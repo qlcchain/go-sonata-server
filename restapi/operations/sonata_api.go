@@ -163,9 +163,12 @@ func NewSonataAPI(spec *loads.Document) *SonataAPI {
 	}
 }
 
-/*SonataAPI sonata API
+/*SonataAPI
+A set of APIs based on the LSO Reference Architecture for
+Serviceability (Address Validation, Site Queries, Product Offering Qualification) |
+Quoting | Product Inventory | Ordering | Trouble-ticketing Billing | Contract & Catalog
 
- */
+*/
 type SonataAPI struct {
 	spec            *loads.Document
 	context         *middleware.Context

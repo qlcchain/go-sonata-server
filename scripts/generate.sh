@@ -8,4 +8,4 @@
 #swagger generate server -f ../spec/MEF_api_productOrderNotification_3.0.0.json -t ../ -s api/product_order_notification -m models/product_order_notification
 #swagger generate server -f ../spec/MEF_api_quoteManagement_2.0.0.json -t ../ -s api/quote_management -m models/quote_management
 #swagger generate server -f ../spec/MEF_api_quoteNotification_1.0.0.yaml -t ../ -s api/quote_notification -m models/quote_notification
-swagger generate server -f ../spec/all.yaml -t ../ -s api -A sonata
+swagger generate server -f ../spec/all.yaml -t ../ -A sonata

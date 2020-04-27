@@ -5,9 +5,12 @@ schemes:
 swagger: "2.0"
 info:
   description: |+
-    sonata API
+    
+    A set of APIs based on the LSO Reference Architecture for
+    Serviceability (Address Validation, Site Queries, Product Offering Qualification) |
+    Quoting | Product Inventory | Ordering | Trouble-ticketing Billing | Contract & Catalog
 
-  title: API sonata
+  title: "MEF LSO Sonata"
   version: 3.0.0
   x-logo:
     backgroundColor: "#FFFFFF"

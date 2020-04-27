@@ -26,8 +26,8 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "sonata API\n\n",
-    "title": "API sonata",
+    "description": "\nA set of APIs based on the LSO Reference Architecture for\nServiceability (Address Validation, Site Queries, Product Offering Qualification) |\nQuoting | Product Inventory | Ordering | Trouble-ticketing Billing | Contract \u0026 Catalog\n\n",
+    "title": "MEF LSO Sonata",
     "version": "3.0.0",
     "x-logo": {
       "backgroundColor": "#FFFFFF",
@@ -6991,8 +6991,8 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "sonata API\n\n",
-    "title": "API sonata",
+    "description": "\nA set of APIs based on the LSO Reference Architecture for\nServiceability (Address Validation, Site Queries, Product Offering Qualification) |\nQuoting | Product Inventory | Ordering | Trouble-ticketing Billing | Contract \u0026 Catalog\n\n",
+    "title": "MEF LSO Sonata",
     "version": "3.0.0",
     "x-logo": {
       "backgroundColor": "#FFFFFF",
