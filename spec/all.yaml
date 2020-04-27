@@ -17,6 +17,26 @@ info:
     url: /redoc/logo.png
 host: serverRoot
 basePath: /api/mef
+securityDefinitions:
+  bearerAuth:
+    # This scheme uses the header: "Authorization: Bearer {base64 encoded string representing a JWT}"
+    # Alternatively, the query param: "access_token" may be used.
+    #
+    # In our scenario, we must use the query param version in order to avoid
+    # passing several headers with key 'Authorization'
+    type: oauth2
+    # The flow and URLs in spec are for documentary purpose: go-swagger does not implement OAuth workflows
+    flow: accessCode
+    authorizationUrl: 'https://dummy.oauth.net/auth'
+    tokenUrl: 'https://dumy.oauth.net/token'
+    # Required scopes are passed by the runtime to the authorizer
+    scopes:
+      customer: scope of registered customers
+      geographicAddressManagement: scope of resellers acting as inventory managers
+      geographicSiteManagement: scope of resellers acting as inventory managers
+      productOrderManagement: scope of resellers acting as inventory managers
+security:
+  - bearerAuth: []
 paths:
   /productOrderManagement/v3/hub:
     post:
@@ -29,6 +49,8 @@ paths:
       operationId: "productOrderManagementHubCreate"
       summary: "Create a Hub"
       description: "Structure used to create a hub (to subscribe to notification)"
+      security:
+        - bearerAuth: [ productOrderManagement ]
       deprecated: false
       parameters:
       - name: "Hub"
@@ -2535,8 +2557,8 @@ paths:
 
           schema:
             $ref: "#/definitions/ErrorRepresentation"
-  ? "/productOfferingQualificationManagement/v3/productOfferingQualification/{ProductOfferingQualificationId}"
-  : get:
+  "/productOfferingQualificationManagement/v3/productOfferingQualification/{ProductOfferingQualificationId}":
+    get:
       description: "The Buyer requests the full details of a single Product Offering Qualification based on a POQ identifier. "
       produces:
         - application/json;charset=utf-8
@@ -6553,6 +6575,15 @@ definitions:
       - success
       - fails
       - partial
+  Principal:
+    type: object
+    properties:
+      name:
+        type: string
+      roles:
+        type: array
+        items:
+          type: string
 tags:
   - description: "Geographic address describe an geographic address with usual parameters as street, postcode, county, etc... information"
     name: GeographicAddress

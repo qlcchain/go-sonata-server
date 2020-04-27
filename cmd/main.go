@@ -18,7 +18,6 @@ var (
 )
 
 func main() {
-
 	swaggerSpec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
 	if err != nil {
 		log.Fatalln(err)
@@ -29,8 +28,8 @@ func main() {
 	defer server.Shutdown()
 
 	parser := flags.NewParser(server, flags.Default)
-	parser.ShortDescription = "API sonata"
-	parser.LongDescription = "sonata API\n\n"
+	parser.ShortDescription = "MEF LSO Sonata"
+	parser.LongDescription = "\nA set of APIs based on the LSO Reference Architecture for\nServiceability (Address Validation, Site Queries, Product Offering Qualification) |\nQuoting | Product Inventory | Ordering | Trouble-ticketing Billing | Contract & Catalog\n\n"
 	server.ConfigureFlags()
 	for _, optsGroup := range api.CommandLineOptionsGroups {
 		_, err := parser.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)

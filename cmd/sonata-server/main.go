@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-openapi/loads"
 	flags "github.com/jessevdk/go-flags"
+
 	"github.com/qlcchain/go-sonata-server/restapi"
 	"github.com/qlcchain/go-sonata-server/restapi/operations"
 )

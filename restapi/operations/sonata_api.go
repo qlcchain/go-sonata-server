@@ -19,6 +19,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/cancel_product_order"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/geographic_address"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/geographic_address_validation"
@@ -52,114 +53,120 @@ func NewSonataAPI(spec *loads.Document) *SonataAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		CancelProductOrderCancelProductOrderCreateHandler: cancel_product_order.CancelProductOrderCreateHandlerFunc(func(params cancel_product_order.CancelProductOrderCreateParams) middleware.Responder {
+		CancelProductOrderCancelProductOrderCreateHandler: cancel_product_order.CancelProductOrderCreateHandlerFunc(func(params cancel_product_order.CancelProductOrderCreateParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderCreate has not yet been implemented")
 		}),
-		CancelProductOrderCancelProductOrderFindHandler: cancel_product_order.CancelProductOrderFindHandlerFunc(func(params cancel_product_order.CancelProductOrderFindParams) middleware.Responder {
+		CancelProductOrderCancelProductOrderFindHandler: cancel_product_order.CancelProductOrderFindHandlerFunc(func(params cancel_product_order.CancelProductOrderFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderFind has not yet been implemented")
 		}),
-		CancelProductOrderCancelProductOrderGetHandler: cancel_product_order.CancelProductOrderGetHandlerFunc(func(params cancel_product_order.CancelProductOrderGetParams) middleware.Responder {
+		CancelProductOrderCancelProductOrderGetHandler: cancel_product_order.CancelProductOrderGetHandlerFunc(func(params cancel_product_order.CancelProductOrderGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderGet has not yet been implemented")
 		}),
-		GeographicAddressGeographicAddressGetHandler: geographic_address.GeographicAddressGetHandlerFunc(func(params geographic_address.GeographicAddressGetParams) middleware.Responder {
+		GeographicAddressGeographicAddressGetHandler: geographic_address.GeographicAddressGetHandlerFunc(func(params geographic_address.GeographicAddressGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation geographic_address.GeographicAddressGet has not yet been implemented")
 		}),
-		GeographicAddressValidationGeographicAddressValidationCreateHandler: geographic_address_validation.GeographicAddressValidationCreateHandlerFunc(func(params geographic_address_validation.GeographicAddressValidationCreateParams) middleware.Responder {
+		GeographicAddressValidationGeographicAddressValidationCreateHandler: geographic_address_validation.GeographicAddressValidationCreateHandlerFunc(func(params geographic_address_validation.GeographicAddressValidationCreateParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation geographic_address_validation.GeographicAddressValidationCreate has not yet been implemented")
 		}),
-		GeographicSiteGeographicSiteFindHandler: geographic_site.GeographicSiteFindHandlerFunc(func(params geographic_site.GeographicSiteFindParams) middleware.Responder {
+		GeographicSiteGeographicSiteFindHandler: geographic_site.GeographicSiteFindHandlerFunc(func(params geographic_site.GeographicSiteFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation geographic_site.GeographicSiteFind has not yet been implemented")
 		}),
-		GeographicSiteGeographicSiteGetHandler: geographic_site.GeographicSiteGetHandlerFunc(func(params geographic_site.GeographicSiteGetParams) middleware.Responder {
+		GeographicSiteGeographicSiteGetHandler: geographic_site.GeographicSiteGetHandlerFunc(func(params geographic_site.GeographicSiteGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation geographic_site.GeographicSiteGet has not yet been implemented")
 		}),
-		NotificationNotificationProductOrderAttributeValueChangeNotificationHandler: notification.NotificationProductOrderAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationProductOrderAttributeValueChangeNotificationParams) middleware.Responder {
+		NotificationNotificationProductOrderAttributeValueChangeNotificationHandler: notification.NotificationProductOrderAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationProductOrderAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOrderAttributeValueChangeNotification has not yet been implemented")
 		}),
-		NotificationNotificationProductOrderCreationNotificationHandler: notification.NotificationProductOrderCreationNotificationHandlerFunc(func(params notification.NotificationProductOrderCreationNotificationParams) middleware.Responder {
+		NotificationNotificationProductOrderCreationNotificationHandler: notification.NotificationProductOrderCreationNotificationHandlerFunc(func(params notification.NotificationProductOrderCreationNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOrderCreationNotification has not yet been implemented")
 		}),
-		NotificationNotificationProductOrderInformationRequiredNotificationHandler: notification.NotificationProductOrderInformationRequiredNotificationHandlerFunc(func(params notification.NotificationProductOrderInformationRequiredNotificationParams) middleware.Responder {
+		NotificationNotificationProductOrderInformationRequiredNotificationHandler: notification.NotificationProductOrderInformationRequiredNotificationHandlerFunc(func(params notification.NotificationProductOrderInformationRequiredNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOrderInformationRequiredNotification has not yet been implemented")
 		}),
-		NotificationNotificationProductOrderStateChangeNotificationHandler: notification.NotificationProductOrderStateChangeNotificationHandlerFunc(func(params notification.NotificationProductOrderStateChangeNotificationParams) middleware.Responder {
+		NotificationNotificationProductOrderStateChangeNotificationHandler: notification.NotificationProductOrderStateChangeNotificationHandlerFunc(func(params notification.NotificationProductOrderStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOrderStateChangeNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteAttributeValueChangeNotificationHandler: notification.NotificationQuoteAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationQuoteAttributeValueChangeNotificationParams) middleware.Responder {
+		NotificationNotificationQuoteAttributeValueChangeNotificationHandler: notification.NotificationQuoteAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationQuoteAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteAttributeValueChangeNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteCreationNotificationHandler: notification.NotificationQuoteCreationNotificationHandlerFunc(func(params notification.NotificationQuoteCreationNotificationParams) middleware.Responder {
+		NotificationNotificationQuoteCreationNotificationHandler: notification.NotificationQuoteCreationNotificationHandlerFunc(func(params notification.NotificationQuoteCreationNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteCreationNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteInformationRequiredNotificationHandler: notification.NotificationQuoteInformationRequiredNotificationHandlerFunc(func(params notification.NotificationQuoteInformationRequiredNotificationParams) middleware.Responder {
+		NotificationNotificationQuoteInformationRequiredNotificationHandler: notification.NotificationQuoteInformationRequiredNotificationHandlerFunc(func(params notification.NotificationQuoteInformationRequiredNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteInformationRequiredNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteStateChangeNotificationHandler: notification.NotificationQuoteStateChangeNotificationHandlerFunc(func(params notification.NotificationQuoteStateChangeNotificationParams) middleware.Responder {
+		NotificationNotificationQuoteStateChangeNotificationHandler: notification.NotificationQuoteStateChangeNotificationHandlerFunc(func(params notification.NotificationQuoteStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteStateChangeNotification has not yet been implemented")
 		}),
-		ProductProductFindHandler: product.ProductFindHandlerFunc(func(params product.ProductFindParams) middleware.Responder {
+		ProductProductFindHandler: product.ProductFindHandlerFunc(func(params product.ProductFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product.ProductFind has not yet been implemented")
 		}),
-		ProductProductGetHandler: product.ProductGetHandlerFunc(func(params product.ProductGetParams) middleware.Responder {
+		ProductProductGetHandler: product.ProductGetHandlerFunc(func(params product.ProductGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product.ProductGet has not yet been implemented")
 		}),
-		ProductOfferingQualificationProductOfferingQualificationCreateHandler: product_offering_qualification.ProductOfferingQualificationCreateHandlerFunc(func(params product_offering_qualification.ProductOfferingQualificationCreateParams) middleware.Responder {
+		ProductOfferingQualificationProductOfferingQualificationCreateHandler: product_offering_qualification.ProductOfferingQualificationCreateHandlerFunc(func(params product_offering_qualification.ProductOfferingQualificationCreateParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product_offering_qualification.ProductOfferingQualificationCreate has not yet been implemented")
 		}),
-		ProductOfferingQualificationProductOfferingQualificationFindHandler: product_offering_qualification.ProductOfferingQualificationFindHandlerFunc(func(params product_offering_qualification.ProductOfferingQualificationFindParams) middleware.Responder {
+		ProductOfferingQualificationProductOfferingQualificationFindHandler: product_offering_qualification.ProductOfferingQualificationFindHandlerFunc(func(params product_offering_qualification.ProductOfferingQualificationFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product_offering_qualification.ProductOfferingQualificationFind has not yet been implemented")
 		}),
-		ProductOfferingQualificationProductOfferingQualificationGetHandler: product_offering_qualification.ProductOfferingQualificationGetHandlerFunc(func(params product_offering_qualification.ProductOfferingQualificationGetParams) middleware.Responder {
+		ProductOfferingQualificationProductOfferingQualificationGetHandler: product_offering_qualification.ProductOfferingQualificationGetHandlerFunc(func(params product_offering_qualification.ProductOfferingQualificationGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product_offering_qualification.ProductOfferingQualificationGet has not yet been implemented")
 		}),
-		HubProductOfferingQualificationManagementHubDeleteHandler: hub.ProductOfferingQualificationManagementHubDeleteHandlerFunc(func(params hub.ProductOfferingQualificationManagementHubDeleteParams) middleware.Responder {
+		HubProductOfferingQualificationManagementHubDeleteHandler: hub.ProductOfferingQualificationManagementHubDeleteHandlerFunc(func(params hub.ProductOfferingQualificationManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.ProductOfferingQualificationManagementHubDelete has not yet been implemented")
 		}),
-		HubProductOfferingQualificationManagementHubGetHandler: hub.ProductOfferingQualificationManagementHubGetHandlerFunc(func(params hub.ProductOfferingQualificationManagementHubGetParams) middleware.Responder {
+		HubProductOfferingQualificationManagementHubGetHandler: hub.ProductOfferingQualificationManagementHubGetHandlerFunc(func(params hub.ProductOfferingQualificationManagementHubGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.ProductOfferingQualificationManagementHubGet has not yet been implemented")
 		}),
-		HubProductOfferingQualificationManagementHubPostHandler: hub.ProductOfferingQualificationManagementHubPostHandlerFunc(func(params hub.ProductOfferingQualificationManagementHubPostParams) middleware.Responder {
+		HubProductOfferingQualificationManagementHubPostHandler: hub.ProductOfferingQualificationManagementHubPostHandlerFunc(func(params hub.ProductOfferingQualificationManagementHubPostParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.ProductOfferingQualificationManagementHubPost has not yet been implemented")
 		}),
-		ProductOrderProductOrderCreateHandler: product_order.ProductOrderCreateHandlerFunc(func(params product_order.ProductOrderCreateParams) middleware.Responder {
+		ProductOrderProductOrderCreateHandler: product_order.ProductOrderCreateHandlerFunc(func(params product_order.ProductOrderCreateParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product_order.ProductOrderCreate has not yet been implemented")
 		}),
-		ProductOrderProductOrderFindHandler: product_order.ProductOrderFindHandlerFunc(func(params product_order.ProductOrderFindParams) middleware.Responder {
+		ProductOrderProductOrderFindHandler: product_order.ProductOrderFindHandlerFunc(func(params product_order.ProductOrderFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product_order.ProductOrderFind has not yet been implemented")
 		}),
-		ProductOrderProductOrderGetHandler: product_order.ProductOrderGetHandlerFunc(func(params product_order.ProductOrderGetParams) middleware.Responder {
+		ProductOrderProductOrderGetHandler: product_order.ProductOrderGetHandlerFunc(func(params product_order.ProductOrderGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation product_order.ProductOrderGet has not yet been implemented")
 		}),
-		HubProductOrderManagementHubCreateHandler: hub.ProductOrderManagementHubCreateHandlerFunc(func(params hub.ProductOrderManagementHubCreateParams) middleware.Responder {
+		HubProductOrderManagementHubCreateHandler: hub.ProductOrderManagementHubCreateHandlerFunc(func(params hub.ProductOrderManagementHubCreateParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.ProductOrderManagementHubCreate has not yet been implemented")
 		}),
-		HubProductOrderManagementHubDeleteHandler: hub.ProductOrderManagementHubDeleteHandlerFunc(func(params hub.ProductOrderManagementHubDeleteParams) middleware.Responder {
+		HubProductOrderManagementHubDeleteHandler: hub.ProductOrderManagementHubDeleteHandlerFunc(func(params hub.ProductOrderManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.ProductOrderManagementHubDelete has not yet been implemented")
 		}),
-		HubProductOrderManagementHubFindHandler: hub.ProductOrderManagementHubFindHandlerFunc(func(params hub.ProductOrderManagementHubFindParams) middleware.Responder {
+		HubProductOrderManagementHubFindHandler: hub.ProductOrderManagementHubFindHandlerFunc(func(params hub.ProductOrderManagementHubFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.ProductOrderManagementHubFind has not yet been implemented")
 		}),
-		QuoteQuoteCreateHandler: quote.QuoteCreateHandlerFunc(func(params quote.QuoteCreateParams) middleware.Responder {
+		QuoteQuoteCreateHandler: quote.QuoteCreateHandlerFunc(func(params quote.QuoteCreateParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation quote.QuoteCreate has not yet been implemented")
 		}),
-		QuoteQuoteFindHandler: quote.QuoteFindHandlerFunc(func(params quote.QuoteFindParams) middleware.Responder {
+		QuoteQuoteFindHandler: quote.QuoteFindHandlerFunc(func(params quote.QuoteFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation quote.QuoteFind has not yet been implemented")
 		}),
-		QuoteQuoteGetHandler: quote.QuoteGetHandlerFunc(func(params quote.QuoteGetParams) middleware.Responder {
+		QuoteQuoteGetHandler: quote.QuoteGetHandlerFunc(func(params quote.QuoteGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation quote.QuoteGet has not yet been implemented")
 		}),
-		HubQuoteManagementHubCreateHandler: hub.QuoteManagementHubCreateHandlerFunc(func(params hub.QuoteManagementHubCreateParams) middleware.Responder {
+		HubQuoteManagementHubCreateHandler: hub.QuoteManagementHubCreateHandlerFunc(func(params hub.QuoteManagementHubCreateParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.QuoteManagementHubCreate has not yet been implemented")
 		}),
-		HubQuoteManagementHubDeleteHandler: hub.QuoteManagementHubDeleteHandlerFunc(func(params hub.QuoteManagementHubDeleteParams) middleware.Responder {
+		HubQuoteManagementHubDeleteHandler: hub.QuoteManagementHubDeleteHandlerFunc(func(params hub.QuoteManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.QuoteManagementHubDelete has not yet been implemented")
 		}),
-		HubQuoteManagementHubFindHandler: hub.QuoteManagementHubFindHandlerFunc(func(params hub.QuoteManagementHubFindParams) middleware.Responder {
+		HubQuoteManagementHubFindHandler: hub.QuoteManagementHubFindHandlerFunc(func(params hub.QuoteManagementHubFindParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation hub.QuoteManagementHubFind has not yet been implemented")
 		}),
-		QuoteQuoteRequestStateChangeHandler: quote.QuoteRequestStateChangeHandlerFunc(func(params quote.QuoteRequestStateChangeParams) middleware.Responder {
+		QuoteQuoteRequestStateChangeHandler: quote.QuoteRequestStateChangeHandlerFunc(func(params quote.QuoteRequestStateChangeParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation quote.QuoteRequestStateChange has not yet been implemented")
 		}),
+
+		BearerAuthAuth: func(token string, scopes []string) (*models.Principal, error) {
+			return nil, errors.NotImplemented("oauth2 bearer auth (bearerAuth) has not yet been implemented")
+		},
+		// default authorizer is authorized meaning no requests are blocked
+		APIAuthorizer: security.Authorized(),
 	}
 }
 
@@ -197,6 +204,13 @@ type SonataAPI struct {
 	// JSONProducer registers a producer for the following mime types:
 	//   - application/json
 	JSONProducer runtime.Producer
+
+	// BearerAuthAuth registers a function that takes an access token and a collection of required scopes and returns a principal
+	// it performs authentication based on an oauth2 bearer token provided in the request
+	BearerAuthAuth func(string, []string) (*models.Principal, error)
+
+	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
+	APIAuthorizer runtime.Authorizer
 
 	// CancelProductOrderCancelProductOrderCreateHandler sets the operation handler for the cancel product order create operation
 	CancelProductOrderCancelProductOrderCreateHandler cancel_product_order.CancelProductOrderCreateHandler
@@ -336,6 +350,10 @@ func (o *SonataAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.BearerAuthAuth == nil {
+		unregistered = append(unregistered, "BearerAuthAuth")
+	}
+
 	if o.CancelProductOrderCancelProductOrderCreateHandler == nil {
 		unregistered = append(unregistered, "cancel_product_order.CancelProductOrderCreateHandler")
 	}
@@ -459,12 +477,22 @@ func (o *SonataAPI) ServeErrorFor(operationID string) func(http.ResponseWriter, 
 
 // AuthenticatorsFor gets the authenticators for the specified security schemes
 func (o *SonataAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
-	return nil
+	result := make(map[string]runtime.Authenticator)
+	for name := range schemes {
+		switch name {
+		case "bearerAuth":
+			result[name] = o.BearerAuthenticator(name, func(token string, scopes []string) (interface{}, error) {
+				return o.BearerAuthAuth(token, scopes)
+			})
+
+		}
+	}
+	return result
 }
 
 // Authorizer returns the registered authorizer
 func (o *SonataAPI) Authorizer() runtime.Authorizer {
-	return nil
+	return o.APIAuthorizer
 }
 
 // ConsumersFor gets the consumers for the specified media types.

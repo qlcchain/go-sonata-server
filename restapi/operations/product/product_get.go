@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // ProductGetHandlerFunc turns a function with the right signature into a product get handler
-type ProductGetHandlerFunc func(ProductGetParams) middleware.Responder
+type ProductGetHandlerFunc func(ProductGetParams, *models.Principal) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn ProductGetHandlerFunc) Handle(params ProductGetParams) middleware.Responder {
-	return fn(params)
+func (fn ProductGetHandlerFunc) Handle(params ProductGetParams, principal *models.Principal) middleware.Responder {
+	return fn(params, principal)
 }
 
 // ProductGetHandler interface for that can handle valid product get params
 type ProductGetHandler interface {
-	Handle(ProductGetParams) middleware.Responder
+	Handle(ProductGetParams, *models.Principal) middleware.Responder
 }
 
 // NewProductGet creates a new http.Handler for the product get operation
@@ -48,12 +50,25 @@ func (o *ProductGet) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 	var Params = NewProductGetParams()
 
+	uprinc, aCtx, err := o.Context.Authorize(r, route)
+	if err != nil {
+		o.Context.Respond(rw, r, route.Produces, route, err)
+		return
+	}
+	if aCtx != nil {
+		r = aCtx
+	}
+	var principal *models.Principal
+	if uprinc != nil {
+		principal = uprinc.(*models.Principal) // this is really a models.Principal, I promise
+	}
+
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params) // actually handle the request
+	res := o.Handler.Handle(Params, principal) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 

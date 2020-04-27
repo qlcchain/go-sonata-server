@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // ProductOfferingQualificationManagementHubDeleteHandlerFunc turns a function with the right signature into a product offering qualification management hub delete handler
-type ProductOfferingQualificationManagementHubDeleteHandlerFunc func(ProductOfferingQualificationManagementHubDeleteParams) middleware.Responder
+type ProductOfferingQualificationManagementHubDeleteHandlerFunc func(ProductOfferingQualificationManagementHubDeleteParams, *models.Principal) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn ProductOfferingQualificationManagementHubDeleteHandlerFunc) Handle(params ProductOfferingQualificationManagementHubDeleteParams) middleware.Responder {
-	return fn(params)
+func (fn ProductOfferingQualificationManagementHubDeleteHandlerFunc) Handle(params ProductOfferingQualificationManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
+	return fn(params, principal)
 }
 
 // ProductOfferingQualificationManagementHubDeleteHandler interface for that can handle valid product offering qualification management hub delete params
 type ProductOfferingQualificationManagementHubDeleteHandler interface {
-	Handle(ProductOfferingQualificationManagementHubDeleteParams) middleware.Responder
+	Handle(ProductOfferingQualificationManagementHubDeleteParams, *models.Principal) middleware.Responder
 }
 
 // NewProductOfferingQualificationManagementHubDelete creates a new http.Handler for the product offering qualification management hub delete operation
@@ -48,12 +50,25 @@ func (o *ProductOfferingQualificationManagementHubDelete) ServeHTTP(rw http.Resp
 	}
 	var Params = NewProductOfferingQualificationManagementHubDeleteParams()
 
+	uprinc, aCtx, err := o.Context.Authorize(r, route)
+	if err != nil {
+		o.Context.Respond(rw, r, route.Produces, route, err)
+		return
+	}
+	if aCtx != nil {
+		r = aCtx
+	}
+	var principal *models.Principal
+	if uprinc != nil {
+		principal = uprinc.(*models.Principal) // this is really a models.Principal, I promise
+	}
+
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params) // actually handle the request
+	res := o.Handler.Handle(Params, principal) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 

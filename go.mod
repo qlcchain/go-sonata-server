@@ -3,6 +3,7 @@ module github.com/qlcchain/go-sonata-server
 go 1.14
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-openapi/errors v0.19.4
 	github.com/go-openapi/loads v0.19.5
 	github.com/go-openapi/runtime v0.19.15

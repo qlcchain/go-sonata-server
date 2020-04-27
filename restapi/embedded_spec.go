@@ -1470,6 +1470,13 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearerAuth": [
+              "productOrderManagement"
+            ]
+          }
+        ],
         "description": "Structure used to create a hub (to subscribe to notification)",
         "consumes": [
           "application/json;charset=utf-8"
@@ -4743,6 +4750,20 @@ func init() {
         "individualCaseBasis",
         "other"
       ]
+    },
+    "Principal": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "Product": {
       "description": "One or more services sold to a Buyer by a Seller.  A particular Product Offering defines the technical and commercial attributes and behav-iors of a Product.",
@@ -6943,6 +6964,25 @@ func init() {
       ]
     }
   },
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://dummy.oauth.net/auth",
+      "tokenUrl": "https://dumy.oauth.net/token",
+      "scopes": {
+        "customer": "scope of registered customers",
+        "geographicAddressManagement": "scope of resellers acting as inventory managers",
+        "geographicSiteManagement": "scope of resellers acting as inventory managers",
+        "productOrderManagement": "scope of resellers acting as inventory managers"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "tags": [
     {
       "description": "Geographic address describe an geographic address with usual parameters as street, postcode, county, etc... information",
@@ -8435,6 +8475,13 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearerAuth": [
+              "productOrderManagement"
+            ]
+          }
+        ],
         "description": "Structure used to create a hub (to subscribe to notification)",
         "consumes": [
           "application/json;charset=utf-8"
@@ -11708,6 +11755,20 @@ func init() {
         "individualCaseBasis",
         "other"
       ]
+    },
+    "Principal": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "Product": {
       "description": "One or more services sold to a Buyer by a Seller.  A particular Product Offering defines the technical and commercial attributes and behav-iors of a Product.",
@@ -13909,6 +13970,25 @@ func init() {
       ]
     }
   },
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://dummy.oauth.net/auth",
+      "tokenUrl": "https://dumy.oauth.net/token",
+      "scopes": {
+        "customer": "scope of registered customers",
+        "geographicAddressManagement": "scope of resellers acting as inventory managers",
+        "geographicSiteManagement": "scope of resellers acting as inventory managers",
+        "productOrderManagement": "scope of resellers acting as inventory managers"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "tags": [
     {
       "description": "Geographic address describe an geographic address with usual parameters as street, postcode, county, etc... information",

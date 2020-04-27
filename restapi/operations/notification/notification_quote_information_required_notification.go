@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NotificationQuoteInformationRequiredNotificationHandlerFunc turns a function with the right signature into a notification quote information required notification handler
-type NotificationQuoteInformationRequiredNotificationHandlerFunc func(NotificationQuoteInformationRequiredNotificationParams) middleware.Responder
+type NotificationQuoteInformationRequiredNotificationHandlerFunc func(NotificationQuoteInformationRequiredNotificationParams, *models.Principal) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn NotificationQuoteInformationRequiredNotificationHandlerFunc) Handle(params NotificationQuoteInformationRequiredNotificationParams) middleware.Responder {
-	return fn(params)
+func (fn NotificationQuoteInformationRequiredNotificationHandlerFunc) Handle(params NotificationQuoteInformationRequiredNotificationParams, principal *models.Principal) middleware.Responder {
+	return fn(params, principal)
 }
 
 // NotificationQuoteInformationRequiredNotificationHandler interface for that can handle valid notification quote information required notification params
 type NotificationQuoteInformationRequiredNotificationHandler interface {
-	Handle(NotificationQuoteInformationRequiredNotificationParams) middleware.Responder
+	Handle(NotificationQuoteInformationRequiredNotificationParams, *models.Principal) middleware.Responder
 }
 
 // NewNotificationQuoteInformationRequiredNotification creates a new http.Handler for the notification quote information required notification operation
@@ -55,12 +57,25 @@ func (o *NotificationQuoteInformationRequiredNotification) ServeHTTP(rw http.Res
 	}
 	var Params = NewNotificationQuoteInformationRequiredNotificationParams()
 
+	uprinc, aCtx, err := o.Context.Authorize(r, route)
+	if err != nil {
+		o.Context.Respond(rw, r, route.Produces, route, err)
+		return
+	}
+	if aCtx != nil {
+		r = aCtx
+	}
+	var principal *models.Principal
+	if uprinc != nil {
+		principal = uprinc.(*models.Principal) // this is really a models.Principal, I promise
+	}
+
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params) // actually handle the request
+	res := o.Handler.Handle(Params, principal) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
