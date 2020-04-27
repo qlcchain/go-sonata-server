@@ -162,8 +162,8 @@ func NewSonataAPI(spec *loads.Document) *SonataAPI {
 			return middleware.NotImplemented("operation quote.QuoteRequestStateChange has not yet been implemented")
 		}),
 
-		BearerAuthAuth: func(token string, scopes []string) (*models.Principal, error) {
-			return nil, errors.NotImplemented("oauth2 bearer auth (bearerAuth) has not yet been implemented")
+		BearerAuth: func(token string, scopes []string) (*models.Principal, error) {
+			return nil, errors.NotImplemented("oauth2 bearer auth (bearer) has not yet been implemented")
 		},
 		// default authorizer is authorized meaning no requests are blocked
 		APIAuthorizer: security.Authorized(),
@@ -205,9 +205,9 @@ type SonataAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// BearerAuthAuth registers a function that takes an access token and a collection of required scopes and returns a principal
+	// BearerAuth registers a function that takes an access token and a collection of required scopes and returns a principal
 	// it performs authentication based on an oauth2 bearer token provided in the request
-	BearerAuthAuth func(string, []string) (*models.Principal, error)
+	BearerAuth func(string, []string) (*models.Principal, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
@@ -350,8 +350,8 @@ func (o *SonataAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.BearerAuthAuth == nil {
-		unregistered = append(unregistered, "BearerAuthAuth")
+	if o.BearerAuth == nil {
+		unregistered = append(unregistered, "BearerAuth")
 	}
 
 	if o.CancelProductOrderCancelProductOrderCreateHandler == nil {
@@ -480,9 +480,9 @@ func (o *SonataAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) ma
 	result := make(map[string]runtime.Authenticator)
 	for name := range schemes {
 		switch name {
-		case "bearerAuth":
+		case "bearer":
 			result[name] = o.BearerAuthenticator(name, func(token string, scopes []string) (interface{}, error) {
-				return o.BearerAuthAuth(token, scopes)
+				return o.BearerAuth(token, scopes)
 			})
 
 		}

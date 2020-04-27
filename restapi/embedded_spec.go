@@ -39,6 +39,14 @@ func init() {
   "paths": {
     "/geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer requests the full details of a single Address based on an Address identifier that was previously provided by the Seller.",
         "produces": [
           "application/json;charset=utf-8"
@@ -116,6 +124,14 @@ func init() {
     },
     "/geographicAddressManagement/v3/geographicAddressValidation": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer sends Address information known to the Buyer to the Seller.  The Seller re-sponds with a list of Addresses known to the Seller that likely match the Address infor-mation sent by the Buyer.  For each Address returned, the Seller generally also provides an Address Identifier, which uniquely identifies this Address within the Seller.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -176,7 +192,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many addresses match - please re-try with more attribute values restriction\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many addresses match - please re-try with more attribute values restriction\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -198,6 +214,14 @@ func init() {
     },
     "/geographicSiteManagement/v3/geographicSite": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer requests that the Seller provides a list of Service Sites known to the Seller based on a set of Site/Address filter criteria.  For each Service Site returned, the Seller also provides a Service Site Identifier, which uniquely identifies this Service Site within the Seller.",
         "produces": [
           "application/json;charset=utf-8"
@@ -335,7 +359,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -357,6 +381,14 @@ func init() {
     },
     "/geographicSiteManagement/v3/geographicSite/{SiteId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer requests the full details for a single Service Site based on a Service Site identifier that was previously provided by the Seller. ",
         "produces": [
           "application/json;charset=utf-8"
@@ -428,6 +460,14 @@ func init() {
     },
     "/productInventoryManagement/v3/product": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer requests a list of Products from the Seller based on filter criteria.",
         "produces": [
           "application/json;charset=utf-8"
@@ -586,7 +626,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription: \n\n\n - code: 103\nmessage: Incomplete request - If place.id is filled, place.type must be filled\ndescription: \n\n\n - code: 104\nmessage: Incomplete request - If place.type is filled, place.id must be filled\ndescription: \n\n\n - code: 105\nmessage: Incomplete request - If partyRole.role is filled, partyRole.relatedPartyId must be filled\ndescription: \n\n\n - code: 106\nmessage: Incomplete request - If partyRole.relatedPartyId is filled, partyRole.role must be filled\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription: \n\n\n - code: 103\nmessage: Incomplete request - If place.id is filled, place.type must be filled\ndescription: \n\n\n - code: 104\nmessage: Incomplete request - If place.type is filled, place.id must be filled\ndescription: \n\n\n - code: 105\nmessage: Incomplete request - If partyRole.role is filled, partyRole.relatedPartyId must be filled\ndescription: \n\n\n - code: 106\nmessage: Incomplete request - If partyRole.relatedPartyId is filled, partyRole.role must be filled\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -602,6 +642,14 @@ func init() {
     },
     "/productInventoryManagement/v3/product/{ProductId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer requests the details associated with a single Product based on a Seller Product Identifier.",
         "produces": [
           "application/json;charset=utf-8"
@@ -667,6 +715,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/hub": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation retrieves a set of hubs.",
         "produces": [
           "application/json;charset=utf-8"
@@ -731,6 +787,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "A request initiated by the Buyer to instruct the Seller to send notifications of POQ state changes in the event the Seller uses the Deferred Response pattern to respond to a Create Product Offering Qualifica-tion request.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -807,6 +871,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/hub/{HubId}": {
       "delete": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation is used to delete a hub.",
         "tags": [
           "Hub"
@@ -872,6 +944,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/productOfferingQualification": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. ",
         "produces": [
           "application/json;charset=utf-8"
@@ -974,7 +1054,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -988,6 +1068,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "A request initiated by the Buyer to determine whether the Seller can feasibly deliver a particular Product (or Products) to a specific set of geographic locations specified by a set of Site/Address filter criteria. The Seller also provides estimated time intervals to complete these deliveries. ",
         "consumes": [
           "application/json;charset=utf-8"
@@ -1048,7 +1136,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: A relatedParty - at productOfferingQualification level - with a role 'Buyer' must be provided (including contact information)\ndescription: \n\n\n - code: 101\nmessage: A least a productOffering OR a productSpecification OR a Product must be provided for a POQItem\ndescription: \n\n\n - code: 102\nmessage: Provided Product Offering Identifier is unknown\ndescription: \n\n\n - code: 103\nmessage: Provided Product Specification Identifier is unknown\ndescription: \n\n\n - code: 104\nmessage: Provided Product Identifier is unknown\ndescription: \n\n\n - code: 105\nmessage: The place information provided are invalid\ndescription: \n\n\n - code: 106\nmessage: A least one date provided is invalid\ndescription: \n\n\n - code: 107\nmessage: Incorrect related party role provided\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: A relatedParty - at productOfferingQualification level - with a role 'Buyer' must be provided (including contact information)\ndescription: \n\n\n - code: 101\nmessage: A least a productOffering OR a productSpecification OR a Product must be provided for a POQItem\ndescription: \n\n\n - code: 102\nmessage: Provided Product Offering Identifier is unknown\ndescription: \n\n\n - code: 103\nmessage: Provided Product Specification Identifier is unknown\ndescription: \n\n\n - code: 104\nmessage: Provided Product Identifier is unknown\ndescription: \n\n\n - code: 105\nmessage: The place information provided are invalid\ndescription: \n\n\n - code: 106\nmessage: A least one date provided is invalid\ndescription: \n\n\n - code: 107\nmessage: Incorrect related party role provided\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -1064,6 +1152,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/productOfferingQualification/{ProductOfferingQualificationId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "The Buyer requests the full details of a single Product Offering Qualification based on a POQ identifier. ",
         "produces": [
           "application/json;charset=utf-8"
@@ -1135,6 +1231,14 @@ func init() {
     },
     "/productOrderManagement/v3/cancelProductOrder": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation allows buyer to retrieve a list of product order cancellation request",
         "produces": [
           "application/json;charset=utf-8"
@@ -1223,6 +1327,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation allows buyer to request a product order cancellation request ",
         "consumes": [
           "application/json;charset=utf-8"
@@ -1289,7 +1401,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: externalId must be provided\ndescription: \n\n\n - code: 101\nmessage: externalId does not match productOrderId\ndescription: \n\n\n - code: 102\nmessage: Product order state is not compliant with this request\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: externalId must be provided\ndescription: \n\n\n - code: 101\nmessage: externalId does not match productOrderId\ndescription: \n\n\n - code: 102\nmessage: Product order state is not compliant with this request\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -1311,6 +1423,14 @@ func init() {
     },
     "/productOrderManagement/v3/cancelProductOrder/{CancelProductOrderId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation allows buyer to retrieve one product order cancellation request",
         "produces": [
           "application/json;charset=utf-8"
@@ -1394,6 +1514,14 @@ func init() {
     },
     "/productOrderManagement/v3/hub": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Find Hub",
         "produces": [
           "application/json;charset=utf-8"
@@ -1472,8 +1600,9 @@ func init() {
       "post": {
         "security": [
           {
-            "bearerAuth": [
-              "productOrderManagement"
+            "bearer": [
+              "customer",
+              "admin"
             ]
           }
         ],
@@ -1565,6 +1694,14 @@ func init() {
     },
     "/productOrderManagement/v3/hub/{HubId}": {
       "delete": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Delete Hub",
         "tags": [
           "Hub"
@@ -1642,6 +1779,14 @@ func init() {
     },
     "/productOrderManagement/v3/productOrder": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
         "produces": [
           "application/json;charset=utf-8"
@@ -1870,7 +2015,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -1890,6 +2035,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -1956,7 +2109,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -1978,6 +2131,14 @@ func init() {
     },
     "/productOrderManagement/v3/productOrder/{ProductOrderId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve a single product order based upon a specified product order id.",
         "produces": [
           "application/json;charset=utf-8"
@@ -2061,6 +2222,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Product Order attribute value change structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -2143,6 +2312,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderCreationNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Product order creation notification structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -2224,6 +2401,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderInformationRequiredNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Product Order information required structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -2306,6 +2491,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderStateChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Product order state change structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -2388,6 +2581,14 @@ func init() {
     },
     "/quoteManagement/v2/hub": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Retrieve hub(s)",
         "produces": [
           "application/json;charset=utf-8"
@@ -2465,6 +2666,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Sets the communication endpoint address the service instance must use to deliver information about its health state, execution state, failures and metrics",
         "consumes": [
           "application/json;charset=utf-8"
@@ -2547,6 +2756,14 @@ func init() {
     },
     "/quoteManagement/v2/hub/{HubId}": {
       "delete": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Clears the communication endpoint address that was set by creating the Hub",
         "tags": [
           "Hub"
@@ -2618,6 +2835,14 @@ func init() {
     },
     "/quoteManagement/v2/quote": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve quote information using filter criteria.",
         "produces": [
           "application/json;charset=utf-8"
@@ -2761,7 +2986,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -2781,6 +3006,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation is used to create a new quote.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -2841,7 +3074,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 101\nmessage: A relatedPartyRole for Buyer role must be provided\ndescription: \n\n\n - code: 103\nmessage: A relatedPartyRole is incomplete (must have partyRole.id or role.id+relatedParty)\ndescription: \n\n\n - code: 104\nmessage: A relatedParty is incomplete (must have a party.id or a party.name)\ndescription: \n\n\n - code: 105\nmessage: Qualification Id provided did not exist or expired\ndescription: \n\n\n - code: 106\nmessage: At least a productOffering Id or a product.id or a productSpec.id must be provided in quote item\ndescription: \n\n\n - code: 107\nmessage: inconsistency between  requestedQuoteCompletionDate and expectedFulfillmentStartDate\ndescription: \n\n\n - code: 108\nmessage: Seller requires agreement under which the buyer is requesting but is missing from the request.\ndescription: \n\n\n - code: 109\nmessage: The agreement provided cannot be validated by the seller\ndescription: \n\n\n - code: 110\nmessage: Product requested is not part of the provided agreement\ndescription: \n\n\n - code: 111\nmessage: Mandatory product/item relationship is missing\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 101\nmessage: A relatedPartyRole for Buyer role must be provided\ndescription: \n\n\n - code: 103\nmessage: A relatedPartyRole is incomplete (must have partyRole.id or role.id+relatedParty)\ndescription: \n\n\n - code: 104\nmessage: A relatedParty is incomplete (must have a party.id or a party.name)\ndescription: \n\n\n - code: 105\nmessage: Qualification Id provided did not exist or expired\ndescription: \n\n\n - code: 106\nmessage: At least a productOffering Id or a product.id or a productSpec.id must be provided in quote item\ndescription: \n\n\n - code: 107\nmessage: inconsistency between  requestedQuoteCompletionDate and expectedFulfillmentStartDate\ndescription: \n\n\n - code: 108\nmessage: Seller requires agreement under which the buyer is requesting but is missing from the request.\ndescription: \n\n\n - code: 109\nmessage: The agreement provided cannot be validated by the seller\ndescription: \n\n\n - code: 110\nmessage: Product requested is not part of the provided agreement\ndescription: \n\n\n - code: 111\nmessage: Mandatory product/item relationship is missing\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -2863,6 +3096,14 @@ func init() {
     },
     "/quoteManagement/v2/quote/requestStateChange": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Request from buyer to cancel or reject a quote.\nWhen seller receive cancel request, seller will shift quote state to CANCELLED (no change on order item state)\nWhen seller receive reject request, seller will shift quote state to REJECTED (no change on order item state)",
         "consumes": [
           "application/json;charset=utf-8"
@@ -2923,7 +3164,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Quote current status is incompatible with requested quote state change\ndescription: \n\n\n - code: 101\nmessage: Quote external Id provided did not match\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Quote current status is incompatible with requested quote state change\ndescription: \n\n\n - code: 101\nmessage: Quote external Id provided did not match\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -2945,6 +3186,14 @@ func init() {
     },
     "/quoteManagement/v2/quote/{id}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve quote information using the ID.",
         "produces": [
           "application/json;charset=utf-8"
@@ -3022,6 +3271,14 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteCreationNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -3098,6 +3355,14 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteStateChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -3174,6 +3439,14 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -3253,6 +3526,14 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -6965,22 +7246,20 @@ func init() {
     }
   },
   "securityDefinitions": {
-    "bearerAuth": {
+    "bearer": {
       "type": "oauth2",
       "flow": "accessCode",
       "authorizationUrl": "https://dummy.oauth.net/auth",
       "tokenUrl": "https://dumy.oauth.net/token",
       "scopes": {
-        "customer": "scope of registered customers",
-        "geographicAddressManagement": "scope of resellers acting as inventory managers",
-        "geographicSiteManagement": "scope of resellers acting as inventory managers",
-        "productOrderManagement": "scope of resellers acting as inventory managers"
+        "admin": "scope of admin customers",
+        "customer": "scope of registered customers"
       }
     }
   },
   "security": [
     {
-      "bearerAuth": []
+      "bearer": []
     }
   ],
   "tags": [
@@ -7044,6 +7323,14 @@ func init() {
   "paths": {
     "/geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer requests the full details of a single Address based on an Address identifier that was previously provided by the Seller.",
         "produces": [
           "application/json;charset=utf-8"
@@ -7121,6 +7408,14 @@ func init() {
     },
     "/geographicAddressManagement/v3/geographicAddressValidation": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer sends Address information known to the Buyer to the Seller.  The Seller re-sponds with a list of Addresses known to the Seller that likely match the Address infor-mation sent by the Buyer.  For each Address returned, the Seller generally also provides an Address Identifier, which uniquely identifies this Address within the Seller.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -7181,7 +7476,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many addresses match - please re-try with more attribute values restriction\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many addresses match - please re-try with more attribute values restriction\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -7203,6 +7498,14 @@ func init() {
     },
     "/geographicSiteManagement/v3/geographicSite": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer requests that the Seller provides a list of Service Sites known to the Seller based on a set of Site/Address filter criteria.  For each Service Site returned, the Seller also provides a Service Site Identifier, which uniquely identifies this Service Site within the Seller.",
         "produces": [
           "application/json;charset=utf-8"
@@ -7340,7 +7643,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -7362,6 +7665,14 @@ func init() {
     },
     "/geographicSiteManagement/v3/geographicSite/{SiteId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer requests the full details for a single Service Site based on a Service Site identifier that was previously provided by the Seller. ",
         "produces": [
           "application/json;charset=utf-8"
@@ -7433,6 +7744,14 @@ func init() {
     },
     "/productInventoryManagement/v3/product": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer requests a list of Products from the Seller based on filter criteria.",
         "produces": [
           "application/json;charset=utf-8"
@@ -7591,7 +7910,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription: \n\n\n - code: 103\nmessage: Incomplete request - If place.id is filled, place.type must be filled\ndescription: \n\n\n - code: 104\nmessage: Incomplete request - If place.type is filled, place.id must be filled\ndescription: \n\n\n - code: 105\nmessage: Incomplete request - If partyRole.role is filled, partyRole.relatedPartyId must be filled\ndescription: \n\n\n - code: 106\nmessage: Incomplete request - If partyRole.relatedPartyId is filled, partyRole.role must be filled\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription: \n\n\n - code: 103\nmessage: Incomplete request - If place.id is filled, place.type must be filled\ndescription: \n\n\n - code: 104\nmessage: Incomplete request - If place.type is filled, place.id must be filled\ndescription: \n\n\n - code: 105\nmessage: Incomplete request - If partyRole.role is filled, partyRole.relatedPartyId must be filled\ndescription: \n\n\n - code: 106\nmessage: Incomplete request - If partyRole.relatedPartyId is filled, partyRole.role must be filled\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -7607,6 +7926,14 @@ func init() {
     },
     "/productInventoryManagement/v3/product/{ProductId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer requests the details associated with a single Product based on a Seller Product Identifier.",
         "produces": [
           "application/json;charset=utf-8"
@@ -7672,6 +7999,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/hub": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation retrieves a set of hubs.",
         "produces": [
           "application/json;charset=utf-8"
@@ -7736,6 +8071,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "A request initiated by the Buyer to instruct the Seller to send notifications of POQ state changes in the event the Seller uses the Deferred Response pattern to respond to a Create Product Offering Qualifica-tion request.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -7812,6 +8155,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/hub/{HubId}": {
       "delete": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation is used to delete a hub.",
         "tags": [
           "Hub"
@@ -7877,6 +8228,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/productOfferingQualification": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. ",
         "produces": [
           "application/json;charset=utf-8"
@@ -7979,7 +8338,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -7993,6 +8352,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "A request initiated by the Buyer to determine whether the Seller can feasibly deliver a particular Product (or Products) to a specific set of geographic locations specified by a set of Site/Address filter criteria. The Seller also provides estimated time intervals to complete these deliveries. ",
         "consumes": [
           "application/json;charset=utf-8"
@@ -8053,7 +8420,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: A relatedParty - at productOfferingQualification level - with a role 'Buyer' must be provided (including contact information)\ndescription: \n\n\n - code: 101\nmessage: A least a productOffering OR a productSpecification OR a Product must be provided for a POQItem\ndescription: \n\n\n - code: 102\nmessage: Provided Product Offering Identifier is unknown\ndescription: \n\n\n - code: 103\nmessage: Provided Product Specification Identifier is unknown\ndescription: \n\n\n - code: 104\nmessage: Provided Product Identifier is unknown\ndescription: \n\n\n - code: 105\nmessage: The place information provided are invalid\ndescription: \n\n\n - code: 106\nmessage: A least one date provided is invalid\ndescription: \n\n\n - code: 107\nmessage: Incorrect related party role provided\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: A relatedParty - at productOfferingQualification level - with a role 'Buyer' must be provided (including contact information)\ndescription: \n\n\n - code: 101\nmessage: A least a productOffering OR a productSpecification OR a Product must be provided for a POQItem\ndescription: \n\n\n - code: 102\nmessage: Provided Product Offering Identifier is unknown\ndescription: \n\n\n - code: 103\nmessage: Provided Product Specification Identifier is unknown\ndescription: \n\n\n - code: 104\nmessage: Provided Product Identifier is unknown\ndescription: \n\n\n - code: 105\nmessage: The place information provided are invalid\ndescription: \n\n\n - code: 106\nmessage: A least one date provided is invalid\ndescription: \n\n\n - code: 107\nmessage: Incorrect related party role provided\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -8069,6 +8436,14 @@ func init() {
     },
     "/productOfferingQualificationManagement/v3/productOfferingQualification/{ProductOfferingQualificationId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "The Buyer requests the full details of a single Product Offering Qualification based on a POQ identifier. ",
         "produces": [
           "application/json;charset=utf-8"
@@ -8140,6 +8515,14 @@ func init() {
     },
     "/productOrderManagement/v3/cancelProductOrder": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation allows buyer to retrieve a list of product order cancellation request",
         "produces": [
           "application/json;charset=utf-8"
@@ -8228,6 +8611,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation allows buyer to request a product order cancellation request ",
         "consumes": [
           "application/json;charset=utf-8"
@@ -8294,7 +8685,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: externalId must be provided\ndescription: \n\n\n - code: 101\nmessage: externalId does not match productOrderId\ndescription: \n\n\n - code: 102\nmessage: Product order state is not compliant with this request\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: externalId must be provided\ndescription: \n\n\n - code: 101\nmessage: externalId does not match productOrderId\ndescription: \n\n\n - code: 102\nmessage: Product order state is not compliant with this request\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -8316,6 +8707,14 @@ func init() {
     },
     "/productOrderManagement/v3/cancelProductOrder/{CancelProductOrderId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation allows buyer to retrieve one product order cancellation request",
         "produces": [
           "application/json;charset=utf-8"
@@ -8399,6 +8798,14 @@ func init() {
     },
     "/productOrderManagement/v3/hub": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Find Hub",
         "produces": [
           "application/json;charset=utf-8"
@@ -8477,8 +8884,9 @@ func init() {
       "post": {
         "security": [
           {
-            "bearerAuth": [
-              "productOrderManagement"
+            "bearer": [
+              "admin",
+              "customer"
             ]
           }
         ],
@@ -8570,6 +8978,14 @@ func init() {
     },
     "/productOrderManagement/v3/hub/{HubId}": {
       "delete": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Delete Hub",
         "tags": [
           "Hub"
@@ -8647,6 +9063,14 @@ func init() {
     },
     "/productOrderManagement/v3/productOrder": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
         "produces": [
           "application/json;charset=utf-8"
@@ -8875,7 +9299,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -8895,6 +9319,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -8961,7 +9393,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -8983,6 +9415,14 @@ func init() {
     },
     "/productOrderManagement/v3/productOrder/{ProductOrderId}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve a single product order based upon a specified product order id.",
         "produces": [
           "application/json;charset=utf-8"
@@ -9066,6 +9506,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Product Order attribute value change structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -9148,6 +9596,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderCreationNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Product order creation notification structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -9229,6 +9685,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderInformationRequiredNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Product Order information required structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -9311,6 +9775,14 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderStateChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Product order state change structure description",
         "consumes": [
           "application/json;charset=utf-8"
@@ -9393,6 +9865,14 @@ func init() {
     },
     "/quoteManagement/v2/hub": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Retrieve hub(s)",
         "produces": [
           "application/json;charset=utf-8"
@@ -9470,6 +9950,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Sets the communication endpoint address the service instance must use to deliver information about its health state, execution state, failures and metrics",
         "consumes": [
           "application/json;charset=utf-8"
@@ -9552,6 +10040,14 @@ func init() {
     },
     "/quoteManagement/v2/hub/{HubId}": {
       "delete": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Clears the communication endpoint address that was set by creating the Hub",
         "tags": [
           "Hub"
@@ -9623,6 +10119,14 @@ func init() {
     },
     "/quoteManagement/v2/quote": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve quote information using filter criteria.",
         "produces": [
           "application/json;charset=utf-8"
@@ -9766,7 +10270,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -9786,6 +10290,14 @@ func init() {
         }
       },
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation is used to create a new quote.",
         "consumes": [
           "application/json;charset=utf-8"
@@ -9846,7 +10358,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 101\nmessage: A relatedPartyRole for Buyer role must be provided\ndescription: \n\n\n - code: 103\nmessage: A relatedPartyRole is incomplete (must have partyRole.id or role.id+relatedParty)\ndescription: \n\n\n - code: 104\nmessage: A relatedParty is incomplete (must have a party.id or a party.name)\ndescription: \n\n\n - code: 105\nmessage: Qualification Id provided did not exist or expired\ndescription: \n\n\n - code: 106\nmessage: At least a productOffering Id or a product.id or a productSpec.id must be provided in quote item\ndescription: \n\n\n - code: 107\nmessage: inconsistency between  requestedQuoteCompletionDate and expectedFulfillmentStartDate\ndescription: \n\n\n - code: 108\nmessage: Seller requires agreement under which the buyer is requesting but is missing from the request.\ndescription: \n\n\n - code: 109\nmessage: The agreement provided cannot be validated by the seller\ndescription: \n\n\n - code: 110\nmessage: Product requested is not part of the provided agreement\ndescription: \n\n\n - code: 111\nmessage: Mandatory product/item relationship is missing\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 101\nmessage: A relatedPartyRole for Buyer role must be provided\ndescription: \n\n\n - code: 103\nmessage: A relatedPartyRole is incomplete (must have partyRole.id or role.id+relatedParty)\ndescription: \n\n\n - code: 104\nmessage: A relatedParty is incomplete (must have a party.id or a party.name)\ndescription: \n\n\n - code: 105\nmessage: Qualification Id provided did not exist or expired\ndescription: \n\n\n - code: 106\nmessage: At least a productOffering Id or a product.id or a productSpec.id must be provided in quote item\ndescription: \n\n\n - code: 107\nmessage: inconsistency between  requestedQuoteCompletionDate and expectedFulfillmentStartDate\ndescription: \n\n\n - code: 108\nmessage: Seller requires agreement under which the buyer is requesting but is missing from the request.\ndescription: \n\n\n - code: 109\nmessage: The agreement provided cannot be validated by the seller\ndescription: \n\n\n - code: 110\nmessage: Product requested is not part of the provided agreement\ndescription: \n\n\n - code: 111\nmessage: Mandatory product/item relationship is missing\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -9868,6 +10380,14 @@ func init() {
     },
     "/quoteManagement/v2/quote/requestStateChange": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Request from buyer to cancel or reject a quote.\nWhen seller receive cancel request, seller will shift quote state to CANCELLED (no change on order item state)\nWhen seller receive reject request, seller will shift quote state to REJECTED (no change on order item state)",
         "consumes": [
           "application/json;charset=utf-8"
@@ -9928,7 +10448,7 @@ func init() {
             }
           },
           "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n \n\n\n - code: 100\nmessage: Quote current status is incompatible with requested quote state change\ndescription: \n\n\n - code: 101\nmessage: Quote external Id provided did not match\ndescription:",
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Quote current status is incompatible with requested quote state change\ndescription: \n\n\n - code: 101\nmessage: Quote external Id provided did not match\ndescription:",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -9950,6 +10470,14 @@ func init() {
     },
     "/quoteManagement/v2/quote/{id}": {
       "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "This operation is used to retrieve quote information using the ID.",
         "produces": [
           "application/json;charset=utf-8"
@@ -10027,6 +10555,14 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteCreationNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -10103,6 +10639,14 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteStateChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -10179,6 +10723,14 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -10258,6 +10810,14 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
       "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -13971,22 +14531,20 @@ func init() {
     }
   },
   "securityDefinitions": {
-    "bearerAuth": {
+    "bearer": {
       "type": "oauth2",
       "flow": "accessCode",
       "authorizationUrl": "https://dummy.oauth.net/auth",
       "tokenUrl": "https://dumy.oauth.net/token",
       "scopes": {
-        "customer": "scope of registered customers",
-        "geographicAddressManagement": "scope of resellers acting as inventory managers",
-        "geographicSiteManagement": "scope of resellers acting as inventory managers",
-        "productOrderManagement": "scope of resellers acting as inventory managers"
+        "admin": "scope of admin customers",
+        "customer": "scope of registered customers"
       }
     }
   },
   "security": [
     {
-      "bearerAuth": []
+      "bearer": []
     }
   ],
   "tags": [

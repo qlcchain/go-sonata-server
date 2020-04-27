@@ -5,7 +5,7 @@ schemes:
 swagger: "2.0"
 info:
   description: |+
-    
+
     A set of APIs based on the LSO Reference Architecture for
     Serviceability (Address Validation, Site Queries, Product Offering Qualification) |
     Quoting | Product Inventory | Ordering | Trouble-ticketing Billing | Contract & Catalog
@@ -18,7 +18,7 @@ info:
 host: serverRoot
 basePath: /api/mef
 securityDefinitions:
-  bearerAuth:
+  bearer:
     # This scheme uses the header: "Authorization: Bearer {base64 encoded string representing a JWT}"
     # Alternatively, the query param: "access_token" may be used.
     #
@@ -32,33 +32,31 @@ securityDefinitions:
     # Required scopes are passed by the runtime to the authorizer
     scopes:
       customer: scope of registered customers
-      geographicAddressManagement: scope of resellers acting as inventory managers
-      geographicSiteManagement: scope of resellers acting as inventory managers
-      productOrderManagement: scope of resellers acting as inventory managers
+      admin: scope of admin customers
 security:
-  - bearerAuth: []
+  - bearer: []
 paths:
   /productOrderManagement/v3/hub:
     post:
       tags:
-      - "Hub"
+        - "Hub"
       consumes:
-      - "application/json;charset=utf-8"
+        - "application/json;charset=utf-8"
       produces:
-      - "application/json;charset=utf-8"
+        - "application/json;charset=utf-8"
       operationId: "productOrderManagementHubCreate"
       summary: "Create a Hub"
       description: "Structure used to create a hub (to subscribe to notification)"
       security:
-        - bearerAuth: [ productOrderManagement ]
+        - bearer: [ "customer","admin" ]
       deprecated: false
       parameters:
-      - name: "Hub"
-        required: true
-        in: "body"
-        description: ""
-        schema:
-          $ref: "#/definitions/HubInput"
+        - name: "Hub"
+          required: true
+          in: "body"
+          description: ""
+          schema:
+            $ref: "#/definitions/HubInput"
       responses:
         201:
           description: "Created"
@@ -113,13 +111,15 @@ paths:
             $ref: "#/definitions/ErrorRepresentation"
     get:
       tags:
-      - "Hub"
+        - "Hub"
       produces:
-      - "application/json;charset=utf-8"
+        - "application/json;charset=utf-8"
       operationId: "productOrderManagementHubFind"
       summary: "Find a list of Hub"
       description: "Find Hub"
       deprecated: false
+      security:
+        - bearer: [ "customer","admin" ]
       responses:
         200:
           description: "Ok"
@@ -177,17 +177,19 @@ paths:
   /productOrderManagement/v3/hub/{HubId}:
     delete:
       tags:
-      - "Hub"
+        - "Hub"
       operationId: "productOrderManagementHubDelete"
       summary: "Delete a Hub"
       description: "Delete Hub"
       deprecated: false
+      security:
+        - bearer: [ "customer","admin" ]
       parameters:
-      - name: "HubId"
-        required: true
-        in: "path"
-        description: ""
-        type: "string"
+        - name: "HubId"
+          required: true
+          in: "path"
+          description: ""
+          type: "string"
       responses:
         204:
           description: "No Content"
@@ -246,6 +248,8 @@ paths:
       tags:
         - CancelProductOrder
       summary: Find a lost of product order cancellation request(s)
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: cancelProductOrderFind
       parameters:
         - type: string
@@ -352,6 +356,8 @@ paths:
       tags:
         - CancelProductOrder
       summary: Create product order cancellation request
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: cancelProductOrderCreate
       parameters:
         - name: CancelProductOrder
@@ -432,7 +438,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -472,6 +478,8 @@ paths:
       tags:
         - CancelProductOrder
       summary: Get a product order cancellation request (by id)
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: cancelProductOrderGet
       parameters:
         - type: string
@@ -573,6 +581,8 @@ paths:
       tags:
         - GeographicAddress
       summary: retrieveAddress
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: geographicAddressGet
       parameters:
         - type: string
@@ -668,6 +678,8 @@ paths:
       tags:
         - GeographicAddressValidation
       summary: validate a Geographic Address
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: geographicAddressValidationCreate
       parameters:
         - name: addressValidationRequest
@@ -740,7 +752,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -770,6 +782,8 @@ paths:
       tags:
         - GeographicSite
       summary: retrieveGeographicSites
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: geographicSiteFind
       parameters:
         - enum:
@@ -892,7 +906,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -922,6 +936,8 @@ paths:
       tags:
         - GeographicSite
       summary: retrieveSite
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: geographicSiteGet
       parameters:
         - type: string
@@ -1004,6 +1020,8 @@ paths:
       tags:
         - Notification
       summary: Product Order attribute value change structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationProductOrderAttributeValueChangeNotification
       parameters:
         - name: productOrderAttributeValueChange
@@ -1104,6 +1122,8 @@ paths:
       tags:
         - Notification
       summary: Product order creation notification structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationProductOrderCreationNotification
       parameters:
         - name: productOrderCreationNotification
@@ -1203,6 +1223,8 @@ paths:
       tags:
         - Notification
       summary: Product Order information required structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationProductOrderInformationRequiredNotification
       parameters:
         - name: productOrderInformationRequired
@@ -1303,6 +1325,8 @@ paths:
       tags:
         - Notification
       summary: Product order state change structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationProductOrderStateChangeNotification
       parameters:
         - name: productOrderStateChange
@@ -1410,6 +1434,8 @@ paths:
       tags:
         - Notification
       summary: Quote attribute value change notification structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteAttributeValueChangeNotification
       parameters:
         - name: quoteAttributeValueChangeNotification
@@ -1509,6 +1535,8 @@ paths:
       tags:
         - Notification
       summary: Quote creation notification structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteCreationNotification
       parameters:
         - name: quoteCreationNotification
@@ -1608,6 +1636,8 @@ paths:
       tags:
         - Notification
       summary: Quote information required notification structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteInformationRequiredNotification
       parameters:
         - name: quoteInformationRequiredNotification
@@ -1707,6 +1737,8 @@ paths:
       tags:
         - Notification
       summary: Quote state change notification structure
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteStateChangeNotification
       parameters:
         - name: quoteStateChangeNotification
@@ -1799,6 +1831,8 @@ paths:
       tags:
         - Product
       summary: productFind (list) - retrieve product list with summary view
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productFind
       parameters:
         - type: string
@@ -1940,7 +1974,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -1982,6 +2016,8 @@ paths:
       tags:
         - Product
       summary: productGet (by id) - retrieve one product with all information
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productGet
       parameters:
         - type: string
@@ -2059,6 +2095,8 @@ paths:
       tags:
         - Hub
       summary: hubFind
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOfferingQualificationManagementHubGet
       responses:
         "200":
@@ -2142,6 +2180,8 @@ paths:
       tags:
         - Hub
       summary: hubCreate
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOfferingQualificationManagementHubPost
       parameters:
         - name: Hub
@@ -2226,6 +2266,8 @@ paths:
       tags:
         - Hub
       summary: hubDelete
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOfferingQualificationManagementHubDelete
       parameters:
         - type: string
@@ -2309,6 +2351,8 @@ paths:
       tags:
         - ProductOfferingQualification
       summary: Retrieve a list of ProductOfferingQualifications based on a set of criteria
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOfferingQualificationFind
       parameters:
         - type: string
@@ -2413,7 +2457,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -2436,6 +2480,8 @@ paths:
       tags:
         - ProductOfferingQualification
       summary: Create a ProductOfferingQualification
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOfferingQualificationCreate
       parameters:
         - name: ProductOfferingQualification
@@ -2508,7 +2554,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -2565,6 +2611,8 @@ paths:
       tags:
         - ProductOfferingQualification
       summary: Get a ProductOfferingQualification based on its id
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOfferingQualificationGet
       parameters:
         - type: string
@@ -2650,6 +2698,8 @@ paths:
       tags:
         - ProductOrder
       summary: Find a list of product order(s)
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOrderFind
       parameters:
         - type: string
@@ -2848,7 +2898,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -2879,6 +2929,8 @@ paths:
       tags:
         - ProductOrder
       summary: Create a product order
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOrderCreate
       parameters:
         - name: ProductOrder
@@ -2959,7 +3011,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -3089,6 +3141,8 @@ paths:
       tags:
         - ProductOrder
       summary: Get a product order (by id)
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: productOrderGet
       parameters:
         - type: string
@@ -3185,24 +3239,26 @@ paths:
   /quoteManagement/v2/hub:
     post:
       tags:
-      - "Hub"
+        - "Hub"
       consumes:
-      - "application/json;charset=utf-8"
+        - "application/json;charset=utf-8"
       produces:
-      - "application/json;charset=utf-8"
+        - "application/json;charset=utf-8"
       operationId: "quoteManagementHubCreate"
       summary: "Register a listener"
       description: "Sets the communication endpoint address the service instance must\
         \ use to deliver information about its health state, execution state, failures\
         \ and metrics"
       deprecated: false
+      security:
+        - bearer: [ "customer","admin" ]
       parameters:
-      - name: "Hub"
-        required: true
-        in: "body"
-        description: ""
-        schema:
-          $ref: "#/definitions/HubInput"
+        - name: "Hub"
+          required: true
+          in: "body"
+          description: ""
+          schema:
+            $ref: "#/definitions/HubInput"
       responses:
         201:
           description: "Created"
@@ -3252,19 +3308,21 @@ paths:
             $ref: "#/definitions/ErrorRepresentation"
     get:
       tags:
-      - "Hub"
+        - "Hub"
       produces:
-      - "application/json;charset=utf-8"
+        - "application/json;charset=utf-8"
       operationId: "quoteManagementHubFind"
       summary: "listHub"
       description: "Retrieve hub(s)"
       deprecated: false
+      security:
+        - bearer: [ "customer","admin" ]
       parameters:
-      - name: "fields"
-        required: false
-        in: "header"
-        description: ""
-        type: "string"
+        - name: "fields"
+          required: false
+          in: "header"
+          description: ""
+          type: "string"
       responses:
         200:
           description: "Ok"
@@ -3317,18 +3375,20 @@ paths:
   /quoteManagement/v2/hub/{HubId}:
     delete:
       tags:
-      - "Hub"
+        - "Hub"
       operationId: "quoteManagementHubDelete"
       summary: "Unregister a listener"
       description: "Clears the communication endpoint address that was set by creating\
         \ the Hub"
       deprecated: false
+      security:
+        - bearer: [ "customer","admin" ]
       parameters:
-      - name: "HubId"
-        required: true
-        in: "path"
-        description: ""
-        type: "string"
+        - name: "HubId"
+          required: true
+          in: "path"
+          description: ""
+          type: "string"
       responses:
         204:
           description: "No Content"
@@ -3382,6 +3442,8 @@ paths:
       tags:
         - Quote
       summary: List quotes
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: quoteFind
       parameters:
         - type: string
@@ -3517,7 +3579,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -3549,6 +3611,8 @@ paths:
         - Quote
       summary: Create a quote
       operationId: quoteCreate
+      security:
+        - bearer: [ "customer","admin" ]
       parameters:
         - name: Quote
           in: body
@@ -3620,7 +3684,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 101
@@ -3700,6 +3764,8 @@ paths:
       tags:
         - Quote
       summary: request a quote state change
+      security:
+        - bearer: [ "customer","admin" ]
       operationId: quoteRequestStateChange
       parameters:
         - name: changeQuoteStateRequest
@@ -3772,7 +3838,7 @@ paths:
             Functional error
 
 
-             
+
 
 
              - code: 100
@@ -3808,6 +3874,8 @@ paths:
         - Quote
       summary: Retrieve a quote
       operationId: quoteGet
+      security:
+        - bearer: [ "customer","admin" ]
       parameters:
         - type: string
           name: id

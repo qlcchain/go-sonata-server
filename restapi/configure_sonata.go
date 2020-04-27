@@ -6,11 +6,13 @@ import (
 	"crypto/tls"
 	"net/http"
 
-	"github.com/qlcchain/go-sonata-server/auth"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/gorilla/handlers"
+	"github.com/justinas/alice"
+
+	"github.com/qlcchain/go-sonata-server/auth"
 
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/restapi/operations"
@@ -29,7 +31,7 @@ import (
 //go:generate swagger generate server --target ../../go-sonata-server --name Sonata --spec ../spec/all.yaml --principal models.Principal
 
 func configureFlags(api *operations.SonataAPI) {
-	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
+	//api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
 
 func configureAPI(api *operations.SonataAPI) http.Handler {
@@ -46,8 +48,8 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.BearerAuthAuth == nil {
-		api.BearerAuthAuth = func(token string, scopes []string) (*models.Principal, error) {
+	if api.BearerAuth == nil {
+		api.BearerAuth = func(token string, scopes []string) (*models.Principal, error) {
 			// TODO: verify scopes???
 			if claims, err := auth.ParseAndCheckToken(token); err != nil {
 				return nil, err
@@ -273,5 +275,26 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
-	return handler
+	writer := &logger{}
+	return alice.New(handlers.CORS(handlers.AllowedOrigins([]string{"*"}), handlers.AllowCredentials()),
+		func(handler http.Handler) http.Handler {
+			return handlers.LoggingHandler(writer, handler)
+		},
+		handlers.ProxyHeaders,
+		handlers.CompressHandler,
+		handlers.RecoveryHandler(
+			handlers.RecoveryLogger(writer),
+			handlers.PrintRecoveryStack(true),
+		)).Then(handler)
+}
+
+type logger struct {
+}
+
+func (l *logger) Write(p []byte) (n int, err error) {
+	panic("implement me")
+}
+
+func (l *logger) Println(...interface{}) {
+
 }
