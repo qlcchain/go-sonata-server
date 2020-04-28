@@ -23,7 +23,7 @@ WORKDIR $QLCHOME
 
 COPY --from=builder /qlcchain/go-sonata-server/build/gsonata /usr/local/bin/gsonata
 
-EXPOSE 5555
+EXPOSE 9999
 
 ENTRYPOINT [ "gsonata"]
 

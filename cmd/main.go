@@ -17,6 +17,8 @@ var (
 	commit  string
 )
 
+const defaultPort = 9999
+
 func main() {
 	swaggerSpec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
 	if err != nil {
@@ -48,6 +50,11 @@ func main() {
 		os.Exit(code)
 	}
 
+	// set default port
+	if server.Port == 0 {
+		server.Port = defaultPort
+	}
+	server.EnabledListeners = []string{"http"}
 	server.ConfigureAPI()
 
 	if err := server.Serve(); err != nil {
