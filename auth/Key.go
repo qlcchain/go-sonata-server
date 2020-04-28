@@ -45,3 +45,12 @@ func NewBase64() string {
 	encode := Encode(key)
 	return base64.StdEncoding.EncodeToString([]byte(encode))
 }
+
+func FromBase64(key string) (*ecdsa.PrivateKey, error) {
+	if data, err := base64.StdEncoding.DecodeString(key); err != nil {
+		return nil, err
+	} else {
+		key = string(data)
+		return Decode(string(data)), nil
+	}
+}

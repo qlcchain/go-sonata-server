@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/base64"
 	"os"
 
 	"github.com/sirupsen/logrus"
@@ -31,15 +30,14 @@ func main() {
 	logrus.Debugln(opts)
 
 	claims := auth.NewRoleClaims(opts.Roles)
-	key := auth.DefaultKey
+	privateKey := auth.Decode(auth.DefaultKey)
 	if opts.Key != "" {
-		if data, err := base64.StdEncoding.DecodeString(opts.Key); err != nil {
+		var err error
+		if privateKey, err = auth.FromBase64(opts.Key); err != nil {
 			logrus.Fatal(err)
-		} else {
-			key = string(data)
 		}
 	}
-	privateKey := auth.Decode(key)
+
 	if token, err := auth.NewToken(claims, privateKey); err == nil {
 		logrus.Infof("Authorization: Bearer %s", token)
 	} else {
