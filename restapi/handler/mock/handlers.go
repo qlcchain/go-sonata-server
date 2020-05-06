@@ -3,15 +3,17 @@ package mock
 import (
 	"fmt"
 
+	"github.com/go-openapi/swag"
+
 	"github.com/brianvoe/gofakeit/v5"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/rs/xid"
 	"github.com/sirupsen/logrus"
 
-	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
-	"github.com/qlcchain/go-sonata-server/util"
+	"github.com/qlcchain/go-sonata-server/models"
 
+	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
 	"github.com/qlcchain/go-sonata-server/restapi/operations"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/cancel_product_order"
 	ga "github.com/qlcchain/go-sonata-server/restapi/operations/geographic_address"
@@ -47,19 +49,38 @@ func init() {
 		logrus.Fatalln(err)
 	}
 	DB.LogMode(true)
-	if err := DB.AutoMigrate(&db.User{}, &db.GeographicAddressModel{}, &db.FieldedAddressModel{}).Error; err != nil {
+	if err := DB.AutoMigrate(&db.User{}, &models.GeographicAddress{}, &models.FieldedAddress{}, &models.FormattedAddress{},
+		&models.GeographicLocation{}, &models.ReferencedAddress{}, &models.GeographicSubAddress{}, &models.SubUnit{},
+		&models.GeographicPoint{}).Error; err != nil {
 		logrus.Fatalln(err)
 	}
 }
 
-func mockGeographicAddress() {
-	for i := 0; i < 10; i++ {
-		a := &db.FieldedAddressModel{
+func mockGeographicAddress(size int) {
+	for i := 0; i < size; i++ {
+		a := &models.FieldedAddress{
 			City:    gofakeit.City(),
 			Country: gofakeit.Country(),
-			//GeographicSubAdress: []*models.GeographicSubAddress{},
-			//ID:                 xid.New().String(),
-			Locality:           "",
+			GeographicSubAddress: []*models.GeographicSubAddress{
+				{
+					//AtSchemaLocation:    "",
+					//AtType:              "",
+					BuildingName:        "Tower01",
+					ID:                  xid.New().String(),
+					LevelNumber:         "BASEMENT 1",
+					LevelType:           "1",
+					PrivateStreetName:   "university",
+					PrivateStreetNumber: "01",
+					SubUnit: []*models.SubUnit{
+						{
+							SubUnitIdentifier: swag.String(xid.New().String()),
+							SubUnitType:       swag.String("BERTH"),
+						},
+					},
+				},
+			},
+			ID:                 xid.New().String(),
+			Locality:           "Locality",
 			PostCodeExtension:  "",
 			Postcode:           gofakeit.Zip(),
 			StateOrProvince:    gofakeit.State(),
@@ -72,57 +93,49 @@ func mockGeographicAddress() {
 			StreetType:         "Alley",
 		}
 
-		address := &db.GeographicAddressModel{
+		address := &models.GeographicAddress{
 			//AtSchemaLocation: "",
 			//AtType:           "",
 			AllowsNewSite:  false,
 			FieldedAddress: a,
-			//FormattedAddress: &models.FormattedAddress{
-			//	AddrLine1: swag.String(fmt.Sprintf("%s %s %s %s, %s %s", a.StreetNr, a.StreetNrLast, a.StreetSuffix,
-			//		a.StreetNrLastSuffix, a.StreetName, a.StreetSuffix)),
-			//	AddrLine2:         "",
-			//	City:              a.City,
-			//	Country:           a.Country,
-			//	ID:                xid.New().String(),
-			//	Locality:          a.Locality,
-			//	PostCodeExtension: a.PostCodeExtension,
-			//	Postcode:          a.Postcode,
-			//	StateOrProvince:   a.StateOrProvince,
-			//},
-			//GeographicLocation: &models.GeographicLocation{
-			//	GeographicPoint: []*models.GeographicPoint{{
-			//		Latitude:  swag.String(fmt.Sprintf("%f", gofakeit.Latitude())),
-			//		Longitude: swag.String(fmt.Sprintf("%f", gofakeit.Longitude())),
-			//	}},
-			//	ID:         xid.New().String(),
-			//	SpatialRef: swag.String(gofakeit.CountryAbr()),
-			//},
+			FormattedAddress: &models.FormattedAddress{
+				AddrLine1: swag.String(fmt.Sprintf("%s %s %s %s, %s %s", a.StreetNr, a.StreetNrLast, a.StreetSuffix,
+					a.StreetNrLastSuffix, a.StreetName, a.StreetSuffix)),
+				AddrLine2:         "",
+				City:              a.City,
+				Country:           a.Country,
+				Locality:          a.Locality,
+				PostCodeExtension: a.PostCodeExtension,
+				Postcode:          a.Postcode,
+				StateOrProvince:   a.StateOrProvince,
+			},
+			GeographicLocation: &models.GeographicLocation{
+				GeographicPoint: []*models.GeographicPoint{
+					{
+						ID:        xid.New().String(),
+						Latitude:  swag.String(fmt.Sprintf("%f", gofakeit.Latitude())),
+						Longitude: swag.String(fmt.Sprintf("%f", gofakeit.Longitude())),
+					},
+				},
+				SpatialRef: swag.String(gofakeit.CountryAbr()),
+			},
 			HasPublicSite: false,
 			ID:            xid.New().String(),
-			//ReferencedAddress: &models.ReferencedAddress{
-			//	ID:            "",
-			//	ReferenceID:   nil,
-			//	ReferenceType: nil,
-			//},
+			ReferencedAddress: &models.ReferencedAddress{
+				ID:            xid.New().String(),
+				ReferenceID:   swag.String("ReferenceID"),
+				ReferenceType: swag.String("ReferenceType"),
+			},
 		}
 
-		fmt.Println(util.ToIndentString(address))
 		if err := DB.Create(address).Error; err != nil {
 			logrus.Error(err)
-		} else {
-			count := 0
-			var aa []db.GeographicAddressModel
-			if err := DB.Find(&aa).Count(&count).Error; err != nil {
-				logrus.Error(err)
-			} else {
-				logrus.Debug(count)
-			}
 		}
 	}
 }
 
 func mockData() error {
-	mockGeographicAddress()
+	mockGeographicAddress(10)
 	return nil
 }
 

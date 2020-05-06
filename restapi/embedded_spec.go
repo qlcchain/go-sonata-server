@@ -4034,7 +4034,7 @@ func init() {
           "description": "Country that the address is in",
           "type": "string"
         },
-        "geographicSubAdress": {
+        "geographicSubAddress": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/GeographicSubAddress"
@@ -4412,6 +4412,10 @@ func init() {
         "longitude"
       ],
       "properties": {
+        "id": {
+          "description": "A unique identifier for the geographic point.",
+          "type": "string"
+        },
         "latitude": {
           "description": "The latitude expressed in decimal degrees format",
           "type": "string"
@@ -11322,7 +11326,7 @@ func init() {
           "description": "Country that the address is in",
           "type": "string"
         },
-        "geographicSubAdress": {
+        "geographicSubAddress": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/GeographicSubAddress"
@@ -11700,6 +11704,10 @@ func init() {
         "longitude"
       ],
       "properties": {
+        "id": {
+          "description": "A unique identifier for the geographic point.",
+          "type": "string"
+        },
         "latitude": {
           "description": "The latitude expressed in decimal degrees format",
           "type": "string"

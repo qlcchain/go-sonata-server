@@ -1,9 +1,15 @@
 package mock
 
 import (
+	"time"
+
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
+	"github.com/rs/xid"
+
+	"github.com/qlcchain/go-sonata-server/restapi/handler"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
 
@@ -13,20 +19,88 @@ import (
 )
 
 func GeographicAddressGeographicAddressGetHandler(params ga.GeographicAddressGetParams, principal *models.Principal) middleware.Responder {
-	if principal.Code != 0 {
-		return ga.NewGeographicAddressGetBadRequest().WithPayload(&models.ErrorRepresentation{
-			Code:   swag.Int32(principal.Code),
-			Reason: swag.String(principal.Reason),
-		})
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return ga.NewGeographicAddressGetBadRequest().WithPayload(payload)
 	}
-	address := &db.GeographicAddressModel{}
-	if err := DB.First(address, params.GeographicAddressID).Error; err == gorm.ErrRecordNotFound {
+	address := &models.GeographicAddress{}
+	if err := DB.Set(db.AutoPreLoad, true).First(address, params.GeographicAddressID).Error; err == gorm.ErrRecordNotFound {
 		return ga.NewGeographicAddressGetNotFound()
 	}
 
-	return ga.NewGeographicAddressGetOK().WithPayload(&models.GeographicAddress{})
+	return ga.NewGeographicAddressGetOK().WithPayload(address)
 }
 
 func GeographicAddressValidationGeographicAddressValidationCreateHandler(params gav.GeographicAddressValidationCreateParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation geographic_address_validation.GeographicAddressValidationCreate has not yet been implemented")
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return gav.NewGeographicAddressValidationCreateBadRequest().WithPayload(payload)
+	}
+	input := params.AddressValidationRequest.RequestedAddress
+
+	var verifiedAddress []*models.GeographicAddressSellerResponse
+	filter := make(map[string]interface{})
+	result := models.ValidationResultFails
+
+	if fa := handler.FieldedAddressRequest2FieldedAddress(input.FieldedAddress); fa != nil {
+		var address []models.GeographicAddress
+		if err := DB.Set(db.AutoPreLoad, true).Model(fa).Related(&address, "ID"); err == nil {
+			if len(address) > 0 {
+				result = models.ValidationResultPartial
+			}
+		}
+		for _, a := range address {
+			if _, ok := filter[a.ID]; !ok {
+				verifiedAddress = append(verifiedAddress, &models.GeographicAddressSellerResponse{
+					AtSchemaLocation: a.AtSchemaLocation,
+					AtType:           a.AtType,
+					AllowsNewSite:    true,
+					FieldedAddress:   a.FieldedAddress,
+					FormattedAddress: a.FormattedAddress,
+					HasPublicSite:    false,
+					ID:               a.ID,
+					IsBestMatch:      swag.Bool(true),
+				})
+				filter[a.ID] = struct{}{}
+			}
+		}
+	}
+
+	if fa := handler.FormattedAddressRequest2FormattedAddress(input.FormattedAddress); fa != nil {
+		var address []models.GeographicAddress
+		if err := DB.Set(db.AutoPreLoad, true).Model(fa).Related(&address, "ID"); err == nil {
+			if len(address) > 0 {
+				if result == models.ValidationResultPartial {
+					result = models.ValidationResultSuccess
+				} else {
+					result = models.ValidationResultPartial
+				}
+			}
+
+			for _, a := range address {
+				if _, ok := filter[a.ID]; !ok {
+					verifiedAddress = append(verifiedAddress, &models.GeographicAddressSellerResponse{
+						AtSchemaLocation: a.AtSchemaLocation,
+						AtType:           a.AtType,
+						AllowsNewSite:    true,
+						FieldedAddress:   a.FieldedAddress,
+						FormattedAddress: a.FormattedAddress,
+						HasPublicSite:    false,
+						ID:               a.ID,
+						IsBestMatch:      swag.Bool(true),
+					})
+					filter[a.ID] = struct{}{}
+				}
+			}
+		}
+	}
+
+	return gav.NewGeographicAddressValidationCreateCreated().WithPayload(&models.GeographicAddressValidation{
+		ID: xid.New().String(),
+		RequestedAddress: &models.GeographicAddressRequestBuyerInput{
+			FieldedAddress:   input.FieldedAddress,
+			FormattedAddress: input.FormattedAddress,
+		},
+		ValidationDate:   strfmt.DateTime(time.Now()),
+		ValidationResult: result,
+		VerifiedAddress:  verifiedAddress,
+	})
 }

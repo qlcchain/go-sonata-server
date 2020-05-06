@@ -26,13 +26,13 @@ type GeographicAddress struct {
 	AllowsNewSite bool `json:"allowsNewSite,omitempty"`
 
 	// fielded address
-	FieldedAddress *FieldedAddress `json:"fieldedAddress,omitempty"`
+	FieldedAddress *FieldedAddress `json:"fieldedAddress,omitempty" gorm:"foreignkey:ID"`
 
 	// formatted address
-	FormattedAddress *FormattedAddress `json:"formattedAddress,omitempty"`
+	FormattedAddress *FormattedAddress `json:"formattedAddress,omitempty" gorm:"foreignkey:ID"`
 
 	// geographic location
-	GeographicLocation *GeographicLocation `json:"geographicLocation,omitempty"`
+	GeographicLocation *GeographicLocation `json:"geographicLocation,omitempty" gorm:"foreignkey:ID"`
 
 	// This attribute specifies if that Address contains Service Sites that are public such as Meet-Me-Rooms at an interconnect location or a shared telecom room in the basement of a multi-tenant building.
 	HasPublicSite bool `json:"hasPublicSite,omitempty"`
@@ -41,7 +41,7 @@ type GeographicAddress struct {
 	ID string `json:"id,omitempty"`
 
 	// referenced address
-	ReferencedAddress *ReferencedAddress `json:"referencedAddress,omitempty"`
+	ReferencedAddress *ReferencedAddress `json:"referencedAddress,omitempty" gorm:"foreignkey:ID"`
 }
 
 // Validate validates this geographic address

@@ -24,8 +24,8 @@ type FieldedAddress struct {
 	// Country that the address is in
 	Country string `json:"country,omitempty"`
 
-	// geographic sub adress
-	GeographicSubAdress []*GeographicSubAddress `json:"geographicSubAdress"`
+	// geographic sub address
+	GeographicSubAddress []*GeographicSubAddress `json:"geographicSubAddress" gorm:"foreignkey:ID"`
 
 	// Unique identifier of the address
 	ID string `json:"id,omitempty"`
@@ -68,7 +68,7 @@ type FieldedAddress struct {
 func (m *FieldedAddress) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateGeographicSubAdress(formats); err != nil {
+	if err := m.validateGeographicSubAddress(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -78,21 +78,21 @@ func (m *FieldedAddress) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *FieldedAddress) validateGeographicSubAdress(formats strfmt.Registry) error {
+func (m *FieldedAddress) validateGeographicSubAddress(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.GeographicSubAdress) { // not required
+	if swag.IsZero(m.GeographicSubAddress) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.GeographicSubAdress); i++ {
-		if swag.IsZero(m.GeographicSubAdress[i]) { // not required
+	for i := 0; i < len(m.GeographicSubAddress); i++ {
+		if swag.IsZero(m.GeographicSubAddress[i]) { // not required
 			continue
 		}
 
-		if m.GeographicSubAdress[i] != nil {
-			if err := m.GeographicSubAdress[i].Validate(formats); err != nil {
+		if m.GeographicSubAddress[i] != nil {
+			if err := m.GeographicSubAddress[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("geographicSubAdress" + "." + strconv.Itoa(i))
+					return ve.ValidateName("geographicSubAddress" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
