@@ -6646,7 +6646,10 @@ definitions:
   Principal:
     type: object
     properties:
-      name:
+      code:
+        type: integer
+        format: int32
+      reason:
         type: string
       roles:
         type: array

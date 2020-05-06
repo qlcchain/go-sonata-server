@@ -15,8 +15,11 @@ import (
 // swagger:model Principal
 type Principal struct {
 
-	// name
-	Name string `json:"name,omitempty"`
+	// code
+	Code int32 `json:"code,omitempty"`
+
+	// reason
+	Reason string `json:"reason,omitempty"`
 
 	// roles
 	Roles []string `json:"roles"`

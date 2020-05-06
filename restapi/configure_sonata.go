@@ -5,20 +5,20 @@ package restapi
 import (
 	"crypto/ecdsa"
 	"crypto/tls"
-	"encoding/json"
 	"net/http"
-	"os"
-	"os/user"
 	"path"
-	"path/filepath"
-	osRuntime "runtime"
 
-	"github.com/qlcchain/go-sonata-server/handler/mock"
+	"github.com/dgrijalva/jwt-go"
+
+	"github.com/qlcchain/go-sonata-server/config"
+	"github.com/qlcchain/go-sonata-server/util"
 
 	"github.com/go-openapi/swag"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
+
+	"github.com/qlcchain/go-sonata-server/restapi/handler/mock"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -33,46 +33,8 @@ import (
 
 var cfg = &ServerCfg{}
 
-func homeDir() string {
-	if home := os.Getenv("HOME"); home != "" {
-		return home
-	}
-	if usr, err := user.Current(); err == nil {
-		return usr.HomeDir
-	}
-	return ""
-}
-
-func logDir() string {
-	home := homeDir()
-	logDir := "Gsonata"
-
-	if home != "" {
-		if osRuntime.GOOS == "darwin" {
-			return filepath.Join(home, "Library", "Application Support", logDir)
-		} else if osRuntime.GOOS == "windows" {
-			return filepath.Join(home, "AppData", "Roaming", logDir)
-		} else {
-			return filepath.Join(home, logDir)
-		}
-	}
-	return ""
-}
-
-func createDirIfNotExist(dir string) error {
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err = os.MkdirAll(dir, 0700)
-		return err
-	}
-	return nil
-}
-
 func init() {
-	dir := logDir()
-	if dir == "" {
-		dir = "/tmp"
-	}
-	_ = createDirIfNotExist(dir)
+	dir := config.LogDir()
 	fn := path.Join(dir, "sonata.log")
 
 	lw, _ := rotatelogs.New(
@@ -99,10 +61,7 @@ type ServerCfg struct {
 }
 
 func (s *ServerCfg) String() string {
-	if data, err := json.Marshal(s); err == nil {
-		return string(data)
-	}
-	return ""
+	return util.ToString(s)
 }
 
 func configureFlags(api *operations.SonataAPI) {
@@ -141,12 +100,33 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 
 	api.BearerAuth = func(token string, scopes []string) (*models.Principal, error) {
 		// TODO: verify scopes???
-		if claims, err := auth.ParseAndCheckToken(token, cfg.PublicKey); err != nil {
-			return nil, err
-		} else {
+		if claims, err := auth.ParseAndCheckToken(token, cfg.PublicKey); err == nil {
 			return &models.Principal{
-				Roles: claims.Roles,
+				Code:   0,
+				Reason: "",
+				Roles:  claims.Roles,
 			}, nil
+		} else {
+			switch vErr, ok := err.(*jwt.ValidationError); ok {
+			case vErr.Errors&jwt.ValidationErrorMalformed != 0:
+				fallthrough
+			case vErr.Errors&jwt.ValidationErrorUnverifiable != 0:
+				fallthrough
+			case vErr.Errors&jwt.ValidationErrorSignatureInvalid != 0:
+				fallthrough
+			case vErr.Errors&jwt.ValidationErrorClaimsInvalid != 0:
+				return &models.Principal{
+					Code: 41, Reason: "Invalid credentials",
+				}, nil
+			case vErr.Errors&jwt.ValidationErrorExpired != 0:
+				return &models.Principal{
+					Code: 42, Reason: "Expired credentials",
+				}, nil
+			default:
+				return &models.Principal{
+					Code: 400, Reason: err.Error(),
+				}, nil
+			}
 		}
 	}
 
@@ -159,7 +139,13 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 
 	api.PreServerShutdown = func() {}
 
-	api.ServerShutdown = func() {}
+	api.ServerShutdown = func() {
+		if mock.DB != nil {
+			if err := mock.DB.Close(); err != nil {
+				logrus.Error(err)
+			}
+		}
+	}
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }

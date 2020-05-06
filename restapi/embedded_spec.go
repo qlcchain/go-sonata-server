@@ -5035,7 +5035,11 @@ func init() {
     "Principal": {
       "type": "object",
       "properties": {
-        "name": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reason": {
           "type": "string"
         },
         "roles": {
@@ -12319,7 +12323,11 @@ func init() {
     "Principal": {
       "type": "object",
       "properties": {
-        "name": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reason": {
           "type": "string"
         },
         "roles": {

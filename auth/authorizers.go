@@ -1,12 +1,17 @@
 package auth
 
 import (
-	"encoding/json"
-	"fmt"
+	"errors"
 	"time"
+
+	"github.com/qlcchain/go-sonata-server/util"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/uuid"
+)
+
+var (
+	ErrInvalidRoleclaims = errors.New("invalid role claims")
 )
 
 type RoleClaims struct {
@@ -30,21 +35,17 @@ func NewRoleClaims(roles []string) *RoleClaims {
 }
 
 func (r *RoleClaims) String() string {
-	if data, err := json.Marshal(r); err == nil {
-		return string(data)
-	}
-
-	return ""
+	return util.ToString(r)
 }
 
 func ParseAndCheckToken(token string, pubKey interface{}) (*RoleClaims, error) {
 	if parsedToken, err := jwt.ParseWithClaims(token, &RoleClaims{}, func(parsedToken *jwt.Token) (interface{}, error) {
 		return pubKey, nil
 	}); err == nil {
-		if claims, ok := parsedToken.Claims.(*RoleClaims); ok && parsedToken.Valid {
+		if claims, ok := parsedToken.Claims.(*RoleClaims); ok {
 			return claims, nil
 		} else {
-			return nil, fmt.Errorf("invalid role claims")
+			return nil, ErrInvalidRoleclaims
 		}
 	} else {
 		return nil, err

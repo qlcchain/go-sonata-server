@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/sirupsen/logrus"
+
 	"github.com/go-openapi/loads"
 	flags "github.com/jessevdk/go-flags"
 
@@ -22,7 +24,7 @@ const defaultPort = 9999
 func main() {
 	swaggerSpec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
 	if err != nil {
-		log.Fatalln(err)
+		logrus.Fatal(err)
 	}
 
 	api := operations.NewSonataAPI(swaggerSpec)
@@ -58,7 +60,6 @@ func main() {
 	server.ConfigureAPI()
 
 	if err := server.Serve(); err != nil {
-		log.Fatalln(err)
+		logrus.Fatal(err)
 	}
-
 }
