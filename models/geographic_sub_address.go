@@ -43,7 +43,7 @@ type GeographicSubAddress struct {
 	PrivateStreetNumber string `json:"privateStreetNumber,omitempty"`
 
 	// sub unit
-	SubUnit []*SubUnit `json:"subUnit" gorm:"foreignkey:SubUnitIdentifier"`
+	SubUnit []*SubUnit `json:"subUnit"`
 }
 
 // Validate validates this geographic sub address

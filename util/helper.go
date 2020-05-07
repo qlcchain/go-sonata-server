@@ -17,3 +17,15 @@ func ToIndentString(v interface{}) string {
 	}
 	return string(b)
 }
+
+func Convert(from, to interface{}) error {
+	if data, err := json.Marshal(from); err != nil {
+		return err
+	} else {
+		if err := json.Unmarshal(data, to); err != nil {
+			return err
+		} else {
+			return nil
+		}
+	}
+}

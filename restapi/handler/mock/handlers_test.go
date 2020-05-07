@@ -11,7 +11,7 @@ import (
 
 func Test_mockGeographicAddress(t *testing.T) {
 	mockGeographicAddress(2)
-	if listGeographicAddress, err := db.ListGeographicAddress(DB); err != nil {
+	if listGeographicAddress, err := db.ListGeographicAddress(Store); err != nil {
 		t.Fatal(err)
 	} else {
 		if len(listGeographicAddress) > 0 {
@@ -20,7 +20,7 @@ func Test_mockGeographicAddress(t *testing.T) {
 				t.Log(idx, util.ToIndentString(a))
 			}
 
-			if address, err := db.GetGeographicAddress(DB, listGeographicAddress[0].ID); err != nil {
+			if address, err := db.GetGeographicAddress(Store, listGeographicAddress[0].ID); err != nil {
 				t.Fatal(err)
 			} else {
 				if address == nil {
@@ -32,7 +32,7 @@ func Test_mockGeographicAddress(t *testing.T) {
 
 			fa := listGeographicAddress[0].FieldedAddress
 			var address models.GeographicAddress
-			if err := DB.Set(db.AutoPreLoad, true).Model(&fa).Related(&address, "ID").Error; err != nil {
+			if err := Store.Set(db.AutoPreLoad, true).Model(&fa).Related(&address, "ID").Error; err != nil {
 				t.Fatal(err)
 			} else {
 				t.Log(util.ToString(address))

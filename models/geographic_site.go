@@ -32,22 +32,22 @@ type GeographicSite struct {
 	Description string `json:"description,omitempty"`
 
 	// fielded address
-	FieldedAddress *FieldedAddress `json:"fieldedAddress,omitempty" gorm:"foreignkey:ID"`
+	FieldedAddress *FieldedAddress `json:"fieldedAddress,omitempty"`
 
 	// formatted adress
-	FormattedAdress *FormattedAddress `json:"formattedAdress,omitempty" gorm:"foreignkey:ID"`
+	FormattedAdress *FormattedAddress `json:"formattedAdress,omitempty"`
 
 	// geographic location
-	GeographicLocation *GeographicLocation `json:"geographicLocation,omitempty" gorm:"foreignkey:ID"`
+	GeographicLocation *GeographicLocation `json:"geographicLocation,omitempty"`
 
 	// Identifier of the Service Site unique within the Seller.
 	ID string `json:"id,omitempty"`
 
 	// referenced address
-	ReferencedAddress *ReferencedAddress `json:"referencedAddress,omitempty" gorm:"foreignkey:ID"`
+	ReferencedAddress *ReferencedAddress `json:"referencedAddress,omitempty"`
 
 	// related party
-	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty"`
 
 	// The name of the company that is the administrative authority (e.g. controls access) for this Service Site. (For example, the building owner)
 	SiteCompanyName string `json:"siteCompanyName,omitempty"`

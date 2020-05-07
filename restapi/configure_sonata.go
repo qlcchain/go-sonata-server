@@ -140,8 +140,8 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 	api.PreServerShutdown = func() {}
 
 	api.ServerShutdown = func() {
-		if mock.DB != nil {
-			if err := mock.DB.Close(); err != nil {
+		if mock.Store != nil {
+			if err := mock.Store.Close(); err != nil {
 				logrus.Error(err)
 			}
 		}

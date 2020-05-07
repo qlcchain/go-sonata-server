@@ -21,7 +21,7 @@ type GeographicLocation struct {
 
 	// geographic point
 	// Required: true
-	GeographicPoint []*GeographicPoint `json:"geographicPoint" gorm:"foreignkey:ID"`
+	GeographicPoint []*GeographicPoint `json:"geographicPoint"`
 
 	// Unique Identifier of a GeographicLocation
 	ID string `json:"id,omitempty"`

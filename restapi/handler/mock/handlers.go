@@ -3,6 +3,8 @@ package mock
 import (
 	"fmt"
 
+	"github.com/qlcchain/go-sonata-server/schema"
+
 	"github.com/go-openapi/swag"
 
 	"github.com/brianvoe/gofakeit/v5"
@@ -13,7 +15,6 @@ import (
 
 	"github.com/qlcchain/go-sonata-server/models"
 
-	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
 	"github.com/qlcchain/go-sonata-server/restapi/operations"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/cancel_product_order"
 	ga "github.com/qlcchain/go-sonata-server/restapi/operations/geographic_address"
@@ -28,14 +29,14 @@ import (
 )
 
 var (
-	DB *gorm.DB
+	Store *gorm.DB
 )
 
 func init() {
 	// prepare db
 	//dir := util.DBDir()
 	var err error
-	//DB, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
+	//Store, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
 	//	SkipDefaultTransaction: false,
 	//	NamingStrategy:         nil,
 	//	Logger: logger.New(log.New(os.Stdout, "\r\n", log.LstdFlags), logger.Config{
@@ -44,24 +45,32 @@ func init() {
 	//		Colorful:      true,
 	//	}),
 	//})
-	DB, err = gorm.Open("sqlite3", "file:mockdb?mode=memory&cache=shared")
+	Store, err = gorm.Open("sqlite3", "file:mockdb?mode=memory&cache=shared")
 	if err != nil {
 		logrus.Fatalln(err)
 	}
-	DB.LogMode(true)
-	if err := DB.AutoMigrate(&db.User{}, &models.GeographicAddress{}, &models.FieldedAddress{}, &models.FormattedAddress{},
-		&models.GeographicLocation{}, &models.ReferencedAddress{}, &models.GeographicSubAddress{}, &models.SubUnit{},
-		&models.GeographicPoint{}).Error; err != nil {
+	Store.LogMode(true)
+	if err := Store.AutoMigrate(
+		// user management
+		&schema.User{},
+		// GeographicAddress
+		&schema.GeographicAddress{}, &schema.FieldedAddress{}, &schema.FormattedAddress{},
+		&schema.GeographicLocation{}, &schema.GeographicAddress{}, &schema.GeographicSubAddress{}, &schema.GeographicPoint{},
+		&models.SubUnit{}, &models.ReferencedAddress{},
+		// GeographicSite
+		// Product
+		// Order
+	).Error; err != nil {
 		logrus.Fatalln(err)
 	}
 }
 
 func mockGeographicAddress(size int) {
 	for i := 0; i < size; i++ {
-		a := &models.FieldedAddress{
+		a := &schema.FieldedAddress{
 			City:    gofakeit.City(),
 			Country: gofakeit.Country(),
-			GeographicSubAddress: []*models.GeographicSubAddress{
+			GeographicSubAddress: []*schema.GeographicSubAddress{
 				{
 					//AtSchemaLocation:    "",
 					//AtType:              "",
@@ -93,12 +102,12 @@ func mockGeographicAddress(size int) {
 			StreetType:         "Alley",
 		}
 
-		address := &models.GeographicAddress{
+		address := &schema.GeographicAddress{
 			//AtSchemaLocation: "",
 			//AtType:           "",
 			AllowsNewSite:  false,
 			FieldedAddress: a,
-			FormattedAddress: &models.FormattedAddress{
+			FormattedAddress: &schema.FormattedAddress{
 				AddrLine1: swag.String(fmt.Sprintf("%s %s %s %s, %s %s", a.StreetNr, a.StreetNrLast, a.StreetSuffix,
 					a.StreetNrLastSuffix, a.StreetName, a.StreetSuffix)),
 				AddrLine2:         "",
@@ -109,8 +118,9 @@ func mockGeographicAddress(size int) {
 				Postcode:          a.Postcode,
 				StateOrProvince:   a.StateOrProvince,
 			},
-			GeographicLocation: &models.GeographicLocation{
-				GeographicPoint: []*models.GeographicPoint{
+			GeographicLocation: &schema.GeographicLocation{
+				ID: xid.New().String(),
+				GeographicPoint: []*schema.GeographicPoint{
 					{
 						ID:        xid.New().String(),
 						Latitude:  swag.String(fmt.Sprintf("%f", gofakeit.Latitude())),
@@ -128,7 +138,7 @@ func mockGeographicAddress(size int) {
 			},
 		}
 
-		if err := DB.Create(address).Error; err != nil {
+		if err := Store.Create(address).Error; err != nil {
 			logrus.Error(err)
 		}
 	}

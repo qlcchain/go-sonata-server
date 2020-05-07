@@ -25,7 +25,7 @@ type FieldedAddress struct {
 	Country string `json:"country,omitempty"`
 
 	// geographic sub address
-	GeographicSubAddress []*GeographicSubAddress `json:"geographicSubAddress" gorm:"foreignkey:ID"`
+	GeographicSubAddress []*GeographicSubAddress `json:"geographicSubAddress"`
 
 	// Unique identifier of the address
 	ID string `json:"id,omitempty"`
