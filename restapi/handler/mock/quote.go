@@ -12,6 +12,7 @@ import (
 func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangeParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation quote.QuoteRequestStateChange has not yet been implemented")
 }
+
 func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation quote.QuoteCreate has not yet been implemented")
 }
@@ -39,12 +40,15 @@ func HubQuoteManagementHubFindHandler(params hub.QuoteManagementHubFindParams, p
 func NotificationNotificationQuoteAttributeValueChangeNotificationHandler(params notification.NotificationQuoteAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation notification.NotificationQuoteAttributeValueChangeNotification has not yet been implemented")
 }
+
 func NotificationNotificationQuoteCreationNotificationHandler(params notification.NotificationQuoteCreationNotificationParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation notification.NotificationQuoteCreationNotification has not yet been implemented")
 }
+
 func NotificationNotificationQuoteInformationRequiredNotificationHandler(params notification.NotificationQuoteInformationRequiredNotificationParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation notification.NotificationQuoteInformationRequiredNotification has not yet been implemented")
 }
+
 func NotificationNotificationQuoteStateChangeNotificationHandler(params notification.NotificationQuoteStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation notification.NotificationQuoteStateChangeNotification has not yet been implemented")
 }

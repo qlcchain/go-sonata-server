@@ -42,3 +42,31 @@ func Test_mockGeographicAddress(t *testing.T) {
 		}
 	}
 }
+
+//type Account struct {
+//	ID    string
+//	Extra *Extra `json:"extra" gorm:"embedded"`
+//}
+//
+//type Extra struct {
+//	F1 string
+//	F2 string
+//}
+//
+//func TestEmbedded(t *testing.T) {
+//	Store.AutoMigrate(&Account{})
+//	id := xid.New().String()
+//	Store.Create(&Account{
+//		ID: id,
+//		//Extra: &Extra{
+//		//	F1: "f1",
+//		//	F2: "f2",
+//		//},
+//	})
+//	r := &Account{}
+//	if err := Store.Set(db.AutoPreLoad, true).Where("id=?", id).First(r).Error; err != nil {
+//		t.Fatal(err)
+//	} else {
+//		t.Log(util.ToIndentString(r))
+//	}
+//}

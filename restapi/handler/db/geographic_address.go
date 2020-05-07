@@ -12,8 +12,7 @@ import (
 
 func ListGeographicAddress(db *gorm.DB) ([]*models.GeographicAddress, error) {
 	var addresses []schema.GeographicAddress
-	if err := db.Set(AutoPreLoad, true).
-		Find(&addresses).Error; err != nil {
+	if err := db.Set(AutoPreLoad, true).Find(&addresses).Error; err != nil {
 		return nil, err
 	}
 
@@ -31,8 +30,7 @@ func ListGeographicAddress(db *gorm.DB) ([]*models.GeographicAddress, error) {
 
 func GetGeographicAddress(db *gorm.DB, id string) (*models.GeographicAddress, error) {
 	address := &schema.GeographicAddress{}
-	if err := db.Set(AutoPreLoad, true).Where("id=?", id).
-		First(address).Error; err != nil {
+	if err := db.Set(AutoPreLoad, true).Where("id=?", id).First(address).Error; err != nil {
 		return nil, err
 	}
 	to := &models.GeographicAddress{}

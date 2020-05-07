@@ -11,8 +11,7 @@ import (
 
 func GetProduct(db *gorm.DB, id string) (*models.Product, error) {
 	product := &schema.Product{}
-	if err := db.Set(AutoPreLoad, true).Where("id=?", id).
-		First(product).Error; err != nil {
+	if err := db.Set(AutoPreLoad, true).Where("id=?", id).First(product).Error; err != nil {
 		return nil, err
 	} else {
 		to := &models.Product{}

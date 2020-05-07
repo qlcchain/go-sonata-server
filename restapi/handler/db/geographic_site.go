@@ -10,8 +10,7 @@ import (
 
 func GetGeographicSite(db *gorm.DB, id string) (*models.GeographicSite, error) {
 	address := &schema.GeographicSite{}
-	if err := db.Set(AutoPreLoad, true).Where("id=?", id).
-		First(address).Error; err != nil {
+	if err := db.Set(AutoPreLoad, true).Where("id=?", id).First(address).Error; err != nil {
 		return nil, err
 	}
 	to := &models.GeographicSite{}
