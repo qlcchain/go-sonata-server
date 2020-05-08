@@ -2,8 +2,12 @@ package mock
 
 import (
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/swag"
+	"github.com/jinzhu/gorm"
 
 	"github.com/qlcchain/go-sonata-server/models"
+	"github.com/qlcchain/go-sonata-server/restapi/handler"
+	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/cancel_product_order"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/hub"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/notification"
@@ -31,7 +35,19 @@ func ProductOrderProductOrderFindHandler(params po.ProductOrderFindParams, princ
 }
 
 func ProductOrderProductOrderGetHandler(params po.ProductOrderGetParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation product_order.ProductOrderGet has not yet been implemented")
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return po.NewProductOrderGetBadRequest().WithPayload(payload)
+	}
+
+	if o, err := db.GetProductOrder(Store, params.ProductOrderID); err == nil {
+		return po.NewProductOrderGetOK().WithPayload(o)
+	} else if err == gorm.ErrRecordNotFound {
+		return po.NewProductOrderGetNotFound()
+	} else {
+		return po.NewProductOrderGetInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
 }
 
 func HubProductOrderManagementHubCreateHandler(params hub.ProductOrderManagementHubCreateParams, principal *models.Principal) middleware.Responder {

@@ -39,14 +39,11 @@ func GeographicSiteGeographicSiteGetHandler(params gs.GeographicSiteGetParams, p
 
 	if site, err := db.GetGeographicSite(Store, params.SiteID); err == nil {
 		return gs.NewGeographicSiteGetOK().WithPayload(site)
+	} else if err == gorm.ErrRecordNotFound {
+		return gs.NewGeographicSiteGetNotFound()
 	} else {
-		if err == gorm.ErrRecordNotFound {
-			return gs.NewGeographicSiteGetNotFound()
-		} else {
-			return gs.NewGeographicSiteGetInternalServerError().WithPayload(&models.ErrorRepresentation{
-				Reason: swag.String(err.Error()),
-			})
-		}
+		return gs.NewGeographicSiteGetInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
 	}
-
 }

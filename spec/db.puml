@@ -1,0 +1,382 @@
+@startuml
+namespace schema {
+    class FieldedAddress << (S,Aquamarine) >> {
+        + City string
+        + Country string
+        + GeographicSubAddress []*GeographicSubAddress
+        + ID string
+        + Locality string
+        + PostCodeExtension string
+        + Postcode string
+        + StateOrProvince string
+        + StreetName string
+        + StreetNr string
+        + StreetNrLast string
+        + StreetNrLastSuffix string
+        + StreetNrSuffix string
+        + StreetSuffix string
+        + StreetType string
+
+    }
+    class FormattedAddress << (S,Aquamarine) >> {
+        + AddrLine1 *string
+        + AddrLine2 string
+        + City string
+        + Country string
+        + ID string
+        + Locality string
+        + PostCodeExtension string
+        + Postcode string
+        + StateOrProvince string
+
+    }
+    class GeographicAddress << (S,Aquamarine) >> {
+        + AtSchemaLocation string
+        + AtType string
+        + AllowsNewSite bool
+        + FieldedAddress *FieldedAddress
+        + FormattedAddress *FormattedAddress
+        + GeographicLocation *GeographicLocation
+        + HasPublicSite bool
+        + ID string
+        + ReferencedAddress *models.ReferencedAddress
+
+    }
+    class GeographicLocation << (S,Aquamarine) >> {
+        + GeographicPoint []*GeographicPoint
+        + ID string
+        + SpatialRef *string
+
+    }
+    class GeographicPoint << (S,Aquamarine) >> {
+        + ID string
+        + Latitude *string
+        + Longitude *string
+
+    }
+    class GeographicSite << (S,Aquamarine) >> {
+        + AtSchemaLocation string
+        + AtType string
+        + AdditionalSiteInformation string
+        + Description string
+        + FieldedAddress *FieldedAddress
+        + FormattedAdress *FormattedAddress
+        + GeographicLocation *GeographicLocation
+        + ID string
+        + ReferencedAddress *models.ReferencedAddress
+        + RelatedParty []*models.RelatedParty
+        + SiteCompanyName string
+        + SiteCustomerName string
+        + SiteName string
+        + SiteType string
+        + Status models.Status
+
+    }
+    class GeographicSubAddress << (S,Aquamarine) >> {
+        + AtSchemaLocation string
+        + AtType string
+        + BuildingName string
+        + ID string
+        + LevelNumber string
+        + LevelType string
+        + PrivateStreetName string
+        + PrivateStreetNumber string
+        + SubUnit []*models.SubUnit
+
+    }
+    class OrderItem << (S,Aquamarine) >> {
+        + AtSchemaLocation string
+        + AtType string
+        + Action models.ProductActionType
+        + BillingAccount *models.BillingAccountRef
+        + ID *string
+        + OrderItemPrice []*OrderItemPrice
+        + OrderItemRelationship []*models.OrderItemRelationShip
+        + PricingMethod models.PricingMethod
+        + PricingReference string
+        + PricingTerm int32
+        + Product *Product
+        + ProductOffering *models.ProductOfferingRef
+        + Qualification *models.QualificationRef
+        + Quote *models.QuoteRef
+        + RelatedParty []*models.RelatedParty
+        + State models.ProductOrderItemStateType
+        + StateChange []*StateChange
+
+    }
+    class OrderItemPrice << (S,Aquamarine) >> {
+        + ID *string
+        + AtType string
+        + Description string
+        + Name *string
+        + Price *models.Price
+        + PriceType models.PriceType
+        + RecurringChargePeriod models.ChargePeriod
+
+    }
+    class OrderMessage << (S,Aquamarine) >> {
+        + ID *string
+        + Code string
+        + CorrectionRequired *bool
+        + Field string
+        + MessageInformation *string
+        + Severity models.Severity
+
+    }
+    class Product << (S,Aquamarine) >> {
+        + AtBaseType string
+        + AtSchemaLocation string
+        + AtType string
+        + Agreement []*models.Agreement
+        + BillingAccount []*models.BillingAccountRef
+        + BuyerProductID string
+        + Href string
+        + ID *string
+        + LastUpdateDate strfmt.DateTime
+        + ProductOffering *models.ProductOfferingRef
+        + ProductOrder []*models.ProductOrderRef
+        + ProductPrice []*ProductPrice
+        + ProductRelationship []*ProductRelationship
+        + ProductSpecification *ProductSpecificationRef
+        + ProductTerm []*ProductTerm
+        + RelatedParty []*models.RelatedParty
+        + Site []*GeographicSite
+        + StartDate *strfmt.DateTime
+        + Status models.ProductStatus
+        + StatusChange []*StatusChange
+        + TerminationDate strfmt.DateTime
+
+    }
+    class ProductOfferingQualification << (S,Aquamarine) >> {
+        + AtSchemaLocation string
+        + AtType string
+        + EffectiveQualificationCompletionDate strfmt.DateTime
+        + ExpectedResponseDate strfmt.DateTime
+        + Href string
+        + ID *string
+        + InstantSyncQualification *bool
+        + ProductOfferingQualificationItem []*ProductOfferingQualificationItem
+        + ProjectID string
+        + ProvideAlternative bool
+        + RelatedParty []*models.RelatedParty
+        + RequestedResponseDate strfmt.DateTime
+        + State models.ProductOfferingQualificationStateType
+        + StateChange []*StateChange
+
+    }
+    class ProductOfferingQualificationItem << (S,Aquamarine) >> {
+        + AtType string
+        + Action models.ProductActionType
+        + AlternateProductProposal []*models.AlternateProductProposal
+        + EligibleProductOffering []*models.ProductOfferingRef
+        + GuaranteedUntilDate strfmt.DateTime
+        + ID *string
+        + InstallationInterval *models.TimeInterval
+        + Product *Product
+        + ProductOffering *models.ProductOfferingRef
+        + ProductOfferingQualificationItemRelationship []*models.ProductOfferingQualificationItemRelationship
+        + RelatedParty []*models.RelatedParty
+        + ServiceConfidenceReason string
+        + ServiceabilityConfidence models.ServiceabilityColor
+        + State models.ProductOfferingQualificationItemStateType
+        + StateChange []*StateChange
+        + TerminationError []*models.TerminationError
+
+    }
+    class ProductOrder << (S,Aquamarine) >> {
+        + AtBaseType string
+        + AtSchemaLocation string
+        + AtType string
+        + BillingAccount *models.BillingAccountRef
+        + BuyerRequestDate strfmt.DateTime
+        + CancellationDate strfmt.DateTime
+        + CancellationReason string
+        + CompletionDate strfmt.DateTime
+        + DesiredResponses models.DesiredOrderResponses
+        + ExpectedCompletionDate strfmt.DateTime
+        + ExpeditePriority bool
+        + ExternalID *string
+        + Href *string
+        + ID *string
+        + Note []*models.Note
+        + OrderActivity models.OrderActivity
+        + OrderDate *strfmt.DateTime
+        + OrderItem []*OrderItem
+        + OrderMessage []*OrderMessage
+        + OrderVersion *string
+        + PricingMethod models.PricingMethod
+        + PricingReference string
+        + PricingTerm int32
+        + Priority int32
+        + ProjectID string
+        + RelatedBuyerPON string
+        + RelatedParty []*models.RelatedParty
+        + RequestedCompletionDate *strfmt.DateTime
+        + RequestedStartDate strfmt.DateTime
+        + State models.ProductOrderStateType
+        + StateChange []*StateChange
+        + TspRestorationPriority string
+
+    }
+    class ProductOrderRef << (S,Aquamarine) >> {
+        + Href string
+        + ID *string
+        + OrderItemID *string
+
+    }
+    class ProductPrice << (S,Aquamarine) >> {
+        + ID *string
+        + AtType string
+        + Description string
+        + Name *string
+        + Price *models.Price
+        + PriceType *models.PriceType
+        + RecurringChargePeriod models.ChargePeriod
+        + UnitOfMeasure string
+
+    }
+    class ProductRef << (S,Aquamarine) >> {
+        + BuyerProductID string
+        + Href string
+        + ID *string
+
+    }
+    class ProductRelationship << (S,Aquamarine) >> {
+        + ID *string
+        + Product *ProductRef
+        + Type *string
+
+    }
+    class ProductSpecificationRef << (S,Aquamarine) >> {
+        + Describing *models.Describing
+        + ID *string
+
+    }
+    class ProductTerm << (S,Aquamarine) >> {
+        + ID *string
+        + Description string
+        + Duration *models.Quantity
+        + Name string
+        + ValidFor *models.TimePeriod
+
+    }
+    class Quote << (S,Aquamarine) >> {
+        + AtBaseTypeField string
+        + AtSchemaLocationField string
+        + Type string
+        + AgreementField []*models.AgreementRef
+        + DescriptionField string
+        + ExpectedFulfillmentStartDateField strfmt.Date
+        + ExpectedQuoteCompletionDateField strfmt.Date
+        + EffectiveQuoteCompletionDateField strfmt.DateTime
+        + ExternalIDField string
+        + InstantSyncQuotingField *bool
+        + NoteField []*models.Note
+        + ProjectIDField string
+        + QuoteItemField []*QuoteItem
+        + QuoteLevelField models.QuoteLevel
+        + RelatedPartyField []*models.RelatedParty
+        + RequestedQuoteCompletionDateField *strfmt.DateTime
+        + HrefField string
+        + IDField string
+        + QuoteDateField strfmt.DateTime
+        + StateField models.QuoteStateType
+        + ValidForField *models.TimePeriod
+
+        - validateAgreement(formats strfmt.Registry) error
+        - validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error
+        - validateExpectedFulfillmentStartDate(formats strfmt.Registry) error
+        - validateExpectedQuoteCompletionDate(formats strfmt.Registry) error
+        - validateInstantSyncQuoting(formats strfmt.Registry) error
+        - validateNote(formats strfmt.Registry) error
+        - validateQuoteDate(formats strfmt.Registry) error
+        - validateQuoteItem(formats strfmt.Registry) error
+        - validateQuoteLevel(formats strfmt.Registry) error
+        - validateRelatedParty(formats strfmt.Registry) error
+        - validateRequestedQuoteCompletionDate(formats strfmt.Registry) error
+        - validateState(formats strfmt.Registry) error
+        - validateValidFor(formats strfmt.Registry) error
+
+        + Validate(formats strfmt.Registry) error
+        + AtBaseType() string
+        + SetAtBaseType(s string) 
+        + AtSchemaLocation() string
+        + SetAtSchemaLocation(s string) 
+        + AtType() string
+        + SetAtType(s string) 
+        + Agreement() []*models.AgreementRef
+        + SetAgreement(refs []*models.AgreementRef) 
+        + Description() string
+        + SetDescription(s string) 
+        + EffectiveQuoteCompletionDate() strfmt.DateTime
+        + SetEffectiveQuoteCompletionDate(time strfmt.DateTime) 
+        + ExpectedFulfillmentStartDate() strfmt.Date
+        + SetExpectedFulfillmentStartDate(date strfmt.Date) 
+        + ExpectedQuoteCompletionDate() strfmt.Date
+        + SetExpectedQuoteCompletionDate(date strfmt.Date) 
+        + ExternalID() string
+        + SetExternalID(s string) 
+        + Href() string
+        + SetHref(s string) 
+        + ID() string
+        + SetID(s string) 
+        + InstantSyncQuoting() bool
+        + SetInstantSyncQuoting(b bool) 
+        + Note() []*models.Note
+        + SetNote(notes []*models.Note) 
+        + ProjectID() string
+        + SetProjectID(s string) 
+        + QuoteDate() strfmt.DateTime
+        + SetQuoteDate(time strfmt.DateTime) 
+        + QuoteItem() []*models.QuoteItem
+        + SetQuoteItem(items []*models.QuoteItem) 
+        + QuoteLevel() models.QuoteLevel
+        + SetQuoteLevel(level models.QuoteLevel) 
+        + RelatedParty() []*models.RelatedParty
+        + SetRelatedParty(parties []*models.RelatedParty) 
+        + RequestedQuoteCompletionDate() *strfmt.DateTime
+        + SetRequestedQuoteCompletionDate(time *strfmt.DateTime) 
+        + State() models.QuoteStateType
+        + SetState(stateType models.QuoteStateType) 
+        + ValidFor() *models.TimePeriod
+        + SetValidFor(period *models.TimePeriod) 
+
+    }
+    class QuoteItem << (S,Aquamarine) >> {
+        + AtSchemaLocation string
+        + AtType string
+        + Action models.ProductActionType
+        + ID *string
+        + Note []*models.Note
+        + Product *Product
+        + ProductOffering *models.ProductOfferingRef
+        + Qualification *models.ProductOfferingQualificationRef
+        + QuoteItemRelationship []*models.QuoteItemRelationship
+        + RelatedParty []*models.RelatedParty
+        + RequestedQuoteItemTerm *models.ItemTerm
+
+    }
+    class StateChange << (S,Aquamarine) >> {
+        + ID *string
+        + ChangeDate strfmt.DateTime
+        + ChangeReason string
+        + State models.ProductOfferingQualificationStateType
+
+    }
+    class StatusChange << (S,Aquamarine) >> {
+        + ID *string
+        + ChangeDate strfmt.DateTime
+        + ChangeReason string
+        + Status models.ProductStatus
+
+    }
+    class User << (S,Aquamarine) >> {
+        + Name string
+        + Role string
+
+    }
+}
+"gorm.Model" *-- "schema.User"
+
+
+@enduml
