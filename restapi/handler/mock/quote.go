@@ -2,8 +2,12 @@ package mock
 
 import (
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/swag"
+	"github.com/jinzhu/gorm"
 
 	"github.com/qlcchain/go-sonata-server/models"
+	"github.com/qlcchain/go-sonata-server/restapi/handler"
+	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/hub"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/notification"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/quote"
@@ -22,7 +26,18 @@ func QuoteQuoteFindHandler(params quote.QuoteFindParams, principal *models.Princ
 }
 
 func QuoteQuoteGetHandler(params quote.QuoteGetParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation quote.QuoteGet has not yet been implemented")
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return quote.NewQuoteGetBadRequest().WithPayload(payload)
+	}
+	if q, err := db.GetQuote(Store, params.ID); err == nil {
+		return quote.NewQuoteGetOK().WithPayload(q)
+	} else if err == gorm.ErrRecordNotFound {
+		return quote.NewQuoteGetNotFound()
+	} else {
+		return quote.NewQuoteGetInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
 }
 
 func HubQuoteManagementHubCreateHandler(params hub.QuoteManagementHubCreateParams, principal *models.Principal) middleware.Responder {
