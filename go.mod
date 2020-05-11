@@ -7,6 +7,8 @@ require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20200206145737-bbfc9a55622e // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
+	github.com/gammazero/deque v0.0.0-20200310222745-50fa758af896 // indirect
+	github.com/gammazero/workerpool v0.0.0-20200311205957-7b00833861c6
 	github.com/go-openapi/errors v0.19.4
 	github.com/go-openapi/loads v0.19.5
 	github.com/go-openapi/runtime v0.19.15

@@ -15,10 +15,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// EventPlus event plus
+// PoEventPlus po event plus
 //
-// swagger:model EventPlus
-type EventPlus struct {
+// swagger:model PoEventPlus
+type PoEventPlus struct {
 	eventField *ProductOrderEvent
 
 	eventTimeField *strfmt.DateTime
@@ -35,46 +35,46 @@ type EventPlus struct {
 }
 
 // Event gets the event of this subtype
-func (m *EventPlus) Event() *ProductOrderEvent {
+func (m *PoEventPlus) Event() *ProductOrderEvent {
 	return m.eventField
 }
 
 // SetEvent sets the event of this subtype
-func (m *EventPlus) SetEvent(val *ProductOrderEvent) {
+func (m *PoEventPlus) SetEvent(val *ProductOrderEvent) {
 	m.eventField = val
 }
 
 // EventID gets the event Id of this subtype
-func (m *EventPlus) EventID() string {
-	return "EventPlus"
+func (m *PoEventPlus) EventID() string {
+	return "PoEventPlus"
 }
 
 // SetEventID sets the event Id of this subtype
-func (m *EventPlus) SetEventID(val string) {
+func (m *PoEventPlus) SetEventID(val string) {
 }
 
 // EventTime gets the event time of this subtype
-func (m *EventPlus) EventTime() *strfmt.DateTime {
+func (m *PoEventPlus) EventTime() *strfmt.DateTime {
 	return m.eventTimeField
 }
 
 // SetEventTime sets the event time of this subtype
-func (m *EventPlus) SetEventTime(val *strfmt.DateTime) {
+func (m *PoEventPlus) SetEventTime(val *strfmt.DateTime) {
 	m.eventTimeField = val
 }
 
 // EventType gets the event type of this subtype
-func (m *EventPlus) EventType() ProductOrderEventType {
+func (m *PoEventPlus) EventType() ProductOrderEventType {
 	return m.eventTypeField
 }
 
 // SetEventType sets the event type of this subtype
-func (m *EventPlus) SetEventType(val ProductOrderEventType) {
+func (m *PoEventPlus) SetEventType(val ProductOrderEventType) {
 	m.eventTypeField = val
 }
 
 // UnmarshalJSON unmarshals this object with a polymorphic type from a JSON structure
-func (m *EventPlus) UnmarshalJSON(raw []byte) error {
+func (m *PoEventPlus) UnmarshalJSON(raw []byte) error {
 	var data struct {
 
 		// field path
@@ -112,7 +112,7 @@ func (m *EventPlus) UnmarshalJSON(raw []byte) error {
 		return err
 	}
 
-	var result EventPlus
+	var result PoEventPlus
 
 	result.eventField = base.Event
 
@@ -133,7 +133,7 @@ func (m *EventPlus) UnmarshalJSON(raw []byte) error {
 }
 
 // MarshalJSON marshals this object with a polymorphic type to a JSON structure
-func (m EventPlus) MarshalJSON() ([]byte, error) {
+func (m PoEventPlus) MarshalJSON() ([]byte, error) {
 	var b1, b2, b3 []byte
 	var err error
 	b1, err = json.Marshal(struct {
@@ -179,8 +179,8 @@ func (m EventPlus) MarshalJSON() ([]byte, error) {
 	return swag.ConcatJSON(b1, b2, b3), nil
 }
 
-// Validate validates this event plus
-func (m *EventPlus) Validate(formats strfmt.Registry) error {
+// Validate validates this po event plus
+func (m *PoEventPlus) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEvent(formats); err != nil {
@@ -209,7 +209,7 @@ func (m *EventPlus) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *EventPlus) validateEvent(formats strfmt.Registry) error {
+func (m *PoEventPlus) validateEvent(formats strfmt.Registry) error {
 
 	if err := validate.Required("event", "body", m.Event()); err != nil {
 		return err
@@ -227,7 +227,7 @@ func (m *EventPlus) validateEvent(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *EventPlus) validateEventTime(formats strfmt.Registry) error {
+func (m *PoEventPlus) validateEventTime(formats strfmt.Registry) error {
 
 	if err := validate.Required("eventTime", "body", m.EventTime()); err != nil {
 		return err
@@ -240,7 +240,7 @@ func (m *EventPlus) validateEventTime(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *EventPlus) validateEventType(formats strfmt.Registry) error {
+func (m *PoEventPlus) validateEventType(formats strfmt.Registry) error {
 
 	if err := validate.Required("eventType", "body", m.EventType()); err != nil {
 		return err
@@ -256,7 +256,7 @@ func (m *EventPlus) validateEventType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *EventPlus) validateFieldPath(formats strfmt.Registry) error {
+func (m *PoEventPlus) validateFieldPath(formats strfmt.Registry) error {
 
 	if err := validate.Required("fieldPath", "body", m.FieldPath); err != nil {
 		return err
@@ -265,7 +265,7 @@ func (m *EventPlus) validateFieldPath(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *EventPlus) validateResourcePath(formats strfmt.Registry) error {
+func (m *PoEventPlus) validateResourcePath(formats strfmt.Registry) error {
 
 	if err := validate.Required("resourcePath", "body", m.ResourcePath); err != nil {
 		return err
@@ -275,7 +275,7 @@ func (m *EventPlus) validateResourcePath(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *EventPlus) MarshalBinary() ([]byte, error) {
+func (m *PoEventPlus) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -283,8 +283,8 @@ func (m *EventPlus) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *EventPlus) UnmarshalBinary(b []byte) error {
-	var res EventPlus
+func (m *PoEventPlus) UnmarshalBinary(b []byte) error {
+	var res PoEventPlus
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

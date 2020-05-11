@@ -31,7 +31,7 @@ func NewProductOrderCreate(ctx *middleware.Context, handler ProductOrderCreateHa
 	return &ProductOrderCreate{Context: ctx, Handler: handler}
 }
 
-/*ProductOrderCreate swagger:route POST /productOrderManagement/v3/productOrder ProductOrder productOrderCreate
+/*ProductOrderCreate swagger:route POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder ProductOrder productOrderCreate
 
 Create a product order
 

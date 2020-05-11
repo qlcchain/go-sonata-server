@@ -74,6 +74,12 @@ func NewSonataAPI(spec *loads.Document) *SonataAPI {
 		GeographicSiteGeographicSiteGetHandler: geographic_site.GeographicSiteGetHandlerFunc(func(params geographic_site.GeographicSiteGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation geographic_site.GeographicSiteGet has not yet been implemented")
 		}),
+		NotificationNotificationProductOfferingQualificationCreationNotificationHandler: notification.NotificationProductOfferingQualificationCreationNotificationHandlerFunc(func(params notification.NotificationProductOfferingQualificationCreationNotificationParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation notification.NotificationProductOfferingQualificationCreationNotification has not yet been implemented")
+		}),
+		NotificationNotificationProductOfferingQualificationStateChangeNotificationHandler: notification.NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc(func(params notification.NotificationProductOfferingQualificationStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation notification.NotificationProductOfferingQualificationStateChangeNotification has not yet been implemented")
+		}),
 		NotificationNotificationProductOrderAttributeValueChangeNotificationHandler: notification.NotificationProductOrderAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationProductOrderAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOrderAttributeValueChangeNotification has not yet been implemented")
 		}),
@@ -226,6 +232,10 @@ type SonataAPI struct {
 	GeographicSiteGeographicSiteFindHandler geographic_site.GeographicSiteFindHandler
 	// GeographicSiteGeographicSiteGetHandler sets the operation handler for the geographic site get operation
 	GeographicSiteGeographicSiteGetHandler geographic_site.GeographicSiteGetHandler
+	// NotificationNotificationProductOfferingQualificationCreationNotificationHandler sets the operation handler for the notification product offering qualification creation notification operation
+	NotificationNotificationProductOfferingQualificationCreationNotificationHandler notification.NotificationProductOfferingQualificationCreationNotificationHandler
+	// NotificationNotificationProductOfferingQualificationStateChangeNotificationHandler sets the operation handler for the notification product offering qualification state change notification operation
+	NotificationNotificationProductOfferingQualificationStateChangeNotificationHandler notification.NotificationProductOfferingQualificationStateChangeNotificationHandler
 	// NotificationNotificationProductOrderAttributeValueChangeNotificationHandler sets the operation handler for the notification product order attribute value change notification operation
 	NotificationNotificationProductOrderAttributeValueChangeNotificationHandler notification.NotificationProductOrderAttributeValueChangeNotificationHandler
 	// NotificationNotificationProductOrderCreationNotificationHandler sets the operation handler for the notification product order creation notification operation
@@ -374,6 +384,12 @@ func (o *SonataAPI) Validate() error {
 	}
 	if o.GeographicSiteGeographicSiteGetHandler == nil {
 		unregistered = append(unregistered, "geographic_site.GeographicSiteGetHandler")
+	}
+	if o.NotificationNotificationProductOfferingQualificationCreationNotificationHandler == nil {
+		unregistered = append(unregistered, "notification.NotificationProductOfferingQualificationCreationNotificationHandler")
+	}
+	if o.NotificationNotificationProductOfferingQualificationStateChangeNotificationHandler == nil {
+		unregistered = append(unregistered, "notification.NotificationProductOfferingQualificationStateChangeNotificationHandler")
 	}
 	if o.NotificationNotificationProductOrderAttributeValueChangeNotificationHandler == nil {
 		unregistered = append(unregistered, "notification.NotificationProductOrderAttributeValueChangeNotificationHandler")
@@ -591,6 +607,14 @@ func (o *SonataAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification"] = notification.NewNotificationProductOfferingQualificationCreationNotification(o.context, o.NotificationNotificationProductOfferingQualificationCreationNotificationHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification"] = notification.NewNotificationProductOfferingQualificationStateChangeNotification(o.context, o.NotificationNotificationProductOfferingQualificationStateChangeNotificationHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification"] = notification.NewNotificationProductOrderAttributeValueChangeNotification(o.context, o.NotificationNotificationProductOrderAttributeValueChangeNotificationHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -655,11 +679,11 @@ func (o *SonataAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderCreate(o.context, o.ProductOrderProductOrderCreateHandler)
+	o.handlers["POST"]["/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderCreate(o.context, o.ProductOrderProductOrderCreateHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderFind(o.context, o.ProductOrderProductOrderFindHandler)
+	o.handlers["GET"]["/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderFind(o.context, o.ProductOrderProductOrderFindHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

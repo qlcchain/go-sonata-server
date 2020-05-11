@@ -1,7 +1,13 @@
 package mock
 
 import (
+	"bytes"
+	"io/ioutil"
+	"net/http"
 	"time"
+
+	"github.com/qlcchain/go-sonata-server/event"
+	"github.com/qlcchain/go-sonata-server/restapi/operations/hub"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
@@ -13,10 +19,13 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
-	"github.com/qlcchain/go-sonata-server/restapi/operations/hub"
 	poq "github.com/qlcchain/go-sonata-server/restapi/operations/product_offering_qualification"
 	"github.com/qlcchain/go-sonata-server/schema"
 	"github.com/qlcchain/go-sonata-server/util"
+)
+
+const (
+	poqTopic = "poq"
 )
 
 func ProductOfferingQualificationProductOfferingQualificationCreateHandler(params poq.ProductOfferingQualificationCreateParams, principal *models.Principal) middleware.Responder {
@@ -91,6 +100,17 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 	if err = Store.Create(qualification).Error; err == nil {
 		var payload *models.ProductOfferingQualification
 		if err = util.Convert(qualification, payload); err == nil {
+			now := strfmt.DateTime(time.Now())
+			event.SimpleEventBus().Publish(poqTopic, &models.PoQEventContainer{
+				Event: &models.PoqEvent{
+					//TODO: convert to url
+					Href: *payload.ID,
+					ID:   *payload.ID,
+				},
+				EventID:   swag.String(xid.New().String()),
+				EventTime: &now,
+				EventType: models.PoqEventTypeProductOfferingQualificationCreateEventNotification,
+			})
 			return poq.NewProductOfferingQualificationCreateCreated().WithPayload(payload)
 		}
 	}
@@ -98,7 +118,6 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 	return poq.NewProductOfferingQualificationCreateServiceUnavailable().WithPayload(&models.ErrorRepresentation{
 		Reason: swag.String(err.Error()),
 	})
-
 }
 
 func ProductOfferingQualificationProductOfferingQualificationFindHandler(params poq.ProductOfferingQualificationFindParams, principal *models.Principal) middleware.Responder {
@@ -128,7 +147,7 @@ func ProductOfferingQualificationProductOfferingQualificationFindHandler(params 
 
 func ProductOfferingQualificationProductOfferingQualificationGetHandler(params poq.ProductOfferingQualificationGetParams, principal *models.Principal) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
-		return poq.NewProductOfferingQualificationGetBadRequest().WithPayload(payload)
+		return poq.NewProductOfferingQualificationGetUnauthorized().WithPayload(payload)
 	}
 
 	if p, err := db.GetProductOfferingQualification(Store, params.ProductOfferingQualificationID); err == nil {
@@ -143,13 +162,128 @@ func ProductOfferingQualificationProductOfferingQualificationGetHandler(params p
 }
 
 func HubProductOfferingQualificationManagementHubDeleteHandler(params hub.ProductOfferingQualificationManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation hub.ProductOfferingQualificationManagementHubDelete has not yet been implemented")
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return hub.NewProductOfferingQualificationManagementHubDeleteUnauthorized().WithPayload(payload)
+	}
+	// verify id
+	id := params.HubID
+
+	if err := db.DeleteSubscriber(Store, id); err == nil {
+		if err := event.SimpleEventBus().Unsubscribe(poqTopic, id); err == nil {
+			return hub.NewProductOfferingQualificationManagementHubDeleteNoContent()
+		} else {
+			return hub.NewProductOrderManagementHubDeleteInternalServerError().WithPayload(&models.ErrorRepresentation{
+				Reason: swag.String(err.Error()),
+			})
+		}
+
+	} else if err == gorm.ErrRecordNotFound {
+		return hub.NewProductOrderManagementHubDeleteNotFound()
+	} else {
+		return hub.NewProductOrderManagementHubDeleteInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
 }
 
 func HubProductOfferingQualificationManagementHubGetHandler(params hub.ProductOfferingQualificationManagementHubGetParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation hub.ProductOfferingQualificationManagementHubGet has not yet been implemented")
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return hub.NewProductOfferingQualificationManagementHubGetUnauthorized().WithPayload(payload)
+	}
+
+	if subscribers, err := db.ListSubscribers(Store, poqTopic); err == nil {
+		var payload []*models.Hub
+		for _, s := range subscribers {
+			payload = append(payload, &models.Hub{
+				Callback: swag.String(s.Callback),
+				ID:       swag.String(s.ID),
+				Query:    swag.String(s.Query),
+			})
+		}
+		return hub.NewProductOfferingQualificationManagementHubGetOK().WithPayload(payload)
+	} else if err == gorm.ErrRecordNotFound {
+		return hub.NewProductOfferingQualificationManagementHubGetNotFound()
+	} else {
+		return hub.NewProductOfferingQualificationManagementHubGetServiceUnavailable().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
 }
 
 func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductOfferingQualificationManagementHubPostParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation hub.ProductOfferingQualificationManagementHubPost has not yet been implemented")
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return hub.NewProductOfferingQualificationManagementHubPostUnauthorized().WithPayload(payload)
+	}
+
+	// verify input
+	input := params.Hub
+	if input == nil {
+		return hub.NewProductOfferingQualificationManagementHubPostBadRequest().WithPayload(&models.ErrorRepresentation{
+			Code:   swag.Int32(21),
+			Reason: swag.String("Missing body"),
+		})
+	}
+
+	if input.Query == nil || input.Callback == nil {
+		return hub.NewProductOfferingQualificationManagementHubPostBadRequest().WithPayload(&models.ErrorRepresentation{
+			Code:   swag.Int32(23),
+			Reason: swag.String("Missing body field"),
+		})
+	}
+
+	if *input.Query != "eventType = ProductOfferingQualificationStateChangeNotification" {
+		return hub.NewProductOfferingQualificationManagementHubPostBadRequest().WithPayload(&models.ErrorRepresentation{
+			Code:   swag.Int32(24),
+			Reason: swag.String("Invalid body field"),
+		})
+	}
+
+	if payload := handler.VerifyCallback(input.Callback); payload != nil {
+		return hub.NewProductOfferingQualificationManagementHubPostBadRequest().WithPayload(payload)
+	}
+
+	if id, err := event.SimpleEventBus().Subscribe(poqTopic, poqCallbackHandler, &event.CallbackOption{}); err != nil {
+		return hub.NewProductOfferingQualificationManagementHubPostServiceUnavailable().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	} else {
+		if err := db.AddSubscriber(Store, &schema.HubSubscriber{
+			ID:       id,
+			Type:     poqTopic,
+			Query:    *input.Query,
+			Callback: *input.Callback,
+		}); err == nil {
+			return hub.NewProductOfferingQualificationManagementHubPostCreated().WithPayload(&models.Hub{
+				Callback: input.Callback,
+				ID:       swag.String(id),
+				Query:    input.Query,
+			})
+		} else {
+			return hub.NewProductOfferingQualificationManagementHubPostServiceUnavailable().WithPayload(&models.ErrorRepresentation{
+				Reason: swag.String(err.Error()),
+			})
+		}
+	}
+}
+
+func poqCallbackHandler(option *event.CallbackOption, poqEvent *models.PoQEventContainer) {
+	if subscriber, err := db.FindSubscriber(Store, option.ID, poqTopic); err == nil {
+		if poqEvent != nil {
+			client := &http.Client{}
+			content := util.ToString(poqEvent)
+			resp, err := client.Post(subscriber.Callback, "application/json;charset=utf-8", bytes.NewBuffer([]byte(content)))
+			if err != nil {
+				logrus.Error(err)
+			}
+			defer resp.Body.Close()
+
+			if all, err := ioutil.ReadAll(resp.Body); err != nil {
+				logrus.Error(err)
+			} else {
+				logrus.Debug(string(all))
+			}
+		}
+	} else {
+		logrus.Error(err)
+	}
 }

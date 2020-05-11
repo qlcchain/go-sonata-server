@@ -36,7 +36,7 @@ type NotificationQuoteStateChangeNotificationParams struct {
 	  Required: true
 	  In: body
 	*/
-	QuoteStateChangeNotification models.Event
+	QuoteStateChangeNotification models.QuoteEvent
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,7 +50,7 @@ func (o *NotificationQuoteStateChangeNotificationParams) BindRequest(r *http.Req
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		body, err := models.UnmarshalEvent(r.Body, route.Consumer)
+		body, err := models.UnmarshalQuoteEvent(r.Body, route.Consumer)
 		if err != nil {
 			if err == io.EOF {
 				err = errors.Required("quoteStateChangeNotification", "body")

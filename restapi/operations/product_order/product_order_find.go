@@ -31,7 +31,7 @@ func NewProductOrderFind(ctx *middleware.Context, handler ProductOrderFindHandle
 	return &ProductOrderFind{Context: ctx, Handler: handler}
 }
 
-/*ProductOrderFind swagger:route GET /productOrderManagement/v3/productOrder ProductOrder productOrderFind
+/*ProductOrderFind swagger:route GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder ProductOrder productOrderFind
 
 Find a list of product order(s)
 

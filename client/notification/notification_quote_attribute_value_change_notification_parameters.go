@@ -63,7 +63,7 @@ for the notification quote attribute value change notification operation typical
 type NotificationQuoteAttributeValueChangeNotificationParams struct {
 
 	/*QuoteAttributeValueChangeNotification*/
-	QuoteAttributeValueChangeNotification []*models.EventPlus
+	QuoteAttributeValueChangeNotification []*models.QuoteEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationQuoteAttributeValueChangeNotificationParams) SetHTTPClient(
 }
 
 // WithQuoteAttributeValueChangeNotification adds the quoteAttributeValueChangeNotification to the notification quote attribute value change notification params
-func (o *NotificationQuoteAttributeValueChangeNotificationParams) WithQuoteAttributeValueChangeNotification(quoteAttributeValueChangeNotification []*models.EventPlus) *NotificationQuoteAttributeValueChangeNotificationParams {
+func (o *NotificationQuoteAttributeValueChangeNotificationParams) WithQuoteAttributeValueChangeNotification(quoteAttributeValueChangeNotification []*models.QuoteEventPlus) *NotificationQuoteAttributeValueChangeNotificationParams {
 	o.SetQuoteAttributeValueChangeNotification(quoteAttributeValueChangeNotification)
 	return o
 }
 
 // SetQuoteAttributeValueChangeNotification adds the quoteAttributeValueChangeNotification to the notification quote attribute value change notification params
-func (o *NotificationQuoteAttributeValueChangeNotificationParams) SetQuoteAttributeValueChangeNotification(quoteAttributeValueChangeNotification []*models.EventPlus) {
+func (o *NotificationQuoteAttributeValueChangeNotificationParams) SetQuoteAttributeValueChangeNotification(quoteAttributeValueChangeNotification []*models.QuoteEventPlus) {
 	o.QuoteAttributeValueChangeNotification = quoteAttributeValueChangeNotification
 }
 

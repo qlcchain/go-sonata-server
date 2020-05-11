@@ -63,7 +63,7 @@ for the notification quote information required notification operation typically
 type NotificationQuoteInformationRequiredNotificationParams struct {
 
 	/*QuoteInformationRequiredNotification*/
-	QuoteInformationRequiredNotification []*models.EventPlus
+	QuoteInformationRequiredNotification []*models.QuoteEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationQuoteInformationRequiredNotificationParams) SetHTTPClient(c
 }
 
 // WithQuoteInformationRequiredNotification adds the quoteInformationRequiredNotification to the notification quote information required notification params
-func (o *NotificationQuoteInformationRequiredNotificationParams) WithQuoteInformationRequiredNotification(quoteInformationRequiredNotification []*models.EventPlus) *NotificationQuoteInformationRequiredNotificationParams {
+func (o *NotificationQuoteInformationRequiredNotificationParams) WithQuoteInformationRequiredNotification(quoteInformationRequiredNotification []*models.QuoteEventPlus) *NotificationQuoteInformationRequiredNotificationParams {
 	o.SetQuoteInformationRequiredNotification(quoteInformationRequiredNotification)
 	return o
 }
 
 // SetQuoteInformationRequiredNotification adds the quoteInformationRequiredNotification to the notification quote information required notification params
-func (o *NotificationQuoteInformationRequiredNotificationParams) SetQuoteInformationRequiredNotification(quoteInformationRequiredNotification []*models.EventPlus) {
+func (o *NotificationQuoteInformationRequiredNotificationParams) SetQuoteInformationRequiredNotification(quoteInformationRequiredNotification []*models.QuoteEventPlus) {
 	o.QuoteInformationRequiredNotification = quoteInformationRequiredNotification
 }
 

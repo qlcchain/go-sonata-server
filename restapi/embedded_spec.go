@@ -942,6 +942,84 @@ func init() {
         }
       }
     },
+    "/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification": {
+      "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
+        "description": "Product Offering Qualification Creation Notification structure definition",
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Product Offering Qualification Creation Notification structure",
+        "operationId": "notificationProductOfferingQualificationCreationNotification",
+        "parameters": [
+          {
+            "name": "productOfferingQualificationCreationNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PoQEventContainer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
     "/productOfferingQualificationManagement/v3/productOfferingQualification": {
       "get": {
         "security": [
@@ -1216,6 +1294,436 @@ func init() {
           },
           "422": {
             "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification": {
+      "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
+        "description": "Product Offering Qualification State Change Notification structure definition",
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Product Offering Qualification State Change Notification structure",
+        "operationId": "notificationProductOfferingQualificationStateChangeNotification",
+        "parameters": [
+          {
+            "name": "productOfferingQualificationStateChangeNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PoQEventContainer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder": {
+      "get": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
+        "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "ProductOrder"
+        ],
+        "summary": "Find a list of product order(s)",
+        "operationId": "productOrderFind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "A Party Role played by an Individual or an Organization that buys products and services from a Seller. Specifically, the ID of the Service Provider (Buyer) organization placing the order.",
+            "name": "buyerId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "A Party Role played by an organization that provides products and services to a Buyer.\nSpecifically, the ID of the Partner/Access Provider (Seller) organization receiving the order.",
+            "name": "sellerId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "The status of the order",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested date greater than",
+            "name": "buyerRequestedDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested date lesser than",
+            "name": "buyerRequestedDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when the order was created greater than",
+            "name": "orderDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when the order was created lesser than",
+            "name": "orderDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested start date greater than",
+            "name": "requestedStartDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested start date lesser than",
+            "name": "requestedStartDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Identifies the Buyer's desired due date (requested delivery date) greater than",
+            "name": "requestedCompletionDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Identifies the Buyer's desired due date (requested delivery date) lesser than",
+            "name": "requestedCompletionDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Seller planned completion date greater than",
+            "name": "expectedCompletionDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Seller planned completion date lesser than",
+            "name": "expectedCompletionDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Effective completion date greater than",
+            "name": "completionDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Effective completion date lesser than",
+            "name": "completionDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "order cancellation date greater than",
+            "name": "orderCancellationDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "order cancellation date lesser than",
+            "name": "orderCancellationDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "A name by which the site is known.",
+            "name": "siteName",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "The name of the company that is located at the service location.  This may be different from the name of the Buyer that ordered services at that site.",
+            "name": "siteCompanyName",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "The customer name at a site where the service is being delivered",
+            "name": "siteCustomerName",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "An identifier that is used to group Orders that represent a unit of functionality that is important to a Buyer.",
+            "name": "projectId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "A number that uniquely identifies an order within the Buyer's enterprise.",
+            "name": "externalId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Requested index for start of resources to be provided in response requested by client",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Requested number of resources to be provided in response requested by client",
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductOrderSummary"
+              }
+            },
+            "headers": {
+              "X-Result-Count": {
+                "type": "integer",
+                "format": "int32",
+                "description": "The number of resources retrieved in the response"
+              },
+              "X-Total-Count": {
+                "type": "integer",
+                "format": "int32",
+                "description": "The total number of matching resources"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearer": [
+              "customer",
+              "admin"
+            ]
+          }
+        ],
+        "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "ProductOrder"
+        ],
+        "summary": "Create a product order",
+        "operationId": "productOrderCreate",
+        "parameters": [
+          {
+            "name": "ProductOrder",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductOrder_Create"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ProductOrder"
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -1777,358 +2285,6 @@ func init() {
         }
       }
     },
-    "/productOrderManagement/v3/productOrder": {
-      "get": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
-        "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
-        "produces": [
-          "application/json;charset=utf-8"
-        ],
-        "tags": [
-          "ProductOrder"
-        ],
-        "summary": "Find a list of product order(s)",
-        "operationId": "productOrderFind",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "A Party Role played by an Individual or an Organization that buys products and services from a Seller. Specifically, the ID of the Service Provider (Buyer) organization placing the order.",
-            "name": "buyerId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "A Party Role played by an organization that provides products and services to a Buyer.\nSpecifically, the ID of the Partner/Access Provider (Seller) organization receiving the order.",
-            "name": "sellerId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "The status of the order",
-            "name": "state",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested date greater than",
-            "name": "buyerRequestedDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested date lesser than",
-            "name": "buyerRequestedDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Date when the order was created greater than",
-            "name": "orderDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Date when the order was created lesser than",
-            "name": "orderDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested start date greater than",
-            "name": "requestedStartDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested start date lesser than",
-            "name": "requestedStartDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Identifies the Buyer's desired due date (requested delivery date) greater than",
-            "name": "requestedCompletionDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Identifies the Buyer's desired due date (requested delivery date) lesser than",
-            "name": "requestedCompletionDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Seller planned completion date greater than",
-            "name": "expectedCompletionDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Seller planned completion date lesser than",
-            "name": "expectedCompletionDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Effective completion date greater than",
-            "name": "completionDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Effective completion date lesser than",
-            "name": "completionDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "order cancellation date greater than",
-            "name": "orderCancellationDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "order cancellation date lesser than",
-            "name": "orderCancellationDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "A name by which the site is known.",
-            "name": "siteName",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "The name of the company that is located at the service location.  This may be different from the name of the Buyer that ordered services at that site.",
-            "name": "siteCompanyName",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "The customer name at a site where the service is being delivered",
-            "name": "siteCustomerName",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "An identifier that is used to group Orders that represent a unit of functionality that is important to a Buyer.",
-            "name": "projectId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "A number that uniquely identifies an order within the Buyer's enterprise.",
-            "name": "externalId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Requested index for start of resources to be provided in response requested by client",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Requested number of resources to be provided in response requested by client",
-            "name": "limit",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ProductOrderSummary"
-              }
-            },
-            "headers": {
-              "X-Result-Count": {
-                "type": "integer",
-                "format": "int32",
-                "description": "The number of resources retrieved in the response"
-              },
-              "X-Total-Count": {
-                "type": "integer",
-                "format": "int32",
-                "description": "The total number of matching resources"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "408": {
-            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
-        "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
-        "consumes": [
-          "application/json;charset=utf-8"
-        ],
-        "produces": [
-          "application/json;charset=utf-8"
-        ],
-        "tags": [
-          "ProductOrder"
-        ],
-        "summary": "Create a product order",
-        "operationId": "productOrderCreate",
-        "parameters": [
-          {
-            "name": "ProductOrder",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProductOrder_Create"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "schema": {
-              "$ref": "#/definitions/ProductOrder"
-            }
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "408": {
-            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
     "/productOrderManagement/v3/productOrder/{ProductOrderId}": {
       "get": {
         "security": [
@@ -2245,7 +2401,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/EventPlus"
+              "$ref": "#/definitions/PoEventPlus"
             }
           }
         ],
@@ -2334,7 +2490,7 @@ func init() {
             "name": "productOrderCreationNotification",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/PoEvent"
             }
           }
         ],
@@ -2424,7 +2580,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/EventPlus"
+              "$ref": "#/definitions/PoEventPlus"
             }
           }
         ],
@@ -2514,7 +2670,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/PoEvent"
             }
           }
         ],
@@ -3294,7 +3450,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/QuoteEvent"
             }
           }
         ],
@@ -3378,7 +3534,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/QuoteEvent"
             }
           }
         ],
@@ -3464,7 +3620,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventPlus"
+                "$ref": "#/definitions/QuoteEventPlus"
               }
             }
           }
@@ -3551,7 +3707,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventPlus"
+                "$ref": "#/definitions/QuoteEventPlus"
               }
             }
           }
@@ -3970,57 +4126,6 @@ func init() {
           "type": "string"
         }
       }
-    },
-    "Event": {
-      "description": "Event class is used to describe information structure used for notification.",
-      "type": "object",
-      "required": [
-        "eventId",
-        "eventType",
-        "eventTime",
-        "event"
-      ],
-      "properties": {
-        "event": {
-          "$ref": "#/definitions/ProductOrderEvent"
-        },
-        "eventId": {
-          "type": "string"
-        },
-        "eventTime": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "eventType": {
-          "$ref": "#/definitions/ProductOrderEventType"
-        }
-      },
-      "discriminator": "eventId"
-    },
-    "EventPlus": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/Event"
-        },
-        {
-          "type": "object",
-          "required": [
-            "resourcePath",
-            "fieldPath"
-          ],
-          "properties": {
-            "fieldPath": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "resourcePath": {
-              "type": "string"
-            }
-          }
-        }
-      ]
     },
     "FieldedAddress": {
       "description": "A type of Address that has a discrete field and value for each type of boundary or identifier down to the lowest level of detail. For example “street number” is one field, “street name” is another field, etc.",
@@ -4925,6 +5030,130 @@ func init() {
         },
         "severity": {
           "$ref": "#/definitions/Severity"
+        }
+      }
+    },
+    "PoEvent": {
+      "description": "Event class is used to describe information structure used for notification.",
+      "type": "object",
+      "required": [
+        "eventId",
+        "eventType",
+        "eventTime",
+        "event"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/ProductOrderEvent"
+        },
+        "eventId": {
+          "type": "string"
+        },
+        "eventTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "eventType": {
+          "$ref": "#/definitions/ProductOrderEventType"
+        }
+      },
+      "discriminator": "eventId"
+    },
+    "PoEventPlus": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/PoEvent"
+        },
+        {
+          "type": "object",
+          "required": [
+            "resourcePath",
+            "fieldPath"
+          ],
+          "properties": {
+            "fieldPath": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "resourcePath": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "PoQEventContainer": {
+      "description": "Event class is used to describe information structure used for notification.",
+      "type": "object",
+      "required": [
+        "eventId",
+        "eventType",
+        "eventTime",
+        "event"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/PoqEvent"
+        },
+        "eventId": {
+          "description": "Id of the event",
+          "type": "string"
+        },
+        "eventTime": {
+          "description": "Datetime when the event occurred",
+          "type": "string",
+          "format": "date-time"
+        },
+        "eventType": {
+          "$ref": "#/definitions/PoqEventType"
+        }
+      }
+    },
+    "PoqEvent": {
+      "description": "The product offering qualification passed as the \"event\" in a notification.",
+      "type": "object",
+      "properties": {
+        "href": {
+          "description": "Link to the POQ",
+          "type": "string"
+        },
+        "id": {
+          "description": "The Serviceability Request's unique identifier.",
+          "type": "string"
+        }
+      }
+    },
+    "PoqEventType": {
+      "description": "Indicates the type of product offering qualification event.",
+      "type": "string",
+      "enum": [
+        "ProductOfferingQualificationCreateEventNotification",
+        "ProductOfferingQualificationStateChangeEventNotification"
+      ]
+    },
+    "PoqItemEvent": {
+      "description": "The product offering qualification item event structure that gets passed in the \"event\" of a notification.",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "desiredActivationDate": {
+          "description": "Desired Activation Date for the product requested in this item",
+          "type": "string",
+          "format": "date"
+        },
+        "id": {
+          "description": "Id of this POQ item",
+          "type": "string"
+        },
+        "serviceabilityConfidence": {
+          "$ref": "#/definitions/ServiceabilityColor"
+        },
+        "state": {
+          "$ref": "#/definitions/QualificationState"
         }
       }
     },
@@ -6315,6 +6544,16 @@ func init() {
         }
       }
     },
+    "QualificationState": {
+      "description": "These values represent the valid states through which the product offering qualification can transition",
+      "type": "string",
+      "enum": [
+        "inProgress",
+        "done",
+        "terminatedWithError.unableToProvide",
+        "terminatedWithError.insufficientInformationProvided"
+      ]
+    },
     "Quantity": {
       "description": "An amount in a given unit",
       "type": "object",
@@ -6446,6 +6685,59 @@ func init() {
       "enum": [
         "CANCELLED",
         "REJECTED"
+      ]
+    },
+    "QuoteEvent": {
+      "description": "Event class is used to describe information structure used for notification.",
+      "type": "object",
+      "required": [
+        "eventId",
+        "eventTime",
+        "eventType",
+        "event"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/QuoteSummaryView"
+        },
+        "eventId": {
+          "description": "Id of the event",
+          "type": "string"
+        },
+        "eventTime": {
+          "description": "Datetime when the event occurred",
+          "type": "string",
+          "format": "date-time"
+        },
+        "eventType": {
+          "$ref": "#/definitions/QuoteEventType"
+        }
+      },
+      "discriminator": "eventId"
+    },
+    "QuoteEventPlus": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/QuoteEvent"
+        },
+        {
+          "type": "object",
+          "required": [
+            "resourcePath",
+            "fieldPath"
+          ],
+          "properties": {
+            "fieldPath": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "resourcePath": {
+              "type": "string"
+            }
+          }
+        }
       ]
     },
     "QuoteEventType": {
@@ -8234,6 +8526,84 @@ func init() {
         }
       }
     },
+    "/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification": {
+      "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
+        "description": "Product Offering Qualification Creation Notification structure definition",
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Product Offering Qualification Creation Notification structure",
+        "operationId": "notificationProductOfferingQualificationCreationNotification",
+        "parameters": [
+          {
+            "name": "productOfferingQualificationCreationNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PoQEventContainer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
     "/productOfferingQualificationManagement/v3/productOfferingQualification": {
       "get": {
         "security": [
@@ -8508,6 +8878,436 @@ func init() {
           },
           "422": {
             "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification": {
+      "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
+        "description": "Product Offering Qualification State Change Notification structure definition",
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Product Offering Qualification State Change Notification structure",
+        "operationId": "notificationProductOfferingQualificationStateChangeNotification",
+        "parameters": [
+          {
+            "name": "productOfferingQualificationStateChangeNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PoQEventContainer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder": {
+      "get": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
+        "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "ProductOrder"
+        ],
+        "summary": "Find a list of product order(s)",
+        "operationId": "productOrderFind",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "A Party Role played by an Individual or an Organization that buys products and services from a Seller. Specifically, the ID of the Service Provider (Buyer) organization placing the order.",
+            "name": "buyerId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "A Party Role played by an organization that provides products and services to a Buyer.\nSpecifically, the ID of the Partner/Access Provider (Seller) organization receiving the order.",
+            "name": "sellerId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "The status of the order",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested date greater than",
+            "name": "buyerRequestedDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested date lesser than",
+            "name": "buyerRequestedDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when the order was created greater than",
+            "name": "orderDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when the order was created lesser than",
+            "name": "orderDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested start date greater than",
+            "name": "requestedStartDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Buyer requested start date lesser than",
+            "name": "requestedStartDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Identifies the Buyer's desired due date (requested delivery date) greater than",
+            "name": "requestedCompletionDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Identifies the Buyer's desired due date (requested delivery date) lesser than",
+            "name": "requestedCompletionDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Seller planned completion date greater than",
+            "name": "expectedCompletionDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Seller planned completion date lesser than",
+            "name": "expectedCompletionDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Effective completion date greater than",
+            "name": "completionDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Effective completion date lesser than",
+            "name": "completionDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "order cancellation date greater than",
+            "name": "orderCancellationDate.gt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "order cancellation date lesser than",
+            "name": "orderCancellationDate.lt",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "A name by which the site is known.",
+            "name": "siteName",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "The name of the company that is located at the service location.  This may be different from the name of the Buyer that ordered services at that site.",
+            "name": "siteCompanyName",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "The customer name at a site where the service is being delivered",
+            "name": "siteCustomerName",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "An identifier that is used to group Orders that represent a unit of functionality that is important to a Buyer.",
+            "name": "projectId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "A number that uniquely identifies an order within the Buyer's enterprise.",
+            "name": "externalId",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Requested index for start of resources to be provided in response requested by client",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Requested number of resources to be provided in response requested by client",
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductOrderSummary"
+              }
+            },
+            "headers": {
+              "X-Result-Count": {
+                "type": "integer",
+                "format": "int32",
+                "description": "The number of resources retrieved in the response"
+              },
+              "X-Total-Count": {
+                "type": "integer",
+                "format": "int32",
+                "description": "The total number of matching resources"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearer": [
+              "admin",
+              "customer"
+            ]
+          }
+        ],
+        "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "tags": [
+          "ProductOrder"
+        ],
+        "summary": "Create a product order",
+        "operationId": "productOrderCreate",
+        "parameters": [
+          {
+            "name": "ProductOrder",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductOrder_Create"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ProductOrder"
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
             "schema": {
               "$ref": "#/definitions/ErrorRepresentation"
             }
@@ -9069,358 +9869,6 @@ func init() {
         }
       }
     },
-    "/productOrderManagement/v3/productOrder": {
-      "get": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
-        "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
-        "produces": [
-          "application/json;charset=utf-8"
-        ],
-        "tags": [
-          "ProductOrder"
-        ],
-        "summary": "Find a list of product order(s)",
-        "operationId": "productOrderFind",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "A Party Role played by an Individual or an Organization that buys products and services from a Seller. Specifically, the ID of the Service Provider (Buyer) organization placing the order.",
-            "name": "buyerId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "A Party Role played by an organization that provides products and services to a Buyer.\nSpecifically, the ID of the Partner/Access Provider (Seller) organization receiving the order.",
-            "name": "sellerId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "The status of the order",
-            "name": "state",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested date greater than",
-            "name": "buyerRequestedDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested date lesser than",
-            "name": "buyerRequestedDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Date when the order was created greater than",
-            "name": "orderDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Date when the order was created lesser than",
-            "name": "orderDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested start date greater than",
-            "name": "requestedStartDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Buyer requested start date lesser than",
-            "name": "requestedStartDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Identifies the Buyer's desired due date (requested delivery date) greater than",
-            "name": "requestedCompletionDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Identifies the Buyer's desired due date (requested delivery date) lesser than",
-            "name": "requestedCompletionDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Seller planned completion date greater than",
-            "name": "expectedCompletionDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Seller planned completion date lesser than",
-            "name": "expectedCompletionDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Effective completion date greater than",
-            "name": "completionDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "Effective completion date lesser than",
-            "name": "completionDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "order cancellation date greater than",
-            "name": "orderCancellationDate.gt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "order cancellation date lesser than",
-            "name": "orderCancellationDate.lt",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "A name by which the site is known.",
-            "name": "siteName",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "The name of the company that is located at the service location.  This may be different from the name of the Buyer that ordered services at that site.",
-            "name": "siteCompanyName",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "The customer name at a site where the service is being delivered",
-            "name": "siteCustomerName",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "An identifier that is used to group Orders that represent a unit of functionality that is important to a Buyer.",
-            "name": "projectId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "A number that uniquely identifies an order within the Buyer's enterprise.",
-            "name": "externalId",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Requested index for start of resources to be provided in response requested by client",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Requested number of resources to be provided in response requested by client",
-            "name": "limit",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ProductOrderSummary"
-              }
-            },
-            "headers": {
-              "X-Result-Count": {
-                "type": "integer",
-                "format": "int32",
-                "description": "The number of resources retrieved in the response"
-              },
-              "X-Total-Count": {
-                "type": "integer",
-                "format": "int32",
-                "description": "The total number of matching resources"
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "408": {
-            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Too many records retrieved - please restrict requested parameter value(s)\ndescription:",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
-        "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
-        "consumes": [
-          "application/json;charset=utf-8"
-        ],
-        "produces": [
-          "application/json;charset=utf-8"
-        ],
-        "tags": [
-          "ProductOrder"
-        ],
-        "summary": "Create a product order",
-        "operationId": "productOrderCreate",
-        "parameters": [
-          {
-            "name": "ProductOrder",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProductOrder_Create"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "schema": {
-              "$ref": "#/definitions/ProductOrder"
-            }
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "408": {
-            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error\n\n\n\n\n\n - code: 100\nmessage: Missing order item (minimum 1)\ndescription: At least one order item must be provided\n\n\n - code: 101\nmessage: Missing Buyer at order level\ndescription: One and only one related partyRole with a \"Buyer\" role should be provided at the product order level.\n\n\n - code: 114\nmessage: Missing Seller at order level\ndescription: One and only one related partyRole with a \"Seller\" role should be provided at the product order level.\n\n\n - code: 102\nmessage: A relatedParty is at the wrong level\ndescription: The partyRole provided is not at the correct level - MEF allows to have\n\"Buyer\", \"Seller\", \"Billing Contact\", \"Order Contact\", \"Implementation Contact\", \"Technical Contact\" roles at product order level and \"UNI Site Contact\", \"UNI Alt Site Contact\", \"ENNI Site Contact\", \"ENNI Alt Site Contact\" at product order item level.\n\n\n - code: 103\nmessage: Missing Buyer Order Contact at order level\ndescription: One and only one related partyRole with a \"Order Contact\" role should be provided at the product order level.\nBuyer Order Contact name \u0026 Telephone number must be provided.\n\n\n - code: 104\nmessage: Missing Buyer Implementation Contact at order level\ndescription: One and only one related partyRole with a \"Implementation Contact\" role should be provided at the product order level.\nImplementation Contact name \u0026 Telephone number must be provided.\n\n\n - code: 105\nmessage: Missing Buyer Technical contact at order level\ndescription: One and only one related partyRole with a \"Technical Contact\" role should be provided at the product order level.\nTechnical Contact name, Telephone number and email address must be provided.\n\n\n - code: 106\nmessage: Address information must match place type\ndescription: If place type is 'Formatted Address' : addrLine1, city, stateOrProvince, postCode and country must be there.\nIf place type is 'Fielded Address' : streetName, streetType, city, stateOrProvince, postCode and country must be there.\n\n\n - code: 107\nmessage: postCode extension requires postcode value to be filled\ndescription: A postCode extension must not be present without a postcode being present\n\n\n - code: 108\nmessage: Product id is required for all OrderItem Actions other than INSTALL\ndescription: If orderItemAction is not INSTALL, orderItem.product.id is mandatory\n\n\n - code: 109\nmessage: Order Activity must match all OrderItem Actions for INSTALL\ndescription: If orderActivity is set to INSTALL, all orderItemAction must be INSTALL\n\n\n - code: 110\nmessage: Referred quote cannot be used for ordering due to its status\ndescription: Quote cannot be used in the order if its status is in CANCELLED, UNABLE TO PROVIDE, REJECTED or EXPIRED state.\n\n\n - code: 111\nmessage: Billing Account information must not be both at order level and order item level\ndescription: Billing Account must not be present both at order header level and order item level.\n\n\n - code: 112\nmessage: PricingMethod, pricing Reference \u0026 pricing term attributes  must not be both at order level and order item level\ndescription: Pricing data  must not be present both at order header level and order item level.\n\n\n - code: 113\nmessage: Referred Serviceability request is expired\ndescription: Serviceability information are expired.\n\n\n - code: 114\nmessage: A reccuring price is mentionned without a charge period.\ndescription: \n\n\n - code: 115\nmessage: Referred Quote is not existing\ndescription: \n\n\n - code: 116\nmessage: Referred ProductOfferingQualification is not existing\ndescription: \n\n\n - code: 117\nmessage: Product /item relationship is missing\ndescription: \n\n\n - code: 118\nmessage: Product Id refered in a relationship is not existing\ndescription:",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
     "/productOrderManagement/v3/productOrder/{ProductOrderId}": {
       "get": {
         "security": [
@@ -9537,7 +9985,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/EventPlus"
+              "$ref": "#/definitions/PoEventPlus"
             }
           }
         ],
@@ -9626,7 +10074,7 @@ func init() {
             "name": "productOrderCreationNotification",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/PoEvent"
             }
           }
         ],
@@ -9716,7 +10164,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/EventPlus"
+              "$ref": "#/definitions/PoEventPlus"
             }
           }
         ],
@@ -9806,7 +10254,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/PoEvent"
             }
           }
         ],
@@ -10586,7 +11034,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/QuoteEvent"
             }
           }
         ],
@@ -10670,7 +11118,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/QuoteEvent"
             }
           }
         ],
@@ -10756,7 +11204,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventPlus"
+                "$ref": "#/definitions/QuoteEventPlus"
               }
             }
           }
@@ -10843,7 +11291,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EventPlus"
+                "$ref": "#/definitions/QuoteEventPlus"
               }
             }
           }
@@ -11262,57 +11710,6 @@ func init() {
           "type": "string"
         }
       }
-    },
-    "Event": {
-      "description": "Event class is used to describe information structure used for notification.",
-      "type": "object",
-      "required": [
-        "eventId",
-        "eventType",
-        "eventTime",
-        "event"
-      ],
-      "properties": {
-        "event": {
-          "$ref": "#/definitions/ProductOrderEvent"
-        },
-        "eventId": {
-          "type": "string"
-        },
-        "eventTime": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "eventType": {
-          "$ref": "#/definitions/ProductOrderEventType"
-        }
-      },
-      "discriminator": "eventId"
-    },
-    "EventPlus": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/Event"
-        },
-        {
-          "type": "object",
-          "required": [
-            "resourcePath",
-            "fieldPath"
-          ],
-          "properties": {
-            "fieldPath": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "resourcePath": {
-              "type": "string"
-            }
-          }
-        }
-      ]
     },
     "FieldedAddress": {
       "description": "A type of Address that has a discrete field and value for each type of boundary or identifier down to the lowest level of detail. For example “street number” is one field, “street name” is another field, etc.",
@@ -12217,6 +12614,130 @@ func init() {
         },
         "severity": {
           "$ref": "#/definitions/Severity"
+        }
+      }
+    },
+    "PoEvent": {
+      "description": "Event class is used to describe information structure used for notification.",
+      "type": "object",
+      "required": [
+        "eventId",
+        "eventType",
+        "eventTime",
+        "event"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/ProductOrderEvent"
+        },
+        "eventId": {
+          "type": "string"
+        },
+        "eventTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "eventType": {
+          "$ref": "#/definitions/ProductOrderEventType"
+        }
+      },
+      "discriminator": "eventId"
+    },
+    "PoEventPlus": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/PoEvent"
+        },
+        {
+          "type": "object",
+          "required": [
+            "resourcePath",
+            "fieldPath"
+          ],
+          "properties": {
+            "fieldPath": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "resourcePath": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "PoQEventContainer": {
+      "description": "Event class is used to describe information structure used for notification.",
+      "type": "object",
+      "required": [
+        "eventId",
+        "eventType",
+        "eventTime",
+        "event"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/PoqEvent"
+        },
+        "eventId": {
+          "description": "Id of the event",
+          "type": "string"
+        },
+        "eventTime": {
+          "description": "Datetime when the event occurred",
+          "type": "string",
+          "format": "date-time"
+        },
+        "eventType": {
+          "$ref": "#/definitions/PoqEventType"
+        }
+      }
+    },
+    "PoqEvent": {
+      "description": "The product offering qualification passed as the \"event\" in a notification.",
+      "type": "object",
+      "properties": {
+        "href": {
+          "description": "Link to the POQ",
+          "type": "string"
+        },
+        "id": {
+          "description": "The Serviceability Request's unique identifier.",
+          "type": "string"
+        }
+      }
+    },
+    "PoqEventType": {
+      "description": "Indicates the type of product offering qualification event.",
+      "type": "string",
+      "enum": [
+        "ProductOfferingQualificationCreateEventNotification",
+        "ProductOfferingQualificationStateChangeEventNotification"
+      ]
+    },
+    "PoqItemEvent": {
+      "description": "The product offering qualification item event structure that gets passed in the \"event\" of a notification.",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "desiredActivationDate": {
+          "description": "Desired Activation Date for the product requested in this item",
+          "type": "string",
+          "format": "date"
+        },
+        "id": {
+          "description": "Id of this POQ item",
+          "type": "string"
+        },
+        "serviceabilityConfidence": {
+          "$ref": "#/definitions/ServiceabilityColor"
+        },
+        "state": {
+          "$ref": "#/definitions/QualificationState"
         }
       }
     },
@@ -13608,6 +14129,16 @@ func init() {
         }
       }
     },
+    "QualificationState": {
+      "description": "These values represent the valid states through which the product offering qualification can transition",
+      "type": "string",
+      "enum": [
+        "inProgress",
+        "done",
+        "terminatedWithError.unableToProvide",
+        "terminatedWithError.insufficientInformationProvided"
+      ]
+    },
     "Quantity": {
       "description": "An amount in a given unit",
       "type": "object",
@@ -13739,6 +14270,59 @@ func init() {
       "enum": [
         "CANCELLED",
         "REJECTED"
+      ]
+    },
+    "QuoteEvent": {
+      "description": "Event class is used to describe information structure used for notification.",
+      "type": "object",
+      "required": [
+        "eventId",
+        "eventTime",
+        "eventType",
+        "event"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/QuoteSummaryView"
+        },
+        "eventId": {
+          "description": "Id of the event",
+          "type": "string"
+        },
+        "eventTime": {
+          "description": "Datetime when the event occurred",
+          "type": "string",
+          "format": "date-time"
+        },
+        "eventType": {
+          "$ref": "#/definitions/QuoteEventType"
+        }
+      },
+      "discriminator": "eventId"
+    },
+    "QuoteEventPlus": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/QuoteEvent"
+        },
+        {
+          "type": "object",
+          "required": [
+            "resourcePath",
+            "fieldPath"
+          ],
+          "properties": {
+            "fieldPath": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "resourcePath": {
+              "type": "string"
+            }
+          }
+        }
       ]
     },
     "QuoteEventType": {

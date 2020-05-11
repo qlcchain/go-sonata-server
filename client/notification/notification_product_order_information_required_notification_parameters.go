@@ -63,7 +63,7 @@ for the notification product order information required notification operation t
 type NotificationProductOrderInformationRequiredNotificationParams struct {
 
 	/*ProductOrderInformationRequired*/
-	ProductOrderInformationRequired *models.EventPlus
+	ProductOrderInformationRequired *models.PoEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationProductOrderInformationRequiredNotificationParams) SetHTTPC
 }
 
 // WithProductOrderInformationRequired adds the productOrderInformationRequired to the notification product order information required notification params
-func (o *NotificationProductOrderInformationRequiredNotificationParams) WithProductOrderInformationRequired(productOrderInformationRequired *models.EventPlus) *NotificationProductOrderInformationRequiredNotificationParams {
+func (o *NotificationProductOrderInformationRequiredNotificationParams) WithProductOrderInformationRequired(productOrderInformationRequired *models.PoEventPlus) *NotificationProductOrderInformationRequiredNotificationParams {
 	o.SetProductOrderInformationRequired(productOrderInformationRequired)
 	return o
 }
 
 // SetProductOrderInformationRequired adds the productOrderInformationRequired to the notification product order information required notification params
-func (o *NotificationProductOrderInformationRequiredNotificationParams) SetProductOrderInformationRequired(productOrderInformationRequired *models.EventPlus) {
+func (o *NotificationProductOrderInformationRequiredNotificationParams) SetProductOrderInformationRequired(productOrderInformationRequired *models.PoEventPlus) {
 	o.ProductOrderInformationRequired = productOrderInformationRequired
 }
 

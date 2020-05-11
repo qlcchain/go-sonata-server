@@ -43,6 +43,7 @@ func Test_mockGeographicAddress(t *testing.T) {
 	}
 }
 
+//
 //type Account struct {
 //	ID    string
 //	Extra *Extra `json:"extra" gorm:"embedded"`

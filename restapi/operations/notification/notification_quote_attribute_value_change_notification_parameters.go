@@ -36,7 +36,7 @@ type NotificationQuoteAttributeValueChangeNotificationParams struct {
 	  Required: true
 	  In: body
 	*/
-	QuoteAttributeValueChangeNotification []*models.EventPlus
+	QuoteAttributeValueChangeNotification []*models.QuoteEventPlus
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,7 +50,7 @@ func (o *NotificationQuoteAttributeValueChangeNotificationParams) BindRequest(r 
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body []*models.EventPlus
+		var body []*models.QuoteEventPlus
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("quoteAttributeValueChangeNotification", "body"))

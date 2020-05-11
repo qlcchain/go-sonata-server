@@ -63,7 +63,7 @@ for the notification product order creation notification operation typically the
 type NotificationProductOrderCreationNotificationParams struct {
 
 	/*ProductOrderCreationNotification*/
-	ProductOrderCreationNotification models.Event
+	ProductOrderCreationNotification models.PoEvent
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationProductOrderCreationNotificationParams) SetHTTPClient(clien
 }
 
 // WithProductOrderCreationNotification adds the productOrderCreationNotification to the notification product order creation notification params
-func (o *NotificationProductOrderCreationNotificationParams) WithProductOrderCreationNotification(productOrderCreationNotification models.Event) *NotificationProductOrderCreationNotificationParams {
+func (o *NotificationProductOrderCreationNotificationParams) WithProductOrderCreationNotification(productOrderCreationNotification models.PoEvent) *NotificationProductOrderCreationNotificationParams {
 	o.SetProductOrderCreationNotification(productOrderCreationNotification)
 	return o
 }
 
 // SetProductOrderCreationNotification adds the productOrderCreationNotification to the notification product order creation notification params
-func (o *NotificationProductOrderCreationNotificationParams) SetProductOrderCreationNotification(productOrderCreationNotification models.Event) {
+func (o *NotificationProductOrderCreationNotificationParams) SetProductOrderCreationNotification(productOrderCreationNotification models.PoEvent) {
 	o.ProductOrderCreationNotification = productOrderCreationNotification
 }
 

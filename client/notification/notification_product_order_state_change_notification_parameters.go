@@ -63,7 +63,7 @@ for the notification product order state change notification operation typically
 type NotificationProductOrderStateChangeNotificationParams struct {
 
 	/*ProductOrderStateChange*/
-	ProductOrderStateChange models.Event
+	ProductOrderStateChange models.PoEvent
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationProductOrderStateChangeNotificationParams) SetHTTPClient(cl
 }
 
 // WithProductOrderStateChange adds the productOrderStateChange to the notification product order state change notification params
-func (o *NotificationProductOrderStateChangeNotificationParams) WithProductOrderStateChange(productOrderStateChange models.Event) *NotificationProductOrderStateChangeNotificationParams {
+func (o *NotificationProductOrderStateChangeNotificationParams) WithProductOrderStateChange(productOrderStateChange models.PoEvent) *NotificationProductOrderStateChangeNotificationParams {
 	o.SetProductOrderStateChange(productOrderStateChange)
 	return o
 }
 
 // SetProductOrderStateChange adds the productOrderStateChange to the notification product order state change notification params
-func (o *NotificationProductOrderStateChangeNotificationParams) SetProductOrderStateChange(productOrderStateChange models.Event) {
+func (o *NotificationProductOrderStateChangeNotificationParams) SetProductOrderStateChange(productOrderStateChange models.PoEvent) {
 	o.ProductOrderStateChange = productOrderStateChange
 }
 

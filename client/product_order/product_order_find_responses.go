@@ -112,7 +112,7 @@ type ProductOrderFindOK struct {
 }
 
 func (o *ProductOrderFindOK) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindOK  %+v", 200, o.Payload)
 }
 
 func (o *ProductOrderFindOK) GetPayload() []*models.ProductOrderSummary {
@@ -168,7 +168,7 @@ type ProductOrderFindBadRequest struct {
 }
 
 func (o *ProductOrderFindBadRequest) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindBadRequest  %+v", 400, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindBadRequest  %+v", 400, o.Payload)
 }
 
 func (o *ProductOrderFindBadRequest) GetPayload() *models.ErrorRepresentation {
@@ -206,7 +206,7 @@ type ProductOrderFindUnauthorized struct {
 }
 
 func (o *ProductOrderFindUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindUnauthorized  %+v", 401, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindUnauthorized  %+v", 401, o.Payload)
 }
 
 func (o *ProductOrderFindUnauthorized) GetPayload() *models.ErrorRepresentation {
@@ -245,7 +245,7 @@ type ProductOrderFindForbidden struct {
 }
 
 func (o *ProductOrderFindForbidden) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ProductOrderFindForbidden) GetPayload() *models.ErrorRepresentation {
@@ -281,7 +281,7 @@ type ProductOrderFindNotFound struct {
 }
 
 func (o *ProductOrderFindNotFound) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ProductOrderFindNotFound) GetPayload() *models.ErrorRepresentation {
@@ -317,7 +317,7 @@ type ProductOrderFindMethodNotAllowed struct {
 }
 
 func (o *ProductOrderFindMethodNotAllowed) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindMethodNotAllowed  %+v", 405, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindMethodNotAllowed  %+v", 405, o.Payload)
 }
 
 func (o *ProductOrderFindMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
@@ -353,7 +353,7 @@ type ProductOrderFindRequestTimeout struct {
 }
 
 func (o *ProductOrderFindRequestTimeout) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindRequestTimeout  %+v", 408, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindRequestTimeout  %+v", 408, o.Payload)
 }
 
 func (o *ProductOrderFindRequestTimeout) GetPayload() *models.ErrorRepresentation {
@@ -396,7 +396,7 @@ type ProductOrderFindUnprocessableEntity struct {
 }
 
 func (o *ProductOrderFindUnprocessableEntity) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindUnprocessableEntity  %+v", 422, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindUnprocessableEntity  %+v", 422, o.Payload)
 }
 
 func (o *ProductOrderFindUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
@@ -432,7 +432,7 @@ type ProductOrderFindInternalServerError struct {
 }
 
 func (o *ProductOrderFindInternalServerError) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindInternalServerError  %+v", 500, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindInternalServerError  %+v", 500, o.Payload)
 }
 
 func (o *ProductOrderFindInternalServerError) GetPayload() *models.ErrorRepresentation {
@@ -467,7 +467,7 @@ type ProductOrderFindServiceUnavailable struct {
 }
 
 func (o *ProductOrderFindServiceUnavailable) Error() string {
-	return fmt.Sprintf("[GET /productOrderManagement/v3/productOrder][%d] productOrderFindServiceUnavailable  %+v", 503, o.Payload)
+	return fmt.Sprintf("[GET /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderFindServiceUnavailable  %+v", 503, o.Payload)
 }
 
 func (o *ProductOrderFindServiceUnavailable) GetPayload() *models.ErrorRepresentation {

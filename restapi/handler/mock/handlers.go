@@ -2,7 +2,9 @@ package mock
 
 import (
 	"fmt"
+	"path"
 
+	"github.com/qlcchain/go-sonata-server/config"
 	"github.com/qlcchain/go-sonata-server/schema"
 
 	"github.com/go-openapi/swag"
@@ -34,7 +36,7 @@ var (
 
 func init() {
 	// prepare db
-	//dir := util.DBDir()
+	dir := config.DBDir()
 	var err error
 	//Store, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
 	//	SkipDefaultTransaction: false,
@@ -45,7 +47,9 @@ func init() {
 	//		Colorful:      true,
 	//	}),
 	//})
-	Store, err = gorm.Open("sqlite3", "file:mockdb?mode=memory&cache=shared")
+	file := path.Join(dir, "sonata.db")
+	//file := "file:mockdb?mode=memory&cache=shared"
+	Store, err = gorm.Open("sqlite3", file)
 	if err != nil {
 		logrus.Fatalln(err)
 	}

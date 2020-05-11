@@ -17,23 +17,21 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// Event Event class is used to describe information structure used for notification.
+// QuoteEvent Event class is used to describe information structure used for notification.
 //
-// swagger:discriminator Event eventId
-type Event interface {
+// swagger:discriminator QuoteEvent eventId
+type QuoteEvent interface {
 	runtime.Validatable
 
-	// event
-	// Required: true
-	Event() *ProductOrderEvent
-	SetEvent(*ProductOrderEvent)
+	Event() QuoteSummaryView
+	SetEvent(QuoteSummaryView)
 
-	// event Id
+	// Id of the event
 	// Required: true
 	EventID() string
 	SetEventID(string)
 
-	// event time
+	// Datetime when the event occurred
 	// Required: true
 	// Format: date-time
 	EventTime() *strfmt.DateTime
@@ -41,72 +39,72 @@ type Event interface {
 
 	// event type
 	// Required: true
-	EventType() ProductOrderEventType
-	SetEventType(ProductOrderEventType)
+	EventType() QuoteEventType
+	SetEventType(QuoteEventType)
 
 	// AdditionalProperties in base type shoud be handled just like regular properties
 	// At this moment, the base type property is pushed down to the subtype
 }
 
-type event struct {
-	eventField *ProductOrderEvent
+type quoteEvent struct {
+	eventField QuoteSummaryView
 
 	eventIdField string
 
 	eventTimeField *strfmt.DateTime
 
-	eventTypeField ProductOrderEventType
+	eventTypeField QuoteEventType
 }
 
 // Event gets the event of this polymorphic type
-func (m *event) Event() *ProductOrderEvent {
+func (m *quoteEvent) Event() QuoteSummaryView {
 	return m.eventField
 }
 
 // SetEvent sets the event of this polymorphic type
-func (m *event) SetEvent(val *ProductOrderEvent) {
+func (m *quoteEvent) SetEvent(val QuoteSummaryView) {
 	m.eventField = val
 }
 
 // EventID gets the event Id of this polymorphic type
-func (m *event) EventID() string {
-	return "Event"
+func (m *quoteEvent) EventID() string {
+	return "QuoteEvent"
 }
 
 // SetEventID sets the event Id of this polymorphic type
-func (m *event) SetEventID(val string) {
+func (m *quoteEvent) SetEventID(val string) {
 }
 
 // EventTime gets the event time of this polymorphic type
-func (m *event) EventTime() *strfmt.DateTime {
+func (m *quoteEvent) EventTime() *strfmt.DateTime {
 	return m.eventTimeField
 }
 
 // SetEventTime sets the event time of this polymorphic type
-func (m *event) SetEventTime(val *strfmt.DateTime) {
+func (m *quoteEvent) SetEventTime(val *strfmt.DateTime) {
 	m.eventTimeField = val
 }
 
 // EventType gets the event type of this polymorphic type
-func (m *event) EventType() ProductOrderEventType {
+func (m *quoteEvent) EventType() QuoteEventType {
 	return m.eventTypeField
 }
 
 // SetEventType sets the event type of this polymorphic type
-func (m *event) SetEventType(val ProductOrderEventType) {
+func (m *quoteEvent) SetEventType(val QuoteEventType) {
 	m.eventTypeField = val
 }
 
-// UnmarshalEventSlice unmarshals polymorphic slices of Event
-func UnmarshalEventSlice(reader io.Reader, consumer runtime.Consumer) ([]Event, error) {
+// UnmarshalQuoteEventSlice unmarshals polymorphic slices of QuoteEvent
+func UnmarshalQuoteEventSlice(reader io.Reader, consumer runtime.Consumer) ([]QuoteEvent, error) {
 	var elements []json.RawMessage
 	if err := consumer.Consume(reader, &elements); err != nil {
 		return nil, err
 	}
 
-	var result []Event
+	var result []QuoteEvent
 	for _, element := range elements {
-		obj, err := unmarshalEvent(element, consumer)
+		obj, err := unmarshalQuoteEvent(element, consumer)
 		if err != nil {
 			return nil, err
 		}
@@ -115,17 +113,17 @@ func UnmarshalEventSlice(reader io.Reader, consumer runtime.Consumer) ([]Event, 
 	return result, nil
 }
 
-// UnmarshalEvent unmarshals polymorphic Event
-func UnmarshalEvent(reader io.Reader, consumer runtime.Consumer) (Event, error) {
+// UnmarshalQuoteEvent unmarshals polymorphic QuoteEvent
+func UnmarshalQuoteEvent(reader io.Reader, consumer runtime.Consumer) (QuoteEvent, error) {
 	// we need to read this twice, so first into a buffer
 	data, err := ioutil.ReadAll(reader)
 	if err != nil {
 		return nil, err
 	}
-	return unmarshalEvent(data, consumer)
+	return unmarshalQuoteEvent(data, consumer)
 }
 
-func unmarshalEvent(data []byte, consumer runtime.Consumer) (Event, error) {
+func unmarshalQuoteEvent(data []byte, consumer runtime.Consumer) (QuoteEvent, error) {
 	buf := bytes.NewBuffer(data)
 	buf2 := bytes.NewBuffer(data)
 
@@ -143,14 +141,14 @@ func unmarshalEvent(data []byte, consumer runtime.Consumer) (Event, error) {
 
 	// The value of eventId is used to determine which type to create and unmarshal the data into
 	switch getType.EventID {
-	case "Event":
-		var result event
+	case "QuoteEvent":
+		var result quoteEvent
 		if err := consumer.Consume(buf2, &result); err != nil {
 			return nil, err
 		}
 		return &result, nil
-	case "EventPlus":
-		var result EventPlus
+	case "QuoteEventPlus":
+		var result QuoteEventPlus
 		if err := consumer.Consume(buf2, &result); err != nil {
 			return nil, err
 		}
@@ -159,8 +157,8 @@ func unmarshalEvent(data []byte, consumer runtime.Consumer) (Event, error) {
 	return nil, errors.New(422, "invalid eventId value: %q", getType.EventID)
 }
 
-// Validate validates this event
-func (m *event) Validate(formats strfmt.Registry) error {
+// Validate validates this quote event
+func (m *quoteEvent) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEvent(formats); err != nil {
@@ -181,25 +179,23 @@ func (m *event) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *event) validateEvent(formats strfmt.Registry) error {
+func (m *quoteEvent) validateEvent(formats strfmt.Registry) error {
 
 	if err := validate.Required("event", "body", m.Event()); err != nil {
 		return err
 	}
 
-	if m.Event() != nil {
-		if err := m.Event().Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("event")
-			}
-			return err
+	if err := m.Event().Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("event")
 		}
+		return err
 	}
 
 	return nil
 }
 
-func (m *event) validateEventTime(formats strfmt.Registry) error {
+func (m *quoteEvent) validateEventTime(formats strfmt.Registry) error {
 
 	if err := validate.Required("eventTime", "body", m.EventTime()); err != nil {
 		return err
@@ -212,7 +208,7 @@ func (m *event) validateEventTime(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *event) validateEventType(formats strfmt.Registry) error {
+func (m *quoteEvent) validateEventType(formats strfmt.Registry) error {
 
 	if err := m.EventType().Validate(formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {

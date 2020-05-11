@@ -36,7 +36,7 @@ type NotificationProductOrderInformationRequiredNotificationParams struct {
 	  Required: true
 	  In: body
 	*/
-	ProductOrderInformationRequired *models.EventPlus
+	ProductOrderInformationRequired *models.PoEventPlus
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,7 +50,7 @@ func (o *NotificationProductOrderInformationRequiredNotificationParams) BindRequ
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.EventPlus
+		var body models.PoEventPlus
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("productOrderInformationRequired", "body"))

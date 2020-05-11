@@ -1028,7 +1028,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/EventPlus"
+            $ref: "#/definitions/PoEventPlus"
       responses:
         "204":
           description: No Content
@@ -1129,7 +1129,7 @@ paths:
         - name: productOrderCreationNotification
           in: body
           schema:
-            $ref: "#/definitions/Event"
+            $ref: "#/definitions/PoEvent"
       responses:
         "204":
           description: No Content
@@ -1231,7 +1231,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/EventPlus"
+            $ref: "#/definitions/PoEventPlus"
       responses:
         "204":
           description: No Content
@@ -1333,7 +1333,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Event"
+            $ref: "#/definitions/PoEvent"
       responses:
         "204":
           description: No Content
@@ -1444,7 +1444,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/EventPlus"
+              $ref: "#/definitions/QuoteEventPlus"
       responses:
         "204":
           description: Success
@@ -1543,7 +1543,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Event"
+            $ref: "#/definitions/QuoteEvent"
       responses:
         "204":
           description: Success
@@ -1646,7 +1646,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/EventPlus"
+              $ref: "#/definitions/QuoteEventPlus"
       responses:
         "204":
           description: Success
@@ -1745,7 +1745,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: "#/definitions/Event"
+            $ref: "#/definitions/QuoteEvent"
       responses:
         "204":
           description: Success
@@ -2690,7 +2690,127 @@ paths:
 
           schema:
             $ref: "#/definitions/ErrorRepresentation"
-  /productOrderManagement/v3/productOrder:
+  /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification:
+    post:
+      tags:
+      - "Notification"
+      consumes:
+      - "application/json;charset=utf-8"
+      operationId: "notificationProductOfferingQualificationCreationNotification"
+      summary: "Product Offering Qualification Creation Notification structure"
+      security:
+        - bearer: [ "customer","admin" ]
+      description: "Product Offering Qualification Creation Notification structure\
+        \ definition"
+      deprecated: false
+      parameters:
+      - name: "productOfferingQualificationCreationNotification"
+        required: true
+        in: "body"
+        description: ""
+        schema:
+          $ref: "#/definitions/PoQEventContainer"
+      responses:
+        204:
+          description: "No Content"
+        400:
+          description: "Bad Request\n\nList of supported error codes:\n- 20: Invalid\
+            \ URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing\
+            \ body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid\
+            \ header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string\
+            \ parameter value"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        401:
+          description: "Unauthorized\n\nList of supported error codes:\n- 40: Missing\
+            \ credentials\n- 41: Invalid credentials\n- 42: Expired credentials"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        403:
+          description: "Forbidden\n\nList of supported error codes:\n- 50: Access\
+            \ denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many\
+            \ requests"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        404:
+          description: "Not Found\n\nList of supported error codes:\n- 60: Resource\
+            \ not found"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        408:
+          description: "Request Time-out\n\nList of supported error codes:\n- 63:\
+            \ Request time-out"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        422:
+          description: "Unprocessable entity\n\nFunctional error"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        503:
+          description: "Service Unavailable\n\n"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+  /productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification:
+    post:
+      tags:
+      - "Notification"
+      consumes:
+      - "application/json;charset=utf-8"
+      operationId: "notificationProductOfferingQualificationStateChangeNotification"
+      summary: "Product Offering Qualification State Change Notification structure"
+      security:
+        - bearer: [ "customer","admin" ]
+      description: "Product Offering Qualification State Change Notification structure\
+        \ definition"
+      deprecated: false
+      parameters:
+      - name: "productOfferingQualificationStateChangeNotification"
+        required: true
+        in: "body"
+        description: ""
+        schema:
+          $ref: "#/definitions/PoQEventContainer"
+      responses:
+        204:
+          description: "No Content"
+        400:
+          description: "Bad Request\n\nList of supported error codes:\n- 20: Invalid\
+            \ URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing\
+            \ body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid\
+            \ header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string\
+            \ parameter value"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        401:
+          description: "Unauthorized\n\nList of supported error codes:\n- 40: Missing\
+            \ credentials\n- 41: Invalid credentials\n- 42: Expired credentials"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        403:
+          description: "Forbidden\n\nList of supported error codes:\n- 50: Access\
+            \ denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many\
+            \ requests"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        404:
+          description: "Not Found\n\nList of supported error codes:\n- 60: Resource\
+            \ not found"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        408:
+          description: "Request Time-out\n\nList of supported error codes:\n- 63:\
+            \ Request time-out"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        422:
+          description: "Unprocessable entity\n\nFunctional error"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        503:
+          description: "Service Unavailable\n\n"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+  /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder:
     get:
       description: This operation is used to retrieve one or more product orders based upon filter criteria specified on input.
       produces:
@@ -4224,28 +4344,30 @@ definitions:
       status:
         description: http error code extension like 400-2
         type: string
-  Event:
-    description: Event class is used to describe information structure used for notification.
-    type: object
+  QuoteEvent:
+    description: "Event class is used to describe information structure used for notification."
+    discriminator: "eventId"
     required:
-      - eventId
-      - eventType
-      - eventTime
-      - event
+    - "eventId"
+    - "eventTime"
+    - "eventType"
+    - "event"
+    type: "object"
     properties:
-      event:
-        $ref: "#/definitions/ProductOrderEvent"
       eventId:
-        type: string
+        description: "Id of the event"
+        type: "string"
       eventTime:
-        type: string
-        format: date-time
+        description: "Datetime when the event occurred"
+        type: "string"
+        format: "date-time"
       eventType:
-        $ref: "#/definitions/ProductOrderEventType"
-    discriminator: eventId
-  EventPlus:
+        $ref: "#/definitions/QuoteEventType"
+      event:
+        $ref: "#/definitions/QuoteSummaryView"
+  QuoteEventPlus:
     allOf:
-      - $ref: "#/definitions/Event"
+      - $ref: "#/definitions/QuoteEvent"
       - type: object
         required:
           - resourcePath
@@ -5106,6 +5228,44 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/RelatedParty"
+  PoEvent:
+    description: "Event class is used to describe information structure used for notification."
+    discriminator: "eventId"
+    required:
+    - "eventId"
+    - "eventType"
+    - "eventTime"
+    - "event"
+    type: "object"
+    properties:
+      eventId:
+        description: ""
+        type: "string"
+      eventType:
+        $ref: "#/definitions/ProductOrderEventType"
+      eventTime:
+        description: ""
+        type: "string"
+        format: "date-time"
+      event:
+        $ref: "#/definitions/ProductOrderEvent"
+  PoEventPlus:
+    description: ""
+    allOf:
+    - $ref: "#/definitions/PoEvent"
+    - required:
+      - "resourcePath"
+      - "fieldPath"
+      type: "object"
+      properties:
+        resourcePath:
+          description: ""
+          type: "string"
+        fieldPath:
+          description: ""
+          type: "array"
+          items:
+            type: "string"
   ProductOfferingQualification:
     description: A grouping of POQ Items formulated into a request made by a Buyer to a Seller
     type: object
@@ -6658,6 +6818,88 @@ definitions:
         type: array
         items:
           type: string
+  QualificationState:
+    description: "These values represent the valid states through which the product\
+      \ offering qualification can transition"
+    type: "string"
+    enum:
+    - "inProgress"
+    - "done"
+    - "terminatedWithError.unableToProvide"
+    - "terminatedWithError.insufficientInformationProvided"
+  PoQEventContainer:
+    description: "Event class is used to describe information structure used for notification."
+    required:
+    - "eventId"
+    - "eventType"
+    - "eventTime"
+    - "event"
+    type: "object"
+    properties:
+      eventId:
+        description: "Id of the event"
+        type: "string"
+      eventType:
+        $ref: "#/definitions/PoqEventType"
+      eventTime:
+        description: "Datetime when the event occurred"
+        type: "string"
+        format: "date-time"
+      event:
+        $ref: "#/definitions/PoqEvent"
+  PoqEventType:
+    description: "Indicates the type of product offering qualification event."
+    type: "string"
+    enum:
+    - "ProductOfferingQualificationCreateEventNotification"
+    - "ProductOfferingQualificationStateChangeEventNotification"
+  PoqItemEvent:
+    description: "The product offering qualification item event structure that gets\
+      \ passed in the \"event\" of a notification."
+    required:
+    - "id"
+    type: "object"
+    properties:
+      id:
+        description: "Id of this POQ item"
+        type: "string"
+      state:
+        $ref: "#/definitions/QualificationState"
+      serviceabilityConfidence:
+        $ref: "#/definitions/ServiceabilityColor"
+      desiredActivationDate:
+        description: "Desired Activation Date for the product requested in this item"
+        type: "string"
+        format: "date"
+  PoqEvent:
+    description: "The product offering qualification passed as the \"event\" in a\
+      \ notification."
+    type: "object"
+    properties:
+      id:
+        description: "The Serviceability Request's unique identifier."
+        type: "string"
+      href:
+        description: "Link to the POQ"
+        type: "string"
+  # PoqEventPlus:
+  #   description: "Event class is used to describe information structure used for notification."
+  #   allOf:
+  #   - $ref: "#/definitions/PoQEventContainer"
+  #   - required:
+  #     - "resourcePath"
+  #     - "fieldPath"
+  #     type: "object"
+  #     properties:
+  #       resourcePath:
+  #         description: "Path to the resource (where an information is required or\
+  #           \ an attribute changed value)"
+  #         type: "string"
+  #       fieldPath:
+  #         description: "Path to the field which has value changed or information required"
+  #         type: "array"
+  #         items:
+  #           type: "string"
 tags:
   - description: "Geographic address describe an geographic address with usual parameters as street, postcode, county, etc... information"
     name: GeographicAddress

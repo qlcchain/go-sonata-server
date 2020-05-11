@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/url"
+
 	"github.com/go-openapi/swag"
 
 	"github.com/qlcchain/go-sonata-server/models"
@@ -11,6 +13,16 @@ func ToErrorRepresentation(principal *models.Principal) *models.ErrorRepresentat
 		return &models.ErrorRepresentation{
 			Code:   swag.Int32(principal.Code),
 			Reason: swag.String(principal.Reason),
+		}
+	}
+	return nil
+}
+
+func VerifyCallback(callback *string) *models.ErrorRepresentation {
+	if _, err := url.Parse(*callback); err != nil {
+		return &models.ErrorRepresentation{
+			Code:   swag.Int32(24),
+			Reason: swag.String("Invalid  body field"),
 		}
 	}
 	return nil

@@ -36,7 +36,7 @@ type NotificationQuoteCreationNotificationParams struct {
 	  Required: true
 	  In: body
 	*/
-	QuoteCreationNotification models.Event
+	QuoteCreationNotification models.QuoteEvent
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,7 +50,7 @@ func (o *NotificationQuoteCreationNotificationParams) BindRequest(r *http.Reques
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		body, err := models.UnmarshalEvent(r.Body, route.Consumer)
+		body, err := models.UnmarshalQuoteEvent(r.Body, route.Consumer)
 		if err != nil {
 			if err == io.EOF {
 				err = errors.Required("quoteCreationNotification", "body")

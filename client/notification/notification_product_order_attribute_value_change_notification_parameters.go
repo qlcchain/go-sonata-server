@@ -63,7 +63,7 @@ for the notification product order attribute value change notification operation
 type NotificationProductOrderAttributeValueChangeNotificationParams struct {
 
 	/*ProductOrderAttributeValueChange*/
-	ProductOrderAttributeValueChange *models.EventPlus
+	ProductOrderAttributeValueChange *models.PoEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationProductOrderAttributeValueChangeNotificationParams) SetHTTP
 }
 
 // WithProductOrderAttributeValueChange adds the productOrderAttributeValueChange to the notification product order attribute value change notification params
-func (o *NotificationProductOrderAttributeValueChangeNotificationParams) WithProductOrderAttributeValueChange(productOrderAttributeValueChange *models.EventPlus) *NotificationProductOrderAttributeValueChangeNotificationParams {
+func (o *NotificationProductOrderAttributeValueChangeNotificationParams) WithProductOrderAttributeValueChange(productOrderAttributeValueChange *models.PoEventPlus) *NotificationProductOrderAttributeValueChangeNotificationParams {
 	o.SetProductOrderAttributeValueChange(productOrderAttributeValueChange)
 	return o
 }
 
 // SetProductOrderAttributeValueChange adds the productOrderAttributeValueChange to the notification product order attribute value change notification params
-func (o *NotificationProductOrderAttributeValueChangeNotificationParams) SetProductOrderAttributeValueChange(productOrderAttributeValueChange *models.EventPlus) {
+func (o *NotificationProductOrderAttributeValueChangeNotificationParams) SetProductOrderAttributeValueChange(productOrderAttributeValueChange *models.PoEventPlus) {
 	o.ProductOrderAttributeValueChange = productOrderAttributeValueChange
 }
 
