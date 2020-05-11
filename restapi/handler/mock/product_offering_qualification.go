@@ -1,9 +1,13 @@
+/*
+ * Copyright (c) 2020. QLC Chain Team
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
 package mock
 
 import (
-	"bytes"
-	"io/ioutil"
-	"net/http"
 	"time"
 
 	"github.com/qlcchain/go-sonata-server/event"
@@ -25,7 +29,11 @@ import (
 )
 
 const (
-	poqTopic = "poq"
+	poqType = "poq"
+)
+
+var (
+	poqBus = event.GetEventBus(poqType)
 )
 
 func ProductOfferingQualificationProductOfferingQualificationCreateHandler(params poq.ProductOfferingQualificationCreateParams, principal *models.Principal) middleware.Responder {
@@ -98,18 +106,18 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 
 	var err error
 	if err = Store.Create(qualification).Error; err == nil {
-		var payload *models.ProductOfferingQualification
+		payload := &models.ProductOfferingQualification{}
 		if err = util.Convert(qualification, payload); err == nil {
 			now := strfmt.DateTime(time.Now())
-			event.SimpleEventBus().Publish(poqTopic, &models.PoQEventContainer{
+			t := models.PoqEventTypeProductOfferingQualificationCreateEventNotification
+			poqBus.Publish(string(t), &models.PoQEventContainer{
 				Event: &models.PoqEvent{
-					//TODO: convert to url
-					Href: *payload.ID,
-					ID:   *payload.ID,
+					Href: handler.HrefToID("", swag.StringValue(payload.ID)),
+					ID:   swag.StringValue(payload.ID),
 				},
 				EventID:   swag.String(xid.New().String()),
 				EventTime: &now,
-				EventType: models.PoqEventTypeProductOfferingQualificationCreateEventNotification,
+				EventType: t,
 			})
 			return poq.NewProductOfferingQualificationCreateCreated().WithPayload(payload)
 		}
@@ -125,13 +133,37 @@ func ProductOfferingQualificationProductOfferingQualificationFindHandler(params 
 		return poq.NewProductOfferingQualificationFindBadRequest().WithPayload(payload)
 	}
 	var poqs []schema.ProductOfferingQualification
-	if err := Store.Set(db.AutoPreLoad, true).Where("", params).Find(&poqs).Error; err == nil {
+	tx := Store.Set(db.AutoPreLoad, true)
+	if v, b := handler.VerifyField(params.ProjectID); b {
+		tx = tx.Where("projectId=?", v)
+	}
+	if v, b := handler.VerifyField(params.State); b {
+		tx = tx.Where("state=?", v)
+	}
+
+	if v, b := handler.VerifyField(params.RequestedResponseDateGt); b {
+		tx = tx.Where("requestedResponseDate>=?", v)
+	}
+
+	if v, b := handler.VerifyField(params.RequestedResponseDateLt); b {
+		tx = tx.Where("requestedResponseDate<=?", v)
+	}
+
+	if v, b := handler.VerifyField(params.Limit); b {
+		tx = tx.Limit(v)
+	}
+
+	if v, b := handler.VerifyField(params.Offset); b {
+		tx = tx.Offset(v)
+	}
+
+	if err := tx.Find(&poqs).Error; err == nil {
 		var result []*models.ProductOfferingQualificationFind
 		for _, p := range poqs {
 			result = append(result, &models.ProductOfferingQualificationFind{
 				ID:                    *p.ID,
 				ProjectID:             p.ProjectID,
-				RequestedResponseDate: strfmt.Date(time.Now()),
+				RequestedResponseDate: strfmt.Date(p.RequestedResponseDate),
 				State:                 p.State,
 			})
 		}
@@ -168,15 +200,20 @@ func HubProductOfferingQualificationManagementHubDeleteHandler(params hub.Produc
 	// verify id
 	id := params.HubID
 
-	if err := db.DeleteSubscriber(Store, id); err == nil {
-		if err := event.SimpleEventBus().Unsubscribe(poqTopic, id); err == nil {
-			return hub.NewProductOfferingQualificationManagementHubDeleteNoContent()
+	if s, err := db.FindSubscriber(Store, id); err == nil {
+		if err := poqBus.Unsubscribe(handler.ParseType(s.Query), id); err == nil {
+			if err := db.DeleteSubscriber(Store, id); err == nil {
+				return hub.NewProductOfferingQualificationManagementHubDeleteNoContent()
+			} else {
+				return hub.NewProductOrderManagementHubDeleteInternalServerError().WithPayload(&models.ErrorRepresentation{
+					Reason: swag.String(err.Error()),
+				})
+			}
 		} else {
 			return hub.NewProductOrderManagementHubDeleteInternalServerError().WithPayload(&models.ErrorRepresentation{
 				Reason: swag.String(err.Error()),
 			})
 		}
-
 	} else if err == gorm.ErrRecordNotFound {
 		return hub.NewProductOrderManagementHubDeleteNotFound()
 	} else {
@@ -190,8 +227,7 @@ func HubProductOfferingQualificationManagementHubGetHandler(params hub.ProductOf
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOfferingQualificationManagementHubGetUnauthorized().WithPayload(payload)
 	}
-
-	if subscribers, err := db.ListSubscribers(Store, poqTopic); err == nil {
+	if subscribers, err := db.ListSubscribers(Store, poqType); err == nil {
 		var payload []*models.Hub
 		for _, s := range subscribers {
 			payload = append(payload, &models.Hub{
@@ -231,7 +267,7 @@ func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductO
 		})
 	}
 
-	if *input.Query != "eventType = ProductOfferingQualificationStateChangeNotification" {
+	if *input.Query == "" {
 		return hub.NewProductOfferingQualificationManagementHubPostBadRequest().WithPayload(&models.ErrorRepresentation{
 			Code:   swag.Int32(24),
 			Reason: swag.String("Invalid body field"),
@@ -242,14 +278,14 @@ func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductO
 		return hub.NewProductOfferingQualificationManagementHubPostBadRequest().WithPayload(payload)
 	}
 
-	if id, err := event.SimpleEventBus().Subscribe(poqTopic, poqCallbackHandler, &event.CallbackOption{}); err != nil {
+	if id, err := poqBus.Subscribe(handler.ParseType(*input.Query), commonCallbackHandler, &event.CallbackOption{}); err != nil {
 		return hub.NewProductOfferingQualificationManagementHubPostServiceUnavailable().WithPayload(&models.ErrorRepresentation{
 			Reason: swag.String(err.Error()),
 		})
 	} else {
 		if err := db.AddSubscriber(Store, &schema.HubSubscriber{
 			ID:       id,
-			Type:     poqTopic,
+			Type:     poqType,
 			Query:    *input.Query,
 			Callback: *input.Callback,
 		}); err == nil {
@@ -263,27 +299,5 @@ func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductO
 				Reason: swag.String(err.Error()),
 			})
 		}
-	}
-}
-
-func poqCallbackHandler(option *event.CallbackOption, poqEvent *models.PoQEventContainer) {
-	if subscriber, err := db.FindSubscriber(Store, option.ID, poqTopic); err == nil {
-		if poqEvent != nil {
-			client := &http.Client{}
-			content := util.ToString(poqEvent)
-			resp, err := client.Post(subscriber.Callback, "application/json;charset=utf-8", bytes.NewBuffer([]byte(content)))
-			if err != nil {
-				logrus.Error(err)
-			}
-			defer resp.Body.Close()
-
-			if all, err := ioutil.ReadAll(resp.Body); err != nil {
-				logrus.Error(err)
-			} else {
-				logrus.Debug(string(all))
-			}
-		}
-	} else {
-		logrus.Error(err)
 	}
 }

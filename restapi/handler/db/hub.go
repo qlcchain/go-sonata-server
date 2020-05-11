@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020. QLC Chain Team
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
 package db
 
 import (
@@ -6,15 +13,15 @@ import (
 	"github.com/qlcchain/go-sonata-server/schema"
 )
 
-func FindSubscriber(db *gorm.DB, id, attype string) (*schema.HubSubscriber, error) {
+func FindSubscriber(db *gorm.DB, id string) (*schema.HubSubscriber, error) {
 	var r = &schema.HubSubscriber{}
-	err := db.Where("id=? AND type=?", id, attype).First(r).Error
+	err := db.Where("id=?", id).First(r).Error
 	return r, err
 }
 
-func ListSubscribers(db *gorm.DB, attype string) ([]*schema.HubSubscriber, error) {
+func ListSubscribers(db *gorm.DB, atType string) ([]*schema.HubSubscriber, error) {
 	var r []*schema.HubSubscriber
-	err := db.Where("type=?", attype).Find(&r).Error
+	err := db.Where("type=?", atType).Find(&r).Error
 	return r, err
 }
 

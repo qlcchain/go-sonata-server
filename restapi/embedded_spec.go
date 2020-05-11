@@ -3427,14 +3427,6 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteCreationNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
         "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -3511,14 +3503,6 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteStateChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
         "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -3595,14 +3579,6 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -3682,14 +3658,6 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -11011,14 +10979,6 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteCreationNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
         "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -11095,14 +11055,6 @@ func init() {
     },
     "/quoteNotification/v1/notification/quoteStateChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
         "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -11179,14 +11131,6 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"
@@ -11266,14 +11210,6 @@ func init() {
     },
     "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json;charset=utf-8"

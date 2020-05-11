@@ -1434,8 +1434,6 @@ paths:
       tags:
         - Notification
       summary: Quote attribute value change notification structure
-      security:
-        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteAttributeValueChangeNotification
       parameters:
         - name: quoteAttributeValueChangeNotification
@@ -1535,8 +1533,6 @@ paths:
       tags:
         - Notification
       summary: Quote creation notification structure
-      security:
-        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteCreationNotification
       parameters:
         - name: quoteCreationNotification
@@ -1636,8 +1632,6 @@ paths:
       tags:
         - Notification
       summary: Quote information required notification structure
-      security:
-        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteInformationRequiredNotification
       parameters:
         - name: quoteInformationRequiredNotification
@@ -1737,8 +1731,6 @@ paths:
       tags:
         - Notification
       summary: Quote state change notification structure
-      security:
-        - bearer: [ "customer","admin" ]
       operationId: notificationQuoteStateChangeNotification
       parameters:
         - name: quoteStateChangeNotification

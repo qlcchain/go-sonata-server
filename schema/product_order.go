@@ -59,7 +59,7 @@ type ProductOrder struct {
 	ID *string `json:"id"`
 
 	// note
-	Note []*models.Note `json:"note" gorm:"foreignkey:ID"`
+	Note []*Note `json:"note" gorm:"foreignkey:ID"`
 
 	// order activity
 	// Required: true

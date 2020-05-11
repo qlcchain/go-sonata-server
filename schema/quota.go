@@ -3,6 +3,8 @@ package schema
 import (
 	"strconv"
 
+	"github.com/rs/xid"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -34,8 +36,9 @@ type Quote struct {
 	// This is the date wished by the requester to have the requested quote item(s) delivered
 	// Format: date
 	ExpectedFulfillmentStartDateField strfmt.Date `json:"expectedFulfillmentStartDate,omitempty"`
-	ExpectedQuoteCompletionDateField  strfmt.Date `json:"expectedQuoteCompletionDate,omitempty"`
-
+	//This is the date filled by the seller to indicate expected quote completion date.
+	ExpectedQuoteCompletionDateField strfmt.Date `json:"expectedQuoteCompletionDate,omitempty"`
+	//Date when the quoted was Cancelled or Rejected or Accepted
 	EffectiveQuoteCompletionDateField strfmt.DateTime `json:"effectiveQuoteCompletionDate,omitempty"`
 
 	// ID given by the consumer and only understandable by him (to facilitate his searches afterwards)
@@ -45,10 +48,10 @@ type Quote struct {
 	InstantSyncQuotingField *bool `json:"instantSyncQuoting,omitempty"`
 
 	// note
-	NoteField []*models.Note `json:"note" gorm:"foreignkey:ID"`
+	NoteField []*Note `json:"note" gorm:"foreignkey:ID"`
 
 	// This value MAY be assigned by the Buyer/Seller to identify a project the quoting request is associated with.
-	ProjectIDField string `json:"projectId,omitempty"`
+	ProjectIDField string `json:"projectID,omitempty"`
 
 	// quote item
 	// Required: true
@@ -67,9 +70,10 @@ type Quote struct {
 	// Format: date-time
 	RequestedQuoteCompletionDateField *strfmt.DateTime `json:"requestedQuoteCompletionDate"`
 
-	HrefField      string                `json:"href,omitempty"`
-	IDField        string                `json:"id,omitempty"`
-	QuoteDateField strfmt.DateTime       `json:"quoteDateField,omitempty"`
+	HrefField string `json:"href,omitempty"`
+	IDField   string `json:"id,omitempty"`
+	//Date when the quote was created
+	QuoteDateField strfmt.DateTime       `json:"quoteDate,omitempty"`
 	StateField     models.QuoteStateType `json:"state,omitempty"`
 	ValidForField  *models.TimePeriod    `json:"validFor,omitempty"`
 }
@@ -220,11 +224,14 @@ func (m *Quote) validateNote(formats strfmt.Registry) error {
 		}
 
 		if m.NoteField[i] != nil {
-			if err := m.NoteField[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("note" + "." + strconv.Itoa(i))
+			to := &models.Note{}
+			if err := util.Convert(m.NoteField[i], to); err == nil {
+				if err := to.Validate(formats); err != nil {
+					if ve, ok := err.(*errors.Validation); ok {
+						return ve.ValidateName("note" + "." + strconv.Itoa(i))
+					}
+					return err
 				}
-				return err
 			}
 		}
 
@@ -453,11 +460,26 @@ func (m *Quote) SetInstantSyncQuoting(b bool) {
 }
 
 func (m *Quote) Note() []*models.Note {
-	return m.NoteField
+	var notes []*models.Note
+	for _, note := range m.NoteField {
+		to := &models.Note{}
+		if err := util.Convert(note, to); err == nil {
+			notes = append(notes)
+		}
+	}
+	return notes
 }
 
 func (m *Quote) SetNote(notes []*models.Note) {
-	m.NoteField = notes
+	var r []*Note
+	for _, n := range notes {
+		to := &Note{}
+		if err := util.Convert(n, to); err == nil {
+			to.ID = swag.String(xid.New().String())
+			r = append(r, to)
+		}
+	}
+	m.NoteField = r
 }
 
 func (m *Quote) ProjectID() string {
@@ -551,7 +573,7 @@ type QuoteItem struct {
 	ID *string `json:"id"`
 
 	// note
-	Note []*models.Note `json:"note" gorm:"foreignkey:ID"`
+	Note []*Note `json:"note" gorm:"foreignkey:ID"`
 
 	// product
 	Product *Product `json:"product,omitempty" gorm:"foreignkey:ID"`
