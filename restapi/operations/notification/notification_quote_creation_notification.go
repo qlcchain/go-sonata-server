@@ -9,21 +9,19 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NotificationQuoteCreationNotificationHandlerFunc turns a function with the right signature into a notification quote creation notification handler
-type NotificationQuoteCreationNotificationHandlerFunc func(NotificationQuoteCreationNotificationParams, *models.Principal) middleware.Responder
+type NotificationQuoteCreationNotificationHandlerFunc func(NotificationQuoteCreationNotificationParams) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn NotificationQuoteCreationNotificationHandlerFunc) Handle(params NotificationQuoteCreationNotificationParams, principal *models.Principal) middleware.Responder {
-	return fn(params, principal)
+func (fn NotificationQuoteCreationNotificationHandlerFunc) Handle(params NotificationQuoteCreationNotificationParams) middleware.Responder {
+	return fn(params)
 }
 
 // NotificationQuoteCreationNotificationHandler interface for that can handle valid notification quote creation notification params
 type NotificationQuoteCreationNotificationHandler interface {
-	Handle(NotificationQuoteCreationNotificationParams, *models.Principal) middleware.Responder
+	Handle(NotificationQuoteCreationNotificationParams) middleware.Responder
 }
 
 // NewNotificationQuoteCreationNotification creates a new http.Handler for the notification quote creation notification operation
@@ -55,25 +53,12 @@ func (o *NotificationQuoteCreationNotification) ServeHTTP(rw http.ResponseWriter
 	}
 	var Params = NewNotificationQuoteCreationNotificationParams()
 
-	uprinc, aCtx, err := o.Context.Authorize(r, route)
-	if err != nil {
-		o.Context.Respond(rw, r, route.Produces, route, err)
-		return
-	}
-	if aCtx != nil {
-		r = aCtx
-	}
-	var principal *models.Principal
-	if uprinc != nil {
-		principal = uprinc.(*models.Principal) // this is really a models.Principal, I promise
-	}
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params, principal) // actually handle the request
+	res := o.Handler.Handle(Params) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 

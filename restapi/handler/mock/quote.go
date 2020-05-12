@@ -337,22 +337,22 @@ func HubQuoteManagementHubFindHandler(params hub.QuoteManagementHubFindParams, p
 	}
 }
 
-func NotificationNotificationQuoteAttributeValueChangeNotificationHandler(params notification.NotificationQuoteAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
+func NotificationNotificationQuoteAttributeValueChangeNotificationHandler(params notification.NotificationQuoteAttributeValueChangeNotificationParams) middleware.Responder {
 	logrus.Debugf("got NotificationQuoteAttributeValueChangeNotificationParams: %s", util.ToString(params.QuoteAttributeValueChangeNotification))
 	return notification.NewNotificationQuoteAttributeValueChangeNotificationNoContent()
 }
 
-func NotificationNotificationQuoteCreationNotificationHandler(params notification.NotificationQuoteCreationNotificationParams, principal *models.Principal) middleware.Responder {
+func NotificationNotificationQuoteCreationNotificationHandler(params notification.NotificationQuoteCreationNotificationParams) middleware.Responder {
 	logrus.Debugf("got NotificationQuoteCreationNotificationParams:%s", util.ToString(params.QuoteCreationNotification))
 	return notification.NewNotificationQuoteCreationNotificationNoContent()
 }
 
-func NotificationNotificationQuoteInformationRequiredNotificationHandler(params notification.NotificationQuoteInformationRequiredNotificationParams, principal *models.Principal) middleware.Responder {
+func NotificationNotificationQuoteInformationRequiredNotificationHandler(params notification.NotificationQuoteInformationRequiredNotificationParams) middleware.Responder {
 	logrus.Debugf("got NotificationQuoteInformationRequiredNotificationParams: %s", util.ToString(params.QuoteInformationRequiredNotification))
 	return notification.NewNotificationProductOrderInformationRequiredNotificationNoContent()
 }
 
-func NotificationNotificationQuoteStateChangeNotificationHandler(params notification.NotificationQuoteStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
+func NotificationNotificationQuoteStateChangeNotificationHandler(params notification.NotificationQuoteStateChangeNotificationParams) middleware.Responder {
 	logrus.Debugf("got NotificationQuoteStateChangeNotificationParams: %s", util.ToString(params.QuoteStateChangeNotification))
 	return notification.NewNotificationQuoteStateChangeNotificationNoContent()
 }

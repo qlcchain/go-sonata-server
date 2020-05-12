@@ -35,7 +35,7 @@ func (o *NotificationQuoteAttributeValueChangeNotificationURL) SetBasePath(bp st
 func (o *NotificationQuoteAttributeValueChangeNotificationURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification"
+	var _path = "/quoteNotification/v1/notification/quoteAttributeValueChangeNotification"
 
 	_basePath := o._basePath
 	if _basePath == "" {

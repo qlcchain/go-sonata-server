@@ -90,7 +90,7 @@ type NotificationProductOfferingQualificationCreationNotificationNoContent struc
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationNoContent) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationNoContent ", 204)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationNoContent ", 204)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -123,7 +123,7 @@ type NotificationProductOfferingQualificationCreationNotificationBadRequest stru
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationBadRequest) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationBadRequest  %+v", 400, o.Payload)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationBadRequest  %+v", 400, o.Payload)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationBadRequest) GetPayload() *models.ErrorRepresentation {
@@ -161,7 +161,7 @@ type NotificationProductOfferingQualificationCreationNotificationUnauthorized st
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationUnauthorized  %+v", 401, o.Payload)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationUnauthorized  %+v", 401, o.Payload)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationUnauthorized) GetPayload() *models.ErrorRepresentation {
@@ -200,7 +200,7 @@ type NotificationProductOfferingQualificationCreationNotificationForbidden struc
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationForbidden) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationForbidden  %+v", 403, o.Payload)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationForbidden) GetPayload() *models.ErrorRepresentation {
@@ -236,7 +236,7 @@ type NotificationProductOfferingQualificationCreationNotificationNotFound struct
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationNotFound) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationNotFound  %+v", 404, o.Payload)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationNotFound) GetPayload() *models.ErrorRepresentation {
@@ -272,7 +272,7 @@ type NotificationProductOfferingQualificationCreationNotificationRequestTimeout 
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationRequestTimeout) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationRequestTimeout  %+v", 408, o.Payload)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationRequestTimeout  %+v", 408, o.Payload)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationRequestTimeout) GetPayload() *models.ErrorRepresentation {
@@ -307,7 +307,7 @@ type NotificationProductOfferingQualificationCreationNotificationUnprocessableEn
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationUnprocessableEntity) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationUnprocessableEntity  %+v", 422, o.Payload)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationUnprocessableEntity  %+v", 422, o.Payload)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
@@ -342,7 +342,7 @@ type NotificationProductOfferingQualificationCreationNotificationServiceUnavaila
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationServiceUnavailable) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationServiceUnavailable  %+v", 503, o.Payload)
+	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationServiceUnavailable  %+v", 503, o.Payload)
 }
 
 func (o *NotificationProductOfferingQualificationCreationNotificationServiceUnavailable) GetPayload() *models.ErrorRepresentation {

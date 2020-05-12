@@ -1419,7 +1419,7 @@ paths:
 
           schema:
             $ref: "#/definitions/ErrorRepresentation"
-  /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification:
+  /quoteNotification/v1/notification/quoteAttributeValueChangeNotification:
     post:
       description: |
         Quote attribute value change notification structure description.
@@ -1434,6 +1434,7 @@ paths:
       tags:
         - Notification
       summary: Quote attribute value change notification structure
+      security: []
       operationId: notificationQuoteAttributeValueChangeNotification
       parameters:
         - name: quoteAttributeValueChangeNotification
@@ -1533,6 +1534,7 @@ paths:
       tags:
         - Notification
       summary: Quote creation notification structure
+      security: []
       operationId: notificationQuoteCreationNotification
       parameters:
         - name: quoteCreationNotification
@@ -1617,7 +1619,7 @@ paths:
 
           schema:
             $ref: "#/definitions/ErrorRepresentation"
-  /quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification:
+  /quoteNotification/v1/notification/quoteInformationRequiredNotification:
     post:
       description: |
         Quote information required notification structure description.
@@ -1632,6 +1634,7 @@ paths:
       tags:
         - Notification
       summary: Quote information required notification structure
+      security: []
       operationId: notificationQuoteInformationRequiredNotification
       parameters:
         - name: quoteInformationRequiredNotification
@@ -1731,6 +1734,7 @@ paths:
       tags:
         - Notification
       summary: Quote state change notification structure
+      security: []
       operationId: notificationQuoteStateChangeNotification
       parameters:
         - name: quoteStateChangeNotification

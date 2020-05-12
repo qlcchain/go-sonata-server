@@ -96,7 +96,7 @@ type NotificationQuoteAttributeValueChangeNotificationNoContent struct {
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationNoContent) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationNoContent ", 204)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationNoContent ", 204)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -129,7 +129,7 @@ type NotificationQuoteAttributeValueChangeNotificationBadRequest struct {
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationBadRequest) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationBadRequest  %+v", 400, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationBadRequest  %+v", 400, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationBadRequest) GetPayload() *models.ErrorRepresentation {
@@ -167,7 +167,7 @@ type NotificationQuoteAttributeValueChangeNotificationUnauthorized struct {
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationUnauthorized  %+v", 401, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationUnauthorized  %+v", 401, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationUnauthorized) GetPayload() *models.ErrorRepresentation {
@@ -206,7 +206,7 @@ type NotificationQuoteAttributeValueChangeNotificationForbidden struct {
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationForbidden) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationForbidden  %+v", 403, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationForbidden) GetPayload() *models.ErrorRepresentation {
@@ -242,7 +242,7 @@ type NotificationQuoteAttributeValueChangeNotificationNotFound struct {
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationNotFound) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationNotFound  %+v", 404, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationNotFound) GetPayload() *models.ErrorRepresentation {
@@ -278,7 +278,7 @@ type NotificationQuoteAttributeValueChangeNotificationMethodNotAllowed struct {
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationMethodNotAllowed) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationMethodNotAllowed  %+v", 405, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationMethodNotAllowed  %+v", 405, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
@@ -313,7 +313,7 @@ type NotificationQuoteAttributeValueChangeNotificationUnprocessableEntity struct
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationUnprocessableEntity) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationUnprocessableEntity  %+v", 422, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationUnprocessableEntity  %+v", 422, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
@@ -349,7 +349,7 @@ type NotificationQuoteAttributeValueChangeNotificationInternalServerError struct
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationInternalServerError) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationInternalServerError  %+v", 500, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationInternalServerError  %+v", 500, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationInternalServerError) GetPayload() *models.ErrorRepresentation {
@@ -384,7 +384,7 @@ type NotificationQuoteAttributeValueChangeNotificationServiceUnavailable struct 
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationServiceUnavailable) Error() string {
-	return fmt.Sprintf("[POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationServiceUnavailable  %+v", 503, o.Payload)
+	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification][%d] notificationQuoteAttributeValueChangeNotificationServiceUnavailable  %+v", 503, o.Payload)
 }
 
 func (o *NotificationQuoteAttributeValueChangeNotificationServiceUnavailable) GetPayload() *models.ErrorRepresentation {

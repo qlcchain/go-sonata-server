@@ -27,9 +27,9 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error)
+	NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error)
 
-	NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error)
+	NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error)
 
 	NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error)
 
@@ -39,13 +39,13 @@ type ClientService interface {
 
 	NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderStateChangeNotificationNoContent, error)
 
-	NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error)
+	NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error)
 
-	NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteCreationNotificationNoContent, error)
+	NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams) (*NotificationQuoteCreationNotificationNoContent, error)
 
-	NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteInformationRequiredNotificationNoContent, error)
+	NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams) (*NotificationQuoteInformationRequiredNotificationNoContent, error)
 
-	NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteStateChangeNotificationNoContent, error)
+	NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams) (*NotificationQuoteStateChangeNotificationNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -55,7 +55,7 @@ type ClientService interface {
 
   Product Offering Qualification Creation Notification structure definition
 */
-func (a *Client) NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error) {
+func (a *Client) NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOfferingQualificationCreationNotificationParams()
@@ -64,13 +64,12 @@ func (a *Client) NotificationProductOfferingQualificationCreationNotification(pa
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "notificationProductOfferingQualificationCreationNotification",
 		Method:             "POST",
-		PathPattern:        "/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification",
+		PathPattern:        "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationProductOfferingQualificationCreationNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -92,7 +91,7 @@ func (a *Client) NotificationProductOfferingQualificationCreationNotification(pa
 
   Product Offering Qualification State Change Notification structure definition
 */
-func (a *Client) NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error) {
+func (a *Client) NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOfferingQualificationStateChangeNotificationParams()
@@ -107,7 +106,6 @@ func (a *Client) NotificationProductOfferingQualificationStateChangeNotification
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationProductOfferingQualificationStateChangeNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -284,7 +282,7 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error) {
+func (a *Client) NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteAttributeValueChangeNotificationParams()
@@ -293,13 +291,12 @@ func (a *Client) NotificationQuoteAttributeValueChangeNotification(params *Notif
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "notificationQuoteAttributeValueChangeNotification",
 		Method:             "POST",
-		PathPattern:        "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification",
+		PathPattern:        "/quoteNotification/v1/notification/quoteAttributeValueChangeNotification",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationQuoteAttributeValueChangeNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -326,7 +323,7 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteCreationNotificationNoContent, error) {
+func (a *Client) NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams) (*NotificationQuoteCreationNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteCreationNotificationParams()
@@ -341,7 +338,6 @@ func (a *Client) NotificationQuoteCreationNotification(params *NotificationQuote
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationQuoteCreationNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -370,7 +366,7 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteInformationRequiredNotificationNoContent, error) {
+func (a *Client) NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams) (*NotificationQuoteInformationRequiredNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteInformationRequiredNotificationParams()
@@ -379,13 +375,12 @@ func (a *Client) NotificationQuoteInformationRequiredNotification(params *Notifi
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "notificationQuoteInformationRequiredNotification",
 		Method:             "POST",
-		PathPattern:        "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification",
+		PathPattern:        "/quoteNotification/v1/notification/quoteInformationRequiredNotification",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationQuoteInformationRequiredNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -412,7 +407,7 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationQuoteStateChangeNotificationNoContent, error) {
+func (a *Client) NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams) (*NotificationQuoteStateChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteStateChangeNotificationParams()
@@ -427,7 +422,6 @@ func (a *Client) NotificationQuoteStateChangeNotification(params *NotificationQu
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationQuoteStateChangeNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

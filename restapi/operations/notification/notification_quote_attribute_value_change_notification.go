@@ -9,21 +9,19 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NotificationQuoteAttributeValueChangeNotificationHandlerFunc turns a function with the right signature into a notification quote attribute value change notification handler
-type NotificationQuoteAttributeValueChangeNotificationHandlerFunc func(NotificationQuoteAttributeValueChangeNotificationParams, *models.Principal) middleware.Responder
+type NotificationQuoteAttributeValueChangeNotificationHandlerFunc func(NotificationQuoteAttributeValueChangeNotificationParams) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn NotificationQuoteAttributeValueChangeNotificationHandlerFunc) Handle(params NotificationQuoteAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
-	return fn(params, principal)
+func (fn NotificationQuoteAttributeValueChangeNotificationHandlerFunc) Handle(params NotificationQuoteAttributeValueChangeNotificationParams) middleware.Responder {
+	return fn(params)
 }
 
 // NotificationQuoteAttributeValueChangeNotificationHandler interface for that can handle valid notification quote attribute value change notification params
 type NotificationQuoteAttributeValueChangeNotificationHandler interface {
-	Handle(NotificationQuoteAttributeValueChangeNotificationParams, *models.Principal) middleware.Responder
+	Handle(NotificationQuoteAttributeValueChangeNotificationParams) middleware.Responder
 }
 
 // NewNotificationQuoteAttributeValueChangeNotification creates a new http.Handler for the notification quote attribute value change notification operation
@@ -31,7 +29,7 @@ func NewNotificationQuoteAttributeValueChangeNotification(ctx *middleware.Contex
 	return &NotificationQuoteAttributeValueChangeNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationQuoteAttributeValueChangeNotification swagger:route POST /quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification Notification notificationQuoteAttributeValueChangeNotification
+/*NotificationQuoteAttributeValueChangeNotification swagger:route POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification Notification notificationQuoteAttributeValueChangeNotification
 
 Quote attribute value change notification structure
 
@@ -57,25 +55,12 @@ func (o *NotificationQuoteAttributeValueChangeNotification) ServeHTTP(rw http.Re
 	}
 	var Params = NewNotificationQuoteAttributeValueChangeNotificationParams()
 
-	uprinc, aCtx, err := o.Context.Authorize(r, route)
-	if err != nil {
-		o.Context.Respond(rw, r, route.Produces, route, err)
-		return
-	}
-	if aCtx != nil {
-		r = aCtx
-	}
-	var principal *models.Principal
-	if uprinc != nil {
-		principal = uprinc.(*models.Principal) // this is really a models.Principal, I promise
-	}
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params, principal) // actually handle the request
+	res := o.Handler.Handle(Params) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 

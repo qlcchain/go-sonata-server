@@ -92,16 +92,16 @@ func NewSonataAPI(spec *loads.Document) *SonataAPI {
 		NotificationNotificationProductOrderStateChangeNotificationHandler: notification.NotificationProductOrderStateChangeNotificationHandlerFunc(func(params notification.NotificationProductOrderStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOrderStateChangeNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteAttributeValueChangeNotificationHandler: notification.NotificationQuoteAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationQuoteAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
+		NotificationNotificationQuoteAttributeValueChangeNotificationHandler: notification.NotificationQuoteAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationQuoteAttributeValueChangeNotificationParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteAttributeValueChangeNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteCreationNotificationHandler: notification.NotificationQuoteCreationNotificationHandlerFunc(func(params notification.NotificationQuoteCreationNotificationParams, principal *models.Principal) middleware.Responder {
+		NotificationNotificationQuoteCreationNotificationHandler: notification.NotificationQuoteCreationNotificationHandlerFunc(func(params notification.NotificationQuoteCreationNotificationParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteCreationNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteInformationRequiredNotificationHandler: notification.NotificationQuoteInformationRequiredNotificationHandlerFunc(func(params notification.NotificationQuoteInformationRequiredNotificationParams, principal *models.Principal) middleware.Responder {
+		NotificationNotificationQuoteInformationRequiredNotificationHandler: notification.NotificationQuoteInformationRequiredNotificationHandlerFunc(func(params notification.NotificationQuoteInformationRequiredNotificationParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteInformationRequiredNotification has not yet been implemented")
 		}),
-		NotificationNotificationQuoteStateChangeNotificationHandler: notification.NotificationQuoteStateChangeNotificationHandlerFunc(func(params notification.NotificationQuoteStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
+		NotificationNotificationQuoteStateChangeNotificationHandler: notification.NotificationQuoteStateChangeNotificationHandlerFunc(func(params notification.NotificationQuoteStateChangeNotificationParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationQuoteStateChangeNotification has not yet been implemented")
 		}),
 		ProductProductFindHandler: product.ProductFindHandlerFunc(func(params product.ProductFindParams, principal *models.Principal) middleware.Responder {
@@ -631,7 +631,7 @@ func (o *SonataAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification"] = notification.NewNotificationQuoteAttributeValueChangeNotification(o.context, o.NotificationNotificationQuoteAttributeValueChangeNotificationHandler)
+	o.handlers["POST"]["/quoteNotification/v1/notification/quoteAttributeValueChangeNotification"] = notification.NewNotificationQuoteAttributeValueChangeNotification(o.context, o.NotificationNotificationQuoteAttributeValueChangeNotificationHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -639,7 +639,7 @@ func (o *SonataAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification"] = notification.NewNotificationQuoteInformationRequiredNotification(o.context, o.NotificationNotificationQuoteInformationRequiredNotificationHandler)
+	o.handlers["POST"]["/quoteNotification/v1/notification/quoteInformationRequiredNotification"] = notification.NewNotificationQuoteInformationRequiredNotification(o.context, o.NotificationNotificationQuoteInformationRequiredNotificationHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

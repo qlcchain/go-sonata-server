@@ -35,7 +35,7 @@ func (o *NotificationQuoteInformationRequiredNotificationURL) SetBasePath(bp str
 func (o *NotificationQuoteInformationRequiredNotificationURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification"
+	var _path = "/quoteNotification/v1/notification/quoteInformationRequiredNotification"
 
 	_basePath := o._basePath
 	if _basePath == "" {

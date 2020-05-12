@@ -3414,160 +3414,9 @@ func init() {
         }
       }
     },
-    "/quoteNotification/v1/notification/quoteCreationNotification": {
+    "/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
       "post": {
-        "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
-        "consumes": [
-          "application/json"
-        ],
-        "tags": [
-          "Notification"
-        ],
-        "summary": "Quote creation notification structure",
-        "operationId": "notificationQuoteCreationNotification",
-        "parameters": [
-          {
-            "name": "quoteCreationNotification",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/QuoteEvent"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
-    "/quoteNotification/v1/notification/quoteStateChangeNotification": {
-      "post": {
-        "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
-        "consumes": [
-          "application/json"
-        ],
-        "tags": [
-          "Notification"
-        ],
-        "summary": "Quote state change notification structure",
-        "operationId": "notificationQuoteStateChangeNotification",
-        "parameters": [
-          {
-            "name": "quoteStateChangeNotification",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/QuoteEvent"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
-    "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
-      "post": {
+        "security": [],
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json"
@@ -3645,8 +3494,86 @@ func init() {
         }
       }
     },
-    "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
+    "/quoteNotification/v1/notification/quoteCreationNotification": {
       "post": {
+        "security": [],
+        "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Quote creation notification structure",
+        "operationId": "notificationQuoteCreationNotification",
+        "parameters": [
+          {
+            "name": "quoteCreationNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QuoteEvent"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
+      "post": {
+        "security": [],
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json"
@@ -3666,6 +3593,83 @@ func init() {
               "items": {
                 "$ref": "#/definitions/QuoteEventPlus"
               }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/quoteNotification/v1/notification/quoteStateChangeNotification": {
+      "post": {
+        "security": [],
+        "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Quote state change notification structure",
+        "operationId": "notificationQuoteStateChangeNotification",
+        "parameters": [
+          {
+            "name": "quoteStateChangeNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QuoteEvent"
             }
           }
         ],
@@ -10955,160 +10959,9 @@ func init() {
         }
       }
     },
-    "/quoteNotification/v1/notification/quoteCreationNotification": {
+    "/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
       "post": {
-        "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
-        "consumes": [
-          "application/json"
-        ],
-        "tags": [
-          "Notification"
-        ],
-        "summary": "Quote creation notification structure",
-        "operationId": "notificationQuoteCreationNotification",
-        "parameters": [
-          {
-            "name": "quoteCreationNotification",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/QuoteEvent"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
-    "/quoteNotification/v1/notification/quoteStateChangeNotification": {
-      "post": {
-        "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
-        "consumes": [
-          "application/json"
-        ],
-        "tags": [
-          "Notification"
-        ],
-        "summary": "Quote state change notification structure",
-        "operationId": "notificationQuoteStateChangeNotification",
-        "parameters": [
-          {
-            "name": "quoteStateChangeNotification",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/QuoteEvent"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "405": {
-            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
-    "/quoteNotification/v1/quoteNotification/v1/notification/quoteAttributeValueChangeNotification": {
-      "post": {
+        "security": [],
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json"
@@ -11186,8 +11039,86 @@ func init() {
         }
       }
     },
-    "/quoteNotification/v1/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
+    "/quoteNotification/v1/notification/quoteCreationNotification": {
       "post": {
+        "security": [],
+        "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Quote creation notification structure",
+        "operationId": "notificationQuoteCreationNotification",
+        "parameters": [
+          {
+            "name": "quoteCreationNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QuoteEvent"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/quoteNotification/v1/notification/quoteInformationRequiredNotification": {
+      "post": {
+        "security": [],
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
           "application/json"
@@ -11207,6 +11138,83 @@ func init() {
               "items": {
                 "$ref": "#/definitions/QuoteEventPlus"
               }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/quoteNotification/v1/notification/quoteStateChangeNotification": {
+      "post": {
+        "security": [],
+        "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Quote state change notification structure",
+        "operationId": "notificationQuoteStateChangeNotification",
+        "parameters": [
+          {
+            "name": "quoteStateChangeNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QuoteEvent"
             }
           }
         ],
