@@ -10,6 +10,8 @@ package mock
 import (
 	"time"
 
+	"github.com/qlcchain/go-sonata-server/restapi/operations/notification"
+
 	"github.com/qlcchain/go-sonata-server/event"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/hub"
 
@@ -300,4 +302,14 @@ func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductO
 			})
 		}
 	}
+}
+
+func NotificationProductOfferingQualificationCreationNotificationHandler(params notification.NotificationProductOfferingQualificationCreationNotificationParams, principal *models.Principal) middleware.Responder {
+	logrus.Debugf("got NotificationProductOfferingQualificationCreationNotificationParams: %s", util.ToString(params.ProductOfferingQualificationCreationNotification))
+	return notification.NewNotificationProductOfferingQualificationCreationNotificationNoContent()
+}
+
+func NotificationProductOfferingQualificationStateChangeNotificationHandler(params notification.NotificationProductOfferingQualificationStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
+	logrus.Debugf("got NotificationProductOfferingQualificationStateChangeNotificationParams: %s", util.ToString(params.ProductOfferingQualificationStateChangeNotification))
+	return notification.NewNotificationProductOfferingQualificationStateChangeNotificationNoContent()
 }
