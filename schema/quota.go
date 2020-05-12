@@ -62,7 +62,7 @@ type Quote struct {
 
 	// related party
 	// Required: true
-	RelatedPartyField []*models.RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedPartyField []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
 
 	// This is the date wished by the requester to have the quote completed (meaning priced).
 	// This attribute is not considered when instantSyncQuoting is set to Yes.
@@ -307,10 +307,15 @@ func (m *Quote) validateRelatedParty(formats strfmt.Registry) error {
 		}
 
 		if m.RelatedPartyField[i] != nil {
-			if err := m.RelatedPartyField[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+			to := &models.RelatedParty{}
+			if err := util.Convert(m.RelatedPartyField[i], to); err == nil {
+				if err := to.Validate(formats); err != nil {
+					if ve, ok := err.(*errors.Validation); ok {
+						return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+					}
+					return err
 				}
+			} else {
 				return err
 			}
 		}
@@ -525,11 +530,15 @@ func (m *Quote) SetQuoteLevel(level models.QuoteLevel) {
 }
 
 func (m *Quote) RelatedParty() []*models.RelatedParty {
-	return m.RelatedPartyField
+	var to = []*models.RelatedParty{}
+	_ = util.Convert(m.RelatedPartyField, &to)
+	return to
 }
 
 func (m *Quote) SetRelatedParty(parties []*models.RelatedParty) {
-	m.RelatedPartyField = parties
+	var to []*RelatedParty
+	_ = util.Convert(parties, &to)
+	m.RelatedPartyField = to
 }
 
 func (m *Quote) RequestedQuoteCompletionDate() *strfmt.DateTime {
@@ -624,7 +633,7 @@ type QuoteItem struct {
 	QuoteItemRelationship []*models.QuoteItemRelationship `json:"quoteItemRelationship" gorm:"foreignkey:ID"`
 
 	// related party
-	RelatedParty []*models.RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
 
 	// requested quote item term
 	RequestedQuoteItemTerm *models.ItemTerm `json:"requestedQuoteItemTerm,omitempty" gorm:"embedded"`

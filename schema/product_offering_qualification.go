@@ -51,7 +51,7 @@ type ProductOfferingQualification struct {
 
 	// related party
 	// Required: true
-	RelatedParty []*models.RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
 
 	// Corresponds to desiredResponseDate - The date a response for the service request is desired.
 	// Format: date-time

@@ -1,5 +1,5 @@
 produces:
-  - application/json;charset=utf-8
+  - application/json
 schemes:
   - https
 swagger: "2.0"
@@ -41,9 +41,9 @@ paths:
       tags:
         - "Hub"
       consumes:
-        - "application/json;charset=utf-8"
+        - "application/json"
       produces:
-        - "application/json;charset=utf-8"
+        - "application/json"
       operationId: "productOrderManagementHubCreate"
       summary: "Create a Hub"
       description: "Structure used to create a hub (to subscribe to notification)"
@@ -113,7 +113,7 @@ paths:
       tags:
         - "Hub"
       produces:
-        - "application/json;charset=utf-8"
+        - "application/json"
       operationId: "productOrderManagementHubFind"
       summary: "Find a list of Hub"
       description: "Find Hub"
@@ -244,7 +244,7 @@ paths:
     get:
       description: This operation allows buyer to retrieve a list of product order cancellation request
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - CancelProductOrder
       summary: Find a lost of product order cancellation request(s)
@@ -350,9 +350,9 @@ paths:
     post:
       description: "This operation allows buyer to request a product order cancellation request "
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - CancelProductOrder
       summary: Create product order cancellation request
@@ -474,7 +474,7 @@ paths:
     get:
       description: This operation allows buyer to retrieve one product order cancellation request
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - CancelProductOrder
       summary: Get a product order cancellation request (by id)
@@ -577,7 +577,7 @@ paths:
     get:
       description: The Buyer requests the full details of a single Address based on an Address identifier that was previously provided by the Seller.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - GeographicAddress
       summary: retrieveAddress
@@ -672,9 +672,9 @@ paths:
     post:
       description: "The Buyer sends Address information known to the Buyer to the Seller.  The Seller re-sponds with a list of Addresses known to the Seller that likely match the Address infor-mation sent by the Buyer.  For each Address returned, the Seller generally also provides an Address Identifier, which uniquely identifies this Address within the Seller."
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - GeographicAddressValidation
       summary: validate a Geographic Address
@@ -778,7 +778,7 @@ paths:
     get:
       description: "The Buyer requests that the Seller provides a list of Service Sites known to the Seller based on a set of Site/Address filter criteria.  For each Service Site returned, the Seller also provides a Service Site Identifier, which uniquely identifies this Service Site within the Seller."
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - GeographicSite
       summary: retrieveGeographicSites
@@ -932,7 +932,7 @@ paths:
     get:
       description: "The Buyer requests the full details for a single Service Site based on a Service Site identifier that was previously provided by the Seller. "
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - GeographicSite
       summary: retrieveSite
@@ -1016,7 +1016,7 @@ paths:
     post:
       description: Product Order attribute value change structure description
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Product Order attribute value change structure
@@ -1118,7 +1118,7 @@ paths:
     post:
       description: Product order creation notification structure description
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Product order creation notification structure
@@ -1219,7 +1219,7 @@ paths:
     post:
       description: Product Order information required structure description
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Product Order information required structure
@@ -1321,7 +1321,7 @@ paths:
     post:
       description: Product order state change structure description
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Product order state change structure
@@ -1430,7 +1430,7 @@ paths:
 
         HTTP Response 422 Unprocessable entity
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Quote attribute value change notification structure
@@ -1529,7 +1529,7 @@ paths:
 
         HTTP Response 422 Unprocessable entity
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Quote creation notification structure
@@ -1628,7 +1628,7 @@ paths:
 
         HTTP Response 422 Unprocessable entity
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Quote information required notification structure
@@ -1727,7 +1727,7 @@ paths:
 
         HTTP Response 422 Unprocessable entity
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Notification
       summary: Quote state change notification structure
@@ -1819,7 +1819,7 @@ paths:
     get:
       description: The Buyer requests a list of Products from the Seller based on filter criteria.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Product
       summary: productFind (list) - retrieve product list with summary view
@@ -2004,7 +2004,7 @@ paths:
     get:
       description: The Buyer requests the details associated with a single Product based on a Seller Product Identifier.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Product
       summary: productGet (by id) - retrieve one product with all information
@@ -2083,7 +2083,7 @@ paths:
     get:
       description: This operation retrieves a set of hubs.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Hub
       summary: hubFind
@@ -2166,9 +2166,9 @@ paths:
     post:
       description: A request initiated by the Buyer to instruct the Seller to send notifications of POQ state changes in the event the Seller uses the Deferred Response pattern to respond to a Create Product Offering Qualifica-tion request.
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Hub
       summary: hubCreate
@@ -2339,7 +2339,7 @@ paths:
     get:
       description: "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. "
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - ProductOfferingQualification
       summary: Retrieve a list of ProductOfferingQualifications based on a set of criteria
@@ -2466,9 +2466,9 @@ paths:
     post:
       description: "A request initiated by the Buyer to determine whether the Seller can feasibly deliver a particular Product (or Products) to a specific set of geographic locations specified by a set of Site/Address filter criteria. The Seller also provides estimated time intervals to complete these deliveries. "
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - ProductOfferingQualification
       summary: Create a ProductOfferingQualification
@@ -2599,7 +2599,7 @@ paths:
     get:
       description: "The Buyer requests the full details of a single Product Offering Qualification based on a POQ identifier. "
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - ProductOfferingQualification
       summary: Get a ProductOfferingQualification based on its id
@@ -2687,7 +2687,7 @@ paths:
       tags:
       - "Notification"
       consumes:
-      - "application/json;charset=utf-8"
+      - "application/json"
       operationId: "notificationProductOfferingQualificationCreationNotification"
       summary: "Product Offering Qualification Creation Notification structure"
       security:
@@ -2747,7 +2747,7 @@ paths:
       tags:
       - "Notification"
       consumes:
-      - "application/json;charset=utf-8"
+      - "application/json"
       operationId: "notificationProductOfferingQualificationStateChangeNotification"
       summary: "Product Offering Qualification State Change Notification structure"
       security:
@@ -2806,7 +2806,7 @@ paths:
     get:
       description: This operation is used to retrieve one or more product orders based upon filter criteria specified on input.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - ProductOrder
       summary: Find a list of product order(s)
@@ -3035,9 +3035,9 @@ paths:
     post:
       description: 'This operation is used to create an order. Depending on the order activity, one can "INSTALL", "CHANGE", or "DISCONNECT" an associated product.'
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - ProductOrder
       summary: Create a product order
@@ -3249,7 +3249,7 @@ paths:
     get:
       description: This operation is used to retrieve a single product order based upon a specified product order id.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - ProductOrder
       summary: Get a product order (by id)
@@ -3353,9 +3353,9 @@ paths:
       tags:
         - "Hub"
       consumes:
-        - "application/json;charset=utf-8"
+        - "application/json"
       produces:
-        - "application/json;charset=utf-8"
+        - "application/json"
       operationId: "quoteManagementHubCreate"
       summary: "Register a listener"
       description: "Sets the communication endpoint address the service instance must\
@@ -3422,7 +3422,7 @@ paths:
       tags:
         - "Hub"
       produces:
-        - "application/json;charset=utf-8"
+        - "application/json"
       operationId: "quoteManagementHubFind"
       summary: "listHub"
       description: "Retrieve hub(s)"
@@ -3550,7 +3550,7 @@ paths:
     get:
       description: This operation is used to retrieve quote information using filter criteria.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Quote
       summary: List quotes
@@ -3716,9 +3716,9 @@ paths:
     post:
       description: This operation is used to create a new quote.
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Quote
       summary: Create a quote
@@ -3870,9 +3870,9 @@ paths:
         When seller receive cancel request, seller will shift quote state to CANCELLED (no change on order item state)
         When seller receive reject request, seller will shift quote state to REJECTED (no change on order item state)
       consumes:
-        - application/json;charset=utf-8
+        - application/json
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Quote
       summary: request a quote state change
@@ -3981,7 +3981,7 @@ paths:
     get:
       description: This operation is used to retrieve quote information using the ID.
       produces:
-        - application/json;charset=utf-8
+        - application/json
       tags:
         - Quote
       summary: Retrieve a quote

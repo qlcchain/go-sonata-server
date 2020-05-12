@@ -16,7 +16,7 @@ type ProductOfferingQualificationItem struct {
 	Action models.ProductActionType `json:"action"`
 
 	// alternate product proposal
-	AlternateProductProposal []*models.AlternateProductProposal `json:"alternateProductProposal" gorm:"foreignkey:ID"`
+	AlternateProductProposal []*AlternateProductProposal `json:"alternateProductProposal" gorm:"foreignkey:ID"`
 
 	// eligible product offering
 	EligibleProductOffering []*models.ProductOfferingRef `json:"eligibleProductOffering" gorm:"foreignkey:ID"`
@@ -42,7 +42,7 @@ type ProductOfferingQualificationItem struct {
 	ProductOfferingQualificationItemRelationship []*models.ProductOfferingQualificationItemRelationship `json:"productOfferingQualificationItemRelationship" gorm:"foreignkey:ID"`
 
 	// related party
-	RelatedParty []*models.RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
 
 	// A description of the reason a particular color is being provided. This may include a specific standard reason codes and descriptions.
 	ServiceConfidenceReason string `json:"serviceConfidenceReason,omitempty"`

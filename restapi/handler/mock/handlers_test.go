@@ -50,6 +50,12 @@ func Test_mockGeographicAddress(t *testing.T) {
 	}
 }
 
+func TestMockQuoteCreate(t *testing.T) {
+	//models.ProductOfferingQualificationCreate{}
+	val := ProductOfferingQualificationCreate()
+	t.Log(util.ToString(val))
+}
+
 //
 //type Account struct {
 //	ID    string

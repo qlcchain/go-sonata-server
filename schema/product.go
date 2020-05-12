@@ -58,7 +58,7 @@ type Product struct {
 	ProductTerm []*ProductTerm `json:"productTerm" gorm:"foreignkey:ID"`
 
 	// related party
-	RelatedParty []*models.RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
 
 	// site
 	Site []*GeographicSite `json:"site" gorm:"foreignkey:ID"`

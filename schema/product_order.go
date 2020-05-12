@@ -104,7 +104,7 @@ type ProductOrder struct {
 
 	// related party
 	// Required: true
-	RelatedParty []*models.RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
 
 	// Identifies the buyer's desired due date (requested delivery date). Cannot be requested on cancelled orders.  Format is YYYY-MM-DDThh:mmTZD (e.g. 1997-07-16T19:20+01:00).
 	// Required: true
@@ -193,7 +193,7 @@ type OrderItem struct {
 	Quote *models.QuoteRef `json:"quote,omitempty" gorm:"foreignkey:ID"`
 
 	// related party
-	RelatedParty []*models.RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
 
 	// state
 	// Required: true

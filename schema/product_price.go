@@ -6,7 +6,7 @@ type ProductPrice struct {
 	ID *string `json:"id"`
 
 	// A technical attribute to extend the class
-	AtType string `json:"@type,omitempty"`
+	AtType string `json:"@type,omitempty" gorm:"column:type"`
 
 	// A narrative that explains in detail the semantics of this product price
 	Description string `json:"description,omitempty"`

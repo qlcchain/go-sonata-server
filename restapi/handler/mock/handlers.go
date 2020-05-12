@@ -8,18 +8,13 @@
 package mock
 
 import (
-	"fmt"
 	"path"
 
 	"github.com/qlcchain/go-sonata-server/config"
 	"github.com/qlcchain/go-sonata-server/schema"
 
-	"github.com/go-openapi/swag"
-
-	"github.com/brianvoe/gofakeit/v5"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"github.com/rs/xid"
 	"github.com/sirupsen/logrus"
 
 	"github.com/qlcchain/go-sonata-server/models"
@@ -69,90 +64,31 @@ func init() {
 		&schema.GeographicLocation{}, &schema.GeographicAddress{}, &schema.GeographicSubAddress{}, &schema.GeographicPoint{},
 		&models.SubUnit{}, &models.ReferencedAddress{},
 		// GeographicSite
+		&schema.GeographicSite{},
 		// Product
+		&schema.Product{}, &models.Agreement{}, &schema.ProductRelationship{}, &models.ProductRef{}, &schema.ProductSpecificationRef{},
+		&schema.ProductTerm{}, &models.ProductOfferingRef{}, &models.ProductOfferingQualificationItemRelationship{}, &schema.ProductOrderRef{},
+		&schema.ProductPrice{}, &models.TerminationError{},
 		// Order
+		// POQ
+		&schema.ProductOfferingQualification{}, &schema.ProductOfferingQualificationItem{}, &schema.StatusChange{}, &schema.StateChange{},
+		&models.BillingAccountRef{},
+		&schema.RelatedParty{}, &schema.AlternateProductProposal{},
+		// Quote
+		&schema.Quote{},
 	).Error; err != nil {
 		logrus.Fatalln(err)
 	}
 }
 
 func mockGeographicAddress(size int) {
-	for i := 0; i < size; i++ {
-		a := &schema.FieldedAddress{
-			City:    gofakeit.City(),
-			Country: gofakeit.Country(),
-			GeographicSubAddress: []*schema.GeographicSubAddress{
-				{
-					//AtSchemaLocation:    "",
-					//AtType:              "",
-					BuildingName:        "Tower01",
-					ID:                  xid.New().String(),
-					LevelNumber:         "BASEMENT 1",
-					LevelType:           "1",
-					PrivateStreetName:   "university",
-					PrivateStreetNumber: "01",
-					SubUnit: []*models.SubUnit{
-						{
-							SubUnitIdentifier: swag.String(xid.New().String()),
-							SubUnitType:       swag.String("BERTH"),
-						},
-					},
-				},
-			},
-			ID:                 xid.New().String(),
-			Locality:           "Locality",
-			PostCodeExtension:  "",
-			Postcode:           gofakeit.Zip(),
-			StateOrProvince:    gofakeit.State(),
-			StreetName:         gofakeit.StreetName(),
-			StreetNr:           gofakeit.StreetNumber(),
-			StreetNrLast:       "",
-			StreetNrLastSuffix: "",
-			StreetNrSuffix:     "",
-			StreetSuffix:       gofakeit.StreetSuffix(),
-			StreetType:         "Alley",
-		}
-
-		address := &schema.GeographicAddress{
-			//AtSchemaLocation: "",
-			//AtType:           "",
-			AllowsNewSite:  false,
-			FieldedAddress: a,
-			FormattedAddress: &schema.FormattedAddress{
-				AddrLine1: swag.String(fmt.Sprintf("%s %s %s %s, %s %s", a.StreetNr, a.StreetNrLast, a.StreetSuffix,
-					a.StreetNrLastSuffix, a.StreetName, a.StreetSuffix)),
-				AddrLine2:         "",
-				City:              a.City,
-				Country:           a.Country,
-				Locality:          a.Locality,
-				PostCodeExtension: a.PostCodeExtension,
-				Postcode:          a.Postcode,
-				StateOrProvince:   a.StateOrProvince,
-			},
-			GeographicLocation: &schema.GeographicLocation{
-				ID: xid.New().String(),
-				GeographicPoint: []*schema.GeographicPoint{
-					{
-						ID:        xid.New().String(),
-						Latitude:  swag.String(fmt.Sprintf("%f", gofakeit.Latitude())),
-						Longitude: swag.String(fmt.Sprintf("%f", gofakeit.Longitude())),
-					},
-				},
-				SpatialRef: swag.String(gofakeit.CountryAbr()),
-			},
-			HasPublicSite: false,
-			ID:            xid.New().String(),
-			ReferencedAddress: &models.ReferencedAddress{
-				ID:            xid.New().String(),
-				ReferenceID:   swag.String("ReferenceID"),
-				ReferenceType: swag.String("ReferenceType"),
-			},
-		}
-
-		if err := Store.Create(address).Error; err != nil {
-			logrus.Error(err)
-		}
-	}
+	//for i := 0; i < size; i++ {
+	//	address := GeographicAddress()
+	//
+	//	if err := Store.Create(address).Error; err != nil {
+	//		logrus.Error(err)
+	//	}
+	//}
 }
 
 func mockData() error {

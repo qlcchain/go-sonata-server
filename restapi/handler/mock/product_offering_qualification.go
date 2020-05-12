@@ -63,7 +63,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 				Product:         p,
 				ProductOffering: i.ProductOffering,
 				ProductOfferingQualificationItemRelationship: i.ProductOfferingQualificationItemRelationship,
-				RelatedParty:             i.RelatedParty,
+				RelatedParty:             handler.ConvertRelatedParty(i.RelatedParty),
 				ServiceConfidenceReason:  "green",
 				ServiceabilityConfidence: models.ServiceabilityColorGreen,
 				State:                    models.ProductOfferingQualificationItemStateTypeInProgress,
@@ -93,7 +93,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 		ProductOfferingQualificationItem:     items,
 		ProjectID:                            input.ProjectID,
 		ProvideAlternative:                   false,
-		RelatedParty:                         input.RelatedParty,
+		RelatedParty:                         handler.ConvertRelatedParty(input.RelatedParty),
 		RequestedResponseDate:                strfmt.DateTime(input.RequestedResponseDate),
 		State:                                models.ProductOfferingQualificationStateTypeInProgress,
 		StateChange: []*schema.StateChange{

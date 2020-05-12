@@ -19,7 +19,7 @@ var (
 func init() {
 	SwaggerJSON = json.RawMessage([]byte(`{
   "produces": [
-    "application/json;charset=utf-8"
+    "application/json"
   ],
   "schemes": [
     "https"
@@ -49,7 +49,7 @@ func init() {
         ],
         "description": "The Buyer requests the full details of a single Address based on an Address identifier that was previously provided by the Seller.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicAddress"
@@ -134,10 +134,10 @@ func init() {
         ],
         "description": "The Buyer sends Address information known to the Buyer to the Seller.  The Seller re-sponds with a list of Addresses known to the Seller that likely match the Address infor-mation sent by the Buyer.  For each Address returned, the Seller generally also provides an Address Identifier, which uniquely identifies this Address within the Seller.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicAddressValidation"
@@ -224,7 +224,7 @@ func init() {
         ],
         "description": "The Buyer requests that the Seller provides a list of Service Sites known to the Seller based on a set of Site/Address filter criteria.  For each Service Site returned, the Seller also provides a Service Site Identifier, which uniquely identifies this Service Site within the Seller.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicSite"
@@ -391,7 +391,7 @@ func init() {
         ],
         "description": "The Buyer requests the full details for a single Service Site based on a Service Site identifier that was previously provided by the Seller. ",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicSite"
@@ -470,7 +470,7 @@ func init() {
         ],
         "description": "The Buyer requests a list of Products from the Seller based on filter criteria.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Product"
@@ -652,7 +652,7 @@ func init() {
         ],
         "description": "The Buyer requests the details associated with a single Product based on a Seller Product Identifier.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Product"
@@ -725,7 +725,7 @@ func init() {
         ],
         "description": "This operation retrieves a set of hubs.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -797,10 +797,10 @@ func init() {
         ],
         "description": "A request initiated by the Buyer to instruct the Seller to send notifications of POQ state changes in the event the Seller uses the Deferred Response pattern to respond to a Create Product Offering Qualifica-tion request.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -954,7 +954,7 @@ func init() {
         ],
         "description": "Product Offering Qualification Creation Notification structure definition",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -1032,7 +1032,7 @@ func init() {
         ],
         "description": "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. ",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOfferingQualification"
@@ -1156,10 +1156,10 @@ func init() {
         ],
         "description": "A request initiated by the Buyer to determine whether the Seller can feasibly deliver a particular Product (or Products) to a specific set of geographic locations specified by a set of Site/Address filter criteria. The Seller also provides estimated time intervals to complete these deliveries. ",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOfferingQualification"
@@ -1240,7 +1240,7 @@ func init() {
         ],
         "description": "The Buyer requests the full details of a single Product Offering Qualification based on a POQ identifier. ",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOfferingQualification"
@@ -1319,7 +1319,7 @@ func init() {
         ],
         "description": "Product Offering Qualification State Change Notification structure definition",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -1397,7 +1397,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOrder"
@@ -1653,10 +1653,10 @@ func init() {
         ],
         "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOrder"
@@ -1749,7 +1749,7 @@ func init() {
         ],
         "description": "This operation allows buyer to retrieve a list of product order cancellation request",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "CancelProductOrder"
@@ -1845,10 +1845,10 @@ func init() {
         ],
         "description": "This operation allows buyer to request a product order cancellation request ",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "CancelProductOrder"
@@ -1941,7 +1941,7 @@ func init() {
         ],
         "description": "This operation allows buyer to retrieve one product order cancellation request",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "CancelProductOrder"
@@ -2032,7 +2032,7 @@ func init() {
         ],
         "description": "Find Hub",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -2116,10 +2116,10 @@ func init() {
         ],
         "description": "Structure used to create a hub (to subscribe to notification)",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -2297,7 +2297,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve a single product order based upon a specified product order id.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOrder"
@@ -2388,7 +2388,7 @@ func init() {
         ],
         "description": "Product Order attribute value change structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -2478,7 +2478,7 @@ func init() {
         ],
         "description": "Product order creation notification structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -2567,7 +2567,7 @@ func init() {
         ],
         "description": "Product Order information required structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -2657,7 +2657,7 @@ func init() {
         ],
         "description": "Product order state change structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -2747,7 +2747,7 @@ func init() {
         ],
         "description": "Retrieve hub(s)",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -2832,10 +2832,10 @@ func init() {
         ],
         "description": "Sets the communication endpoint address the service instance must use to deliver information about its health state, execution state, failures and metrics",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -3001,7 +3001,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve quote information using filter criteria.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -3172,10 +3172,10 @@ func init() {
         ],
         "description": "This operation is used to create a new quote.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -3262,10 +3262,10 @@ func init() {
         ],
         "description": "Request from buyer to cancel or reject a quote.\nWhen seller receive cancel request, seller will shift quote state to CANCELLED (no change on order item state)\nWhen seller receive reject request, seller will shift quote state to REJECTED (no change on order item state)",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -3352,7 +3352,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve quote information using the ID.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -3429,7 +3429,7 @@ func init() {
       "post": {
         "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -3505,7 +3505,7 @@ func init() {
       "post": {
         "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -3581,7 +3581,7 @@ func init() {
       "post": {
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -3660,7 +3660,7 @@ func init() {
       "post": {
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -7571,7 +7571,7 @@ func init() {
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
   "produces": [
-    "application/json;charset=utf-8"
+    "application/json"
   ],
   "schemes": [
     "https"
@@ -7601,7 +7601,7 @@ func init() {
         ],
         "description": "The Buyer requests the full details of a single Address based on an Address identifier that was previously provided by the Seller.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicAddress"
@@ -7686,10 +7686,10 @@ func init() {
         ],
         "description": "The Buyer sends Address information known to the Buyer to the Seller.  The Seller re-sponds with a list of Addresses known to the Seller that likely match the Address infor-mation sent by the Buyer.  For each Address returned, the Seller generally also provides an Address Identifier, which uniquely identifies this Address within the Seller.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicAddressValidation"
@@ -7776,7 +7776,7 @@ func init() {
         ],
         "description": "The Buyer requests that the Seller provides a list of Service Sites known to the Seller based on a set of Site/Address filter criteria.  For each Service Site returned, the Seller also provides a Service Site Identifier, which uniquely identifies this Service Site within the Seller.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicSite"
@@ -7943,7 +7943,7 @@ func init() {
         ],
         "description": "The Buyer requests the full details for a single Service Site based on a Service Site identifier that was previously provided by the Seller. ",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "GeographicSite"
@@ -8022,7 +8022,7 @@ func init() {
         ],
         "description": "The Buyer requests a list of Products from the Seller based on filter criteria.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Product"
@@ -8204,7 +8204,7 @@ func init() {
         ],
         "description": "The Buyer requests the details associated with a single Product based on a Seller Product Identifier.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Product"
@@ -8277,7 +8277,7 @@ func init() {
         ],
         "description": "This operation retrieves a set of hubs.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -8349,10 +8349,10 @@ func init() {
         ],
         "description": "A request initiated by the Buyer to instruct the Seller to send notifications of POQ state changes in the event the Seller uses the Deferred Response pattern to respond to a Create Product Offering Qualifica-tion request.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -8506,7 +8506,7 @@ func init() {
         ],
         "description": "Product Offering Qualification Creation Notification structure definition",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -8584,7 +8584,7 @@ func init() {
         ],
         "description": "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. ",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOfferingQualification"
@@ -8708,10 +8708,10 @@ func init() {
         ],
         "description": "A request initiated by the Buyer to determine whether the Seller can feasibly deliver a particular Product (or Products) to a specific set of geographic locations specified by a set of Site/Address filter criteria. The Seller also provides estimated time intervals to complete these deliveries. ",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOfferingQualification"
@@ -8792,7 +8792,7 @@ func init() {
         ],
         "description": "The Buyer requests the full details of a single Product Offering Qualification based on a POQ identifier. ",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOfferingQualification"
@@ -8871,7 +8871,7 @@ func init() {
         ],
         "description": "Product Offering Qualification State Change Notification structure definition",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -8949,7 +8949,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve one or more product orders based upon filter criteria specified on input.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOrder"
@@ -9205,10 +9205,10 @@ func init() {
         ],
         "description": "This operation is used to create an order. Depending on the order activity, one can \"INSTALL\", \"CHANGE\", or \"DISCONNECT\" an associated product.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOrder"
@@ -9301,7 +9301,7 @@ func init() {
         ],
         "description": "This operation allows buyer to retrieve a list of product order cancellation request",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "CancelProductOrder"
@@ -9397,10 +9397,10 @@ func init() {
         ],
         "description": "This operation allows buyer to request a product order cancellation request ",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "CancelProductOrder"
@@ -9493,7 +9493,7 @@ func init() {
         ],
         "description": "This operation allows buyer to retrieve one product order cancellation request",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "CancelProductOrder"
@@ -9584,7 +9584,7 @@ func init() {
         ],
         "description": "Find Hub",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -9668,10 +9668,10 @@ func init() {
         ],
         "description": "Structure used to create a hub (to subscribe to notification)",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -9849,7 +9849,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve a single product order based upon a specified product order id.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "ProductOrder"
@@ -9940,7 +9940,7 @@ func init() {
         ],
         "description": "Product Order attribute value change structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -10030,7 +10030,7 @@ func init() {
         ],
         "description": "Product order creation notification structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -10119,7 +10119,7 @@ func init() {
         ],
         "description": "Product Order information required structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -10209,7 +10209,7 @@ func init() {
         ],
         "description": "Product order state change structure description",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -10299,7 +10299,7 @@ func init() {
         ],
         "description": "Retrieve hub(s)",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -10384,10 +10384,10 @@ func init() {
         ],
         "description": "Sets the communication endpoint address the service instance must use to deliver information about its health state, execution state, failures and metrics",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Hub"
@@ -10553,7 +10553,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve quote information using filter criteria.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -10724,10 +10724,10 @@ func init() {
         ],
         "description": "This operation is used to create a new quote.",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -10814,10 +10814,10 @@ func init() {
         ],
         "description": "Request from buyer to cancel or reject a quote.\nWhen seller receive cancel request, seller will shift quote state to CANCELLED (no change on order item state)\nWhen seller receive reject request, seller will shift quote state to REJECTED (no change on order item state)",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -10904,7 +10904,7 @@ func init() {
         ],
         "description": "This operation is used to retrieve quote information using the ID.",
         "produces": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Quote"
@@ -10981,7 +10981,7 @@ func init() {
       "post": {
         "description": "Quote creation notification structure definition\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -11057,7 +11057,7 @@ func init() {
       "post": {
         "description": "Quote state change notification structure description\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -11133,7 +11133,7 @@ func init() {
       "post": {
         "description": "Quote attribute value change notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target attribute with value changed.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"
@@ -11212,7 +11212,7 @@ func init() {
       "post": {
         "description": "Quote information required notification structure description.\nAttribute resourcePatch allows to target quote but also quoteItem - example: resourcePath\":\"/quote/42/quoteItem/3\" is the item #3 of quote #42\nAttribute fieldPath allows to target missing information: fieldPath\":\"missing=quote.relatedParty.Role.value\u0026party.id=46\" means role information is missing for party 46.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n",
         "consumes": [
-          "application/json;charset=utf-8"
+          "application/json"
         ],
         "tags": [
           "Notification"

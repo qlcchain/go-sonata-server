@@ -14,6 +14,11 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
+
+	"github.com/rs/xid"
+
+	"github.com/qlcchain/go-sonata-server/schema"
 
 	"github.com/sirupsen/logrus"
 
@@ -28,6 +33,20 @@ import (
 var (
 	jsonContentType = "application/json;charset=utf-8"
 )
+
+func NewDatetime(dt time.Time) *strfmt.DateTime {
+	t := strfmt.DateTime(dt)
+	return &t
+}
+
+func NewDate(dt time.Time) *strfmt.Date {
+	t := strfmt.Date(dt)
+	return &t
+}
+
+func NewID() *string {
+	return swag.String(xid.New().String())
+}
 
 func HrefToID(prefix, id string) string {
 	return fmt.Sprintf("%s/%s", prefix, id)
@@ -147,4 +166,16 @@ func FormattedAddressRequest2FormattedAddress(req *models.FormattedAddressReques
 		Postcode:          req.Postcode,
 		StateOrProvince:   req.StateOrProvince,
 	}
+}
+
+func ConvertRelatedParty(from []*models.RelatedParty) []*schema.RelatedParty {
+	if from == nil {
+		return nil
+	}
+	var to []*schema.RelatedParty
+	for _, i := range from {
+		m := &schema.RelatedParty{}
+		to = append(to, m.From(i))
+	}
+	return to
 }

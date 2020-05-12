@@ -117,7 +117,7 @@ func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.P
 		ProjectIDField:                    input.ProjectID,
 		QuoteItemField:                    items,
 		QuoteLevelField:                   input.QuoteLevel,
-		RelatedPartyField:                 input.RelatedParty,
+		RelatedPartyField:                 handler.ConvertRelatedParty(input.RelatedParty),
 		RequestedQuoteCompletionDateField: input.RequestedQuoteCompletionDate,
 		HrefField:                         handler.HrefToID("", id),
 		IDField:                           id,
