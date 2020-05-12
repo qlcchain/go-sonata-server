@@ -28,7 +28,8 @@ func GeographicSiteGeographicSiteFindHandler(params gs.GeographicSiteFindParams,
 
 	var sites []schema.GeographicSite
 	//TODO: query from db
-	if err := Store.Set(db.AutoPreLoad, true).Where("", params).Find(&sites).Error; err == nil {
+	tx := Store.Set(db.AutoPreLoad, true)
+	if err := tx.Where("", params).Find(&sites).Error; err == nil {
 		return gs.NewGeographicSiteFindOK()
 	} else if err == gorm.ErrRecordNotFound {
 		return gs.NewGeographicSiteFindNotFound()

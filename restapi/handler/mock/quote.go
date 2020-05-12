@@ -56,11 +56,19 @@ func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangePar
 	}
 
 	if err := Store.Save(state).Error; err == nil {
-		// TODO: publish event
-		quoteBus.Publish(string(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION), models.QuoteEventPlus{
-			FieldPath:    nil,
-			ResourcePath: nil,
-		})
+		if q, err := db.GetQuote(Store, *input.ID); err != nil {
+			//FIXME: calculate file path and resource path
+			event := models.QuoteEventPlus{
+				FieldPath:    []string{},
+				ResourcePath: nil,
+			}
+			e := q.(*schema.Quote).ToQuoteSummaryView()
+			event.SetEvent(e)
+			event.SetEventID(xid.New().String())
+			event.SetEventTime(&now)
+			event.SetEventType(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION)
+			quoteBus.Publish(string(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION), event)
+		}
 		return quote.NewQuoteRequestStateChangeOK().WithPayload(&models.ChangeQuoteStateResponse{
 			ExternalID:                    input.ExternalID,
 			ID:                            input.ID,
@@ -122,7 +130,17 @@ func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.P
 	}
 	q.SetNote(input.Note)
 	if err := Store.Save(q).Error; err == nil {
-		//TODO: publish event
+		//FIXME: calculate file path and resource path
+		event := models.QuoteEventPlus{
+			FieldPath:    []string{},
+			ResourcePath: nil,
+		}
+		e := q.ToQuoteSummaryView()
+		event.SetEvent(e)
+		event.SetEventID(xid.New().String())
+		event.SetEventTime(&now)
+		event.SetEventType(models.QuoteEventTypeQUOTECREATIONNOTIFICATION)
+		quoteBus.Publish(string(models.QuoteEventTypeQUOTECREATIONNOTIFICATION), event)
 		quoteBus.Publish(string(models.QuoteEventTypeQUOTECREATIONNOTIFICATION), &models.QuoteEventPlus{
 			FieldPath:    nil,
 			ResourcePath: nil,

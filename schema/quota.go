@@ -556,6 +556,42 @@ func (m *Quote) SetValidFor(period *models.TimePeriod) {
 	m.ValidForField = period
 }
 
+func (m *Quote) ToQuoteSummaryView() models.QuoteSummaryView {
+	to := &QuoteSummaryView{}
+	to.AtBaseTypeField = m.AtBaseTypeField
+	to.AtSchemaLocationField = m.AtSchemaLocationField
+	to.AtTypeField = m.Type
+	to.CategoryField = ""
+	to.EffectiveQuoteCompletionDateField = m.EffectiveQuoteCompletionDateField
+	to.ExpectedFulfillmentStartDateField = m.ExpectedFulfillmentStartDateField
+	to.ExpectedQuoteCompletionDateField = m.ExpectedQuoteCompletionDateField
+	to.ExternalIdField = m.ExternalIDField
+	to.HrefField = m.HrefField
+	to.IDField = m.IDField
+	to.QuoteDateField = m.QuoteDateField
+	to.QuoteItemField = m.QuoteItem()
+	to.QuoteLevelField = m.QuoteLevelField
+	var roles []*models.RelatedPartyRole
+	//FIXME: How to convert this??? store role in db???
+	for _, p := range m.RelatedParty() {
+		r := ""
+		if len(p.Role) > 0 {
+			r = p.Role[0]
+		}
+		roles = append(roles, &models.RelatedPartyRole{
+			AtReferredType: p.AtReferredType,
+			ID:             swag.StringValue(p.ID),
+			RelatedParty:   p,
+			Role:           swag.String(r),
+		})
+	}
+	to.RelatedPartyRoleField = roles
+	to.RequestedQuoteCompletionDateField = m.RequestedQuoteCompletionDateField
+	to.StateField = models.QuoteState(m.StateField)
+	to.ValidForField = m.ValidForField
+	return to
+}
+
 type QuoteItem struct {
 
 	// Link to the schema describing this REST resource
