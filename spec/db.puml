@@ -1,5 +1,13 @@
 @startuml
 namespace schema {
+    class AlternateProductProposal << (S,Aquamarine) >> {
+        + AtType string
+        + EligibleProductOffering []*models.ProductOfferingRef
+        + ID *string
+        + InstallationInterval *models.TimeInterval
+        + ProductSpecification *ProductSpecificationRef
+
+    }
     class FieldedAddress << (S,Aquamarine) >> {
         + City string
         + Country string
@@ -64,7 +72,7 @@ namespace schema {
         + GeographicLocation *GeographicLocation
         + ID string
         + ReferencedAddress *models.ReferencedAddress
-        + RelatedParty []*models.RelatedParty
+        + RelatedParty []*RelatedParty
         + SiteCompanyName string
         + SiteCustomerName string
         + SiteName string
@@ -84,6 +92,20 @@ namespace schema {
         + SubUnit []*models.SubUnit
 
     }
+    class HubSubscriber << (S,Aquamarine) >> {
+        + ID string
+        + Type string
+        + Query string
+        + Callback string
+
+    }
+    class Note << (S,Aquamarine) >> {
+        + ID *string
+        + Author *string
+        + Date *strfmt.DateTime
+        + Text *string
+
+    }
     class OrderItem << (S,Aquamarine) >> {
         + AtSchemaLocation string
         + AtType string
@@ -99,7 +121,7 @@ namespace schema {
         + ProductOffering *models.ProductOfferingRef
         + Qualification *models.QualificationRef
         + Quote *models.QuoteRef
-        + RelatedParty []*models.RelatedParty
+        + RelatedParty []*RelatedParty
         + State models.ProductOrderItemStateType
         + StateChange []*StateChange
 
@@ -139,7 +161,7 @@ namespace schema {
         + ProductRelationship []*ProductRelationship
         + ProductSpecification *ProductSpecificationRef
         + ProductTerm []*ProductTerm
-        + RelatedParty []*models.RelatedParty
+        + RelatedParty []*RelatedParty
         + Site []*GeographicSite
         + StartDate *strfmt.DateTime
         + Status models.ProductStatus
@@ -158,7 +180,7 @@ namespace schema {
         + ProductOfferingQualificationItem []*ProductOfferingQualificationItem
         + ProjectID string
         + ProvideAlternative bool
-        + RelatedParty []*models.RelatedParty
+        + RelatedParty []*RelatedParty
         + RequestedResponseDate strfmt.DateTime
         + State models.ProductOfferingQualificationStateType
         + StateChange []*StateChange
@@ -167,7 +189,7 @@ namespace schema {
     class ProductOfferingQualificationItem << (S,Aquamarine) >> {
         + AtType string
         + Action models.ProductActionType
-        + AlternateProductProposal []*models.AlternateProductProposal
+        + AlternateProductProposal []*AlternateProductProposal
         + EligibleProductOffering []*models.ProductOfferingRef
         + GuaranteedUntilDate strfmt.DateTime
         + ID *string
@@ -175,7 +197,7 @@ namespace schema {
         + Product *Product
         + ProductOffering *models.ProductOfferingRef
         + ProductOfferingQualificationItemRelationship []*models.ProductOfferingQualificationItemRelationship
-        + RelatedParty []*models.RelatedParty
+        + RelatedParty []*RelatedParty
         + ServiceConfidenceReason string
         + ServiceabilityConfidence models.ServiceabilityColor
         + State models.ProductOfferingQualificationItemStateType
@@ -198,7 +220,7 @@ namespace schema {
         + ExternalID *string
         + Href *string
         + ID *string
-        + Note []*models.Note
+        + Note []*Note
         + OrderActivity models.OrderActivity
         + OrderDate *strfmt.DateTime
         + OrderItem []*OrderItem
@@ -210,7 +232,7 @@ namespace schema {
         + Priority int32
         + ProjectID string
         + RelatedBuyerPON string
-        + RelatedParty []*models.RelatedParty
+        + RelatedParty []*RelatedParty
         + RequestedCompletionDate *strfmt.DateTime
         + RequestedStartDate strfmt.DateTime
         + State models.ProductOrderStateType
@@ -271,11 +293,11 @@ namespace schema {
         + EffectiveQuoteCompletionDateField strfmt.DateTime
         + ExternalIDField string
         + InstantSyncQuotingField *bool
-        + NoteField []*models.Note
+        + NoteField []*Note
         + ProjectIDField string
         + QuoteItemField []*QuoteItem
         + QuoteLevelField models.QuoteLevel
-        + RelatedPartyField []*models.RelatedParty
+        + RelatedPartyField []*RelatedParty
         + RequestedQuoteCompletionDateField *strfmt.DateTime
         + HrefField string
         + IDField string
@@ -340,6 +362,44 @@ namespace schema {
         + SetState(stateType models.QuoteStateType) 
         + ValidFor() *models.TimePeriod
         + SetValidFor(period *models.TimePeriod) 
+        + ToQuoteSummaryView() models.QuoteSummaryView
+
+    }
+    class QuoteFind << (S,Aquamarine) >> {
+        + DescriptionField string
+        + EffectiveQuoteCompletionDateField strfmt.DateTime
+        + ExpectedQuoteCompletionDateField strfmt.Date
+        + ExternalIDField string
+        + HrefField string
+        + IDField string
+        + ProjectIDField string
+        + QuoteDateField strfmt.DateTime
+        + QuoteLevelField models.QuoteLevel
+        + RequestedQuoteCompletionDateField *strfmt.DateTime
+        + StateField models.QuoteStateType
+
+        + Description() string
+        + SetDescription(val string) 
+        + EffectiveQuoteCompletionDate() strfmt.DateTime
+        + SetEffectiveQuoteCompletionDate(val strfmt.DateTime) 
+        + ExpectedQuoteCompletionDate() strfmt.Date
+        + SetExpectedQuoteCompletionDate(val strfmt.Date) 
+        + ExternalID() string
+        + SetExternalID(val string) 
+        + Href() string
+        + SetHref(val string) 
+        + ID() string
+        + SetID(val string) 
+        + ProjectID() string
+        + SetProjectID(val string) 
+        + QuoteDate() strfmt.DateTime
+        + SetQuoteDate(val strfmt.DateTime) 
+        + QuoteLevel() models.QuoteLevel
+        + SetQuoteLevel(val models.QuoteLevel) 
+        + RequestedQuoteCompletionDate() *strfmt.DateTime
+        + SetRequestedQuoteCompletionDate(val *strfmt.DateTime) 
+        + State() models.QuoteStateType
+        + SetState(val models.QuoteStateType) 
 
     }
     class QuoteItem << (S,Aquamarine) >> {
@@ -347,13 +407,94 @@ namespace schema {
         + AtType string
         + Action models.ProductActionType
         + ID *string
-        + Note []*models.Note
+        + Note []*Note
         + Product *Product
         + ProductOffering *models.ProductOfferingRef
         + Qualification *models.ProductOfferingQualificationRef
         + QuoteItemRelationship []*models.QuoteItemRelationship
-        + RelatedParty []*models.RelatedParty
+        + RelatedParty []*RelatedParty
         + RequestedQuoteItemTerm *models.ItemTerm
+
+    }
+    class QuoteSummaryView << (S,Aquamarine) >> {
+        + AtBaseTypeField string
+        + AtSchemaLocationField string
+        + AtTypeField string
+        + CategoryField string
+        + EffectiveQuoteCompletionDateField strfmt.DateTime
+        + ExpectedFulfillmentStartDateField strfmt.Date
+        + ExpectedQuoteCompletionDateField strfmt.Date
+        + ExternalIdField string
+        + HrefField string
+        + IDField string
+        + QuoteDateField strfmt.DateTime
+        + QuoteItemField []*models.QuoteItem
+        + QuoteLevelField models.QuoteLevel
+        + RelatedPartyRoleField []*models.RelatedPartyRole
+        + RequestedQuoteCompletionDateField *strfmt.DateTime
+        + StateField models.QuoteState
+        + ValidForField *models.TimePeriod
+
+        - validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error
+        - validateExpectedFulfillmentStartDate(formats strfmt.Registry) error
+        - validateExpectedQuoteCompletionDate(formats strfmt.Registry) error
+        - validateQuoteDate(formats strfmt.Registry) error
+        - validateQuoteItem(formats strfmt.Registry) error
+        - validateQuoteLevel(formats strfmt.Registry) error
+        - validateRelatedPartyRole(formats strfmt.Registry) error
+        - validateRequestedQuoteCompletionDate(formats strfmt.Registry) error
+        - validateState(formats strfmt.Registry) error
+        - validateValidFor(formats strfmt.Registry) error
+
+        + AtBaseType() string
+        + SetAtBaseType(val string) 
+        + AtSchemaLocation() string
+        + SetAtSchemaLocation(val string) 
+        + AtType() string
+        + SetAtType(val string) 
+        + Category() string
+        + SetCategory(val string) 
+        + EffectiveQuoteCompletionDate() strfmt.DateTime
+        + SetEffectiveQuoteCompletionDate(val strfmt.DateTime) 
+        + ExpectedFulfillmentStartDate() strfmt.Date
+        + SetExpectedFulfillmentStartDate(val strfmt.Date) 
+        + ExpectedQuoteCompletionDate() strfmt.Date
+        + SetExpectedQuoteCompletionDate(val strfmt.Date) 
+        + ExternalID() string
+        + SetExternalID(val string) 
+        + Href() string
+        + SetHref(val string) 
+        + ID() string
+        + SetID(val string) 
+        + QuoteDate() strfmt.DateTime
+        + SetQuoteDate(val strfmt.DateTime) 
+        + QuoteItem() []*models.QuoteItem
+        + SetQuoteItem(val []*models.QuoteItem) 
+        + QuoteLevel() models.QuoteLevel
+        + SetQuoteLevel(val models.QuoteLevel) 
+        + RelatedPartyRole() []*models.RelatedPartyRole
+        + SetRelatedPartyRole(val []*models.RelatedPartyRole) 
+        + RequestedQuoteCompletionDate() *strfmt.DateTime
+        + SetRequestedQuoteCompletionDate(val *strfmt.DateTime) 
+        + State() models.QuoteState
+        + SetState(val models.QuoteState) 
+        + ValidFor() *models.TimePeriod
+        + SetValidFor(val *models.TimePeriod) 
+        + Validate(formats strfmt.Registry) error
+
+    }
+    class RelatedParty << (S,Aquamarine) >> {
+        + AtReferredType string
+        + EmailAddress string
+        + ID *string
+        + Name *string
+        + Number string
+        + NumberExtension string
+        + Role []string
+        + Roles string
+
+        + To() *models.RelatedParty
+        + From(m *models.RelatedParty) *RelatedParty
 
     }
     class StateChange << (S,Aquamarine) >> {
