@@ -942,84 +942,6 @@ func init() {
         }
       }
     },
-    "/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification": {
-      "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
-        "description": "Product Offering Qualification Creation Notification structure definition",
-        "consumes": [
-          "application/json"
-        ],
-        "tags": [
-          "Notification"
-        ],
-        "summary": "Product Offering Qualification Creation Notification structure",
-        "operationId": "notificationProductOfferingQualificationCreationNotification",
-        "parameters": [
-          {
-            "name": "productOfferingQualificationCreationNotification",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PoQEventContainer"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "408": {
-            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
     "/productOfferingQualificationManagement/v3/productOfferingQualification": {
       "get": {
         "security": [
@@ -1031,6 +953,9 @@ func init() {
           }
         ],
         "description": "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. ",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -1307,16 +1232,80 @@ func init() {
         }
       }
     },
-    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification": {
+    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification": {
       "post": {
-        "security": [
+        "security": [],
+        "description": "Product Offering Qualification Creation Notification structure definition",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Product Offering Qualification Creation Notification structure",
+        "operationId": "notificationProductOfferingQualificationCreationNotification",
+        "parameters": [
           {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
+            "name": "productOfferingQualificationCreationNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PoQEventContainer"
+            }
           }
         ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification": {
+      "post": {
+        "security": [],
         "description": "Product Offering Qualification State Change Notification structure definition",
         "consumes": [
           "application/json"
@@ -8494,84 +8483,6 @@ func init() {
         }
       }
     },
-    "/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification": {
-      "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
-        "description": "Product Offering Qualification Creation Notification structure definition",
-        "consumes": [
-          "application/json"
-        ],
-        "tags": [
-          "Notification"
-        ],
-        "summary": "Product Offering Qualification Creation Notification structure",
-        "operationId": "notificationProductOfferingQualificationCreationNotification",
-        "parameters": [
-          {
-            "name": "productOfferingQualificationCreationNotification",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PoQEventContainer"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "401": {
-            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "403": {
-            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "404": {
-            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "408": {
-            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity\n\nFunctional error",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          },
-          "503": {
-            "description": "Service Unavailable\n\n",
-            "schema": {
-              "$ref": "#/definitions/ErrorRepresentation"
-            }
-          }
-        }
-      }
-    },
     "/productOfferingQualificationManagement/v3/productOfferingQualification": {
       "get": {
         "security": [
@@ -8583,6 +8494,9 @@ func init() {
           }
         ],
         "description": "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. ",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -8859,16 +8773,80 @@ func init() {
         }
       }
     },
-    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification": {
+    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification": {
       "post": {
-        "security": [
+        "security": [],
+        "description": "Product Offering Qualification Creation Notification structure definition",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Product Offering Qualification Creation Notification structure",
+        "operationId": "notificationProductOfferingQualificationCreationNotification",
+        "parameters": [
           {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
+            "name": "productOfferingQualificationCreationNotification",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PoQEventContainer"
+            }
           }
         ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "401": {
+            "description": "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "403": {
+            "description": "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "404": {
+            "description": "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "408": {
+            "description": "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity\n\nFunctional error",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable\n\n",
+            "schema": {
+              "$ref": "#/definitions/ErrorRepresentation"
+            }
+          }
+        }
+      }
+    },
+    "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification": {
+      "post": {
+        "security": [],
         "description": "Product Offering Qualification State Change Notification structure definition",
         "consumes": [
           "application/json"

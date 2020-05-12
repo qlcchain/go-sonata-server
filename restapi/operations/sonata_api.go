@@ -74,10 +74,10 @@ func NewSonataAPI(spec *loads.Document) *SonataAPI {
 		GeographicSiteGeographicSiteGetHandler: geographic_site.GeographicSiteGetHandlerFunc(func(params geographic_site.GeographicSiteGetParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation geographic_site.GeographicSiteGet has not yet been implemented")
 		}),
-		NotificationNotificationProductOfferingQualificationCreationNotificationHandler: notification.NotificationProductOfferingQualificationCreationNotificationHandlerFunc(func(params notification.NotificationProductOfferingQualificationCreationNotificationParams, principal *models.Principal) middleware.Responder {
+		NotificationNotificationProductOfferingQualificationCreationNotificationHandler: notification.NotificationProductOfferingQualificationCreationNotificationHandlerFunc(func(params notification.NotificationProductOfferingQualificationCreationNotificationParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOfferingQualificationCreationNotification has not yet been implemented")
 		}),
-		NotificationNotificationProductOfferingQualificationStateChangeNotificationHandler: notification.NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc(func(params notification.NotificationProductOfferingQualificationStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
+		NotificationNotificationProductOfferingQualificationStateChangeNotificationHandler: notification.NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc(func(params notification.NotificationProductOfferingQualificationStateChangeNotificationParams) middleware.Responder {
 			return middleware.NotImplemented("operation notification.NotificationProductOfferingQualificationStateChangeNotification has not yet been implemented")
 		}),
 		NotificationNotificationProductOrderAttributeValueChangeNotificationHandler: notification.NotificationProductOrderAttributeValueChangeNotificationHandlerFunc(func(params notification.NotificationProductOrderAttributeValueChangeNotificationParams, principal *models.Principal) middleware.Responder {
@@ -607,7 +607,7 @@ func (o *SonataAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification"] = notification.NewNotificationProductOfferingQualificationCreationNotification(o.context, o.NotificationNotificationProductOfferingQualificationCreationNotificationHandler)
+	o.handlers["POST"]["/productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification"] = notification.NewNotificationProductOfferingQualificationCreationNotification(o.context, o.NotificationNotificationProductOfferingQualificationCreationNotificationHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

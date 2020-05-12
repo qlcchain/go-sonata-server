@@ -33,7 +33,7 @@ type ProductOfferingQualification struct {
 
 	// The Serviceability Request's unique identifier.
 	// Required: true
-	ID *string `json:"id"`
+	ID *string `json:"id" gorm:"unique;not null"`
 
 	// If this flag is set to Yes, Buyer requests to have instant qualificationto be provided in operation POST response
 	InstantSyncQualification *bool `json:"instantSyncQualification,omitempty"`

@@ -78,7 +78,9 @@ func VerifyField(v interface{}) (string, bool) {
 	case *string:
 		value = swag.StringValue(t)
 	case *strfmt.DateTime:
-		value = t.String()
+		if t != nil {
+			value = t.String()
+		}
 	}
 
 	return value, value != ""
@@ -87,7 +89,7 @@ func VerifyField(v interface{}) (string, bool) {
 func ParseType(v string) string {
 	if strings.Contains(v, "=") {
 		if split := strings.Split(v, "="); len(split) == 2 {
-			return strings.Trim(split[0], " ")
+			return strings.Trim(split[1], " ")
 		}
 	}
 	return v

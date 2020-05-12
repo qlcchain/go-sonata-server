@@ -2338,6 +2338,8 @@ paths:
   /productOfferingQualificationManagement/v3/productOfferingQualification:
     get:
       description: "The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller. "
+      consumes:
+        - application/json
       produces:
         - application/json
       tags:
@@ -2682,7 +2684,7 @@ paths:
 
           schema:
             $ref: "#/definitions/ErrorRepresentation"
-  /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification:
+  /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification:
     post:
       tags:
       - "Notification"
@@ -2690,8 +2692,7 @@ paths:
       - "application/json"
       operationId: "notificationProductOfferingQualificationCreationNotification"
       summary: "Product Offering Qualification Creation Notification structure"
-      security:
-        - bearer: [ "customer","admin" ]
+      security: []
       description: "Product Offering Qualification Creation Notification structure\
         \ definition"
       deprecated: false
@@ -2750,8 +2751,7 @@ paths:
       - "application/json"
       operationId: "notificationProductOfferingQualificationStateChangeNotification"
       summary: "Product Offering Qualification State Change Notification structure"
-      security:
-        - bearer: [ "customer","admin" ]
+      security: []
       description: "Product Offering Qualification State Change Notification structure\
         \ definition"
       deprecated: false

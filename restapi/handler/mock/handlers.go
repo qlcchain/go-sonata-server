@@ -8,9 +8,6 @@
 package mock
 
 import (
-	"path"
-
-	"github.com/qlcchain/go-sonata-server/config"
 	"github.com/qlcchain/go-sonata-server/schema"
 
 	"github.com/jinzhu/gorm"
@@ -37,9 +34,9 @@ var (
 )
 
 func init() {
-	// prepare db
-	dir := config.DBDir()
 	var err error
+	// prepare db
+	//dir := config.DBDir()
 	//Store, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
 	//	SkipDefaultTransaction: false,
 	//	NamingStrategy:         nil,
@@ -49,8 +46,8 @@ func init() {
 	//		Colorful:      true,
 	//	}),
 	//})
-	file := path.Join(dir, "sonata.db")
-	//file := "file:mockdb?mode=memory&cache=shared"
+	//file := path.Join(dir, "sonata.db")
+	file := "file:mockdb?mode=memory&cache=shared"
 	Store, err = gorm.Open("sqlite3", file)
 	if err != nil {
 		logrus.Fatalln(err)
@@ -58,7 +55,7 @@ func init() {
 	Store.LogMode(true)
 	if err := Store.AutoMigrate(
 		// user management
-		&schema.User{},
+		&schema.User{}, &schema.HubSubscriber{},
 		// GeographicAddress
 		&schema.GeographicAddress{}, &schema.FieldedAddress{}, &schema.FormattedAddress{},
 		&schema.GeographicLocation{}, &schema.GeographicAddress{}, &schema.GeographicSubAddress{}, &schema.GeographicPoint{},

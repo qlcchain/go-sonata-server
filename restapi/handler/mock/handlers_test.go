@@ -54,6 +54,8 @@ func TestMockQuoteCreate(t *testing.T) {
 	//models.ProductOfferingQualificationCreate{}
 	val := ProductOfferingQualificationCreate()
 	t.Log(util.ToString(val))
+
+	//t.Log(util.ToString(&product_offering_qualification.ProductOfferingQualificationFindParams{}))
 }
 
 //

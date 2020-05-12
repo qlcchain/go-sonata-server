@@ -9,21 +9,19 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NotificationProductOfferingQualificationCreationNotificationHandlerFunc turns a function with the right signature into a notification product offering qualification creation notification handler
-type NotificationProductOfferingQualificationCreationNotificationHandlerFunc func(NotificationProductOfferingQualificationCreationNotificationParams, *models.Principal) middleware.Responder
+type NotificationProductOfferingQualificationCreationNotificationHandlerFunc func(NotificationProductOfferingQualificationCreationNotificationParams) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn NotificationProductOfferingQualificationCreationNotificationHandlerFunc) Handle(params NotificationProductOfferingQualificationCreationNotificationParams, principal *models.Principal) middleware.Responder {
-	return fn(params, principal)
+func (fn NotificationProductOfferingQualificationCreationNotificationHandlerFunc) Handle(params NotificationProductOfferingQualificationCreationNotificationParams) middleware.Responder {
+	return fn(params)
 }
 
 // NotificationProductOfferingQualificationCreationNotificationHandler interface for that can handle valid notification product offering qualification creation notification params
 type NotificationProductOfferingQualificationCreationNotificationHandler interface {
-	Handle(NotificationProductOfferingQualificationCreationNotificationParams, *models.Principal) middleware.Responder
+	Handle(NotificationProductOfferingQualificationCreationNotificationParams) middleware.Responder
 }
 
 // NewNotificationProductOfferingQualificationCreationNotification creates a new http.Handler for the notification product offering qualification creation notification operation
@@ -31,7 +29,7 @@ func NewNotificationProductOfferingQualificationCreationNotification(ctx *middle
 	return &NotificationProductOfferingQualificationCreationNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationProductOfferingQualificationCreationNotification swagger:route POST /productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification Notification notificationProductOfferingQualificationCreationNotification
+/*NotificationProductOfferingQualificationCreationNotification swagger:route POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification Notification notificationProductOfferingQualificationCreationNotification
 
 Product Offering Qualification Creation Notification structure
 
@@ -50,25 +48,12 @@ func (o *NotificationProductOfferingQualificationCreationNotification) ServeHTTP
 	}
 	var Params = NewNotificationProductOfferingQualificationCreationNotificationParams()
 
-	uprinc, aCtx, err := o.Context.Authorize(r, route)
-	if err != nil {
-		o.Context.Respond(rw, r, route.Produces, route, err)
-		return
-	}
-	if aCtx != nil {
-		r = aCtx
-	}
-	var principal *models.Principal
-	if uprinc != nil {
-		principal = uprinc.(*models.Principal) // this is really a models.Principal, I promise
-	}
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params, principal) // actually handle the request
+	res := o.Handler.Handle(Params) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 

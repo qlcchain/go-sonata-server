@@ -35,7 +35,7 @@ func (o *NotificationProductOfferingQualificationCreationNotificationURL) SetBas
 func (o *NotificationProductOfferingQualificationCreationNotificationURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/productOfferingQualificationManagement/v3/notification/productOfferingQualificationCreationNotification"
+	var _path = "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification"
 
 	_basePath := o._basePath
 	if _basePath == "" {

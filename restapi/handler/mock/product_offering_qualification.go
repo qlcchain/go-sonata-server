@@ -107,7 +107,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 	}
 
 	var err error
-	if err = Store.Create(qualification).Error; err == nil {
+	if err = Store.Save(qualification).Error; err == nil {
 		payload := &models.ProductOfferingQualification{}
 		if err = util.Convert(qualification, payload); err == nil {
 			now := strfmt.DateTime(time.Now())
@@ -117,7 +117,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 					Href: handler.HrefToID("", swag.StringValue(payload.ID)),
 					ID:   swag.StringValue(payload.ID),
 				},
-				EventID:   swag.String(xid.New().String()),
+				EventID:   handler.NewID(),
 				EventTime: &now,
 				EventType: t,
 			})
@@ -134,7 +134,7 @@ func ProductOfferingQualificationProductOfferingQualificationFindHandler(params 
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return poq.NewProductOfferingQualificationFindBadRequest().WithPayload(payload)
 	}
-	var poqs []schema.ProductOfferingQualification
+	var poqs []*schema.ProductOfferingQualification
 	tx := Store.Set(db.AutoPreLoad, true)
 	if v, b := handler.VerifyField(params.ProjectID); b {
 		tx = tx.Where("projectId=?", v)
@@ -304,12 +304,12 @@ func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductO
 	}
 }
 
-func NotificationProductOfferingQualificationCreationNotificationHandler(params notification.NotificationProductOfferingQualificationCreationNotificationParams, principal *models.Principal) middleware.Responder {
+func NotificationProductOfferingQualificationCreationNotificationHandler(params notification.NotificationProductOfferingQualificationCreationNotificationParams) middleware.Responder {
 	logrus.Debugf("got NotificationProductOfferingQualificationCreationNotificationParams: %s", util.ToString(params.ProductOfferingQualificationCreationNotification))
 	return notification.NewNotificationProductOfferingQualificationCreationNotificationNoContent()
 }
 
-func NotificationProductOfferingQualificationStateChangeNotificationHandler(params notification.NotificationProductOfferingQualificationStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
+func NotificationProductOfferingQualificationStateChangeNotificationHandler(params notification.NotificationProductOfferingQualificationStateChangeNotificationParams) middleware.Responder {
 	logrus.Debugf("got NotificationProductOfferingQualificationStateChangeNotificationParams: %s", util.ToString(params.ProductOfferingQualificationStateChangeNotification))
 	return notification.NewNotificationProductOfferingQualificationStateChangeNotificationNoContent()
 }

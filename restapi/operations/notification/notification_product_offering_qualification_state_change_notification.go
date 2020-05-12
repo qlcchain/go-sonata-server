@@ -9,21 +9,19 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc turns a function with the right signature into a notification product offering qualification state change notification handler
-type NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc func(NotificationProductOfferingQualificationStateChangeNotificationParams, *models.Principal) middleware.Responder
+type NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc func(NotificationProductOfferingQualificationStateChangeNotificationParams) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc) Handle(params NotificationProductOfferingQualificationStateChangeNotificationParams, principal *models.Principal) middleware.Responder {
-	return fn(params, principal)
+func (fn NotificationProductOfferingQualificationStateChangeNotificationHandlerFunc) Handle(params NotificationProductOfferingQualificationStateChangeNotificationParams) middleware.Responder {
+	return fn(params)
 }
 
 // NotificationProductOfferingQualificationStateChangeNotificationHandler interface for that can handle valid notification product offering qualification state change notification params
 type NotificationProductOfferingQualificationStateChangeNotificationHandler interface {
-	Handle(NotificationProductOfferingQualificationStateChangeNotificationParams, *models.Principal) middleware.Responder
+	Handle(NotificationProductOfferingQualificationStateChangeNotificationParams) middleware.Responder
 }
 
 // NewNotificationProductOfferingQualificationStateChangeNotification creates a new http.Handler for the notification product offering qualification state change notification operation
@@ -50,25 +48,12 @@ func (o *NotificationProductOfferingQualificationStateChangeNotification) ServeH
 	}
 	var Params = NewNotificationProductOfferingQualificationStateChangeNotificationParams()
 
-	uprinc, aCtx, err := o.Context.Authorize(r, route)
-	if err != nil {
-		o.Context.Respond(rw, r, route.Produces, route, err)
-		return
-	}
-	if aCtx != nil {
-		r = aCtx
-	}
-	var principal *models.Principal
-	if uprinc != nil {
-		principal = uprinc.(*models.Principal) // this is really a models.Principal, I promise
-	}
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params, principal) // actually handle the request
+	res := o.Handler.Handle(Params) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
