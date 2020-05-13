@@ -6,164 +6,44 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"bytes"
-	"encoding/json"
-	"io"
-	"io/ioutil"
-
 	"github.com/go-openapi/errors"
-	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
 // PoEvent Event class is used to describe information structure used for notification.
 //
-// swagger:discriminator PoEvent eventId
-type PoEvent interface {
-	runtime.Validatable
+// swagger:model PoEvent
+type PoEvent struct {
 
 	// event
 	// Required: true
-	Event() *ProductOrderEvent
-	SetEvent(*ProductOrderEvent)
+	Event *ProductOrderEvent `json:"event"`
 
 	// event Id
 	// Required: true
-	EventID() string
-	SetEventID(string)
+	EventID *string `json:"eventId"`
 
 	// event time
 	// Required: true
 	// Format: date-time
-	EventTime() *strfmt.DateTime
-	SetEventTime(*strfmt.DateTime)
+	EventTime *strfmt.DateTime `json:"eventTime"`
 
 	// event type
 	// Required: true
-	EventType() ProductOrderEventType
-	SetEventType(ProductOrderEventType)
-
-	// AdditionalProperties in base type shoud be handled just like regular properties
-	// At this moment, the base type property is pushed down to the subtype
-}
-
-type poEvent struct {
-	eventField *ProductOrderEvent
-
-	eventIdField string
-
-	eventTimeField *strfmt.DateTime
-
-	eventTypeField ProductOrderEventType
-}
-
-// Event gets the event of this polymorphic type
-func (m *poEvent) Event() *ProductOrderEvent {
-	return m.eventField
-}
-
-// SetEvent sets the event of this polymorphic type
-func (m *poEvent) SetEvent(val *ProductOrderEvent) {
-	m.eventField = val
-}
-
-// EventID gets the event Id of this polymorphic type
-func (m *poEvent) EventID() string {
-	return "PoEvent"
-}
-
-// SetEventID sets the event Id of this polymorphic type
-func (m *poEvent) SetEventID(val string) {
-}
-
-// EventTime gets the event time of this polymorphic type
-func (m *poEvent) EventTime() *strfmt.DateTime {
-	return m.eventTimeField
-}
-
-// SetEventTime sets the event time of this polymorphic type
-func (m *poEvent) SetEventTime(val *strfmt.DateTime) {
-	m.eventTimeField = val
-}
-
-// EventType gets the event type of this polymorphic type
-func (m *poEvent) EventType() ProductOrderEventType {
-	return m.eventTypeField
-}
-
-// SetEventType sets the event type of this polymorphic type
-func (m *poEvent) SetEventType(val ProductOrderEventType) {
-	m.eventTypeField = val
-}
-
-// UnmarshalPoEventSlice unmarshals polymorphic slices of PoEvent
-func UnmarshalPoEventSlice(reader io.Reader, consumer runtime.Consumer) ([]PoEvent, error) {
-	var elements []json.RawMessage
-	if err := consumer.Consume(reader, &elements); err != nil {
-		return nil, err
-	}
-
-	var result []PoEvent
-	for _, element := range elements {
-		obj, err := unmarshalPoEvent(element, consumer)
-		if err != nil {
-			return nil, err
-		}
-		result = append(result, obj)
-	}
-	return result, nil
-}
-
-// UnmarshalPoEvent unmarshals polymorphic PoEvent
-func UnmarshalPoEvent(reader io.Reader, consumer runtime.Consumer) (PoEvent, error) {
-	// we need to read this twice, so first into a buffer
-	data, err := ioutil.ReadAll(reader)
-	if err != nil {
-		return nil, err
-	}
-	return unmarshalPoEvent(data, consumer)
-}
-
-func unmarshalPoEvent(data []byte, consumer runtime.Consumer) (PoEvent, error) {
-	buf := bytes.NewBuffer(data)
-	buf2 := bytes.NewBuffer(data)
-
-	// the first time this is read is to fetch the value of the eventId property.
-	var getType struct {
-		EventID string `json:"eventId"`
-	}
-	if err := consumer.Consume(buf, &getType); err != nil {
-		return nil, err
-	}
-
-	if err := validate.RequiredString("eventId", "body", getType.EventID); err != nil {
-		return nil, err
-	}
-
-	// The value of eventId is used to determine which type to create and unmarshal the data into
-	switch getType.EventID {
-	case "PoEvent":
-		var result poEvent
-		if err := consumer.Consume(buf2, &result); err != nil {
-			return nil, err
-		}
-		return &result, nil
-	case "PoEventPlus":
-		var result PoEventPlus
-		if err := consumer.Consume(buf2, &result); err != nil {
-			return nil, err
-		}
-		return &result, nil
-	}
-	return nil, errors.New(422, "invalid eventId value: %q", getType.EventID)
+	EventType ProductOrderEventType `json:"eventType"`
 }
 
 // Validate validates this po event
-func (m *poEvent) Validate(formats strfmt.Registry) error {
+func (m *PoEvent) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEvent(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateEventID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -181,14 +61,14 @@ func (m *poEvent) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *poEvent) validateEvent(formats strfmt.Registry) error {
+func (m *PoEvent) validateEvent(formats strfmt.Registry) error {
 
-	if err := validate.Required("event", "body", m.Event()); err != nil {
+	if err := validate.Required("event", "body", m.Event); err != nil {
 		return err
 	}
 
-	if m.Event() != nil {
-		if err := m.Event().Validate(formats); err != nil {
+	if m.Event != nil {
+		if err := m.Event.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("event")
 			}
@@ -199,27 +79,54 @@ func (m *poEvent) validateEvent(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *poEvent) validateEventTime(formats strfmt.Registry) error {
+func (m *PoEvent) validateEventID(formats strfmt.Registry) error {
 
-	if err := validate.Required("eventTime", "body", m.EventTime()); err != nil {
-		return err
-	}
-
-	if err := validate.FormatOf("eventTime", "body", "date-time", m.EventTime().String(), formats); err != nil {
+	if err := validate.Required("eventId", "body", m.EventID); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (m *poEvent) validateEventType(formats strfmt.Registry) error {
+func (m *PoEvent) validateEventTime(formats strfmt.Registry) error {
 
-	if err := m.EventType().Validate(formats); err != nil {
+	if err := validate.Required("eventTime", "body", m.EventTime); err != nil {
+		return err
+	}
+
+	if err := validate.FormatOf("eventTime", "body", "date-time", m.EventTime.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *PoEvent) validateEventType(formats strfmt.Registry) error {
+
+	if err := m.EventType.Validate(formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("eventType")
 		}
 		return err
 	}
 
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *PoEvent) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *PoEvent) UnmarshalBinary(b []byte) error {
+	var res PoEvent
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
 	return nil
 }

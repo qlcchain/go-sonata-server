@@ -1,6 +1,9 @@
 package schema
 
-import "github.com/qlcchain/go-sonata-server/models"
+import (
+	"github.com/qlcchain/go-sonata-server/models"
+	"github.com/qlcchain/go-sonata-server/util"
+)
 
 type GeographicSite struct {
 
@@ -19,8 +22,8 @@ type GeographicSite struct {
 	// fielded address
 	FieldedAddress *FieldedAddress `json:"fieldedAddress,omitempty" gorm:"foreignkey:ID"`
 
-	// formatted adress
-	FormattedAdress *FormattedAddress `json:"formattedAdress,omitempty" gorm:"foreignkey:ID"`
+	// formatted address
+	FormattedAddress *FormattedAddress `json:"formattedAddress,omitempty" gorm:"foreignkey:ID"`
 
 	// geographic location
 	GeographicLocation *GeographicLocation `json:"geographicLocation,omitempty" gorm:"foreignkey:ID"`
@@ -48,4 +51,72 @@ type GeographicSite struct {
 
 	// status
 	Status models.Status `json:"status,omitempty"`
+}
+
+func (m *GeographicSite) To() *models.GeographicSite {
+	if m == nil {
+		return nil
+	}
+	return &models.GeographicSite{
+		AtSchemaLocation:           m.AtSchemaLocation,
+		AtType:                     m.AtType,
+		AdditionnalSiteInformation: m.AdditionalSiteInformation,
+		Description:                m.Description,
+		FieldedAddress:             m.FieldedAddress.To(),
+		FormattedAdress:            m.FormattedAddress.To(),
+		GeographicLocation:         m.GeographicLocation.To(),
+		ID:                         m.ID,
+		ReferencedAddress:          m.ReferencedAddress,
+		RelatedParty:               ToRelatedParty(m.RelatedParty),
+		SiteCompanyName:            m.SiteCompanyName,
+		SiteCustomerName:           m.SiteCustomerName,
+		SiteName:                   m.SiteName,
+		SiteType:                   m.SiteType,
+		Status:                     m.Status,
+	}
+}
+
+func (m *GeographicSite) From(site *models.GeographicSite) *GeographicSite {
+	if site == nil {
+		return nil
+	}
+
+	r := &GeographicSite{
+		AtSchemaLocation:          site.AtSchemaLocation,
+		AtType:                    site.AtType,
+		AdditionalSiteInformation: site.AdditionnalSiteInformation,
+		Description:               site.Description,
+		ID:                        util.NewOrDefault(site.ID),
+		ReferencedAddress:         site.ReferencedAddress,
+		RelatedParty:              FromRelatedParty(site.RelatedParty),
+		SiteCompanyName:           site.SiteCompanyName,
+		SiteCustomerName:          site.SiteCustomerName,
+		SiteName:                  site.SiteName,
+		SiteType:                  site.SiteType,
+		Status:                    site.Status,
+	}
+	r.GeographicLocation.From(site.GeographicLocation)
+	r.FieldedAddress.From(site.FieldedAddress)
+	r.FormattedAddress.From(site.FormattedAdress)
+	return r
+}
+
+func ToGeographicSite(sites []*GeographicSite) []*models.GeographicSite {
+	var to []*models.GeographicSite
+	for _, s := range sites {
+		to = append(to, s.To())
+	}
+	return to
+}
+
+func FromGeographicSite(sites []*models.GeographicSite) []*GeographicSite {
+	if sites == nil {
+		return nil
+	}
+	var to []*GeographicSite
+	for _, s := range sites {
+		r := &GeographicSite{}
+		to = append(to, r.From(s))
+	}
+	return to
 }

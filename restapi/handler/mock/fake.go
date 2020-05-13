@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/qlcchain/go-sonata-server/util"
+
 	"github.com/brianvoe/gofakeit/v5"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -29,7 +31,7 @@ func FieldAddress() *models.FieldedAddress {
 				//AtSchemaLocation:    "",
 				//AtType:              "",
 				BuildingName:        "Tower01",
-				ID:                  xid.New().String(),
+				ID:                  util.NewID(),
 				LevelNumber:         "BASEMENT 1",
 				LevelType:           "1",
 				PrivateStreetName:   "university",
@@ -42,7 +44,7 @@ func FieldAddress() *models.FieldedAddress {
 				},
 			},
 		},
-		ID:                 xid.New().String(),
+		ID:                 util.NewID(),
 		Locality:           "Locality",
 		PostCodeExtension:  "",
 		Postcode:           gofakeit.Zip(),
@@ -76,10 +78,10 @@ func GeographicAddress() *models.GeographicAddress {
 			StateOrProvince:   a.StateOrProvince,
 		},
 		GeographicLocation: &models.GeographicLocation{
-			ID: xid.New().String(),
+			ID: util.NewID(),
 			GeographicPoint: []*models.GeographicPoint{
 				{
-					ID:        xid.New().String(),
+					ID:        util.NewID(),
 					Latitude:  swag.String(fmt.Sprintf("%f", gofakeit.Latitude())),
 					Longitude: swag.String(fmt.Sprintf("%f", gofakeit.Longitude())),
 				},
@@ -87,9 +89,9 @@ func GeographicAddress() *models.GeographicAddress {
 			SpatialRef: swag.String(gofakeit.CountryAbr()),
 		},
 		HasPublicSite: false,
-		ID:            xid.New().String(),
+		ID:            util.NewID(),
 		ReferencedAddress: &models.ReferencedAddress{
-			ID:            xid.New().String(),
+			ID:            util.NewID(),
 			ReferenceID:   swag.String("ReferenceID"),
 			ReferenceType: swag.String("ReferenceType"),
 		},
@@ -119,7 +121,7 @@ func RelatedParty() *models.RelatedParty {
 	return &models.RelatedParty{
 		AtReferredType:  "Organization",
 		EmailAddress:    gofakeit.Email(),
-		ID:              handler.NewID(),
+		ID:              util.NewIDPtr(),
 		Name:            swag.String(gofakeit.Name()),
 		Number:          gofakeit.Phone(),
 		NumberExtension: "",
@@ -138,7 +140,7 @@ func Describing() *models.Describing {
 
 func Agreement() *models.Agreement {
 	return &models.Agreement{
-		ID:   handler.NewID(),
+		ID:   util.NewIDPtr(),
 		Name: gofakeit.Name(),
 		Path: gofakeit.URL(),
 	}
@@ -177,20 +179,20 @@ func Product() *models.Product {
 		},
 		BillingAccount: []*models.BillingAccountRef{
 			{
-				ID: handler.NewID(),
+				ID: util.NewIDPtr(),
 			},
 		},
-		BuyerProductID: xid.New().String(),
+		BuyerProductID: util.NewID(),
 		Href:           gofakeit.URL(),
-		ID:             handler.NewID(),
+		ID:             util.NewIDPtr(),
 		LastUpdateDate: strfmt.DateTime(time.Now()),
 		ProductOffering: &models.ProductOfferingRef{
-			ID: handler.NewID(),
+			ID: util.NewIDPtr(),
 		},
 		ProductOrder: []*models.ProductOrderRef{
 			{
 				Href:        gofakeit.URL(),
-				ID:          handler.NewID(),
+				ID:          util.NewIDPtr(),
 				OrderItemID: swag.String("01"),
 			},
 		},
@@ -202,14 +204,14 @@ func Product() *models.Product {
 				Product: &models.ProductRef{
 					BuyerProductID: "",
 					Href:           gofakeit.URL(),
-					ID:             handler.NewID(),
+					ID:             util.NewIDPtr(),
 				},
 				Type: swag.String("bundled"),
 			},
 		},
 		ProductSpecification: &models.ProductSpecificationRef{
 			Describing: Describing(),
-			ID:         handler.NewID(),
+			ID:         util.NewIDPtr(),
 		},
 		ProductTerm: []*models.ProductTerm{
 			{
@@ -258,39 +260,39 @@ func QuoteCreate() *models.QuoteCreate {
 		Agreement: []*models.AgreementRef{
 			{
 				Href: gofakeit.URL(),
-				ID:   handler.NewID(),
+				ID:   util.NewIDPtr(),
 				Name: swag.String(gofakeit.Name()),
 				Path: swag.String(gofakeit.URL()),
 			},
 		},
 		Description:                  "demo create quote",
 		ExpectedFulfillmentStartDate: strfmt.Date(time.Now().AddDate(0, 0, 5)),
-		ExternalID:                   xid.New().String(),
+		ExternalID:                   util.NewID(),
 		InstantSyncQuoting:           swag.Bool(false),
 		Note:                         []*models.Note{Note()},
-		ProjectID:                    xid.New().String(),
+		ProjectID:                    util.NewID(),
 		QuoteItem: []*models.QuoteItemCreate{
 			{
 				//AtSchemaLocation:       "",
 				//AtType:                 "",
 				Action: models.ProductActionTypeAdd,
-				ID:     handler.NewID(),
+				ID:     util.NewIDPtr(),
 				Note: []*models.Note{
 					Note(),
 				},
 				Product: Product(),
 				ProductOffering: &models.ProductOfferingRef{
-					ID: handler.NewID(),
+					ID: util.NewIDPtr(),
 				},
 				Qualification: &models.ProductOfferingQualificationRef{
 					//AtReferredType:    "",
 					Href:              gofakeit.URL(),
-					ID:                handler.NewID(),
-					QualificationItem: handler.NewID(),
+					ID:                util.NewIDPtr(),
+					QualificationItem: util.NewIDPtr(),
 				},
 				QuoteItemRelationship: []*models.QuoteItemRelationship{
 					{
-						ID:   handler.NewID(),
+						ID:   util.NewIDPtr(),
 						Type: models.RelationshipTypeBundled,
 					},
 				},
@@ -317,7 +319,7 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 			{
 				AtType: "E-Line Spec",
 				Action: models.ProductActionTypeAdd,
-				ID:     handler.NewID(),
+				ID:     util.NewIDPtr(),
 				Product: &models.Product{
 					AtType: "E-Line Spec",
 					Agreement: []*models.Agreement{
@@ -325,15 +327,15 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 					},
 					BillingAccount: []*models.BillingAccountRef{
 						{
-							ID: handler.NewID(),
+							ID: util.NewIDPtr(),
 						},
 					},
-					BuyerProductID: xid.New().String(),
+					BuyerProductID: util.NewID(),
 					Href:           gofakeit.URL(),
-					ID:             handler.NewID(),
+					ID:             util.NewIDPtr(),
 					LastUpdateDate: strfmt.DateTime(time.Now()),
 					ProductOffering: &models.ProductOfferingRef{
-						ID: handler.NewID(),
+						ID: util.NewIDPtr(),
 					},
 					//ProductOrder: []*models.ProductOrderRef{
 					//	{
@@ -350,14 +352,14 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 							Product: &models.ProductRef{
 								BuyerProductID: "",
 								Href:           gofakeit.URL(),
-								ID:             handler.NewID(),
+								ID:             util.NewIDPtr(),
 							},
 							Type: swag.String("bundled"),
 						},
 					},
 					ProductSpecification: &models.ProductSpecificationRef{
 						Describing: Describing(),
-						ID:         handler.NewID(),
+						ID:         util.NewIDPtr(),
 					},
 					ProductTerm: []*models.ProductTerm{
 						{
@@ -382,11 +384,11 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 					TerminationDate: strfmt.DateTime(time.Now().AddDate(10, 0, 0)),
 				},
 				ProductOffering: &models.ProductOfferingRef{
-					ID: handler.NewID(),
+					ID: util.NewIDPtr(),
 				},
 				ProductOfferingQualificationItemRelationship: []*models.ProductOfferingQualificationItemRelationship{
 					{
-						ID:   handler.NewID(),
+						ID:   util.NewIDPtr(),
 						Type: models.RelationshipTypeBundled,
 					},
 				},
@@ -395,7 +397,7 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 				},
 			},
 		},
-		ProjectID:          xid.New().String(),
+		ProjectID:          util.NewID(),
 		ProvideAlternative: swag.Bool(false),
 		RelatedParty: []*models.RelatedParty{
 			RelatedParty(),

@@ -36,7 +36,7 @@ type NotificationProductOrderStateChangeNotificationParams struct {
 	  Required: true
 	  In: body
 	*/
-	ProductOrderStateChange models.PoEvent
+	ProductOrderStateChange *models.PoEvent
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,12 +50,13 @@ func (o *NotificationProductOrderStateChangeNotificationParams) BindRequest(r *h
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		body, err := models.UnmarshalPoEvent(r.Body, route.Consumer)
-		if err != nil {
+		var body models.PoEvent
+		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				err = errors.Required("productOrderStateChange", "body")
+				res = append(res, errors.Required("productOrderStateChange", "body"))
+			} else {
+				res = append(res, errors.NewParseError("productOrderStateChange", "body", "", err))
 			}
-			res = append(res, err)
 		} else {
 			// validate body object
 			if err := body.Validate(route.Formats); err != nil {
@@ -63,7 +64,7 @@ func (o *NotificationProductOrderStateChangeNotificationParams) BindRequest(r *h
 			}
 
 			if len(res) == 0 {
-				o.ProductOrderStateChange = body
+				o.ProductOrderStateChange = &body
 			}
 		}
 	} else {

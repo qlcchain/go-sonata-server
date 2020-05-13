@@ -3,6 +3,8 @@ package schema
 import (
 	"strings"
 
+	"github.com/qlcchain/go-sonata-server/util"
+
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
@@ -35,6 +37,10 @@ type RelatedParty struct {
 }
 
 func (r *RelatedParty) To() *models.RelatedParty {
+	if r == nil {
+		return nil
+	}
+
 	var role []string
 	if r.Roles != "" {
 		role = strings.Split(r.Roles, ",")
@@ -51,13 +57,36 @@ func (r *RelatedParty) To() *models.RelatedParty {
 }
 
 func (r *RelatedParty) From(m *models.RelatedParty) *RelatedParty {
-	r.AtReferredType = m.AtReferredType
-	r.EmailAddress = m.EmailAddress
-	r.ID = m.ID
-	r.Name = m.Name
-	r.Number = m.Number
-	r.NumberExtension = m.NumberExtension
-	r.Role = m.Role
-	r.Roles = strings.Join(m.Role, ",")
+	if m == nil {
+		return nil
+	}
+	return &RelatedParty{
+		AtReferredType:  m.AtReferredType,
+		EmailAddress:    m.EmailAddress,
+		ID:              util.NewOrDefaultPtr(m.ID),
+		Name:            m.Name,
+		Number:          m.Number,
+		NumberExtension: m.NumberExtension,
+		Role:            m.Role,
+		Roles:           strings.Join(m.Role, ","),
+	}
+}
+
+func ToRelatedParty(party []*RelatedParty) []*models.RelatedParty {
+	var r []*models.RelatedParty
+	for _, p := range party {
+		r = append(r, p.To())
+	}
 	return r
+}
+
+func FromRelatedParty(party []*models.RelatedParty) []*RelatedParty {
+	var to []*RelatedParty
+	for _, p := range party {
+		r := &RelatedParty{
+			ID: util.NewOrDefaultPtr(p.ID),
+		}
+		to = append(to, r.From(p))
+	}
+	return to
 }

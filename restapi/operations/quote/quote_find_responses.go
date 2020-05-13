@@ -34,7 +34,7 @@ type QuoteFindOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []models.QuoteFind `json:"body,omitempty"`
+	Payload []*models.QuoteFind `json:"body,omitempty"`
 }
 
 // NewQuoteFindOK creates QuoteFindOK with default headers values
@@ -66,13 +66,13 @@ func (o *QuoteFindOK) SetXTotalCount(xTotalCount int32) {
 }
 
 // WithPayload adds the payload to the quote find o k response
-func (o *QuoteFindOK) WithPayload(payload []models.QuoteFind) *QuoteFindOK {
+func (o *QuoteFindOK) WithPayload(payload []*models.QuoteFind) *QuoteFindOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the quote find o k response
-func (o *QuoteFindOK) SetPayload(payload []models.QuoteFind) {
+func (o *QuoteFindOK) SetPayload(payload []*models.QuoteFind) {
 	o.Payload = payload
 }
 
@@ -97,7 +97,7 @@ func (o *QuoteFindOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]models.QuoteFind, 0, 50)
+		payload = make([]*models.QuoteFind, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

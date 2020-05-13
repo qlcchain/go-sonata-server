@@ -1,14 +1,8 @@
 package schema
 
 import (
-	"strconv"
-
-	"github.com/rs/xid"
-
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/util"
@@ -17,574 +11,84 @@ import (
 type Quote struct {
 
 	// Indicates the base (class) type of the quote.
-	AtBaseTypeField string `json:"@baseType,omitempty"`
+	AtBaseType string `json:"@baseType,omitempty"`
 
 	// Link to the schema describing the REST resource.
-	// Technical attribute to extend this class.
-	AtSchemaLocationField string `json:"@schemaLocation,omitempty"`
+	AtSchemaLocation string `json:"@schemaLocation,omitempty"`
 
 	// Indicates the (class) type of the quote.
-	// Technical attribute to extend this class.
-	Type string `json:"@type,omitempty"`
+	AtType string `json:"@type,omitempty"`
 
 	// agreement
-	AgreementField []*models.AgreementRef `json:"agreement" gorm:"foreignkey:ID"`
+	Agreement []*models.AgreementRef `json:"agreement" gorm:"foreignkey:ID"`
 
 	// Description of the quote
-	DescriptionField string `json:"description,omitempty"`
+	Description string `json:"description,omitempty"`
+
+	// Date when the quoted was Cancelled or Rejected or Accepted
+	// Format: date-time
+	EffectiveQuoteCompletionDate strfmt.DateTime `json:"effectiveQuoteCompletionDate,omitempty"`
 
 	// This is the date wished by the requester to have the requested quote item(s) delivered
 	// Format: date
-	ExpectedFulfillmentStartDateField strfmt.Date `json:"expectedFulfillmentStartDate,omitempty"`
-	//This is the date filled by the seller to indicate expected quote completion date.
-	ExpectedQuoteCompletionDateField strfmt.Date `json:"expectedQuoteCompletionDate,omitempty"`
-	//Date when the quoted was Cancelled or Rejected or Accepted
-	EffectiveQuoteCompletionDateField strfmt.DateTime `json:"effectiveQuoteCompletionDate,omitempty"`
+	ExpectedFulfillmentStartDate strfmt.Date `json:"expectedFulfillmentStartDate,omitempty"`
+
+	// This is the date filled by the seller to indicate expected quote completion date.
+	// Format: date
+	ExpectedQuoteCompletionDate strfmt.Date `json:"expectedQuoteCompletionDate,omitempty"`
 
 	// ID given by the consumer and only understandable by him (to facilitate his searches afterwards)
-	ExternalIDField string `json:"externalId,omitempty"`
+	ExternalID string `json:"externalId,omitempty"`
+
+	// Hyperlink to access the quote
+	Href string `json:"href,omitempty"`
+
+	// Unique (within the quoting domain) identifier for the quote, as attributed by the quoting system
+	ID string `json:"id,omitempty"`
 
 	// If this flag is set to Yes, Buyer requests to have instant quoting to be provided in operation POST response
-	InstantSyncQuotingField *bool `json:"instantSyncQuoting,omitempty"`
+	// Required: true
+	InstantSyncQuoting bool `json:"instantSyncQuoting"`
 
 	// note
-	NoteField []*Note `json:"note" gorm:"foreignkey:ID"`
+	Note []*Note `json:"note" gorm:"foreignkey:ID"`
 
 	// This value MAY be assigned by the Buyer/Seller to identify a project the quoting request is associated with.
-	ProjectIDField string `json:"projectID,omitempty"`
+	ProjectID string `json:"projectId,omitempty"`
+
+	// Date when the quote was created
+	// Format: date-time
+	QuoteDate strfmt.DateTime `json:"quoteDate,omitempty"`
 
 	// quote item
 	// Required: true
-	QuoteItemField []*QuoteItem `json:"quoteItem" gorm:"foreignkey:ID"`
+	QuoteItem []*QuoteItem `json:"quoteItem" gorm:"foreignkey:ID"`
 
 	// quote level
-	QuoteLevelField models.QuoteLevel `json:"quoteLevel,omitempty"`
+	// Required: true
+	QuoteLevel models.QuoteLevel `json:"quoteLevel"`
 
 	// related party
 	// Required: true
-	RelatedPartyField []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty"`
 
-	// This is the date wished by the requester to have the quote completed (meaning priced).
-	// This attribute is not considered when instantSyncQuoting is set to Yes.
+	// This is the date wished by the requester to have the quote completed (meaning priced)
 	// Required: true
 	// Format: date-time
-	RequestedQuoteCompletionDateField *strfmt.DateTime `json:"requestedQuoteCompletionDate"`
+	RequestedQuoteCompletionDate *strfmt.DateTime `json:"requestedQuoteCompletionDate"`
 
-	HrefField string `json:"href,omitempty"`
-	IDField   string `json:"id,omitempty" gorm:"column:id"`
-	//Date when the quote was created
-	QuoteDateField strfmt.DateTime       `json:"quoteDate,omitempty"`
-	StateField     models.QuoteStateType `json:"state,omitempty"`
-	ValidForField  *models.TimePeriod    `json:"validFor,omitempty"`
+	// state
+	// Required: true
+	State models.QuoteStateType `json:"state"`
+
+	// valid for
+	ValidFor *models.TimePeriod `json:"validFor,omitempty" gorm:"embedded"`
 }
 
-func (m *Quote) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateAgreement(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateEffectiveQuoteCompletionDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateExpectedFulfillmentStartDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateExpectedQuoteCompletionDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateInstantSyncQuoting(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNote(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateQuoteDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateQuoteItem(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateQuoteLevel(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRelatedParty(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRequestedQuoteCompletionDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateState(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateValidFor(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *Quote) validateAgreement(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Agreement()) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Agreement()); i++ {
-		if swag.IsZero(m.AgreementField[i]) { // not required
-			continue
-		}
-
-		if m.AgreementField[i] != nil {
-			if err := m.AgreementField[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("agreement" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *Quote) validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.EffectiveQuoteCompletionDate()) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("effectiveQuoteCompletionDate", "body", "date-time", m.EffectiveQuoteCompletionDate().String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateExpectedFulfillmentStartDate(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ExpectedFulfillmentStartDate()) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("expectedFulfillmentStartDate", "body", "date", m.ExpectedFulfillmentStartDate().String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateExpectedQuoteCompletionDate(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ExpectedQuoteCompletionDate()) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("expectedQuoteCompletionDate", "body", "date", m.ExpectedQuoteCompletionDate().String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateInstantSyncQuoting(formats strfmt.Registry) error {
-
-	if err := validate.Required("instantSyncQuoting", "body", bool(m.InstantSyncQuoting())); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateNote(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Note()) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Note()); i++ {
-		if swag.IsZero(m.NoteField[i]) { // not required
-			continue
-		}
-
-		if m.NoteField[i] != nil {
-			to := &models.Note{}
-			if err := util.Convert(m.NoteField[i], to); err == nil {
-				if err := to.Validate(formats); err != nil {
-					if ve, ok := err.(*errors.Validation); ok {
-						return ve.ValidateName("note" + "." + strconv.Itoa(i))
-					}
-					return err
-				}
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *Quote) validateQuoteDate(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.QuoteDate()) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("quoteDate", "body", "date-time", m.QuoteDate().String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateQuoteItem(formats strfmt.Registry) error {
-
-	if err := validate.Required("quoteItem", "body", m.QuoteItem()); err != nil {
-		return err
-	}
-
-	for i := 0; i < len(m.QuoteItem()); i++ {
-		if swag.IsZero(m.QuoteItemField[i]) { // not required
-			continue
-		}
-
-		if m.QuoteItemField[i] != nil {
-			qi := &models.QuoteItem{}
-			if err := util.Convert(m.QuoteItemField[i], qi); err == nil {
-				if err := qi.Validate(formats); err != nil {
-					if ve, ok := err.(*errors.Validation); ok {
-						return ve.ValidateName("quoteItem" + "." + strconv.Itoa(i))
-					}
-					return err
-				}
-			} else {
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *Quote) validateQuoteLevel(formats strfmt.Registry) error {
-
-	if err := m.QuoteLevel().Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("quoteLevel")
-		}
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateRelatedParty(formats strfmt.Registry) error {
-
-	if err := validate.Required("relatedParty", "body", m.RelatedParty()); err != nil {
-		return err
-	}
-
-	for i := 0; i < len(m.RelatedParty()); i++ {
-		if swag.IsZero(m.RelatedPartyField[i]) { // not required
-			continue
-		}
-
-		if m.RelatedPartyField[i] != nil {
-			to := &models.RelatedParty{}
-			if err := util.Convert(m.RelatedPartyField[i], to); err == nil {
-				if err := to.Validate(formats); err != nil {
-					if ve, ok := err.(*errors.Validation); ok {
-						return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
-					}
-					return err
-				}
-			} else {
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *Quote) validateRequestedQuoteCompletionDate(formats strfmt.Registry) error {
-
-	if err := validate.Required("requestedQuoteCompletionDate", "body", m.RequestedQuoteCompletionDate()); err != nil {
-		return err
-	}
-
-	if err := validate.FormatOf("requestedQuoteCompletionDate", "body", "date-time", m.RequestedQuoteCompletionDate().String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateState(formats strfmt.Registry) error {
-
-	if err := m.State().Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
-		return err
-	}
-
-	return nil
-}
-
-func (m *Quote) validateValidFor(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ValidFor()) { // not required
-		return nil
-	}
-
-	if m.ValidFor() != nil {
-		if err := m.ValidFor().Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("validFor")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *Quote) AtBaseType() string {
-	return m.AtBaseTypeField
-}
-
-func (m *Quote) SetAtBaseType(s string) {
-	m.AtBaseTypeField = s
-}
-
-func (m *Quote) AtSchemaLocation() string {
-	return m.AtSchemaLocationField
-}
-
-func (m *Quote) SetAtSchemaLocation(s string) {
-	m.AtSchemaLocationField = s
-}
-
-func (m *Quote) AtType() string {
-	return m.Type
-}
-
-func (m *Quote) SetAtType(s string) {
-	m.Type = s
-}
-
-func (m *Quote) Agreement() []*models.AgreementRef {
-	return m.AgreementField
-}
-
-func (m *Quote) SetAgreement(refs []*models.AgreementRef) {
-	m.AgreementField = refs
-}
-
-func (m *Quote) Description() string {
-	return m.DescriptionField
-}
-
-func (m *Quote) SetDescription(s string) {
-	m.DescriptionField = s
-}
-
-func (m *Quote) EffectiveQuoteCompletionDate() strfmt.DateTime {
-	return m.EffectiveQuoteCompletionDateField
-}
-
-func (m *Quote) SetEffectiveQuoteCompletionDate(time strfmt.DateTime) {
-	m.EffectiveQuoteCompletionDateField = time
-}
-
-func (m *Quote) ExpectedFulfillmentStartDate() strfmt.Date {
-	return m.ExpectedFulfillmentStartDateField
-}
-
-func (m *Quote) SetExpectedFulfillmentStartDate(date strfmt.Date) {
-	m.ExpectedFulfillmentStartDateField = date
-}
-
-func (m *Quote) ExpectedQuoteCompletionDate() strfmt.Date {
-	return m.ExpectedQuoteCompletionDateField
-}
-
-func (m *Quote) SetExpectedQuoteCompletionDate(date strfmt.Date) {
-	m.ExpectedQuoteCompletionDateField = date
-}
-
-func (m *Quote) ExternalID() string {
-	return m.ExternalIDField
-}
-
-func (m *Quote) SetExternalID(s string) {
-	m.ExternalIDField = s
-}
-
-func (m *Quote) Href() string {
-	return m.HrefField
-}
-
-func (m *Quote) SetHref(s string) {
-	m.HrefField = s
-}
-
-func (m *Quote) ID() string {
-	return m.IDField
-}
-
-func (m *Quote) SetID(s string) {
-	m.IDField = s
-}
-
-func (m *Quote) InstantSyncQuoting() bool {
-	return *m.InstantSyncQuotingField
-}
-
-func (m *Quote) SetInstantSyncQuoting(b bool) {
-	*m.InstantSyncQuotingField = b
-}
-
-func (m *Quote) Note() []*models.Note {
-	var notes []*models.Note
-	for _, note := range m.NoteField {
-		to := &models.Note{}
-		if err := util.Convert(note, to); err == nil {
-			notes = append(notes)
-		}
-	}
-	return notes
-}
-
-func (m *Quote) SetNote(notes []*models.Note) {
-	var r []*Note
-	for _, n := range notes {
-		to := &Note{}
-		if err := util.Convert(n, to); err == nil {
-			to.ID = swag.String(xid.New().String())
-			r = append(r, to)
-		}
-	}
-	m.NoteField = r
-}
-
-func (m *Quote) ProjectID() string {
-	return m.ProjectID()
-}
-
-func (m *Quote) SetProjectID(s string) {
-	m.ProjectIDField = s
-}
-
-func (m *Quote) QuoteDate() strfmt.DateTime {
-	return m.QuoteDateField
-}
-
-func (m *Quote) SetQuoteDate(time strfmt.DateTime) {
-	m.QuoteDateField = time
-}
-
-func (m *Quote) QuoteItem() []*models.QuoteItem {
-	if m.QuoteItemField == nil {
-		return nil
-	} else {
-		var to []*models.QuoteItem
-		_ = util.Convert(m.QuoteItemField, &to)
-		return to
-	}
-}
-
-func (m *Quote) SetQuoteItem(items []*models.QuoteItem) {
-	if items != nil {
-		var to []*QuoteItem
-		_ = util.Convert(items, &to)
-		m.QuoteItemField = to
-	}
-}
-
-func (m *Quote) QuoteLevel() models.QuoteLevel {
-	return m.QuoteLevelField
-}
-
-func (m *Quote) SetQuoteLevel(level models.QuoteLevel) {
-	m.QuoteLevelField = level
-}
-
-func (m *Quote) RelatedParty() []*models.RelatedParty {
-	var to = []*models.RelatedParty{}
-	_ = util.Convert(m.RelatedPartyField, &to)
-	return to
-}
-
-func (m *Quote) SetRelatedParty(parties []*models.RelatedParty) {
-	var to []*RelatedParty
-	_ = util.Convert(parties, &to)
-	m.RelatedPartyField = to
-}
-
-func (m *Quote) RequestedQuoteCompletionDate() *strfmt.DateTime {
-	return m.RequestedQuoteCompletionDateField
-}
-
-func (m *Quote) SetRequestedQuoteCompletionDate(time *strfmt.DateTime) {
-	m.RequestedQuoteCompletionDateField = time
-}
-
-func (m *Quote) State() models.QuoteStateType {
-	return m.StateField
-}
-
-func (m *Quote) SetState(stateType models.QuoteStateType) {
-	m.StateField = stateType
-}
-
-func (m *Quote) ValidFor() *models.TimePeriod {
-	return m.ValidForField
-}
-
-func (m *Quote) SetValidFor(period *models.TimePeriod) {
-	m.ValidForField = period
-}
-
-func (m *Quote) ToQuoteSummaryView() models.QuoteSummaryView {
-	to := &QuoteSummaryView{
-		AtBaseTypeField:                   m.AtBaseTypeField,
-		AtSchemaLocationField:             m.AtSchemaLocationField,
-		AtTypeField:                       m.Type,
-		CategoryField:                     "",
-		EffectiveQuoteCompletionDateField: m.EffectiveQuoteCompletionDateField,
-		ExpectedFulfillmentStartDateField: m.ExpectedFulfillmentStartDateField,
-		ExpectedQuoteCompletionDateField:  m.ExpectedQuoteCompletionDateField,
-		ExternalIdField:                   m.ExternalIDField,
-		HrefField:                         m.HrefField,
-		IDField:                           m.IDField,
-		QuoteDateField:                    m.QuoteDateField,
-		QuoteItemField:                    m.QuoteItem(),
-		QuoteLevelField:                   m.QuoteLevelField,
-	}
-
+func (m *Quote) ToQuoteSummaryView() *models.QuoteSummaryView {
 	var roles []*models.RelatedPartyRole
 	//FIXME: How to convert this??? store role in db???
-	for _, p := range m.RelatedParty() {
+	for _, p := range m.RelatedParty {
 		r := ""
 		if len(p.Role) > 0 {
 			r = p.Role[0]
@@ -592,15 +96,74 @@ func (m *Quote) ToQuoteSummaryView() models.QuoteSummaryView {
 		roles = append(roles, &models.RelatedPartyRole{
 			AtReferredType: p.AtReferredType,
 			ID:             swag.StringValue(p.ID),
-			RelatedParty:   p,
+			RelatedParty:   p.To(),
 			Role:           swag.String(r),
 		})
 	}
-	to.RelatedPartyRoleField = roles
-	to.RequestedQuoteCompletionDateField = m.RequestedQuoteCompletionDateField
-	to.StateField = models.QuoteState(m.StateField)
-	to.ValidForField = m.ValidForField
-	return to
+	var quoteItem []*models.QuoteItem
+	_ = util.Convert(m.QuoteItem, &quoteItem)
+
+	return &models.QuoteSummaryView{
+		AtBaseType:                   m.AtBaseType,
+		AtSchemaLocation:             m.AtSchemaLocation,
+		AtType:                       m.AtType,
+		Category:                     "",
+		EffectiveQuoteCompletionDate: m.EffectiveQuoteCompletionDate,
+		ExpectedFulfillmentStartDate: m.ExpectedFulfillmentStartDate,
+		ExpectedQuoteCompletionDate:  m.ExpectedQuoteCompletionDate,
+		ExternalID:                   m.ExternalID,
+		Href:                         m.Href,
+		ID:                           m.ID,
+		QuoteDate:                    m.QuoteDate,
+		QuoteItem:                    quoteItem,
+		QuoteLevel:                   m.QuoteLevel,
+		RequestedQuoteCompletionDate: m.RequestedQuoteCompletionDate,
+		State:                        models.QuoteState(m.State),
+		ValidFor:                     m.ValidFor,
+		RelatedPartyRole:             roles,
+	}
+}
+
+func (m *Quote) ToQuoteFind() *models.QuoteFind {
+	return &models.QuoteFind{
+		Description:                  m.Description,
+		EffectiveQuoteCompletionDate: m.EffectiveQuoteCompletionDate,
+		ExpectedQuoteCompletionDate:  m.ExpectedQuoteCompletionDate,
+		ExternalID:                   m.ExternalID,
+		Href:                         m.Href,
+		ID:                           m.ID,
+		ProjectID:                    m.ProjectID,
+		QuoteDate:                    m.QuoteDate,
+		QuoteLevel:                   m.QuoteLevel,
+		RequestedQuoteCompletionDate: m.RequestedQuoteCompletionDate,
+		State:                        m.State,
+	}
+}
+
+func (m *Quote) ToQuote() *models.Quote {
+	return &models.Quote{
+		AtBaseType:                   m.AtBaseType,
+		AtSchemaLocation:             m.AtSchemaLocation,
+		AtType:                       m.AtType,
+		Agreement:                    m.Agreement,
+		Description:                  m.Description,
+		EffectiveQuoteCompletionDate: m.EffectiveQuoteCompletionDate,
+		ExpectedFulfillmentStartDate: m.ExpectedFulfillmentStartDate,
+		ExpectedQuoteCompletionDate:  m.ExpectedQuoteCompletionDate,
+		ExternalID:                   m.ExternalID,
+		Href:                         m.Href,
+		ID:                           m.ID,
+		InstantSyncQuoting:           m.InstantSyncQuoting,
+		Note:                         ToNotes(m.Note),
+		ProjectID:                    m.ProjectID,
+		QuoteDate:                    m.QuoteDate,
+		QuoteItem:                    ToQuoteItem(m.QuoteItem),
+		QuoteLevel:                   m.QuoteLevel,
+		RelatedParty:                 ToRelatedParty(m.RelatedParty),
+		RequestedQuoteCompletionDate: m.RequestedQuoteCompletionDate,
+		State:                        m.State,
+		ValidFor:                     m.ValidFor,
+	}
 }
 
 type QuoteItem struct {
@@ -620,23 +183,60 @@ type QuoteItem struct {
 	ID *string `json:"id"`
 
 	// note
-	Note []*Note `json:"note" gorm:"foreignkey:ID"`
+	Note []*Note `json:"note"`
 
 	// product
-	Product *Product `json:"product,omitempty" gorm:"foreignkey:ID"`
+	Product *Product `json:"product,omitempty"`
 
 	// product offering
-	ProductOffering *models.ProductOfferingRef `json:"productOffering,omitempty" gorm:"foreignkey:ID"`
+	ProductOffering *models.ProductOfferingRef `json:"productOffering,omitempty"`
 
 	// qualification
-	Qualification *models.ProductOfferingQualificationRef `json:"qualification,omitempty" gorm:"foreignkey:ID"`
+	Qualification []*models.ProductOfferingQualificationRef `json:"qualification"`
+
+	// quote item price
+	QuoteItemPrice []*models.QuotePrice `json:"quoteItemPrice"`
 
 	// quote item relationship
-	QuoteItemRelationship []*models.QuoteItemRelationship `json:"quoteItemRelationship" gorm:"foreignkey:ID"`
+	QuoteItemRelationship []*models.QuoteItemRelationship `json:"quoteItemRelationship"`
+
+	// quote item term
+	QuoteItemTerm *models.ItemTerm `json:"quoteItemTerm,omitempty"`
 
 	// related party
-	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty"`
 
 	// requested quote item term
-	RequestedQuoteItemTerm *models.ItemTerm `json:"requestedQuoteItemTerm,omitempty" gorm:"embedded"`
+	RequestedQuoteItemTerm *models.ItemTerm `json:"requestedQuoteItemTerm,omitempty"`
+
+	// state
+	// Required: true
+	State models.QuoteItemStateType `json:"state"`
+}
+
+func (m *QuoteItem) To() *models.QuoteItem {
+	return &models.QuoteItem{
+		AtSchemaLocation:       m.AtSchemaLocation,
+		AtType:                 m.AtType,
+		Action:                 m.Action,
+		ID:                     m.ID,
+		Note:                   ToNotes(m.Note),
+		Product:                m.Product.To(),
+		ProductOffering:        m.ProductOffering,
+		Qualification:          m.Qualification,
+		QuoteItemPrice:         m.QuoteItemPrice,
+		QuoteItemRelationship:  m.QuoteItemRelationship,
+		QuoteItemTerm:          m.QuoteItemTerm,
+		RelatedParty:           ToRelatedParty(m.RelatedParty),
+		RequestedQuoteItemTerm: m.RequestedQuoteItemTerm,
+		State:                  m.State,
+	}
+}
+
+func ToQuoteItem(item []*QuoteItem) []*models.QuoteItem {
+	var to []*models.QuoteItem
+	for _, i := range item {
+		to = append(to, i.To())
+	}
+	return to
 }

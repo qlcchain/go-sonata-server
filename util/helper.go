@@ -7,7 +7,12 @@
 
 package util
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"github.com/go-openapi/swag"
+	"github.com/rs/xid"
+)
 
 func ToString(v interface{}) string {
 	bytes, err := json.Marshal(v)
@@ -35,4 +40,26 @@ func Convert(from, to interface{}) error {
 			return nil
 		}
 	}
+}
+
+func NewID() string {
+	return xid.New().String()
+}
+
+func NewIDPtr() *string {
+	return swag.String(NewID())
+}
+
+func NewOrDefaultPtr(id *string) *string {
+	if id == nil {
+		return NewIDPtr()
+	}
+	return id
+}
+
+func NewOrDefault(id string) string {
+	if id == "" {
+		return NewID()
+	}
+	return id
 }

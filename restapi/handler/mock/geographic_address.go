@@ -10,13 +10,14 @@ package mock
 import (
 	"time"
 
+	"github.com/qlcchain/go-sonata-server/util"
+
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
-	"github.com/rs/xid"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 
@@ -101,7 +102,7 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 	}
 
 	return gav.NewGeographicAddressValidationCreateCreated().WithPayload(&models.GeographicAddressValidation{
-		ID: xid.New().String(),
+		ID: util.NewID(),
 		RequestedAddress: &models.GeographicAddressRequestBuyerInput{
 			FieldedAddress:   input.FieldedAddress,
 			FormattedAddress: input.FormattedAddress,

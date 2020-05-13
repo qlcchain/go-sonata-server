@@ -5,6 +5,9 @@ package schema
 
 import (
 	"github.com/go-openapi/strfmt"
+	log "github.com/sirupsen/logrus"
+
+	"github.com/qlcchain/go-sonata-server/util"
 
 	"github.com/qlcchain/go-sonata-server/models"
 )
@@ -24,4 +27,23 @@ type StatusChange struct {
 
 	// status
 	Status models.ProductStatus `json:"status,omitempty"`
+}
+
+func ToStatusChange(from []*StatusChange) []*models.StatusChange {
+	var to []*models.StatusChange
+	if err := util.Convert(from, &to); err != nil {
+		log.Error(err)
+	}
+	return to
+}
+
+func FromStatusChange(from []*models.StatusChange) []*StatusChange {
+	var to []*StatusChange
+	if err := util.Convert(from, &to); err != nil {
+		log.Error(err)
+	}
+	for _, status := range to {
+		status.ID = util.NewOrDefaultPtr(status.ID)
+	}
+	return to
 }

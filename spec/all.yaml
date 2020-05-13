@@ -4342,7 +4342,7 @@ definitions:
         type: string
   QuoteEvent:
     description: "Event class is used to describe information structure used for notification."
-    discriminator: "eventId"
+    # discriminator: "eventId"
     required:
     - "eventId"
     - "eventTime"
@@ -4691,7 +4691,7 @@ definitions:
         type: string
       fieldedAddress:
         $ref: "#/definitions/FieldedAddress"
-      formattedAdress:
+      formattedAddress:
         $ref: "#/definitions/FormattedAddress"
       geographicLocation:
         $ref: "#/definitions/GeographicLocation"
@@ -5226,7 +5226,7 @@ definitions:
           $ref: "#/definitions/RelatedParty"
   PoEvent:
     description: "Event class is used to describe information structure used for notification."
-    discriminator: "eventId"
+    # discriminator: "eventId"
     required:
     - "eventId"
     - "eventType"
@@ -6195,7 +6195,7 @@ definitions:
         $ref: "#/definitions/QuoteStateType"
       validFor:
         $ref: "#/definitions/TimePeriod"
-    discriminator: id
+    # discriminator: id
   QuoteChangeState:
     description: Quote state change 'request able' by buyer
     type: string
@@ -6466,7 +6466,7 @@ definitions:
         $ref: "#/definitions/QuoteState"
       validFor:
         $ref: "#/definitions/TimePeriod"
-    discriminator: id
+    # discriminator: id
   Quote_Create:
     description: This structure is used only in the POST operation for the request.
     type: object
@@ -6570,7 +6570,7 @@ definitions:
         format: date-time
       state:
         $ref: "#/definitions/QuoteStateType"
-    discriminator: id
+    # discriminator: id
   ReferencedAddress:
     description: A globally unique identifier controlled by a generally accepted independent administrative authority that specifies a fixed geographical location.
     type: object

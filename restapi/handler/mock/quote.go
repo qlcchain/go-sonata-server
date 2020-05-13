@@ -16,7 +16,6 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
-	"github.com/rs/xid"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/qlcchain/go-sonata-server/event"
@@ -51,23 +50,24 @@ func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangePar
 	}
 	now := strfmt.DateTime(time.Now())
 	state := &schema.Quote{
-		IDField:         *input.ID,
-		ExternalIDField: input.ExternalID,
-		StateField:      models.QuoteStateType(input.State),
+		ID:         *input.ID,
+		ExternalID: input.ExternalID,
+		State:      models.QuoteStateType(input.State),
 	}
 
 	if err := Store.Save(state).Error; err == nil {
 		if q, err := db.GetQuote(Store, *input.ID); err != nil {
 			//FIXME: calculate file path and resource path
 			ev := models.QuoteEventPlus{
+				QuoteEvent: models.QuoteEvent{
+					Event:     q.ToQuoteSummaryView(),
+					EventID:   util.NewIDPtr(),
+					EventTime: &now,
+					EventType: models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION,
+				},
 				FieldPath:    []string{},
 				ResourcePath: nil,
 			}
-			e := q.(*schema.Quote).ToQuoteSummaryView()
-			ev.SetEvent(e)
-			ev.SetEventID(xid.New().String())
-			ev.SetEventTime(&now)
-			ev.SetEventType(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION)
 			quoteBus.Publish(string(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION), ev)
 		}
 		return quote.NewQuoteRequestStateChangeOK().WithPayload(&models.ChangeQuoteStateResponse{
@@ -90,59 +90,67 @@ func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.P
 		return quote.NewQuoteCreateUnauthorized().WithPayload(payload)
 	}
 	input := params.Quote
-	id := xid.New().String()
+	id := util.NewID()
 	now := strfmt.DateTime(time.Now())
 	var items []*schema.QuoteItem
 	for _, item := range input.QuoteItem {
-		to := &schema.QuoteItem{}
-		if err := util.Convert(item, to); err == nil {
-			to.ID = swag.String(xid.New().String())
-			items = append(items, to)
-		} else {
-			log.Error(err)
-		}
+		items = append(items, &schema.QuoteItem{
+			AtSchemaLocation: item.AtSchemaLocation,
+			AtType:           item.AtType,
+			Action:           item.Action,
+			ID:               util.NewOrDefaultPtr(item.ID),
+			Note:             schema.FromNotes(item.Note),
+			Product:          schema.FromProduct(item.Product),
+			ProductOffering:  item.ProductOffering,
+			Qualification:    []*models.ProductOfferingQualificationRef{item.Qualification},
+			//QuoteItemPrice:         item.,
+			QuoteItemRelationship: item.QuoteItemRelationship,
+			//QuoteItemTerm:          item.q,
+			RelatedParty:           schema.FromRelatedParty(item.RelatedParty),
+			RequestedQuoteItemTerm: item.RequestedQuoteItemTerm,
+			State:                  models.QuoteItemStateTypeINPROGRESS,
+		})
 	}
+
+	for _, a := range input.Agreement {
+		a.ID = util.NewOrDefaultPtr(a.ID)
+	}
+
 	q := &schema.Quote{
-		AtBaseTypeField:                   input.AtBaseType,
-		AtSchemaLocationField:             input.AtSchemaLocation,
-		Type:                              input.AtType,
-		AgreementField:                    input.Agreement,
-		DescriptionField:                  input.Description,
-		ExpectedFulfillmentStartDateField: input.ExpectedFulfillmentStartDate,
+		ID:                           util.NewID(),
+		AtBaseType:                   input.AtBaseType,
+		AtSchemaLocation:             input.AtSchemaLocation,
+		AtType:                       input.AtType,
+		Agreement:                    input.Agreement,
+		Description:                  input.Description,
+		ExpectedFulfillmentStartDate: input.ExpectedFulfillmentStartDate,
 		//TODO: maybe config
-		ExpectedQuoteCompletionDateField:  strfmt.Date(time.Now().AddDate(0, 0, 5)),
-		EffectiveQuoteCompletionDateField: strfmt.NewDateTime(),
-		ExternalIDField:                   input.ExternalID,
-		InstantSyncQuotingField:           input.InstantSyncQuoting,
-		//NoteField:                         notes,
-		ProjectIDField:                    input.ProjectID,
-		QuoteItemField:                    items,
-		QuoteLevelField:                   input.QuoteLevel,
-		RelatedPartyField:                 handler.ConvertRelatedParty(input.RelatedParty),
-		RequestedQuoteCompletionDateField: input.RequestedQuoteCompletionDate,
-		HrefField:                         handler.HrefToID("", id),
-		IDField:                           id,
-		QuoteDateField:                    now,
-		StateField:                        models.QuoteStateTypeACCEPTED,
-		ValidForField: &models.TimePeriod{
-			EndDateTime:   strfmt.DateTime(time.Now().AddDate(1, 1, 10)),
-			StartDateTime: now,
-		},
+		ExpectedQuoteCompletionDate:  strfmt.Date(time.Now().AddDate(0, 0, 5)),
+		EffectiveQuoteCompletionDate: strfmt.NewDateTime(),
+		ExternalID:                   input.ExternalID,
+		InstantSyncQuoting:           swag.BoolValue(input.InstantSyncQuoting),
+		Note:                         schema.FromNotes(input.Note),
+		ProjectID:                    input.ProjectID,
+		QuoteItem:                    items,
+		QuoteLevel:                   input.QuoteLevel,
+		RelatedParty:                 handler.ConvertRelatedParty(input.RelatedParty),
+		RequestedQuoteCompletionDate: input.RequestedQuoteCompletionDate,
+		Href:                         handler.HrefToID("", id),
 	}
-	q.SetNote(input.Note)
 	if err := Store.Save(q).Error; err == nil {
 		//FIXME: calculate file path and resource path
 		ev := models.QuoteEventPlus{
+			QuoteEvent: models.QuoteEvent{
+				Event:     q.ToQuoteSummaryView(),
+				EventID:   util.NewIDPtr(),
+				EventTime: &now,
+				EventType: models.QuoteEventTypeQUOTECREATIONNOTIFICATION,
+			},
 			FieldPath:    []string{},
 			ResourcePath: swag.String(""),
 		}
-		e := q.ToQuoteSummaryView()
-		ev.SetEvent(e)
-		ev.SetEventID(xid.New().String())
-		ev.SetEventTime(&now)
-		ev.SetEventType(models.QuoteEventTypeQUOTECREATIONNOTIFICATION)
 		quoteBus.Publish(string(models.QuoteEventTypeQUOTECREATIONNOTIFICATION), ev)
-		return quote.NewQuoteCreateCreated().WithPayload(q)
+		return quote.NewQuoteCreateCreated().WithPayload(q.ToQuote())
 	} else {
 		return quote.NewQuoteCreateInternalServerError().WithPayload(&models.ErrorRepresentation{
 			Reason: swag.String(err.Error()),
@@ -198,10 +206,9 @@ func QuoteQuoteFindHandler(params quote.QuoteFindParams, principal *models.Princ
 	}
 	var quotes []*schema.Quote
 	if err := tx.Find(&quotes).Error; err == nil {
-		var payload []models.QuoteFind
+		var payload []*models.QuoteFind
 		for _, q := range quotes {
-			to := schema.From(q)
-			payload = append(payload, &to)
+			payload = append(payload, q.ToQuoteFind())
 		}
 		return quote.NewQuoteFindOK().WithPayload(payload)
 	} else if err == gorm.ErrRecordNotFound {
@@ -218,7 +225,7 @@ func QuoteQuoteGetHandler(params quote.QuoteGetParams, principal *models.Princip
 		return quote.NewQuoteGetUnauthorized().WithPayload(payload)
 	}
 	if q, err := db.GetQuote(Store, params.ID); err == nil {
-		return quote.NewQuoteGetOK().WithPayload(q)
+		return quote.NewQuoteGetOK().WithPayload(q.ToQuote())
 	} else if err == gorm.ErrRecordNotFound {
 		return quote.NewQuoteGetNotFound()
 	} else {

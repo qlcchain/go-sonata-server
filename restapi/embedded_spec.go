@@ -5017,8 +5017,7 @@ func init() {
         "eventType": {
           "$ref": "#/definitions/ProductOrderEventType"
         }
-      },
-      "discriminator": "eventId"
+      }
     },
     "PoEventPlus": {
       "allOf": [
@@ -6637,8 +6636,7 @@ func init() {
         "validFor": {
           "$ref": "#/definitions/TimePeriod"
         }
-      },
-      "discriminator": "id"
+      }
     },
     "QuoteChangeState": {
       "description": "Quote state change 'request able' by buyer",
@@ -6673,8 +6671,7 @@ func init() {
         "eventType": {
           "$ref": "#/definitions/QuoteEventType"
         }
-      },
-      "discriminator": "eventId"
+      }
     },
     "QuoteEventPlus": {
       "allOf": [
@@ -7059,8 +7056,7 @@ func init() {
         "validFor": {
           "$ref": "#/definitions/TimePeriod"
         }
-      },
-      "discriminator": "id"
+      }
     },
     "Quote_Create": {
       "description": "This structure is used only in the POST operation for the request.",
@@ -7192,8 +7188,7 @@ func init() {
         "state": {
           "$ref": "#/definitions/QuoteStateType"
         }
-      },
-      "discriminator": "id"
+      }
     },
     "ReferencedAddress": {
       "description": "A globally unique identifier controlled by a generally accepted independent administrative authority that specifies a fixed geographical location.",
@@ -12562,8 +12557,7 @@ func init() {
         "eventType": {
           "$ref": "#/definitions/ProductOrderEventType"
         }
-      },
-      "discriminator": "eventId"
+      }
     },
     "PoEventPlus": {
       "allOf": [
@@ -14183,8 +14177,7 @@ func init() {
         "validFor": {
           "$ref": "#/definitions/TimePeriod"
         }
-      },
-      "discriminator": "id"
+      }
     },
     "QuoteChangeState": {
       "description": "Quote state change 'request able' by buyer",
@@ -14219,8 +14212,7 @@ func init() {
         "eventType": {
           "$ref": "#/definitions/QuoteEventType"
         }
-      },
-      "discriminator": "eventId"
+      }
     },
     "QuoteEventPlus": {
       "allOf": [
@@ -14605,8 +14597,7 @@ func init() {
         "validFor": {
           "$ref": "#/definitions/TimePeriod"
         }
-      },
-      "discriminator": "id"
+      }
     },
     "Quote_Create": {
       "description": "This structure is used only in the POST operation for the request.",
@@ -14738,8 +14729,7 @@ func init() {
         "state": {
           "$ref": "#/definitions/QuoteStateType"
         }
-      },
-      "discriminator": "id"
+      }
     },
     "ReferencedAddress": {
       "description": "A globally unique identifier controlled by a generally accepted independent administrative authority that specifies a fixed geographical location.",

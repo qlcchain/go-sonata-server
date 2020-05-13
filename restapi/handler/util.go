@@ -16,8 +16,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rs/xid"
-
 	"github.com/qlcchain/go-sonata-server/schema"
 
 	log "github.com/sirupsen/logrus"
@@ -43,10 +41,6 @@ func NewDatetime(dt time.Time) *strfmt.DateTime {
 func NewDate(dt time.Time) *strfmt.Date {
 	t := strfmt.Date(dt)
 	return &t
-}
-
-func NewID() *string {
-	return swag.String(xid.New().String())
 }
 
 func HrefToID(prefix, id string) string {

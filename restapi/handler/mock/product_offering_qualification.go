@@ -44,7 +44,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 	}
 
 	input := params.ProductOfferingQualification
-	id := xid.New().String()
+	id := util.NewID()
 	var items []*schema.ProductOfferingQualificationItem
 	for _, i := range input.ProductOfferingQualificationItem {
 		p := &schema.Product{}
@@ -117,7 +117,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 					Href: handler.HrefToID("", swag.StringValue(payload.ID)),
 					ID:   swag.StringValue(payload.ID),
 				},
-				EventID:   handler.NewID(),
+				EventID:   util.NewIDPtr(),
 				EventTime: &now,
 				EventType: t,
 			})

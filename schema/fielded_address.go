@@ -1,5 +1,12 @@
 package schema
 
+import (
+	log "github.com/sirupsen/logrus"
+
+	"github.com/qlcchain/go-sonata-server/models"
+	"github.com/qlcchain/go-sonata-server/util"
+)
+
 type FieldedAddress struct {
 
 	// City that the address is in
@@ -46,4 +53,27 @@ type FieldedAddress struct {
 
 	// Alley, avenue, boulevard, brae, crescent, drive, highway, lane, terrace, parade, place, tarn, way, wharf
 	StreetType string `json:"streetType,omitempty"`
+}
+
+func (m *FieldedAddress) To() *models.FieldedAddress {
+	if m == nil {
+		return nil
+	}
+	to := &models.FieldedAddress{}
+	if err := util.Convert(m, to); err != nil {
+		log.Error(err)
+	}
+	return to
+}
+
+func (m *FieldedAddress) From(f *models.FieldedAddress) *FieldedAddress {
+	if f == nil {
+		return nil
+	}
+	r := &FieldedAddress{}
+	if err := util.Convert(f, r); err != nil {
+		log.Error(err)
+	}
+	r.ID = util.NewOrDefault(r.ID)
+	return r
 }

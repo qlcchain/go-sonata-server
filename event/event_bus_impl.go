@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rs/xid"
+	"github.com/qlcchain/go-sonata-server/util"
 
 	"github.com/gammazero/workerpool"
 )
@@ -99,7 +99,7 @@ func (eb *DefaultEventBus) doSubscribe(topic string, fn interface{}, callbackOpt
 	if kind != reflect.Func {
 		return "", fmt.Errorf("%s is not of type reflect.Func", kind)
 	}
-	id := xid.New().String()
+	id := util.NewID()
 	if callbackOption == nil {
 		callbackOption = &CallbackOption{}
 	}

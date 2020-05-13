@@ -3,6 +3,8 @@ package schema
 import (
 	"github.com/go-openapi/strfmt"
 
+	"github.com/qlcchain/go-sonata-server/util"
+
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
@@ -78,4 +80,64 @@ type Product struct {
 	// Termination date (commercial) is when the product has been terminated (when the disconnect in the product order has been processed).
 	// Format: date-time
 	TerminationDate strfmt.DateTime `json:"terminationDate,omitempty"`
+}
+
+func (p *Product) To() *models.Product {
+	if p == nil {
+		return nil
+	}
+	return &models.Product{
+		AtBaseType:           p.AtBaseType,
+		AtSchemaLocation:     p.AtSchemaLocation,
+		AtType:               p.AtType,
+		Agreement:            p.Agreement,
+		BillingAccount:       p.BillingAccount,
+		BuyerProductID:       p.BuyerProductID,
+		Href:                 p.Href,
+		ID:                   p.ID,
+		LastUpdateDate:       p.LastUpdateDate,
+		ProductOffering:      p.ProductOffering,
+		ProductOrder:         p.ProductOrder,
+		ProductPrice:         ToProductPrice(p.ProductPrice),
+		ProductRelationship:  ToProductRelationship(p.ProductRelationship),
+		ProductSpecification: p.ProductSpecification.To(),
+		ProductTerm:          ToProductTerm(p.ProductTerm),
+		RelatedParty:         ToRelatedParty(p.RelatedParty),
+		Site:                 ToGeographicSite(p.Site),
+		StartDate:            p.StartDate,
+		Status:               p.Status,
+		StatusChange:         ToStatusChange(p.StatusChange),
+		TerminationDate:      p.TerminationDate,
+	}
+}
+
+func FromProduct(p *models.Product) *Product {
+	for _, a := range p.Agreement {
+		a.ID = util.NewOrDefaultPtr(a.ID)
+	}
+
+	r := &Product{
+		AtBaseType:          p.AtBaseType,
+		AtSchemaLocation:    p.AtSchemaLocation,
+		AtType:              p.AtType,
+		Agreement:           p.Agreement,
+		BillingAccount:      p.BillingAccount,
+		BuyerProductID:      p.BuyerProductID,
+		Href:                p.Href,
+		ID:                  util.NewOrDefaultPtr(p.ID),
+		LastUpdateDate:      p.LastUpdateDate,
+		ProductOffering:     p.ProductOffering,
+		ProductOrder:        p.ProductOrder,
+		ProductPrice:        FromProductPrice(p.ProductPrice),
+		ProductRelationship: FromProductRelationship(p.ProductRelationship),
+		ProductTerm:         FromProductTerm(p.ProductTerm),
+		RelatedParty:        FromRelatedParty(p.RelatedParty),
+		Site:                FromGeographicSite(p.Site),
+		StartDate:           p.StartDate,
+		Status:              p.Status,
+		StatusChange:        FromStatusChange(p.StatusChange),
+		TerminationDate:     p.TerminationDate,
+	}
+	r.ProductSpecification.From(p.ProductSpecification)
+	return r
 }

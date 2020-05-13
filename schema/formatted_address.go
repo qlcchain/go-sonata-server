@@ -1,5 +1,12 @@
 package schema
 
+import (
+	log "github.com/sirupsen/logrus"
+
+	"github.com/qlcchain/go-sonata-server/models"
+	"github.com/qlcchain/go-sonata-server/util"
+)
+
 type FormattedAddress struct {
 
 	// The first address line in a formatted address
@@ -29,4 +36,26 @@ type FormattedAddress struct {
 
 	// The State or Province that the address is in
 	StateOrProvince string `json:"stateOrProvince,omitempty"`
+}
+
+func (m *FormattedAddress) To() *models.FormattedAddress {
+	if m == nil {
+		return nil
+	}
+	to := &models.FormattedAddress{}
+	if err := util.Convert(m, to); err != nil {
+		log.Error(err)
+	}
+	return to
+}
+
+func (m *FormattedAddress) From(f *models.FormattedAddress) *FormattedAddress {
+	if f == nil {
+		return nil
+	}
+	r := &FormattedAddress{}
+	if err := util.Convert(f, r); err != nil {
+		log.Error(err)
+	}
+	return r
 }

@@ -25,7 +25,7 @@ type QuoteCreateCreated struct {
 	/*
 	  In: Body
 	*/
-	Payload models.Quote `json:"body,omitempty"`
+	Payload *models.Quote `json:"body,omitempty"`
 }
 
 // NewQuoteCreateCreated creates QuoteCreateCreated with default headers values
@@ -35,13 +35,13 @@ func NewQuoteCreateCreated() *QuoteCreateCreated {
 }
 
 // WithPayload adds the payload to the quote create created response
-func (o *QuoteCreateCreated) WithPayload(payload models.Quote) *QuoteCreateCreated {
+func (o *QuoteCreateCreated) WithPayload(payload *models.Quote) *QuoteCreateCreated {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the quote create created response
-func (o *QuoteCreateCreated) SetPayload(payload models.Quote) {
+func (o *QuoteCreateCreated) SetPayload(payload *models.Quote) {
 	o.Payload = payload
 }
 

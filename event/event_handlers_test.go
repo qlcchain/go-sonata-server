@@ -14,10 +14,10 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/google/uuid"
-	"github.com/rs/xid"
+	"github.com/qlcchain/go-sonata-server/util"
 
 	"github.com/gammazero/workerpool"
+	"github.com/google/uuid"
 )
 
 func TestEventHandler(t *testing.T) {
@@ -43,7 +43,7 @@ func TestEventHandler(t *testing.T) {
 	handler1 := &eventHandler{
 		callBack: reflect.ValueOf(fn),
 		pool:     workerpool.New(2),
-		id:       xid.New().String(),
+		id:       util.NewID(),
 	}
 	handlers.Add(handler1)
 

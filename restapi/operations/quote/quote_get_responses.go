@@ -25,7 +25,7 @@ type QuoteGetOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.Quote `json:"body,omitempty"`
+	Payload *models.Quote `json:"body,omitempty"`
 }
 
 // NewQuoteGetOK creates QuoteGetOK with default headers values
@@ -35,13 +35,13 @@ func NewQuoteGetOK() *QuoteGetOK {
 }
 
 // WithPayload adds the payload to the quote get o k response
-func (o *QuoteGetOK) WithPayload(payload models.Quote) *QuoteGetOK {
+func (o *QuoteGetOK) WithPayload(payload *models.Quote) *QuoteGetOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the quote get o k response
-func (o *QuoteGetOK) SetPayload(payload models.Quote) {
+func (o *QuoteGetOK) SetPayload(payload *models.Quote) {
 	o.Payload = payload
 }
 
