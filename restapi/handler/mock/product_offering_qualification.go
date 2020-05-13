@@ -20,7 +20,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
 	"github.com/rs/xid"
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
@@ -78,7 +78,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 				TerminationError: nil,
 			})
 		} else {
-			logrus.Error(err)
+			log.Error(err)
 		}
 	}
 
@@ -305,11 +305,11 @@ func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductO
 }
 
 func NotificationProductOfferingQualificationCreationNotificationHandler(params notification.NotificationProductOfferingQualificationCreationNotificationParams) middleware.Responder {
-	logrus.Debugf("got NotificationProductOfferingQualificationCreationNotificationParams: %s", util.ToString(params.ProductOfferingQualificationCreationNotification))
+	log.Debugf("got NotificationProductOfferingQualificationCreationNotificationParams: %s", util.ToString(params.ProductOfferingQualificationCreationNotification))
 	return notification.NewNotificationProductOfferingQualificationCreationNotificationNoContent()
 }
 
 func NotificationProductOfferingQualificationStateChangeNotificationHandler(params notification.NotificationProductOfferingQualificationStateChangeNotificationParams) middleware.Responder {
-	logrus.Debugf("got NotificationProductOfferingQualificationStateChangeNotificationParams: %s", util.ToString(params.ProductOfferingQualificationStateChangeNotification))
+	log.Debugf("got NotificationProductOfferingQualificationStateChangeNotificationParams: %s", util.ToString(params.ProductOfferingQualificationStateChangeNotification))
 	return notification.NewNotificationProductOfferingQualificationStateChangeNotificationNoContent()
 }

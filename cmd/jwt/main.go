@@ -10,7 +10,7 @@ package main
 import (
 	"os"
 
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	flags "github.com/jessevdk/go-flags"
 
@@ -23,7 +23,8 @@ var opts struct {
 }
 
 func main() {
-	logrus.SetLevel(logrus.DebugLevel)
+	log.SetLevel(log.DebugLevel)
+	log.SetFormatter(&log.TextFormatter{})
 	if _, err := flags.ParseArgs(&opts, os.Args); err != nil {
 		code := 1
 		if fe, ok := err.(*flags.Error); ok {
@@ -34,20 +35,20 @@ func main() {
 		os.Exit(code)
 	}
 
-	logrus.Debugln(opts)
+	log.Debugln(opts)
 
 	claims := auth.NewRoleClaims(opts.Roles)
 	privateKey := auth.Decode(auth.DefaultKey)
 	if opts.Key != "" {
 		var err error
 		if privateKey, err = auth.FromBase64(opts.Key); err != nil {
-			logrus.Fatal(err)
+			log.Fatal(err)
 		}
 	}
 
 	if token, err := auth.NewToken(claims, privateKey); err == nil {
-		logrus.Infof("Authorization: Bearer %s", token)
+		log.Infof("Authorization: Bearer %s", token)
 	} else {
-		logrus.Fatalf("failed to generate JWT token, %s", err)
+		log.Fatalf("failed to generate JWT token, %s", err)
 	}
 }

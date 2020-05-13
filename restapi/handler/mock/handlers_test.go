@@ -52,10 +52,17 @@ func Test_mockGeographicAddress(t *testing.T) {
 
 func TestMockQuoteCreate(t *testing.T) {
 	//models.ProductOfferingQualificationCreate{}
-	val := ProductOfferingQualificationCreate()
-	t.Log(util.ToString(val))
-
+	//poq
+	//t.Log(util.ToString(ProductOfferingQualificationCreate()))
 	//t.Log(util.ToString(&product_offering_qualification.ProductOfferingQualificationFindParams{}))
+	//quote
+	//t.Log(util.ToString(QuoteCreate()))
+	//t.Log(models.ChangelQuoteStateRequest{
+	//	ExternalID:             "",
+	//	ID:                     nil,
+	//	QuoteChangeStateReason: nil,
+	//	State:                  "",
+	//})
 }
 
 //

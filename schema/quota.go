@@ -71,7 +71,7 @@ type Quote struct {
 	RequestedQuoteCompletionDateField *strfmt.DateTime `json:"requestedQuoteCompletionDate"`
 
 	HrefField string `json:"href,omitempty"`
-	IDField   string `json:"id,omitempty"`
+	IDField   string `json:"id,omitempty" gorm:"column:id"`
 	//Date when the quote was created
 	QuoteDateField strfmt.DateTime       `json:"quoteDate,omitempty"`
 	StateField     models.QuoteStateType `json:"state,omitempty"`
@@ -566,20 +566,22 @@ func (m *Quote) SetValidFor(period *models.TimePeriod) {
 }
 
 func (m *Quote) ToQuoteSummaryView() models.QuoteSummaryView {
-	to := &QuoteSummaryView{}
-	to.AtBaseTypeField = m.AtBaseTypeField
-	to.AtSchemaLocationField = m.AtSchemaLocationField
-	to.AtTypeField = m.Type
-	to.CategoryField = ""
-	to.EffectiveQuoteCompletionDateField = m.EffectiveQuoteCompletionDateField
-	to.ExpectedFulfillmentStartDateField = m.ExpectedFulfillmentStartDateField
-	to.ExpectedQuoteCompletionDateField = m.ExpectedQuoteCompletionDateField
-	to.ExternalIdField = m.ExternalIDField
-	to.HrefField = m.HrefField
-	to.IDField = m.IDField
-	to.QuoteDateField = m.QuoteDateField
-	to.QuoteItemField = m.QuoteItem()
-	to.QuoteLevelField = m.QuoteLevelField
+	to := &QuoteSummaryView{
+		AtBaseTypeField:                   m.AtBaseTypeField,
+		AtSchemaLocationField:             m.AtSchemaLocationField,
+		AtTypeField:                       m.Type,
+		CategoryField:                     "",
+		EffectiveQuoteCompletionDateField: m.EffectiveQuoteCompletionDateField,
+		ExpectedFulfillmentStartDateField: m.ExpectedFulfillmentStartDateField,
+		ExpectedQuoteCompletionDateField:  m.ExpectedQuoteCompletionDateField,
+		ExternalIdField:                   m.ExternalIDField,
+		HrefField:                         m.HrefField,
+		IDField:                           m.IDField,
+		QuoteDateField:                    m.QuoteDateField,
+		QuoteItemField:                    m.QuoteItem(),
+		QuoteLevelField:                   m.QuoteLevelField,
+	}
+
 	var roles []*models.RelatedPartyRole
 	//FIXME: How to convert this??? store role in db???
 	for _, p := range m.RelatedParty() {

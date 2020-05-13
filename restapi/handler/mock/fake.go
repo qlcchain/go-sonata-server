@@ -106,9 +106,12 @@ func Note() *models.Note {
 
 func ItemTerm() *models.ItemTerm {
 	return &models.ItemTerm{
-		Description: "",
-		Duration:    nil,
-		Name:        "",
+		Description: gofakeit.JobDescriptor(),
+		Duration: &models.Duration{
+			Unit:  models.DurationUnitDAY,
+			Value: swag.Int32(gofakeit.Int32()),
+		},
+		Name: gofakeit.Name(),
 	}
 }
 
@@ -251,13 +254,13 @@ func QuoteCreate() *models.QuoteCreate {
 	return &models.QuoteCreate{
 		//AtBaseType:                   "",
 		//AtSchemaLocation:             "",
-		//AtType:                       "",
+		AtType: "",
 		Agreement: []*models.AgreementRef{
 			{
 				Href: gofakeit.URL(),
 				ID:   handler.NewID(),
-				Name: nil,
-				Path: swag.String(""),
+				Name: swag.String(gofakeit.Name()),
+				Path: swag.String(gofakeit.URL()),
 			},
 		},
 		Description:                  "demo create quote",
@@ -281,9 +284,9 @@ func QuoteCreate() *models.QuoteCreate {
 				},
 				Qualification: &models.ProductOfferingQualificationRef{
 					//AtReferredType:    "",
-					Href:              "",
-					ID:                nil,
-					QualificationItem: swag.String(""),
+					Href:              gofakeit.URL(),
+					ID:                handler.NewID(),
+					QualificationItem: handler.NewID(),
 				},
 				QuoteItemRelationship: []*models.QuoteItemRelationship{
 					{

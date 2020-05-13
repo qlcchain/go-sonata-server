@@ -65,14 +65,14 @@ func init() {
 		// Product
 		&schema.Product{}, &models.Agreement{}, &schema.ProductRelationship{}, &models.ProductRef{}, &schema.ProductSpecificationRef{},
 		&schema.ProductTerm{}, &models.ProductOfferingRef{}, &models.ProductOfferingQualificationItemRelationship{}, &schema.ProductOrderRef{},
-		&schema.ProductPrice{}, &models.TerminationError{},
+		&schema.ProductPrice{}, &models.TerminationError{}, &models.ProductOfferingQualificationRef{},
 		// Order
 		// POQ
 		&schema.ProductOfferingQualification{}, &schema.ProductOfferingQualificationItem{}, &schema.StatusChange{}, &schema.StateChange{},
 		&models.BillingAccountRef{},
 		&schema.RelatedParty{}, &schema.AlternateProductProposal{},
 		// Quote
-		&schema.Quote{},
+		&schema.Quote{}, &models.AgreementRef{}, &schema.Note{}, &schema.QuoteItem{}, &models.QuoteItemRelationship{},
 	).Error; err != nil {
 		logrus.Fatalln(err)
 	}

@@ -20,7 +20,7 @@ import (
 
 	"github.com/qlcchain/go-sonata-server/schema"
 
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/qlcchain/go-sonata-server/util"
 
@@ -32,6 +32,7 @@ import (
 
 var (
 	jsonContentType = "application/json;charset=utf-8"
+	client          = &http.Client{}
 )
 
 func NewDatetime(dt time.Time) *strfmt.DateTime {
@@ -53,15 +54,15 @@ func HrefToID(prefix, id string) string {
 }
 
 func HttpPost(url string, v interface{}) (string, error) {
-	client := &http.Client{}
 	content := util.ToString(v)
+	log.Debug(content)
 	resp, err := client.Post(url, jsonContentType, bytes.NewBuffer([]byte(content)))
 	if err != nil {
 		return "", err
 	}
 	defer func() {
 		if err := resp.Body.Close(); err != nil {
-			logrus.Error(err)
+			log.Error(err)
 		}
 	}()
 

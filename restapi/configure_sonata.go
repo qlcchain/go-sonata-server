@@ -16,7 +16,7 @@ import (
 	"github.com/go-openapi/swag"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler/mock"
 
@@ -44,11 +44,15 @@ func init() {
 
 	lh := lfshook.NewHook(
 		lw,
-		&logrus.JSONFormatter{},
+		&log.JSONFormatter{},
 	)
-	logrus.AddHook(lh)
-
-	logrus.SetLevel(logrus.ErrorLevel)
+	log.AddHook(lh)
+	//log.SetFormatter(&log.TextFormatter{
+	//	FullTimestamp: true,
+	//	DisableColors: true,
+	//})
+	log.SetReportCaller(true)
+	log.SetLevel(log.ErrorLevel)
 }
 
 //go:generate swagger generate server --target ../../go-sonata-server --name Sonata --spec ../spec/all.yaml --principal models.Principal
@@ -76,25 +80,25 @@ func configureFlags(api *operations.SonataAPI) {
 
 func configureAPI(api *operations.SonataAPI) http.Handler {
 	if cfg.Verbose {
-		logrus.SetLevel(logrus.DebugLevel)
+		log.SetLevel(log.DebugLevel)
 	}
 
 	if cfg.Key != "" {
 		var err error
 		if cfg.PrivateKey, err = auth.FromBase64(cfg.Key); err != nil {
-			logrus.Fatal(err)
+			log.Fatal(err)
 		}
 	}
 
 	if cfg.PrivateKey == nil {
-		logrus.Debug("use default key...")
+		log.Debug("use default key...")
 		cfg.PrivateKey = auth.Decode(auth.DefaultKey)
 		cfg.PublicKey = &cfg.PrivateKey.PublicKey
 	}
 
 	// configure the api here
 	api.ServeError = errors.ServeError
-	api.Logger = logrus.Printf
+	api.Logger = log.Printf
 	api.JSONConsumer = runtime.JSONConsumer()
 	api.JSONProducer = runtime.JSONProducer()
 
@@ -142,7 +146,7 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 	api.ServerShutdown = func() {
 		if mock.Store != nil {
 			if err := mock.Store.Close(); err != nil {
-				logrus.Error(err)
+				log.Error(err)
 			}
 		}
 	}
@@ -188,10 +192,10 @@ type logger struct {
 }
 
 func (l *logger) Write(p []byte) (n int, err error) {
-	logrus.Debugln(string(p))
+	log.Debugln(string(p))
 	return len(p), nil
 }
 
 func (l *logger) Println(args ...interface{}) {
-	logrus.Error(args)
+	log.Error(args)
 }

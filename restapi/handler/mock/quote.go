@@ -17,7 +17,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
 	"github.com/rs/xid"
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/qlcchain/go-sonata-server/event"
 	"github.com/qlcchain/go-sonata-server/schema"
@@ -51,23 +51,24 @@ func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangePar
 	}
 	now := strfmt.DateTime(time.Now())
 	state := &schema.Quote{
-		IDField:    *input.ID,
-		StateField: models.QuoteStateType(input.State),
+		IDField:         *input.ID,
+		ExternalIDField: input.ExternalID,
+		StateField:      models.QuoteStateType(input.State),
 	}
 
 	if err := Store.Save(state).Error; err == nil {
 		if q, err := db.GetQuote(Store, *input.ID); err != nil {
 			//FIXME: calculate file path and resource path
-			event := models.QuoteEventPlus{
+			ev := models.QuoteEventPlus{
 				FieldPath:    []string{},
 				ResourcePath: nil,
 			}
 			e := q.(*schema.Quote).ToQuoteSummaryView()
-			event.SetEvent(e)
-			event.SetEventID(xid.New().String())
-			event.SetEventTime(&now)
-			event.SetEventType(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION)
-			quoteBus.Publish(string(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION), event)
+			ev.SetEvent(e)
+			ev.SetEventID(xid.New().String())
+			ev.SetEventTime(&now)
+			ev.SetEventType(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION)
+			quoteBus.Publish(string(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION), ev)
 		}
 		return quote.NewQuoteRequestStateChangeOK().WithPayload(&models.ChangeQuoteStateResponse{
 			ExternalID:                    input.ExternalID,
@@ -98,7 +99,7 @@ func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.P
 			to.ID = swag.String(xid.New().String())
 			items = append(items, to)
 		} else {
-			logrus.Error(err)
+			log.Error(err)
 		}
 	}
 	q := &schema.Quote{
@@ -131,20 +132,16 @@ func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.P
 	q.SetNote(input.Note)
 	if err := Store.Save(q).Error; err == nil {
 		//FIXME: calculate file path and resource path
-		event := models.QuoteEventPlus{
+		ev := models.QuoteEventPlus{
 			FieldPath:    []string{},
-			ResourcePath: nil,
+			ResourcePath: swag.String(""),
 		}
 		e := q.ToQuoteSummaryView()
-		event.SetEvent(e)
-		event.SetEventID(xid.New().String())
-		event.SetEventTime(&now)
-		event.SetEventType(models.QuoteEventTypeQUOTECREATIONNOTIFICATION)
-		quoteBus.Publish(string(models.QuoteEventTypeQUOTECREATIONNOTIFICATION), event)
-		quoteBus.Publish(string(models.QuoteEventTypeQUOTECREATIONNOTIFICATION), &models.QuoteEventPlus{
-			FieldPath:    nil,
-			ResourcePath: nil,
-		})
+		ev.SetEvent(e)
+		ev.SetEventID(xid.New().String())
+		ev.SetEventTime(&now)
+		ev.SetEventType(models.QuoteEventTypeQUOTECREATIONNOTIFICATION)
+		quoteBus.Publish(string(models.QuoteEventTypeQUOTECREATIONNOTIFICATION), ev)
 		return quote.NewQuoteCreateCreated().WithPayload(q)
 	} else {
 		return quote.NewQuoteCreateInternalServerError().WithPayload(&models.ErrorRepresentation{
@@ -202,6 +199,10 @@ func QuoteQuoteFindHandler(params quote.QuoteFindParams, principal *models.Princ
 	var quotes []*schema.Quote
 	if err := tx.Find(&quotes).Error; err == nil {
 		var payload []models.QuoteFind
+		for _, q := range quotes {
+			to := schema.From(q)
+			payload = append(payload, &to)
+		}
 		return quote.NewQuoteFindOK().WithPayload(payload)
 	} else if err == gorm.ErrRecordNotFound {
 		return quote.NewQuoteFindNotFound()
@@ -338,22 +339,22 @@ func HubQuoteManagementHubFindHandler(params hub.QuoteManagementHubFindParams, p
 }
 
 func NotificationNotificationQuoteAttributeValueChangeNotificationHandler(params notification.NotificationQuoteAttributeValueChangeNotificationParams) middleware.Responder {
-	logrus.Debugf("got NotificationQuoteAttributeValueChangeNotificationParams: %s", util.ToString(params.QuoteAttributeValueChangeNotification))
+	log.Debugf("got NotificationQuoteAttributeValueChangeNotificationParams: %s", util.ToString(params.QuoteAttributeValueChangeNotification))
 	return notification.NewNotificationQuoteAttributeValueChangeNotificationNoContent()
 }
 
 func NotificationNotificationQuoteCreationNotificationHandler(params notification.NotificationQuoteCreationNotificationParams) middleware.Responder {
-	logrus.Debugf("got NotificationQuoteCreationNotificationParams:%s", util.ToString(params.QuoteCreationNotification))
+	log.Debugf("got NotificationQuoteCreationNotificationParams:%s", util.ToString(params.QuoteCreationNotification))
 	return notification.NewNotificationQuoteCreationNotificationNoContent()
 }
 
 func NotificationNotificationQuoteInformationRequiredNotificationHandler(params notification.NotificationQuoteInformationRequiredNotificationParams) middleware.Responder {
-	logrus.Debugf("got NotificationQuoteInformationRequiredNotificationParams: %s", util.ToString(params.QuoteInformationRequiredNotification))
+	log.Debugf("got NotificationQuoteInformationRequiredNotificationParams: %s", util.ToString(params.QuoteInformationRequiredNotification))
 	return notification.NewNotificationProductOrderInformationRequiredNotificationNoContent()
 }
 
 func NotificationNotificationQuoteStateChangeNotificationHandler(params notification.NotificationQuoteStateChangeNotificationParams) middleware.Responder {
-	logrus.Debugf("got NotificationQuoteStateChangeNotificationParams: %s", util.ToString(params.QuoteStateChangeNotification))
+	log.Debugf("got NotificationQuoteStateChangeNotificationParams: %s", util.ToString(params.QuoteStateChangeNotification))
 	return notification.NewNotificationQuoteStateChangeNotificationNoContent()
 }
 
@@ -361,12 +362,12 @@ func commonCallbackHandler(option *event.CallbackOption, v interface{}) {
 	if subscriber, err := db.FindSubscriber(Store, option.ID); err == nil {
 		if v != nil {
 			if content, err := handler.HttpPost(subscriber.Callback, v); err != nil {
-				logrus.Error(err)
+				log.Error(err)
 			} else {
-				logrus.Debug(content)
+				log.Debug(content)
 			}
 		}
 	} else {
-		logrus.Error(err)
+		log.Error(err)
 	}
 }

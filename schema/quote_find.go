@@ -30,6 +30,10 @@ type QuoteFind struct {
 	StateField models.QuoteStateType `json:"state"`
 }
 
+func (m *QuoteFind) Validate(registry strfmt.Registry) error {
+	return nil
+}
+
 // Description gets the description of this polymorphic type
 func (m *QuoteFind) Description() string {
 	return m.DescriptionField
@@ -137,4 +141,20 @@ func (m *QuoteFind) State() models.QuoteStateType {
 // SetState sets the state of this polymorphic type
 func (m *QuoteFind) SetState(val models.QuoteStateType) {
 	m.StateField = val
+}
+
+func From(q *Quote) QuoteFind {
+	return QuoteFind{
+		DescriptionField:                  q.DescriptionField,
+		EffectiveQuoteCompletionDateField: q.EffectiveQuoteCompletionDateField,
+		ExpectedQuoteCompletionDateField:  q.ExpectedQuoteCompletionDateField,
+		ExternalIDField:                   q.ExternalIDField,
+		HrefField:                         q.HrefField,
+		IDField:                           q.IDField,
+		ProjectIDField:                    q.ProjectIDField,
+		QuoteDateField:                    q.QuoteDateField,
+		QuoteLevelField:                   q.QuoteLevelField,
+		RequestedQuoteCompletionDateField: q.RequestedQuoteCompletionDateField,
+		StateField:                        q.StateField,
+	}
 }
