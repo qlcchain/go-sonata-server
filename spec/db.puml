@@ -25,6 +25,9 @@ namespace schema {
         + StreetSuffix string
         + StreetType string
 
+        + To() *models.FieldedAddress
+        + From(f *models.FieldedAddress) *FieldedAddress
+
     }
     class FormattedAddress << (S,Aquamarine) >> {
         + AddrLine1 *string
@@ -36,6 +39,9 @@ namespace schema {
         + PostCodeExtension string
         + Postcode string
         + StateOrProvince string
+
+        + To() *models.FormattedAddress
+        + From(f *models.FormattedAddress) *FormattedAddress
 
     }
     class GeographicAddress << (S,Aquamarine) >> {
@@ -55,6 +61,9 @@ namespace schema {
         + ID string
         + SpatialRef *string
 
+        + To() *models.GeographicLocation
+        + From(f *models.GeographicLocation) *GeographicLocation
+
     }
     class GeographicPoint << (S,Aquamarine) >> {
         + ID string
@@ -68,7 +77,7 @@ namespace schema {
         + AdditionalSiteInformation string
         + Description string
         + FieldedAddress *FieldedAddress
-        + FormattedAdress *FormattedAddress
+        + FormattedAddress *FormattedAddress
         + GeographicLocation *GeographicLocation
         + ID string
         + ReferencedAddress *models.ReferencedAddress
@@ -78,6 +87,9 @@ namespace schema {
         + SiteName string
         + SiteType string
         + Status models.Status
+
+        + To() *models.GeographicSite
+        + From(site *models.GeographicSite) *GeographicSite
 
     }
     class GeographicSubAddress << (S,Aquamarine) >> {
@@ -167,6 +179,8 @@ namespace schema {
         + Status models.ProductStatus
         + StatusChange []*StatusChange
         + TerminationDate strfmt.DateTime
+
+        + To() *models.Product
 
     }
     class ProductOfferingQualification << (S,Aquamarine) >> {
@@ -273,6 +287,9 @@ namespace schema {
         + Describing *models.Describing
         + ID *string
 
+        + To() *models.ProductSpecificationRef
+        + From(f *models.ProductSpecificationRef) *ProductSpecificationRef
+
     }
     class ProductTerm << (S,Aquamarine) >> {
         + ID *string
@@ -283,123 +300,31 @@ namespace schema {
 
     }
     class Quote << (S,Aquamarine) >> {
-        + AtBaseTypeField string
-        + AtSchemaLocationField string
-        + Type string
-        + AgreementField []*models.AgreementRef
-        + DescriptionField string
-        + ExpectedFulfillmentStartDateField strfmt.Date
-        + ExpectedQuoteCompletionDateField strfmt.Date
-        + EffectiveQuoteCompletionDateField strfmt.DateTime
-        + ExternalIDField string
-        + InstantSyncQuotingField *bool
-        + NoteField []*Note
-        + ProjectIDField string
-        + QuoteItemField []*QuoteItem
-        + QuoteLevelField models.QuoteLevel
-        + RelatedPartyField []*RelatedParty
-        + RequestedQuoteCompletionDateField *strfmt.DateTime
-        + HrefField string
-        + IDField string
-        + QuoteDateField strfmt.DateTime
-        + StateField models.QuoteStateType
-        + ValidForField *models.TimePeriod
+        + AtBaseType string
+        + AtSchemaLocation string
+        + AtType string
+        + Agreement []*models.AgreementRef
+        + Description string
+        + EffectiveQuoteCompletionDate strfmt.DateTime
+        + ExpectedFulfillmentStartDate strfmt.Date
+        + ExpectedQuoteCompletionDate strfmt.Date
+        + ExternalID string
+        + Href string
+        + ID string
+        + InstantSyncQuoting bool
+        + Note []*Note
+        + ProjectID string
+        + QuoteDate strfmt.DateTime
+        + QuoteItem []*QuoteItem
+        + QuoteLevel models.QuoteLevel
+        + RelatedParty []*RelatedParty
+        + RequestedQuoteCompletionDate *strfmt.DateTime
+        + State models.QuoteStateType
+        + ValidFor *models.TimePeriod
 
-        - validateAgreement(formats strfmt.Registry) error
-        - validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error
-        - validateExpectedFulfillmentStartDate(formats strfmt.Registry) error
-        - validateExpectedQuoteCompletionDate(formats strfmt.Registry) error
-        - validateInstantSyncQuoting(formats strfmt.Registry) error
-        - validateNote(formats strfmt.Registry) error
-        - validateQuoteDate(formats strfmt.Registry) error
-        - validateQuoteItem(formats strfmt.Registry) error
-        - validateQuoteLevel(formats strfmt.Registry) error
-        - validateRelatedParty(formats strfmt.Registry) error
-        - validateRequestedQuoteCompletionDate(formats strfmt.Registry) error
-        - validateState(formats strfmt.Registry) error
-        - validateValidFor(formats strfmt.Registry) error
-
-        + Validate(formats strfmt.Registry) error
-        + AtBaseType() string
-        + SetAtBaseType(s string) 
-        + AtSchemaLocation() string
-        + SetAtSchemaLocation(s string) 
-        + AtType() string
-        + SetAtType(s string) 
-        + Agreement() []*models.AgreementRef
-        + SetAgreement(refs []*models.AgreementRef) 
-        + Description() string
-        + SetDescription(s string) 
-        + EffectiveQuoteCompletionDate() strfmt.DateTime
-        + SetEffectiveQuoteCompletionDate(time strfmt.DateTime) 
-        + ExpectedFulfillmentStartDate() strfmt.Date
-        + SetExpectedFulfillmentStartDate(date strfmt.Date) 
-        + ExpectedQuoteCompletionDate() strfmt.Date
-        + SetExpectedQuoteCompletionDate(date strfmt.Date) 
-        + ExternalID() string
-        + SetExternalID(s string) 
-        + Href() string
-        + SetHref(s string) 
-        + ID() string
-        + SetID(s string) 
-        + InstantSyncQuoting() bool
-        + SetInstantSyncQuoting(b bool) 
-        + Note() []*models.Note
-        + SetNote(notes []*models.Note) 
-        + ProjectID() string
-        + SetProjectID(s string) 
-        + QuoteDate() strfmt.DateTime
-        + SetQuoteDate(time strfmt.DateTime) 
-        + QuoteItem() []*models.QuoteItem
-        + SetQuoteItem(items []*models.QuoteItem) 
-        + QuoteLevel() models.QuoteLevel
-        + SetQuoteLevel(level models.QuoteLevel) 
-        + RelatedParty() []*models.RelatedParty
-        + SetRelatedParty(parties []*models.RelatedParty) 
-        + RequestedQuoteCompletionDate() *strfmt.DateTime
-        + SetRequestedQuoteCompletionDate(time *strfmt.DateTime) 
-        + State() models.QuoteStateType
-        + SetState(stateType models.QuoteStateType) 
-        + ValidFor() *models.TimePeriod
-        + SetValidFor(period *models.TimePeriod) 
-        + ToQuoteSummaryView() models.QuoteSummaryView
-
-    }
-    class QuoteFind << (S,Aquamarine) >> {
-        + DescriptionField string
-        + EffectiveQuoteCompletionDateField strfmt.DateTime
-        + ExpectedQuoteCompletionDateField strfmt.Date
-        + ExternalIDField string
-        + HrefField string
-        + IDField string
-        + ProjectIDField string
-        + QuoteDateField strfmt.DateTime
-        + QuoteLevelField models.QuoteLevel
-        + RequestedQuoteCompletionDateField *strfmt.DateTime
-        + StateField models.QuoteStateType
-
-        + Description() string
-        + SetDescription(val string) 
-        + EffectiveQuoteCompletionDate() strfmt.DateTime
-        + SetEffectiveQuoteCompletionDate(val strfmt.DateTime) 
-        + ExpectedQuoteCompletionDate() strfmt.Date
-        + SetExpectedQuoteCompletionDate(val strfmt.Date) 
-        + ExternalID() string
-        + SetExternalID(val string) 
-        + Href() string
-        + SetHref(val string) 
-        + ID() string
-        + SetID(val string) 
-        + ProjectID() string
-        + SetProjectID(val string) 
-        + QuoteDate() strfmt.DateTime
-        + SetQuoteDate(val strfmt.DateTime) 
-        + QuoteLevel() models.QuoteLevel
-        + SetQuoteLevel(val models.QuoteLevel) 
-        + RequestedQuoteCompletionDate() *strfmt.DateTime
-        + SetRequestedQuoteCompletionDate(val *strfmt.DateTime) 
-        + State() models.QuoteStateType
-        + SetState(val models.QuoteStateType) 
+        + ToQuoteSummaryView() *models.QuoteSummaryView
+        + ToQuoteFind() *models.QuoteFind
+        + ToQuote() *models.Quote
 
     }
     class QuoteItem << (S,Aquamarine) >> {
@@ -410,77 +335,15 @@ namespace schema {
         + Note []*Note
         + Product *Product
         + ProductOffering *models.ProductOfferingRef
-        + Qualification *models.ProductOfferingQualificationRef
+        + Qualification []*models.ProductOfferingQualificationRef
+        + QuoteItemPrice []*models.QuotePrice
         + QuoteItemRelationship []*models.QuoteItemRelationship
+        + QuoteItemTerm *models.ItemTerm
         + RelatedParty []*RelatedParty
         + RequestedQuoteItemTerm *models.ItemTerm
+        + State models.QuoteItemStateType
 
-    }
-    class QuoteSummaryView << (S,Aquamarine) >> {
-        + AtBaseTypeField string
-        + AtSchemaLocationField string
-        + AtTypeField string
-        + CategoryField string
-        + EffectiveQuoteCompletionDateField strfmt.DateTime
-        + ExpectedFulfillmentStartDateField strfmt.Date
-        + ExpectedQuoteCompletionDateField strfmt.Date
-        + ExternalIdField string
-        + HrefField string
-        + IDField string
-        + QuoteDateField strfmt.DateTime
-        + QuoteItemField []*models.QuoteItem
-        + QuoteLevelField models.QuoteLevel
-        + RelatedPartyRoleField []*models.RelatedPartyRole
-        + RequestedQuoteCompletionDateField *strfmt.DateTime
-        + StateField models.QuoteState
-        + ValidForField *models.TimePeriod
-
-        - validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error
-        - validateExpectedFulfillmentStartDate(formats strfmt.Registry) error
-        - validateExpectedQuoteCompletionDate(formats strfmt.Registry) error
-        - validateQuoteDate(formats strfmt.Registry) error
-        - validateQuoteItem(formats strfmt.Registry) error
-        - validateQuoteLevel(formats strfmt.Registry) error
-        - validateRelatedPartyRole(formats strfmt.Registry) error
-        - validateRequestedQuoteCompletionDate(formats strfmt.Registry) error
-        - validateState(formats strfmt.Registry) error
-        - validateValidFor(formats strfmt.Registry) error
-
-        + AtBaseType() string
-        + SetAtBaseType(val string) 
-        + AtSchemaLocation() string
-        + SetAtSchemaLocation(val string) 
-        + AtType() string
-        + SetAtType(val string) 
-        + Category() string
-        + SetCategory(val string) 
-        + EffectiveQuoteCompletionDate() strfmt.DateTime
-        + SetEffectiveQuoteCompletionDate(val strfmt.DateTime) 
-        + ExpectedFulfillmentStartDate() strfmt.Date
-        + SetExpectedFulfillmentStartDate(val strfmt.Date) 
-        + ExpectedQuoteCompletionDate() strfmt.Date
-        + SetExpectedQuoteCompletionDate(val strfmt.Date) 
-        + ExternalID() string
-        + SetExternalID(val string) 
-        + Href() string
-        + SetHref(val string) 
-        + ID() string
-        + SetID(val string) 
-        + QuoteDate() strfmt.DateTime
-        + SetQuoteDate(val strfmt.DateTime) 
-        + QuoteItem() []*models.QuoteItem
-        + SetQuoteItem(val []*models.QuoteItem) 
-        + QuoteLevel() models.QuoteLevel
-        + SetQuoteLevel(val models.QuoteLevel) 
-        + RelatedPartyRole() []*models.RelatedPartyRole
-        + SetRelatedPartyRole(val []*models.RelatedPartyRole) 
-        + RequestedQuoteCompletionDate() *strfmt.DateTime
-        + SetRequestedQuoteCompletionDate(val *strfmt.DateTime) 
-        + State() models.QuoteState
-        + SetState(val models.QuoteState) 
-        + ValidFor() *models.TimePeriod
-        + SetValidFor(val *models.TimePeriod) 
-        + Validate(formats strfmt.Registry) error
+        + To() *models.QuoteItem
 
     }
     class RelatedParty << (S,Aquamarine) >> {
