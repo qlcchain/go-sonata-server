@@ -1,7 +1,5 @@
 package schema
 
-import "github.com/qlcchain/go-sonata-server/models"
-
 type GeographicSubAddress struct {
 
 	// Technical attribute to extend this class
@@ -29,5 +27,5 @@ type GeographicSubAddress struct {
 	PrivateStreetNumber string `json:"privateStreetNumber,omitempty"`
 
 	// sub unit
-	SubUnit []*models.SubUnit `json:"subUnit" gorm:"foreignkey:SubUnitIdentifier"`
+	SubUnit []*SubUnit `json:"subUnit" gorm:"foreignkey:ID"`
 }

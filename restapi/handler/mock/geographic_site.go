@@ -23,10 +23,10 @@ import (
 
 func GeographicSiteGeographicSiteFindHandler(params gs.GeographicSiteFindParams, principal *models.Principal) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
-		return gs.NewGeographicSiteFindBadRequest().WithPayload(payload)
+		return gs.NewGeographicSiteFindUnauthorized().WithPayload(payload)
 	}
 
-	var sites []schema.GeographicSite
+	var sites []*schema.GeographicSite
 	//TODO: query from db
 	tx := Store.Set(db.AutoPreLoad, true)
 	if err := tx.Where("", params).Find(&sites).Error; err == nil {
@@ -42,7 +42,7 @@ func GeographicSiteGeographicSiteFindHandler(params gs.GeographicSiteFindParams,
 
 func GeographicSiteGeographicSiteGetHandler(params gs.GeographicSiteGetParams, principal *models.Principal) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
-		return gs.NewGeographicSiteGetBadRequest().WithPayload(payload)
+		return gs.NewGeographicSiteGetUnauthorized().WithPayload(payload)
 	}
 
 	if site, err := db.GetGeographicSite(Store, params.SiteID); err == nil {

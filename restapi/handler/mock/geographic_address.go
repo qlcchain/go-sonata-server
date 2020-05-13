@@ -10,12 +10,12 @@ package mock
 import (
 	"time"
 
-	"github.com/qlcchain/go-sonata-server/util"
+	"github.com/go-openapi/strfmt"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
+	"github.com/qlcchain/go-sonata-server/util"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
 
@@ -28,19 +28,22 @@ import (
 
 func GeographicAddressGeographicAddressGetHandler(params ga.GeographicAddressGetParams, principal *models.Principal) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
-		return ga.NewGeographicAddressGetBadRequest().WithPayload(payload)
+		return ga.NewGeographicAddressGetUnauthorized().WithPayload(payload)
 	}
-	address := &models.GeographicAddress{}
-	if err := Store.Set(db.AutoPreLoad, true).First(address, params.GeographicAddressID).Error; err == gorm.ErrRecordNotFound {
+	if address, err := db.GetGeographicAddress(Store, params.GeographicAddressID); err == nil {
+		return ga.NewGeographicAddressGetOK().WithPayload(address)
+	} else if err == gorm.ErrRecordNotFound {
 		return ga.NewGeographicAddressGetNotFound()
+	} else {
+		return ga.NewGeographicAddressGetInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
 	}
-
-	return ga.NewGeographicAddressGetOK().WithPayload(address)
 }
 
 func GeographicAddressValidationGeographicAddressValidationCreateHandler(params gav.GeographicAddressValidationCreateParams, principal *models.Principal) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
-		return gav.NewGeographicAddressValidationCreateBadRequest().WithPayload(payload)
+		return gav.NewGeographicAddressValidationCreateUnauthorized().WithPayload(payload)
 	}
 	input := params.AddressValidationRequest.RequestedAddress
 
@@ -48,21 +51,19 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 	filter := make(map[string]interface{})
 	result := models.ValidationResultFails
 
-	if fa := handler.FieldedAddressRequest2FieldedAddress(input.FieldedAddress); fa != nil {
-		var address []models.GeographicAddress
-		if err := Store.Set(db.AutoPreLoad, true).Model(fa).Related(&address, "ID"); err == nil {
-			if len(address) > 0 {
-				result = models.ValidationResultPartial
-			}
+	if address, err := db.GetGeographicAddressByFieldedAddress(Store, input.FieldedAddress); err == nil {
+		if len(address) > 0 {
+			result = models.ValidationResultPartial
 		}
+
 		for _, a := range address {
 			if _, ok := filter[a.ID]; !ok {
 				verifiedAddress = append(verifiedAddress, &models.GeographicAddressSellerResponse{
 					AtSchemaLocation: a.AtSchemaLocation,
 					AtType:           a.AtType,
 					AllowsNewSite:    a.AllowsNewSite,
-					FieldedAddress:   a.FieldedAddress,
-					FormattedAddress: a.FormattedAddress,
+					FieldedAddress:   a.FieldedAddress.To(),
+					FormattedAddress: a.FormattedAddress.To(),
 					HasPublicSite:    a.HasPublicSite,
 					ID:               a.ID,
 					IsBestMatch:      swag.Bool(true),
@@ -72,34 +73,33 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 		}
 	}
 
-	if fa := handler.FormattedAddressRequest2FormattedAddress(input.FormattedAddress); fa != nil {
-		var address []models.GeographicAddress
-		if err := Store.Set(db.AutoPreLoad, true).Model(fa).Related(&address, "ID"); err == nil {
-			if len(address) > 0 {
-				if result == models.ValidationResultPartial {
-					result = models.ValidationResultSuccess
-				} else {
-					result = models.ValidationResultPartial
-				}
+	if address, err := db.GetGeographicAddressByFormattedAddress(Store, input.FormattedAddress); err == nil {
+		if len(address) > 0 {
+			if result == models.ValidationResultPartial {
+				result = models.ValidationResultSuccess
+			} else {
+				result = models.ValidationResultPartial
 			}
+		}
 
-			for _, a := range address {
-				if _, ok := filter[a.ID]; !ok {
-					verifiedAddress = append(verifiedAddress, &models.GeographicAddressSellerResponse{
-						AtSchemaLocation: a.AtSchemaLocation,
-						AtType:           a.AtType,
-						AllowsNewSite:    a.AllowsNewSite,
-						FieldedAddress:   a.FieldedAddress,
-						FormattedAddress: a.FormattedAddress,
-						HasPublicSite:    a.HasPublicSite,
-						ID:               a.ID,
-						IsBestMatch:      swag.Bool(true),
-					})
-					filter[a.ID] = struct{}{}
-				}
+		for _, a := range address {
+			if _, ok := filter[a.ID]; !ok {
+				verifiedAddress = append(verifiedAddress, &models.GeographicAddressSellerResponse{
+					AtSchemaLocation: a.AtSchemaLocation,
+					AtType:           a.AtType,
+					AllowsNewSite:    a.AllowsNewSite,
+					FieldedAddress:   a.FieldedAddress.To(),
+					FormattedAddress: a.FormattedAddress.To(),
+					HasPublicSite:    a.HasPublicSite,
+					ID:               a.ID,
+					IsBestMatch:      swag.Bool(true),
+				})
+				filter[a.ID] = struct{}{}
 			}
 		}
 	}
+
+	// TODO: fuzzy query when can not fetch any records by best match
 
 	return gav.NewGeographicAddressValidationCreateCreated().WithPayload(&models.GeographicAddressValidation{
 		ID: util.NewID(),

@@ -5,7 +5,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-package mock
+package handler
 
 import (
 	"fmt"
@@ -16,10 +16,8 @@ import (
 	"github.com/brianvoe/gofakeit/v5"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/rs/xid"
 
 	"github.com/qlcchain/go-sonata-server/models"
-	"github.com/qlcchain/go-sonata-server/restapi/handler"
 )
 
 func FieldAddress() *models.FieldedAddress {
@@ -38,8 +36,8 @@ func FieldAddress() *models.FieldedAddress {
 				PrivateStreetNumber: "01",
 				SubUnit: []*models.SubUnit{
 					{
-						SubUnitIdentifier: swag.String(xid.New().String()),
-						SubUnitType:       swag.String("BERTH"),
+						SubUnitIdentifier: swag.String(fmt.Sprintf("%d", gofakeit.Uint32())),
+						SubUnitType:       swag.String("UNIT"),
 					},
 				},
 			},
@@ -101,7 +99,7 @@ func GeographicAddress() *models.GeographicAddress {
 func Note() *models.Note {
 	return &models.Note{
 		Author: swag.String(gofakeit.Name()),
-		Date:   handler.NewDatetime(time.Now()),
+		Date:   NewDatetime(time.Now()),
 		Text:   swag.String(gofakeit.Phrase()),
 	}
 }
@@ -228,7 +226,7 @@ func Product() *models.Product {
 			RelatedParty(),
 		},
 		Site:      []*models.GeographicSite{},
-		StartDate: handler.NewDatetime(time.Now().AddDate(-1, 0, 0)),
+		StartDate: NewDatetime(time.Now().AddDate(-1, 0, 0)),
 		Status:    models.ProductStatusActive,
 		StatusChange: []*models.StatusChange{
 			StatusChange(),
@@ -306,7 +304,7 @@ func QuoteCreate() *models.QuoteCreate {
 		RelatedParty: []*models.RelatedParty{
 			RelatedParty(),
 		},
-		RequestedQuoteCompletionDate: handler.NewDatetime(time.Now().AddDate(0, 0, 3)),
+		RequestedQuoteCompletionDate: NewDatetime(time.Now().AddDate(0, 0, 3)),
 	}
 }
 
@@ -376,7 +374,7 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 						RelatedParty(),
 					},
 					Site:      []*models.GeographicSite{},
-					StartDate: handler.NewDatetime(time.Now().AddDate(-1, 0, 0)),
+					StartDate: NewDatetime(time.Now().AddDate(-1, 0, 0)),
 					Status:    models.ProductStatusActive,
 					StatusChange: []*models.StatusChange{
 						StatusChange(),

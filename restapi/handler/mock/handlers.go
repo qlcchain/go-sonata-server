@@ -59,7 +59,7 @@ func init() {
 		// GeographicAddress
 		&schema.GeographicAddress{}, &schema.FieldedAddress{}, &schema.FormattedAddress{},
 		&schema.GeographicLocation{}, &schema.GeographicAddress{}, &schema.GeographicSubAddress{}, &schema.GeographicPoint{},
-		&models.SubUnit{}, &models.ReferencedAddress{},
+		&schema.SubUnit{}, &models.ReferencedAddress{},
 		// GeographicSite
 		&schema.GeographicSite{},
 		// Product
