@@ -1,14 +1,13 @@
 name: Main workflow
 on: [push]
 jobs:
-
   build:
     name: Check, Build and Publish snapshot artifacts 
     runs-on: ubuntu-18.04
     if: contains(github.event.head_commit.message, '[skip ci]') == false && contains(github.event.head_commit.message, '[ci skip]') == false
     steps:
       - name: Set up Go
-        uses: actions/setup-go@v1.1.2
+        uses: actions/setup-go@v2
         with:
           go-version: 1.14.x
 
@@ -28,7 +27,7 @@ jobs:
         env:
           GO111MODULE: "on"
         run: |
-          go test -race -coverprofile=coverage.txt -covermode=atomic
+          go test ./... -coverprofile=coverage.txt -covermode=atomic
           make clean build
 
       - uses: codecov/codecov-action@v1.0.2
@@ -47,19 +46,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           dockerfile: Dockerfile
-      
-      - name: GoReleaser Action
-        uses: goreleaser/goreleaser-action@v1.4.0
-        with:
-          version: latest
-          args: --rm-dist --snapshot
-          key: ${{ secrets.PRIVATE_KEY }}
-      
-      - name: Prepare artifacts
-        run: mkdir -p artifact && cp dist/*.{tar.gz,zip,txt,sig} artifact/
+
+      - name: Build snapshot
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        run: |
+          make snapshot
+          mkdir -p artifact && cp dist/*.{tar.gz,zip,txt,sig} artifact/
 
       - name: Upload snapshot artifacts
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: go-sonata-server-artifact
+          name: go-sonata-server
           path: artifact/

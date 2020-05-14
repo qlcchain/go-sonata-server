@@ -51,7 +51,7 @@ func GetGeographicSiteByParams(db *gorm.DB, params *gs.GeographicSiteFindParams)
 	}
 	if params.GeographicAddressCity == nil && params.GeographicAddressCountry == nil && params.GeographicAddressID == nil &&
 		params.GeographicAddressPostcode == nil && params.GeographicAddressStreetName == nil && params.GeographicAddressStreetNr == nil {
-		log.Warnln("all geographic address are emptry, ignore...")
+		log.Warnln("all geographic address are empty, ignore...")
 	} else {
 		var fa []*schema.FieldedAddress
 		if err := tx.Find(&fa, &schema.FieldedAddress{

@@ -14,7 +14,8 @@ BUILDDIR = $(shell pwd)/build
 VERSION ?= 0.0.1
 GITREV = $(shell git rev-parse --short HEAD)
 BUILDTIME = $(shell date +'%FT%TZ%z')
-LDFLAGS=-ldflags "-X main.version=${VERSION} -X main.commit=${GITREV} -X main.date=${BUILDTIME}"
+LDFLAGS=-ldflags '-X main.version=${VERSION} -X main.commit=${GITREV} -X main.date=${BUILDTIME}'
+GO_BUILDER_VERSION=v1.14.2
 
 default: build
 
@@ -26,7 +27,7 @@ deps:
 
 build:
 	go build ${LDFLAGS} -o $(BUILDDIR)/${BINARY} -i $(MAIN)
-	@echo "Build $(BINARY) done."
+	@echo 'Build $(BINARY) done.'
 
 changelog:
 	git-chglog $(VERSION) > CHANGELOG.md
@@ -38,7 +39,20 @@ lint:
 	golangci-lint run --fix
 
 snapshot:
-	goreleaser --snapshot --rm-dist
+	docker run --rm --privileged \
+		-e PRIVATE_KEY=$(PRIVATE_KEY) \
+		-v $(CURDIR):/go-sonata-server \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v $(GOPATH)/src:/go/src \
+		-w /go-sonata-server \
+		goreng/golang-cross:$(GO_BUILDER_VERSION) --snapshot --rm-dist
 
 release: changelog
-	goreleaser --rm-dist --release-notes=CHANGELOG.md
+	docker run --rm --privileged \
+		-e GITHUB_TOKEN=$(GITHUB_TOKEN) \
+		-e PRIVATE_KEY=$(PRIVATE_KEY) \
+		-v $(CURDIR):/go-sonata-server \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v $(GOPATH)/src:/go/src \
+		-w /go-sonata-server \
+		goreng/golang-cross:$(GO_BUILDER_VERSION) --rm-dist --release-notes=CHANGELOG.md

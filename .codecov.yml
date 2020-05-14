@@ -4,10 +4,10 @@ codecov:
   max_report_age: off
 
 ignore:
-- "**/mock"
-- "**/edwards25519/*"
-- "**/*_gen.go"
-- "**/*.pb.go"
+- "models/**"
+- "schema/**"
+- "**/operations/**"
+- "client/**"
 
 #comment: false
 

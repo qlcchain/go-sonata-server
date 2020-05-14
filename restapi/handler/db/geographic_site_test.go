@@ -50,7 +50,7 @@ func TestGetGeographicSiteByParams(t *testing.T) {
 
 	from := sites[0]
 	if r, err := GetGeographicSiteByParams(db, &gs.GeographicSiteFindParams{
-		SiteCompanyName: swag.String(from.SiteCustomerName),
+		SiteCompanyName: swag.String(from.SiteCompanyName),
 	}); err == nil {
 		if !reflect.DeepEqual(r[0].To(), from.To()) {
 			t.Fatalf("invalid site, exp: %s, got: %s", util.ToString(from.To()), util.ToString(r[0].To()))

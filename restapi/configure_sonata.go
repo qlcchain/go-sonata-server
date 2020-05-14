@@ -197,5 +197,5 @@ func (l *logger) Write(p []byte) (n int, err error) {
 }
 
 func (l *logger) Println(args ...interface{}) {
-	log.Error(args)
+	log.Error(args...)
 }

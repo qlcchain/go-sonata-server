@@ -19,26 +19,19 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.14.x
-      
-      - name: Generate changelog with git-chglog
+
+      - name: Publish GitHub Release
         env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           GIT_CHGLOG_VERION: 0.9.1
         run: |
           sudo wget -O /usr/local/bin/git-chglog https://github.com/git-chglog/git-chglog/releases/download/${GIT_CHGLOG_VERION}/git-chglog_linux_amd64
           sudo chmod +x /usr/local/bin/git-chglog
           export PATH=$PATH:/usr/local/bin
           export TAG=${GITHUB_REF/refs\/tags\//}
-          make VERSION=${TAG} changelog
-      
-      - name: GoReleaser Action
-        uses: goreleaser/goreleaser-action@v1.4.0
-        with:
-          version: latest
-          args: release --rm-dist --release-notes=CHANGELOG.md
-          key: ${{ secrets.PRIVATE_KEY }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      
+          make VERSION=${TAG} release
+
       - name: Publish Docker image to DockerHub
         uses: docker://goreng/publish-docker-github-action:v2.4
         with:
@@ -46,3 +39,4 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           dockerfile: Dockerfile
+
