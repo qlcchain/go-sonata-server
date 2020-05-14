@@ -24,6 +24,8 @@ func GeographicSiteGeographicSiteFindHandler(params gs.GeographicSiteFindParams,
 		return gs.NewGeographicSiteFindUnauthorized().WithPayload(payload)
 	}
 
+	//log.Debug(util.ToString(params))
+
 	if sites, err := db.GetGeographicSiteByParams(Store, &params); err == nil {
 		var payload []*models.GeographicSiteFindResp
 		for _, site := range sites {

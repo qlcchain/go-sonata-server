@@ -10,6 +10,7 @@ package db
 import (
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
+	log "github.com/sirupsen/logrus"
 
 	gs "github.com/qlcchain/go-sonata-server/restapi/operations/geographic_site"
 
@@ -48,27 +49,30 @@ func GetGeographicSiteByParams(db *gorm.DB, params *gs.GeographicSiteFindParams)
 			}
 		}
 	}
-
-	var fa []*schema.FieldedAddress
-	// FIXME: where condition?
-	if err := tx.Where(&schema.FieldedAddress{
-		City:       swag.StringValue(params.GeographicAddressCity),
-		Country:    swag.StringValue(params.GeographicAddressCountry),
-		ID:         swag.StringValue(params.GeographicAddressID),
-		Postcode:   swag.StringValue(params.GeographicAddressPostcode),
-		StreetName: swag.StringValue(params.GeographicAddressStreetName),
-		StreetNr:   swag.StringValue(params.GeographicAddressStreetNr),
-	}).Find(&fa).Error; err == nil {
-		var ids []string
-		for _, f := range fa {
-			ids = append(ids, f.ID)
-		}
-		var sites []*schema.GeographicSite
-		if err := tx.Where("id IN (?)", ids).Find(&sites).Error; err == nil {
-			for _, site := range sites {
-				if _, ok := filter[site.ID]; !ok {
-					r = append(r, site)
-					filter[site.ID] = struct{}{}
+	if params.GeographicAddressCity == nil && params.GeographicAddressCountry == nil && params.GeographicAddressID == nil &&
+		params.GeographicAddressPostcode == nil && params.GeographicAddressStreetName == nil && params.GeographicAddressStreetNr == nil {
+		log.Warnln("all geographic address are emptry, ignore...")
+	} else {
+		var fa []*schema.FieldedAddress
+		if err := tx.Find(&fa, &schema.FieldedAddress{
+			City:       swag.StringValue(params.GeographicAddressCity),
+			Country:    swag.StringValue(params.GeographicAddressCountry),
+			ID:         swag.StringValue(params.GeographicAddressID),
+			Postcode:   swag.StringValue(params.GeographicAddressPostcode),
+			StreetName: swag.StringValue(params.GeographicAddressStreetName),
+			StreetNr:   swag.StringValue(params.GeographicAddressStreetNr),
+		}).Error; err == nil {
+			var ids []string
+			for _, f := range fa {
+				ids = append(ids, f.ID)
+			}
+			var sites []*schema.GeographicSite
+			if err := tx.Where("id IN (?)", ids).Find(&sites).Error; err == nil {
+				for _, site := range sites {
+					if _, ok := filter[site.ID]; !ok {
+						r = append(r, site)
+						filter[site.ID] = struct{}{}
+					}
 				}
 			}
 		}
