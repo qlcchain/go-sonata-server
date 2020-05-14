@@ -26,7 +26,7 @@ type Contact struct {
 
 	// Identifies the electronic mail address of the Billing Contact when a Buyer profile does not already exist.
 	// Required: true
-	EmailAdress *string `json:"emailAdress"`
+	EmailAddress *string `json:"emailAddress"`
 
 	// Identifies the telephone number (excluding extension) of the billing contact
 	// Required: true
@@ -37,7 +37,7 @@ type Contact struct {
 
 	// Identifies the address of the person or office to be contacted on billing matters.
 	// Required: true
-	StreetAdress *string `json:"streetAdress"`
+	StreetAddress *string `json:"streetAddress"`
 }
 
 // Validate validates this contact
@@ -48,7 +48,7 @@ func (m *Contact) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateEmailAdress(formats); err != nil {
+	if err := m.validateEmailAddress(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -56,7 +56,7 @@ func (m *Contact) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateStreetAdress(formats); err != nil {
+	if err := m.validateStreetAddress(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -75,9 +75,9 @@ func (m *Contact) validateContactName(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Contact) validateEmailAdress(formats strfmt.Registry) error {
+func (m *Contact) validateEmailAddress(formats strfmt.Registry) error {
 
-	if err := validate.Required("emailAdress", "body", m.EmailAdress); err != nil {
+	if err := validate.Required("emailAddress", "body", m.EmailAddress); err != nil {
 		return err
 	}
 
@@ -93,9 +93,9 @@ func (m *Contact) validatePhoneNumber(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Contact) validateStreetAdress(formats strfmt.Registry) error {
+func (m *Contact) validateStreetAddress(formats strfmt.Registry) error {
 
-	if err := validate.Required("streetAdress", "body", m.StreetAdress); err != nil {
+	if err := validate.Required("streetAddress", "body", m.StreetAddress); err != nil {
 		return err
 	}
 

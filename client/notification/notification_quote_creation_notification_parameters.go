@@ -63,7 +63,7 @@ for the notification quote creation notification operation typically these are w
 type NotificationQuoteCreationNotificationParams struct {
 
 	/*QuoteCreationNotification*/
-	QuoteCreationNotification models.QuoteEvent
+	QuoteCreationNotification *models.QuoteEvent
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationQuoteCreationNotificationParams) SetHTTPClient(client *http
 }
 
 // WithQuoteCreationNotification adds the quoteCreationNotification to the notification quote creation notification params
-func (o *NotificationQuoteCreationNotificationParams) WithQuoteCreationNotification(quoteCreationNotification models.QuoteEvent) *NotificationQuoteCreationNotificationParams {
+func (o *NotificationQuoteCreationNotificationParams) WithQuoteCreationNotification(quoteCreationNotification *models.QuoteEvent) *NotificationQuoteCreationNotificationParams {
 	o.SetQuoteCreationNotification(quoteCreationNotification)
 	return o
 }
 
 // SetQuoteCreationNotification adds the quoteCreationNotification to the notification quote creation notification params
-func (o *NotificationQuoteCreationNotificationParams) SetQuoteCreationNotification(quoteCreationNotification models.QuoteEvent) {
+func (o *NotificationQuoteCreationNotificationParams) SetQuoteCreationNotification(quoteCreationNotification *models.QuoteEvent) {
 	o.QuoteCreationNotification = quoteCreationNotification
 }
 
@@ -122,8 +122,10 @@ func (o *NotificationQuoteCreationNotificationParams) WriteToRequest(r runtime.C
 	}
 	var res []error
 
-	if err := r.SetBodyParam(o.QuoteCreationNotification); err != nil {
-		return err
+	if o.QuoteCreationNotification != nil {
+		if err := r.SetBodyParam(o.QuoteCreationNotification); err != nil {
+			return err
+		}
 	}
 
 	if len(res) > 0 {

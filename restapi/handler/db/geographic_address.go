@@ -8,6 +8,8 @@
 package db
 
 import (
+	"errors"
+
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 
@@ -36,6 +38,9 @@ func ListGeographicAddress(db *gorm.DB) ([]*models.GeographicAddress, error) {
 }
 
 func GetGeographicAddressByIds(db *gorm.DB, ids []string) ([]*schema.GeographicAddress, error) {
+	if len(ids) == 0 {
+		return nil, errors.New("invalid ids")
+	}
 	tx := db.Set(AutoPreLoad, true)
 	var address []*schema.GeographicAddress
 	err := tx.Where("id IN (?)", ids).Find(&address).Error
@@ -55,10 +60,35 @@ func GetGeographicAddress(db *gorm.DB, id string) (*models.GeographicAddress, er
 	}
 }
 
-func GetGeographicAddressByFieldedAddress(db *gorm.DB, param *models.FieldedAddressRequest) ([]*schema.GeographicAddress, error) {
-	fa := request2FieldedAddress(param)
+func GetGeographicAddressByFieldedAddress(db *gorm.DB, req *models.FieldedAddressRequest) ([]*schema.GeographicAddress, error) {
 	var r []*schema.FieldedAddress
-	if err := db.Where(fa).Find(&r).Error; err == nil {
+	tx := db.Set(AutoPreLoad, true)
+	tx = tx.Where(&schema.FieldedAddress{
+		City:               req.City,
+		Country:            req.Country,
+		Locality:           req.Locality,
+		PostCodeExtension:  req.PostCodeExtension,
+		Postcode:           req.Postcode,
+		StateOrProvince:    req.StateOrProvince,
+		StreetName:         req.StreetName,
+		StreetNr:           req.StreetNr,
+		StreetNrLast:       req.StreetNrLast,
+		StreetNrLastSuffix: req.StreetNrLastSuffix,
+		StreetNrSuffix:     req.StreetNrSuffix,
+		StreetSuffix:       req.StreetSuffix,
+		StreetType:         req.StreetType,
+	})
+	if req.GeographicSubAddress != nil {
+		var sub []*schema.GeographicSubAddress
+		if err := db.Find(&sub, req.GeographicSubAddress).Error; err == nil {
+			var ids []string
+			for _, address := range sub {
+				ids = append(ids, address.ID)
+			}
+			tx = tx.Where("id IN (?)", ids)
+		}
+	}
+	if err := tx.Find(&r).Error; err == nil {
 		var ids []string
 		for _, fieldedAddress := range r {
 			ids = append(ids, fieldedAddress.ID)
@@ -80,38 +110,6 @@ func GetGeographicAddressByFormattedAddress(db *gorm.DB, param *models.Formatted
 		return GetGeographicAddressByIds(db, ids)
 	} else {
 		return nil, err
-	}
-}
-
-func request2FieldedAddress(req *models.FieldedAddressRequest) *schema.FieldedAddress {
-	if req == nil {
-		return nil
-	}
-
-	var a []*schema.GeographicSubAddress
-	from := req.GeographicSubAddress
-	if from != nil {
-		to := &schema.GeographicSubAddress{}
-		if err := util.Convert(from, to); err == nil {
-			a = append(a, to)
-		}
-	}
-
-	return &schema.FieldedAddress{
-		City:                 req.City,
-		Country:              req.Country,
-		GeographicSubAddress: a,
-		Locality:             req.Locality,
-		PostCodeExtension:    req.PostCodeExtension,
-		Postcode:             req.Postcode,
-		StateOrProvince:      req.StateOrProvince,
-		StreetName:           req.StreetName,
-		StreetNr:             req.StreetNr,
-		StreetNrLast:         req.StreetNrLast,
-		StreetNrLastSuffix:   req.StreetNrLastSuffix,
-		StreetNrSuffix:       req.StreetNrSuffix,
-		StreetSuffix:         req.StreetSuffix,
-		StreetType:           req.StreetType,
 	}
 }
 

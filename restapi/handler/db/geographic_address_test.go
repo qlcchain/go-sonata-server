@@ -11,7 +11,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
 	"github.com/qlcchain/go-sonata-server/models"
@@ -21,22 +20,8 @@ import (
 )
 
 func TestGetGeographicAddressByFieldedAddress(t *testing.T) {
-	file := "file:mockdb?mode=memory&cache=shared"
-	db, err := gorm.Open("sqlite3", file)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func() {
-		if err := db.Close(); err != nil {
-			t.Error(err)
-		}
-	}()
-	db.LogMode(true)
-
-	db.AutoMigrate(&schema.GeographicAddress{}, &schema.FormattedAddress{}, &schema.FieldedAddress{},
-		&schema.GeographicSubAddress{}, &schema.SubUnit{}, &schema.GeographicLocation{}, &schema.GeographicPoint{},
-		&models.ReferencedAddress{},
-	)
+	teardownTestCase, db := setupTestCase(t)
+	defer teardownTestCase(t)
 
 	var addresses []*schema.GeographicAddress
 	const size = 1

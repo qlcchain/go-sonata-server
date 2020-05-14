@@ -4249,8 +4249,8 @@ definitions:
     required:
       - contactName
       - phoneNumber
-      - emailAdress
-      - streetAdress
+      - emailAddress
+      - streetAddress
     properties:
       "@referredType":
         description: Technical attribut to extend API
@@ -4258,7 +4258,7 @@ definitions:
       contactName:
         description: Identifies the name of the person or office to be contacted on billing matters.
         type: string
-      emailAdress:
+      emailAddress:
         description: Identifies the electronic mail address of the Billing Contact when a Buyer profile does not already exist.
         type: string
       phoneNumber:
@@ -4267,7 +4267,7 @@ definitions:
       phoneNumberExtension:
         description: Identifies the telephone number extension of the billing contact
         type: string
-      streetAdress:
+      streetAddress:
         description: Identifies the address of the person or office to be contacted on billing matters.
         type: string
   Describing:
@@ -4683,7 +4683,7 @@ definitions:
       "@type":
         description: Technical attribute to extend this class
         type: string
-      additionnalSiteInformation:
+      additionalSiteInformation:
         description: Additional site information
         type: string
       description:

@@ -63,7 +63,7 @@ for the notification product order state change notification operation typically
 type NotificationProductOrderStateChangeNotificationParams struct {
 
 	/*ProductOrderStateChange*/
-	ProductOrderStateChange models.PoEvent
+	ProductOrderStateChange *models.PoEvent
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationProductOrderStateChangeNotificationParams) SetHTTPClient(cl
 }
 
 // WithProductOrderStateChange adds the productOrderStateChange to the notification product order state change notification params
-func (o *NotificationProductOrderStateChangeNotificationParams) WithProductOrderStateChange(productOrderStateChange models.PoEvent) *NotificationProductOrderStateChangeNotificationParams {
+func (o *NotificationProductOrderStateChangeNotificationParams) WithProductOrderStateChange(productOrderStateChange *models.PoEvent) *NotificationProductOrderStateChangeNotificationParams {
 	o.SetProductOrderStateChange(productOrderStateChange)
 	return o
 }
 
 // SetProductOrderStateChange adds the productOrderStateChange to the notification product order state change notification params
-func (o *NotificationProductOrderStateChangeNotificationParams) SetProductOrderStateChange(productOrderStateChange models.PoEvent) {
+func (o *NotificationProductOrderStateChangeNotificationParams) SetProductOrderStateChange(productOrderStateChange *models.PoEvent) {
 	o.ProductOrderStateChange = productOrderStateChange
 }
 
@@ -122,8 +122,10 @@ func (o *NotificationProductOrderStateChangeNotificationParams) WriteToRequest(r
 	}
 	var res []error
 
-	if err := r.SetBodyParam(o.ProductOrderStateChange); err != nil {
-		return err
+	if o.ProductOrderStateChange != nil {
+		if err := r.SetBodyParam(o.ProductOrderStateChange); err != nil {
+			return err
+		}
 	}
 
 	if len(res) > 0 {

@@ -49,7 +49,7 @@ func (m *FormattedAddress) To() *models.FormattedAddress {
 	return to
 }
 
-func (m *FormattedAddress) From(f *models.FormattedAddress) *FormattedAddress {
+func FromFormattedAddress(f *models.FormattedAddress) *FormattedAddress {
 	if f == nil {
 		return nil
 	}

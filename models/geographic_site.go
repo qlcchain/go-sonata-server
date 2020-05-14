@@ -26,7 +26,7 @@ type GeographicSite struct {
 	AtType string `json:"@type,omitempty"`
 
 	// Additional site information
-	AdditionnalSiteInformation string `json:"additionnalSiteInformation,omitempty"`
+	AdditionalSiteInformation string `json:"additionalSiteInformation,omitempty"`
 
 	// A textual description of the Service Site.
 	Description string `json:"description,omitempty"`
@@ -34,8 +34,8 @@ type GeographicSite struct {
 	// fielded address
 	FieldedAddress *FieldedAddress `json:"fieldedAddress,omitempty"`
 
-	// formatted adress
-	FormattedAdress *FormattedAddress `json:"formattedAdress,omitempty"`
+	// formatted address
+	FormattedAddress *FormattedAddress `json:"formattedAddress,omitempty"`
 
 	// geographic location
 	GeographicLocation *GeographicLocation `json:"geographicLocation,omitempty"`
@@ -73,7 +73,7 @@ func (m *GeographicSite) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateFormattedAdress(formats); err != nil {
+	if err := m.validateFormattedAddress(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -117,16 +117,16 @@ func (m *GeographicSite) validateFieldedAddress(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *GeographicSite) validateFormattedAdress(formats strfmt.Registry) error {
+func (m *GeographicSite) validateFormattedAddress(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.FormattedAdress) { // not required
+	if swag.IsZero(m.FormattedAddress) { // not required
 		return nil
 	}
 
-	if m.FormattedAdress != nil {
-		if err := m.FormattedAdress.Validate(formats); err != nil {
+	if m.FormattedAddress != nil {
+		if err := m.FormattedAddress.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("formattedAdress")
+				return ve.ValidateName("formattedAddress")
 			}
 			return err
 		}

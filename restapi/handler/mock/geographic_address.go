@@ -10,6 +10,8 @@ package mock
 import (
 	"time"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/go-openapi/strfmt"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
@@ -71,6 +73,8 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 				filter[a.ID] = struct{}{}
 			}
 		}
+	} else {
+		log.Error(err)
 	}
 
 	if address, err := db.GetGeographicAddressByFormattedAddress(Store, input.FormattedAddress); err == nil {
@@ -97,6 +101,8 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 				filter[a.ID] = struct{}{}
 			}
 		}
+	} else {
+		log.Error(err)
 	}
 
 	// TODO: fuzzy query when can not fetch any records by best match

@@ -66,7 +66,7 @@ func (m *FieldedAddress) To() *models.FieldedAddress {
 	return to
 }
 
-func (m *FieldedAddress) From(f *models.FieldedAddress) *FieldedAddress {
+func FromFieldedAddress(f *models.FieldedAddress) *FieldedAddress {
 	if f == nil {
 		return nil
 	}

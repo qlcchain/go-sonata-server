@@ -63,7 +63,7 @@ for the notification product order creation notification operation typically the
 type NotificationProductOrderCreationNotificationParams struct {
 
 	/*ProductOrderCreationNotification*/
-	ProductOrderCreationNotification models.PoEvent
+	ProductOrderCreationNotification *models.PoEvent
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationProductOrderCreationNotificationParams) SetHTTPClient(clien
 }
 
 // WithProductOrderCreationNotification adds the productOrderCreationNotification to the notification product order creation notification params
-func (o *NotificationProductOrderCreationNotificationParams) WithProductOrderCreationNotification(productOrderCreationNotification models.PoEvent) *NotificationProductOrderCreationNotificationParams {
+func (o *NotificationProductOrderCreationNotificationParams) WithProductOrderCreationNotification(productOrderCreationNotification *models.PoEvent) *NotificationProductOrderCreationNotificationParams {
 	o.SetProductOrderCreationNotification(productOrderCreationNotification)
 	return o
 }
 
 // SetProductOrderCreationNotification adds the productOrderCreationNotification to the notification product order creation notification params
-func (o *NotificationProductOrderCreationNotificationParams) SetProductOrderCreationNotification(productOrderCreationNotification models.PoEvent) {
+func (o *NotificationProductOrderCreationNotificationParams) SetProductOrderCreationNotification(productOrderCreationNotification *models.PoEvent) {
 	o.ProductOrderCreationNotification = productOrderCreationNotification
 }
 
@@ -122,8 +122,10 @@ func (o *NotificationProductOrderCreationNotificationParams) WriteToRequest(r ru
 	}
 	var res []error
 
-	if err := r.SetBodyParam(o.ProductOrderCreationNotification); err != nil {
-		return err
+	if o.ProductOrderCreationNotification != nil {
+		if err := r.SetBodyParam(o.ProductOrderCreationNotification); err != nil {
+			return err
+		}
 	}
 
 	if len(res) > 0 {

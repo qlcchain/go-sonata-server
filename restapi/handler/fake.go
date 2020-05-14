@@ -57,42 +57,66 @@ func FieldAddress() *models.FieldedAddress {
 	}
 }
 
+func FormattedAddress(a *models.FieldedAddress) *models.FormattedAddress {
+	if a == nil {
+		a = FieldAddress()
+	}
+	return &models.FormattedAddress{
+		AddrLine1: swag.String(fmt.Sprintf("%s %s %s %s, %s %s", a.StreetNr, a.StreetNrLast, a.StreetSuffix,
+			a.StreetNrLastSuffix, a.StreetName, a.StreetSuffix)),
+		AddrLine2:         "",
+		City:              a.City,
+		Country:           a.Country,
+		Locality:          a.Locality,
+		PostCodeExtension: a.PostCodeExtension,
+		Postcode:          a.Postcode,
+		StateOrProvince:   a.StateOrProvince,
+	}
+}
+
+func GeographicSiteAndAddress() (*models.GeographicAddress, *models.GeographicSite) {
+	a := GeographicAddress()
+	s := GeographicSite()
+	s.FieldedAddress = a.FieldedAddress
+	s.FormattedAddress = a.FormattedAddress
+	s.ReferencedAddress = a.ReferencedAddress
+	return a, s
+}
+
+func GeographicLocation() *models.GeographicLocation {
+	return &models.GeographicLocation{
+		ID: util.NewID(),
+		GeographicPoint: []*models.GeographicPoint{
+			{
+				ID:        util.NewID(),
+				Latitude:  swag.String(fmt.Sprintf("%f", gofakeit.Latitude())),
+				Longitude: swag.String(fmt.Sprintf("%f", gofakeit.Longitude())),
+			},
+		},
+		SpatialRef: swag.String(gofakeit.CountryAbr()),
+	}
+}
+
+func ReferencedAddress(refID *string) *models.ReferencedAddress {
+	return &models.ReferencedAddress{
+		ID:            util.NewID(),
+		ReferenceID:   util.NewOrDefaultPtr(refID),
+		ReferenceType: swag.String("refer"),
+	}
+}
+
 func GeographicAddress() *models.GeographicAddress {
 	a := FieldAddress()
 	return &models.GeographicAddress{
 		//AtSchemaLocation: "",
 		//AtType:           "",
-		AllowsNewSite:  false,
-		FieldedAddress: a,
-		FormattedAddress: &models.FormattedAddress{
-			AddrLine1: swag.String(fmt.Sprintf("%s %s %s %s, %s %s", a.StreetNr, a.StreetNrLast, a.StreetSuffix,
-				a.StreetNrLastSuffix, a.StreetName, a.StreetSuffix)),
-			AddrLine2:         "",
-			City:              a.City,
-			Country:           a.Country,
-			Locality:          a.Locality,
-			PostCodeExtension: a.PostCodeExtension,
-			Postcode:          a.Postcode,
-			StateOrProvince:   a.StateOrProvince,
-		},
-		GeographicLocation: &models.GeographicLocation{
-			ID: util.NewID(),
-			GeographicPoint: []*models.GeographicPoint{
-				{
-					ID:        util.NewID(),
-					Latitude:  swag.String(fmt.Sprintf("%f", gofakeit.Latitude())),
-					Longitude: swag.String(fmt.Sprintf("%f", gofakeit.Longitude())),
-				},
-			},
-			SpatialRef: swag.String(gofakeit.CountryAbr()),
-		},
-		HasPublicSite: false,
-		ID:            util.NewID(),
-		ReferencedAddress: &models.ReferencedAddress{
-			ID:            util.NewID(),
-			ReferenceID:   swag.String("ReferenceID"),
-			ReferenceType: swag.String("ReferenceType"),
-		},
+		AllowsNewSite:      false,
+		FieldedAddress:     a,
+		FormattedAddress:   FormattedAddress(a),
+		GeographicLocation: GeographicLocation(),
+		HasPublicSite:      false,
+		ID:                 util.NewID(),
+		ReferencedAddress:  ReferencedAddress(nil),
 	}
 }
 
@@ -124,7 +148,7 @@ func RelatedParty() *models.RelatedParty {
 		Number:          gofakeit.Phone(),
 		NumberExtension: "",
 		Role: []string{
-			"Buyer", "Seller",
+			"Buyer", "Seller", "Site Contact",
 		},
 	}
 }
@@ -225,13 +249,42 @@ func Product() *models.Product {
 		RelatedParty: []*models.RelatedParty{
 			RelatedParty(),
 		},
-		Site:      []*models.GeographicSite{},
+		Site: []*models.GeographicSite{
+			GeographicSite(),
+		},
 		StartDate: NewDatetime(time.Now().AddDate(-1, 0, 0)),
 		Status:    models.ProductStatusActive,
 		StatusChange: []*models.StatusChange{
 			StatusChange(),
 		},
 		TerminationDate: strfmt.DateTime(time.Now().AddDate(10, 0, 0)),
+	}
+}
+
+func GeographicSite() *models.GeographicSite {
+	fa := FieldAddress()
+	return &models.GeographicSite{
+		AtSchemaLocation:          "",
+		AtType:                    "",
+		AdditionalSiteInformation: gofakeit.BuzzWord(),
+		Description:               gofakeit.JobDescriptor(),
+		FieldedAddress:            fa,
+		FormattedAddress:          FormattedAddress(fa),
+		GeographicLocation:        GeographicLocation(),
+		ID:                        util.NewID(),
+		ReferencedAddress: &models.ReferencedAddress{
+			ID:            util.NewID(),
+			ReferenceID:   util.NewIDPtr(),
+			ReferenceType: swag.String(gofakeit.RandomString([]string{"01", "02"})),
+		},
+		RelatedParty: []*models.RelatedParty{
+			RelatedParty(),
+		},
+		SiteCompanyName:  gofakeit.Company(),
+		SiteCustomerName: gofakeit.Name(),
+		SiteName:         gofakeit.Name(),
+		SiteType:         "PUBLIC",
+		Status:           models.StatusPlanned,
 	}
 }
 
@@ -335,6 +388,7 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 					ProductOffering: &models.ProductOfferingRef{
 						ID: util.NewIDPtr(),
 					},
+					//TODO: fill it
 					//ProductOrder: []*models.ProductOrderRef{
 					//	{
 					//		Href:        gofakeit.URL(),

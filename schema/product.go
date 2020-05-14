@@ -132,7 +132,7 @@ func FromProduct(p *models.Product) *Product {
 		ProductRelationship: FromProductRelationship(p.ProductRelationship),
 		ProductTerm:         FromProductTerm(p.ProductTerm),
 		RelatedParty:        FromRelatedParty(p.RelatedParty),
-		Site:                FromGeographicSite(p.Site),
+		Site:                FromGeographicSites(p.Site),
 		StartDate:           p.StartDate,
 		Status:              p.Status,
 		StatusChange:        FromStatusChange(p.StatusChange),

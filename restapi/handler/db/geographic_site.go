@@ -8,22 +8,74 @@
 package db
 
 import (
+	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
+
+	gs "github.com/qlcchain/go-sonata-server/restapi/operations/geographic_site"
 
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/schema"
-	"github.com/qlcchain/go-sonata-server/util"
 )
 
 func GetGeographicSite(db *gorm.DB, id string) (*models.GeographicSite, error) {
 	address := &schema.GeographicSite{}
 	if err := db.Set(AutoPreLoad, true).Where("id=?", id).First(address).Error; err != nil {
 		return nil, err
-	}
-	to := &models.GeographicSite{}
-	if err := util.Convert(address, to); err == nil {
-		return to, nil
 	} else {
-		return nil, err
+		return address.To(), nil
 	}
+}
+
+func GetGeographicSiteByParams(db *gorm.DB, params *gs.GeographicSiteFindParams) ([]*schema.GeographicSite, error) {
+	var r []*schema.GeographicSite
+
+	tx := db.Set(AutoPreLoad, true)
+	filter := make(map[string]interface{}, 0)
+
+	// query by best match
+	var sites []*schema.GeographicSite
+	if err := tx.Where(&schema.GeographicSite{
+		SiteCompanyName:  swag.StringValue(params.SiteCompanyName),
+		SiteCustomerName: swag.StringValue(params.SiteCustomerName),
+		SiteName:         swag.StringValue(params.SiteName),
+		SiteType:         swag.StringValue(params.SiteType),
+		Status:           models.Status(swag.StringValue(params.Status)),
+	}).Find(&sites).Error; err == nil {
+		for _, site := range sites {
+			if _, ok := filter[site.ID]; !ok {
+				r = append(r, site)
+				filter[site.ID] = struct{}{}
+			}
+		}
+	}
+
+	var fa []*schema.FieldedAddress
+	// FIXME: where condition?
+	if err := tx.Where(&schema.FieldedAddress{
+		City:       swag.StringValue(params.GeographicAddressCity),
+		Country:    swag.StringValue(params.GeographicAddressCountry),
+		ID:         swag.StringValue(params.GeographicAddressID),
+		Postcode:   swag.StringValue(params.GeographicAddressPostcode),
+		StreetName: swag.StringValue(params.GeographicAddressStreetName),
+		StreetNr:   swag.StringValue(params.GeographicAddressStreetNr),
+	}).Find(&fa).Error; err == nil {
+		var ids []string
+		for _, f := range fa {
+			ids = append(ids, f.ID)
+		}
+		var sites []*schema.GeographicSite
+		if err := tx.Where("id IN (?)", ids).Find(&sites).Error; err == nil {
+			for _, site := range sites {
+				if _, ok := filter[site.ID]; !ok {
+					r = append(r, site)
+					filter[site.ID] = struct{}{}
+				}
+			}
+		}
+	}
+
+	if len(r) == 0 {
+		return nil, gorm.ErrRecordNotFound
+	}
+	return r, nil
 }

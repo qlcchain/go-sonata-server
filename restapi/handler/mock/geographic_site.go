@@ -12,8 +12,6 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
 
-	"github.com/qlcchain/go-sonata-server/schema"
-
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
 
 	"github.com/qlcchain/go-sonata-server/models"
@@ -26,11 +24,25 @@ func GeographicSiteGeographicSiteFindHandler(params gs.GeographicSiteFindParams,
 		return gs.NewGeographicSiteFindUnauthorized().WithPayload(payload)
 	}
 
-	var sites []*schema.GeographicSite
-	//TODO: query from db
-	tx := Store.Set(db.AutoPreLoad, true)
-	if err := tx.Where("", params).Find(&sites).Error; err == nil {
-		return gs.NewGeographicSiteFindOK()
+	if sites, err := db.GetGeographicSiteByParams(Store, &params); err == nil {
+		var payload []*models.GeographicSiteFindResp
+		for _, site := range sites {
+			payload = append(payload, &models.GeographicSiteFindResp{
+				GeographicAddress: &models.GeographicAddressFindResp{
+					FieldedAddress:   site.FieldedAddress.To(),
+					FormattedAddress: site.FormattedAddress.To(),
+				},
+				ID:               site.ID,
+				SiteCompanyName:  site.SiteCompanyName,
+				SiteContactName:  site.ContractName(),
+				SiteCustomerName: site.SiteCustomerName,
+				SiteDescription:  site.Description,
+				SiteName:         site.SiteName,
+				SiteType:         site.SiteType,
+				Status:           site.Status,
+			})
+		}
+		return gs.NewGeographicSiteFindOK().WithPayload(payload)
 	} else if err == gorm.ErrRecordNotFound {
 		return gs.NewGeographicSiteFindNotFound()
 	} else {

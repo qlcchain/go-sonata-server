@@ -63,7 +63,7 @@ for the notification quote state change notification operation typically these a
 type NotificationQuoteStateChangeNotificationParams struct {
 
 	/*QuoteStateChangeNotification*/
-	QuoteStateChangeNotification models.QuoteEvent
+	QuoteStateChangeNotification *models.QuoteEvent
 
 	timeout    time.Duration
 	Context    context.Context
@@ -104,13 +104,13 @@ func (o *NotificationQuoteStateChangeNotificationParams) SetHTTPClient(client *h
 }
 
 // WithQuoteStateChangeNotification adds the quoteStateChangeNotification to the notification quote state change notification params
-func (o *NotificationQuoteStateChangeNotificationParams) WithQuoteStateChangeNotification(quoteStateChangeNotification models.QuoteEvent) *NotificationQuoteStateChangeNotificationParams {
+func (o *NotificationQuoteStateChangeNotificationParams) WithQuoteStateChangeNotification(quoteStateChangeNotification *models.QuoteEvent) *NotificationQuoteStateChangeNotificationParams {
 	o.SetQuoteStateChangeNotification(quoteStateChangeNotification)
 	return o
 }
 
 // SetQuoteStateChangeNotification adds the quoteStateChangeNotification to the notification quote state change notification params
-func (o *NotificationQuoteStateChangeNotificationParams) SetQuoteStateChangeNotification(quoteStateChangeNotification models.QuoteEvent) {
+func (o *NotificationQuoteStateChangeNotificationParams) SetQuoteStateChangeNotification(quoteStateChangeNotification *models.QuoteEvent) {
 	o.QuoteStateChangeNotification = quoteStateChangeNotification
 }
 
@@ -122,8 +122,10 @@ func (o *NotificationQuoteStateChangeNotificationParams) WriteToRequest(r runtim
 	}
 	var res []error
 
-	if err := r.SetBodyParam(o.QuoteStateChangeNotification); err != nil {
-		return err
+	if o.QuoteStateChangeNotification != nil {
+		if err := r.SetBodyParam(o.QuoteStateChangeNotification); err != nil {
+			return err
+		}
 	}
 
 	if len(res) > 0 {

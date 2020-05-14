@@ -3964,8 +3964,8 @@ func init() {
       "required": [
         "contactName",
         "phoneNumber",
-        "emailAdress",
-        "streetAdress"
+        "emailAddress",
+        "streetAddress"
       ],
       "properties": {
         "@referredType": {
@@ -3976,7 +3976,7 @@ func init() {
           "description": "Identifies the name of the person or office to be contacted on billing matters.",
           "type": "string"
         },
-        "emailAdress": {
+        "emailAddress": {
           "description": "Identifies the electronic mail address of the Billing Contact when a Buyer profile does not already exist.",
           "type": "string"
         },
@@ -3988,7 +3988,7 @@ func init() {
           "description": "Identifies the telephone number extension of the billing contact",
           "type": "string"
         },
-        "streetAdress": {
+        "streetAddress": {
           "description": "Identifies the address of the person or office to be contacted on billing matters.",
           "type": "string"
         }
@@ -4504,7 +4504,7 @@ func init() {
           "description": "Technical attribute to extend this class",
           "type": "string"
         },
-        "additionnalSiteInformation": {
+        "additionalSiteInformation": {
           "description": "Additional site information",
           "type": "string"
         },
@@ -4515,7 +4515,7 @@ func init() {
         "fieldedAddress": {
           "$ref": "#/definitions/FieldedAddress"
         },
-        "formattedAdress": {
+        "formattedAddress": {
           "$ref": "#/definitions/FormattedAddress"
         },
         "geographicLocation": {
@@ -11504,8 +11504,8 @@ func init() {
       "required": [
         "contactName",
         "phoneNumber",
-        "emailAdress",
-        "streetAdress"
+        "emailAddress",
+        "streetAddress"
       ],
       "properties": {
         "@referredType": {
@@ -11516,7 +11516,7 @@ func init() {
           "description": "Identifies the name of the person or office to be contacted on billing matters.",
           "type": "string"
         },
-        "emailAdress": {
+        "emailAddress": {
           "description": "Identifies the electronic mail address of the Billing Contact when a Buyer profile does not already exist.",
           "type": "string"
         },
@@ -11528,7 +11528,7 @@ func init() {
           "description": "Identifies the telephone number extension of the billing contact",
           "type": "string"
         },
-        "streetAdress": {
+        "streetAddress": {
           "description": "Identifies the address of the person or office to be contacted on billing matters.",
           "type": "string"
         }
@@ -12044,7 +12044,7 @@ func init() {
           "description": "Technical attribute to extend this class",
           "type": "string"
         },
-        "additionnalSiteInformation": {
+        "additionalSiteInformation": {
           "description": "Additional site information",
           "type": "string"
         },
@@ -12055,7 +12055,7 @@ func init() {
         "fieldedAddress": {
           "$ref": "#/definitions/FieldedAddress"
         },
-        "formattedAdress": {
+        "formattedAddress": {
           "$ref": "#/definitions/FormattedAddress"
         },
         "geographicLocation": {

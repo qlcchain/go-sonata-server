@@ -1,9 +1,15 @@
 package schema
 
 import (
+	"strings"
+
+	"github.com/go-openapi/swag"
+
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/util"
 )
+
+const siteContract = "Site Contact"
 
 type GeographicSite struct {
 
@@ -58,33 +64,36 @@ func (m *GeographicSite) To() *models.GeographicSite {
 		return nil
 	}
 	return &models.GeographicSite{
-		AtSchemaLocation:           m.AtSchemaLocation,
-		AtType:                     m.AtType,
-		AdditionnalSiteInformation: m.AdditionalSiteInformation,
-		Description:                m.Description,
-		FieldedAddress:             m.FieldedAddress.To(),
-		FormattedAdress:            m.FormattedAddress.To(),
-		GeographicLocation:         m.GeographicLocation.To(),
-		ID:                         m.ID,
-		ReferencedAddress:          m.ReferencedAddress,
-		RelatedParty:               ToRelatedParty(m.RelatedParty),
-		SiteCompanyName:            m.SiteCompanyName,
-		SiteCustomerName:           m.SiteCustomerName,
-		SiteName:                   m.SiteName,
-		SiteType:                   m.SiteType,
-		Status:                     m.Status,
+		AtSchemaLocation:          m.AtSchemaLocation,
+		AtType:                    m.AtType,
+		AdditionalSiteInformation: m.AdditionalSiteInformation,
+		Description:               m.Description,
+		FieldedAddress:            m.FieldedAddress.To(),
+		FormattedAddress:          m.FormattedAddress.To(),
+		GeographicLocation:        m.GeographicLocation.To(),
+		ID:                        m.ID,
+		ReferencedAddress:         m.ReferencedAddress,
+		RelatedParty:              ToRelatedParty(m.RelatedParty),
+		SiteCompanyName:           m.SiteCompanyName,
+		SiteCustomerName:          m.SiteCustomerName,
+		SiteName:                  m.SiteName,
+		SiteType:                  m.SiteType,
+		Status:                    m.Status,
 	}
 }
 
-func (m *GeographicSite) From(site *models.GeographicSite) *GeographicSite {
+func FromGeographicSite(site *models.GeographicSite) *GeographicSite {
 	if site == nil {
 		return nil
 	}
 
-	r := &GeographicSite{
+	return &GeographicSite{
 		AtSchemaLocation:          site.AtSchemaLocation,
 		AtType:                    site.AtType,
-		AdditionalSiteInformation: site.AdditionnalSiteInformation,
+		AdditionalSiteInformation: site.AdditionalSiteInformation,
+		FieldedAddress:            FromFieldedAddress(site.FieldedAddress),
+		GeographicLocation:        FromGeographicLocation(site.GeographicLocation),
+		FormattedAddress:          FromFormattedAddress(site.FormattedAddress),
 		Description:               site.Description,
 		ID:                        util.NewOrDefault(site.ID),
 		ReferencedAddress:         site.ReferencedAddress,
@@ -95,10 +104,17 @@ func (m *GeographicSite) From(site *models.GeographicSite) *GeographicSite {
 		SiteType:                  site.SiteType,
 		Status:                    site.Status,
 	}
-	r.GeographicLocation.From(site.GeographicLocation)
-	r.FieldedAddress.From(site.FieldedAddress)
-	r.FormattedAddress.From(site.FormattedAdress)
-	return r
+}
+
+func (m *GeographicSite) ContractName() string {
+	if len(m.RelatedParty) > 0 {
+		for _, party := range m.RelatedParty {
+			if strings.Contains(party.Roles, siteContract) {
+				return swag.StringValue(party.Name)
+			}
+		}
+	}
+	return ""
 }
 
 func ToGeographicSite(sites []*GeographicSite) []*models.GeographicSite {
@@ -109,14 +125,13 @@ func ToGeographicSite(sites []*GeographicSite) []*models.GeographicSite {
 	return to
 }
 
-func FromGeographicSite(sites []*models.GeographicSite) []*GeographicSite {
+func FromGeographicSites(sites []*models.GeographicSite) []*GeographicSite {
 	if sites == nil {
 		return nil
 	}
 	var to []*GeographicSite
 	for _, s := range sites {
-		r := &GeographicSite{}
-		to = append(to, r.From(s))
+		to = append(to, FromGeographicSite(s))
 	}
 	return to
 }
