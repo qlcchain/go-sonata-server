@@ -224,7 +224,7 @@ func Product() *models.Product {
 		ProductRelationship: []*models.ProductRelationship{
 			{
 				Product: &models.ProductRef{
-					BuyerProductID: "",
+					BuyerProductID: util.NewID(),
 					Href:           gofakeit.URL(),
 					ID:             util.NewIDPtr(),
 				},

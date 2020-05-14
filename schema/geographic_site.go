@@ -41,7 +41,7 @@ type GeographicSite struct {
 	ReferencedAddress *models.ReferencedAddress `json:"referencedAddress,omitempty" gorm:"foreignkey:ID"`
 
 	// related party
-	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"many2many:site_related_party;foreignkey:ID"`
 
 	// The name of the company that is the administrative authority (e.g. controls access) for this Service Site. (For example, the building owner)
 	SiteCompanyName string `json:"siteCompanyName,omitempty"`

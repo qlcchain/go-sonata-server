@@ -20,7 +20,7 @@ type Quote struct {
 	AtType string `json:"@type,omitempty"`
 
 	// agreement
-	Agreement []*models.AgreementRef `json:"agreement" gorm:"foreignkey:ID"`
+	Agreement []*models.AgreementRef `json:"agreement" gorm:"many2many:quote_agreement;foreignkey:ID"`
 
 	// Description of the quote
 	Description string `json:"description,omitempty"`
@@ -70,7 +70,7 @@ type Quote struct {
 
 	// related party
 	// Required: true
-	RelatedParty []*RelatedParty `json:"relatedParty"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"many2many:quote_related_party;foreignkey:ID"`
 
 	// This is the date wished by the requester to have the quote completed (meaning priced)
 	// Required: true
@@ -183,7 +183,7 @@ type QuoteItem struct {
 	ID *string `json:"id"`
 
 	// note
-	Note []*Note `json:"note"`
+	Note []*Note `json:"note" gorm:"foreignkey:ID"`
 
 	// product
 	Product *Product `json:"product,omitempty"`
@@ -192,19 +192,19 @@ type QuoteItem struct {
 	ProductOffering *models.ProductOfferingRef `json:"productOffering,omitempty"`
 
 	// qualification
-	Qualification []*models.ProductOfferingQualificationRef `json:"qualification"`
+	Qualification []*models.ProductOfferingQualificationRef `json:"qualification" gorm:"foreignkey:ID"`
 
 	// quote item price
-	QuoteItemPrice []*models.QuotePrice `json:"quoteItemPrice"`
+	QuoteItemPrice []*QuotePrice `json:"quoteItemPrice"`
 
 	// quote item relationship
-	QuoteItemRelationship []*models.QuoteItemRelationship `json:"quoteItemRelationship"`
+	QuoteItemRelationship []*models.QuoteItemRelationship `json:"quoteItemRelationship" gorm:"foreignkey:ID"`
 
 	// quote item term
 	QuoteItemTerm *models.ItemTerm `json:"quoteItemTerm,omitempty"`
 
 	// related party
-	RelatedParty []*RelatedParty `json:"relatedParty"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"many2many:quote_item_related_party;foreignkey:ID"`
 
 	// requested quote item term
 	RequestedQuoteItemTerm *models.ItemTerm `json:"requestedQuoteItemTerm,omitempty"`
@@ -224,7 +224,7 @@ func (m *QuoteItem) To() *models.QuoteItem {
 		Product:                m.Product.To(),
 		ProductOffering:        m.ProductOffering,
 		Qualification:          m.Qualification,
-		QuoteItemPrice:         m.QuoteItemPrice,
+		QuoteItemPrice:         ToQuotePrice(m.QuoteItemPrice),
 		QuoteItemRelationship:  m.QuoteItemRelationship,
 		QuoteItemTerm:          m.QuoteItemTerm,
 		RelatedParty:           ToRelatedParty(m.RelatedParty),

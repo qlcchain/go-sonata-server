@@ -25,7 +25,7 @@ func (m *ProductSpecificationRef) To() *models.ProductSpecificationRef {
 	return to
 }
 
-func (m *ProductSpecificationRef) From(f *models.ProductSpecificationRef) *ProductSpecificationRef {
+func FromProductSpecificationRef(f *models.ProductSpecificationRef) *ProductSpecificationRef {
 	if f == nil {
 		return nil
 	}

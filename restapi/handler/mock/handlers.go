@@ -10,6 +10,8 @@ package mock
 import (
 	"encoding/json"
 
+	"github.com/qlcchain/go-sonata-server/restapi/handler"
+
 	"github.com/qlcchain/go-sonata-server/schema"
 
 	"github.com/jinzhu/gorm"
@@ -700,7 +702,7 @@ var (
 
 func init() {
 	var err error
-	// prepare db
+	//prepare db
 	//dir := config.DBDir()
 	//Store, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
 	//	SkipDefaultTransaction: false,
@@ -766,6 +768,14 @@ func mockData() error {
 			if err := Store.Create(geographicSite).Error; err != nil {
 				log.Error(err)
 			}
+		}
+	}
+	//mock product
+	for i := 0; i < 10; i++ {
+		from := handler.Product()
+		to := schema.FromProduct(from)
+		if err := Store.Create(to).Error; err != nil {
+			log.Error(err)
 		}
 	}
 

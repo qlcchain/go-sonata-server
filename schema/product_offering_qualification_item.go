@@ -42,7 +42,7 @@ type ProductOfferingQualificationItem struct {
 	ProductOfferingQualificationItemRelationship []*models.ProductOfferingQualificationItemRelationship `json:"productOfferingQualificationItemRelationship" gorm:"foreignkey:ID"`
 
 	// related party
-	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"many2many:poq_item_related_party;foreignkey:ID"`
 
 	// A description of the reason a particular color is being provided. This may include a specific standard reason codes and descriptions.
 	ServiceConfidenceReason string `json:"serviceConfidenceReason,omitempty"`

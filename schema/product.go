@@ -22,7 +22,7 @@ type Product struct {
 	AtType string `json:"@type,omitempty"`
 
 	// agreement
-	Agreement []*models.Agreement `json:"agreement" gorm:"foreignkey:ID"`
+	Agreement []*models.Agreement `json:"agreement" gorm:"many2many:product_agreement;foreignkey:ID;foreignkey:ID"`
 
 	// billing account
 	BillingAccount []*models.BillingAccountRef `json:"billingAccount" gorm:"foreignkey:ID"`
@@ -45,10 +45,10 @@ type Product struct {
 	ProductOffering *models.ProductOfferingRef `json:"productOffering,omitempty"`
 
 	// product order
-	ProductOrder []*models.ProductOrderRef `json:"productOrder" gorm:"foreignkey:ID"`
+	ProductOrder []*models.ProductOrderRef `json:"productOrder" gorm:"many2many:product_product_order;foreignkey:ID"`
 
 	// product price
-	ProductPrice []*ProductPrice `json:"productPrice" gorm:"foreignkey:ID"`
+	ProductPrice []*ProductPrice `json:"productPrice" gorm:"many2many:product_price;foreignkey:ID"`
 
 	// product relationship
 	ProductRelationship []*ProductRelationship `json:"productRelationship" gorm:"foreignkey:ID"`
@@ -57,13 +57,13 @@ type Product struct {
 	ProductSpecification *ProductSpecificationRef `json:"productSpecification,omitempty" gorm:"foreignkey:ID"`
 
 	// product term
-	ProductTerm []*ProductTerm `json:"productTerm" gorm:"foreignkey:ID"`
+	ProductTerm []*ProductTerm `json:"productTerm" gorm:"many2many:product_term;foreignkey:ID"`
 
 	// related party
-	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"foreignkey:ID"`
+	RelatedParty []*RelatedParty `json:"relatedParty" gorm:"many2many:product_related_party;foreignkey:ID"`
 
 	// site
-	Site []*GeographicSite `json:"site" gorm:"foreignkey:ID"`
+	Site []*GeographicSite `json:"site" gorm:"many2many:product_geographic_site;foreignkey:ID"`
 
 	// Start date is when the product is active for the first time (when the install in the product order has been processed).
 	// Required: true
@@ -116,28 +116,27 @@ func FromProduct(p *models.Product) *Product {
 		a.ID = util.NewOrDefaultPtr(a.ID)
 	}
 
-	r := &Product{
-		AtBaseType:          p.AtBaseType,
-		AtSchemaLocation:    p.AtSchemaLocation,
-		AtType:              p.AtType,
-		Agreement:           p.Agreement,
-		BillingAccount:      p.BillingAccount,
-		BuyerProductID:      p.BuyerProductID,
-		Href:                p.Href,
-		ID:                  util.NewOrDefaultPtr(p.ID),
-		LastUpdateDate:      p.LastUpdateDate,
-		ProductOffering:     p.ProductOffering,
-		ProductOrder:        p.ProductOrder,
-		ProductPrice:        FromProductPrice(p.ProductPrice),
-		ProductRelationship: FromProductRelationship(p.ProductRelationship),
-		ProductTerm:         FromProductTerm(p.ProductTerm),
-		RelatedParty:        FromRelatedParty(p.RelatedParty),
-		Site:                FromGeographicSites(p.Site),
-		StartDate:           p.StartDate,
-		Status:              p.Status,
-		StatusChange:        FromStatusChange(p.StatusChange),
-		TerminationDate:     p.TerminationDate,
+	return &Product{
+		AtBaseType:           p.AtBaseType,
+		AtSchemaLocation:     p.AtSchemaLocation,
+		AtType:               p.AtType,
+		Agreement:            p.Agreement,
+		BillingAccount:       p.BillingAccount,
+		BuyerProductID:       p.BuyerProductID,
+		Href:                 p.Href,
+		ID:                   util.NewOrDefaultPtr(p.ID),
+		LastUpdateDate:       p.LastUpdateDate,
+		ProductOffering:      p.ProductOffering,
+		ProductOrder:         p.ProductOrder,
+		ProductPrice:         FromProductPrice(p.ProductPrice),
+		ProductRelationship:  FromProductRelationship(p.ProductRelationship),
+		ProductTerm:          FromProductTerm(p.ProductTerm),
+		RelatedParty:         FromRelatedParty(p.RelatedParty),
+		Site:                 FromGeographicSites(p.Site),
+		StartDate:            p.StartDate,
+		Status:               p.Status,
+		StatusChange:         FromStatusChange(p.StatusChange),
+		TerminationDate:      p.TerminationDate,
+		ProductSpecification: FromProductSpecificationRef(p.ProductSpecification),
 	}
-	r.ProductSpecification.From(p.ProductSpecification)
-	return r
 }
