@@ -10,8 +10,6 @@ package mock
 import (
 	"encoding/json"
 
-	"github.com/qlcchain/go-sonata-server/config"
-
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 
 	"github.com/qlcchain/go-sonata-server/schema"
@@ -720,9 +718,6 @@ func init() {
 	Store, err = gorm.Open("sqlite3", file)
 	if err != nil {
 		log.Fatalln(err)
-	}
-	if config.Cfg.Verbose {
-		Store.LogMode(true)
 	}
 	if err := Store.AutoMigrate(
 		// user management

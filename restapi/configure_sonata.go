@@ -69,6 +69,7 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 	cfg := config.Cfg
 	if cfg.Verbose {
 		log.SetLevel(log.DebugLevel)
+		mock.Store.LogMode(true)
 	}
 
 	if cfg.Key != "" {

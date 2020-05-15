@@ -106,15 +106,20 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 	}
 
 	// TODO: fuzzy query when can not fetch any records by best match
+	if len(verifiedAddress) == 0 {
+		return gav.NewGeographicAddressValidationCreateNotFound()
+	} else {
+		return gav.NewGeographicAddressValidationCreateCreated().WithPayload(&models.GeographicAddressValidation{
+			ID: util.NewID(),
+			RequestedAddress: &models.GeographicAddressRequestBuyerInput{
+				FieldedAddress:   input.FieldedAddress,
+				FormattedAddress: input.FormattedAddress,
+			},
+			ValidationDate:   strfmt.DateTime(time.Now()),
+			ValidationResult: result,
+			VerifiedAddress:  verifiedAddress,
+		})
 
-	return gav.NewGeographicAddressValidationCreateCreated().WithPayload(&models.GeographicAddressValidation{
-		ID: util.NewID(),
-		RequestedAddress: &models.GeographicAddressRequestBuyerInput{
-			FieldedAddress:   input.FieldedAddress,
-			FormattedAddress: input.FormattedAddress,
-		},
-		ValidationDate:   strfmt.DateTime(time.Now()),
-		ValidationResult: result,
-		VerifiedAddress:  verifiedAddress,
-	})
+	}
+
 }
