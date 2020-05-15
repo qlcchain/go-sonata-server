@@ -10,6 +10,8 @@ package mock
 import (
 	"encoding/json"
 
+	"github.com/qlcchain/go-sonata-server/config"
+
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 
 	"github.com/qlcchain/go-sonata-server/schema"
@@ -719,7 +721,9 @@ func init() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	Store.LogMode(true)
+	if config.Cfg.Verbose {
+		Store.LogMode(true)
+	}
 	if err := Store.AutoMigrate(
 		// user management
 		&schema.User{}, &schema.HubSubscriber{},

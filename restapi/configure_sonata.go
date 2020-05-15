@@ -3,20 +3,20 @@
 package restapi
 
 import (
-	"crypto/ecdsa"
 	"crypto/tls"
 	"net/http"
 	"path"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/qlcchain/go-sonata-server/schema"
 
-	"github.com/qlcchain/go-sonata-server/config"
-	"github.com/qlcchain/go-sonata-server/util"
+	"github.com/dgrijalva/jwt-go"
 
 	"github.com/go-openapi/swag"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/qlcchain/go-sonata-server/config"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler/mock"
 
@@ -30,8 +30,6 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/restapi/operations"
 )
-
-var cfg = &ServerCfg{}
 
 func init() {
 	dir := config.LogDir()
@@ -57,28 +55,18 @@ func init() {
 
 //go:generate swagger generate server --target ../../go-sonata-server --name Sonata --spec ../spec/all.yaml --principal models.Principal
 
-type ServerCfg struct {
-	Key        string            `json:"key" short:"K" long:"key" description:"private key(elliptic P521) to sign JWT token"`
-	Verbose    bool              `json:"verbose" short:"V" long:"verbose" description:"Show verbose debug information"`
-	PrivateKey *ecdsa.PrivateKey `json:"-"`
-	PublicKey  *ecdsa.PublicKey  `json:"-"`
-}
-
-func (s *ServerCfg) String() string {
-	return util.ToString(s)
-}
-
 func configureFlags(api *operations.SonataAPI) {
 	api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{
 		{
 			ShortDescription: "jwt",
 			LongDescription:  "jwt options",
-			Options:          cfg,
+			Options:          config.Cfg,
 		},
 	}
 }
 
 func configureAPI(api *operations.SonataAPI) http.Handler {
+	cfg := config.Cfg
 	if cfg.Verbose {
 		log.SetLevel(log.DebugLevel)
 	}
@@ -144,6 +132,8 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 	api.PreServerShutdown = func() {}
 
 	api.ServerShutdown = func() {
+		// clear all subscriber
+		mock.Store.Delete(&schema.HubSubscriber{})
 		if mock.Store != nil {
 			if err := mock.Store.Close(); err != nil {
 				log.Error(err)

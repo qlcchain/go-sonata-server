@@ -2367,14 +2367,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product Order attribute value change structure description",
         "consumes": [
           "application/json"
@@ -2457,14 +2450,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderCreationNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product order creation notification structure description",
         "consumes": [
           "application/json"
@@ -2546,14 +2532,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderInformationRequiredNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product Order information required structure description",
         "consumes": [
           "application/json"
@@ -2636,14 +2615,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderStateChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "customer",
-              "admin"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product order state change structure description",
         "consumes": [
           "application/json"
@@ -9907,14 +9879,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product Order attribute value change structure description",
         "consumes": [
           "application/json"
@@ -9997,14 +9962,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderCreationNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product order creation notification structure description",
         "consumes": [
           "application/json"
@@ -10086,14 +10044,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderInformationRequiredNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product Order information required structure description",
         "consumes": [
           "application/json"
@@ -10176,14 +10127,7 @@ func init() {
     },
     "/productOrderNotification/v3/notification/productOrderStateChangeNotification": {
       "post": {
-        "security": [
-          {
-            "bearer": [
-              "admin",
-              "customer"
-            ]
-          }
-        ],
+        "security": [],
         "description": "Product order state change structure description",
         "consumes": [
           "application/json"

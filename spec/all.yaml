@@ -1020,8 +1020,7 @@ paths:
       tags:
         - Notification
       summary: Product Order attribute value change structure
-      security:
-        - bearer: [ "customer","admin" ]
+      security: []
       operationId: notificationProductOrderAttributeValueChangeNotification
       parameters:
         - name: productOrderAttributeValueChange
@@ -1122,8 +1121,7 @@ paths:
       tags:
         - Notification
       summary: Product order creation notification structure
-      security:
-        - bearer: [ "customer","admin" ]
+      security: []
       operationId: notificationProductOrderCreationNotification
       parameters:
         - name: productOrderCreationNotification
@@ -1223,8 +1221,7 @@ paths:
       tags:
         - Notification
       summary: Product Order information required structure
-      security:
-        - bearer: [ "customer","admin" ]
+      security: []
       operationId: notificationProductOrderInformationRequiredNotification
       parameters:
         - name: productOrderInformationRequired
@@ -1325,8 +1322,7 @@ paths:
       tags:
         - Notification
       summary: Product order state change structure
-      security:
-        - bearer: [ "customer","admin" ]
+      security: []
       operationId: notificationProductOrderStateChangeNotification
       parameters:
         - name: productOrderStateChange

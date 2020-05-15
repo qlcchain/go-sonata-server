@@ -31,13 +31,13 @@ type ClientService interface {
 
 	NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error)
 
-	NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error)
+	NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error)
 
-	NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderCreationNotificationNoContent, error)
+	NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams) (*NotificationProductOrderCreationNotificationNoContent, error)
 
-	NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderInformationRequiredNotificationNoContent, error)
+	NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams) (*NotificationProductOrderInformationRequiredNotificationNoContent, error)
 
-	NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderStateChangeNotificationNoContent, error)
+	NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams) (*NotificationProductOrderStateChangeNotificationNoContent, error)
 
 	NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error)
 
@@ -127,7 +127,7 @@ func (a *Client) NotificationProductOfferingQualificationStateChangeNotification
 
   Product Order attribute value change structure description
 */
-func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderAttributeValueChangeNotificationParams()
@@ -142,7 +142,6 @@ func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationProductOrderAttributeValueChangeNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -164,7 +163,7 @@ func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params
 
   Product order creation notification structure description
 */
-func (a *Client) NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderCreationNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams) (*NotificationProductOrderCreationNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderCreationNotificationParams()
@@ -179,7 +178,6 @@ func (a *Client) NotificationProductOrderCreationNotification(params *Notificati
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationProductOrderCreationNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -201,7 +199,7 @@ func (a *Client) NotificationProductOrderCreationNotification(params *Notificati
 
   Product Order information required structure description
 */
-func (a *Client) NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderInformationRequiredNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams) (*NotificationProductOrderInformationRequiredNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderInformationRequiredNotificationParams()
@@ -216,7 +214,6 @@ func (a *Client) NotificationProductOrderInformationRequiredNotification(params 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationProductOrderInformationRequiredNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -238,7 +235,7 @@ func (a *Client) NotificationProductOrderInformationRequiredNotification(params 
 
   Product order state change structure description
 */
-func (a *Client) NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams, authInfo runtime.ClientAuthInfoWriter) (*NotificationProductOrderStateChangeNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams) (*NotificationProductOrderStateChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderStateChangeNotificationParams()
@@ -253,7 +250,6 @@ func (a *Client) NotificationProductOrderStateChangeNotification(params *Notific
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &NotificationProductOrderStateChangeNotificationReader{formats: a.formats},
-		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

@@ -8,10 +8,10 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/go-openapi/loads"
 	flags "github.com/jessevdk/go-flags"
@@ -31,12 +31,17 @@ const defaultPort = 9999
 func main() {
 	swaggerSpec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
 	if err != nil {
-		logrus.Fatal(err)
+		log.Fatal(err)
 	}
 
+	fmt.Printf("gsonata %s-%s.%s", version, commit, date)
 	api := operations.NewSonataAPI(swaggerSpec)
 	server := restapi.NewServer(api)
-	defer server.Shutdown()
+	defer func() {
+		if err := server.Shutdown(); err != nil {
+			log.Error(err)
+		}
+	}()
 
 	parser := flags.NewParser(server, flags.Default)
 	parser.ShortDescription = "MEF LSO Sonata"
@@ -67,6 +72,6 @@ func main() {
 	server.ConfigureAPI()
 
 	if err := server.Serve(); err != nil {
-		logrus.Fatal(err)
+		log.Fatal(err)
 	}
 }
