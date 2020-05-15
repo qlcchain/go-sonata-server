@@ -55,7 +55,7 @@ func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangePar
 		State:      models.QuoteStateType(input.State),
 	}
 
-	if err := Store.Save(state).Error; err == nil {
+	if err := Store.Model(&schema.Quote{}).Update(state).Error; err == nil {
 		if q, err := db.GetQuote(Store, *input.ID); err != nil {
 			//FIXME: calculate file path and resource path
 			ev := models.QuoteEventPlus{
