@@ -13,18 +13,36 @@ import (
 	"github.com/qlcchain/go-sonata-server/util"
 )
 
-// TODO: add mock data option
+type DebugCfg struct {
+	Verbose bool `json:"verbose" short:"V" long:"verbose" description:"Show verbose debug information"`
+	Mock    bool `json:"mock"  long:"mock" description:"Mock sample data"`
+}
+
 type ServerCfg struct {
+	Domain         string   `json:"domain" long:"domain" description:"bind domain" default:"localhost"`
+	AllowedOrigins []string `json:"allowedOrigins" long:"allowedOrigins" description:"AllowedOrigins of CORS" default:"*"`
+}
+
+type SonataCfg struct {
+	Server *ServerCfg `json:"server"`
+	Jwt    *JwtCfg    `json:"jwt"`
+	Debug  *DebugCfg  `json:"debug"`
+}
+
+type JwtCfg struct {
 	Key        string            `json:"key" short:"K" long:"key" description:"private key(elliptic P521) to sign JWT token"`
-	Verbose    bool              `json:"verbose" short:"V" long:"verbose" description:"Show verbose debug information"`
 	PrivateKey *ecdsa.PrivateKey `json:"-"`
 	PublicKey  *ecdsa.PublicKey  `json:"-"`
 }
 
-func (s *ServerCfg) String() string {
+func (s *SonataCfg) String() string {
 	return util.ToString(s)
 }
 
 var (
-	Cfg = &ServerCfg{}
+	Cfg = &SonataCfg{
+		Server: &ServerCfg{},
+		Jwt:    &JwtCfg{},
+		Debug:  &DebugCfg{},
+	}
 )
