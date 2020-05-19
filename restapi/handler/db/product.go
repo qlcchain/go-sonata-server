@@ -9,7 +9,6 @@ package db
 
 import (
 	"github.com/go-openapi/swag"
-	"github.com/jinzhu/gorm"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/product"
@@ -20,17 +19,18 @@ import (
 	"github.com/qlcchain/go-sonata-server/schema"
 )
 
-func GetProduct(db *gorm.DB, id string) (*models.Product, error) {
+func GetProduct(id string) (*models.Product, error) {
 	r := &schema.Product{}
-	if err := db.Set(AutoPreLoad, true).Where("id=?", id).First(r).Error; err != nil {
+	tx := Store.Set(AutoPreLoad, true)
+	if err := tx.Where("id=?", id).First(r).Error; err != nil {
 		return nil, err
 	} else {
 		return r.To(), nil
 	}
 }
 
-func GetProductsByParams(db *gorm.DB, params *product.ProductFindParams) ([]*schema.Product, error) {
-	tx := db.Set(AutoPreLoad, true)
+func GetProductsByParams(params *product.ProductFindParams) ([]*schema.Product, error) {
+	tx := Store.Set(AutoPreLoad, true)
 	var r []*schema.Product
 	var ids []*string
 	filter := make(map[*string]interface{}, 0)

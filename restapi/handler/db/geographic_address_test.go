@@ -42,7 +42,7 @@ func TestGetGeographicAddressByFieldedAddress(t *testing.T) {
 		t.Fatal()
 	}
 
-	if address, err := ListGeographicAddress(db); err != nil {
+	if address, err := ListGeographicAddress(); err != nil {
 		t.Fatal(err)
 	} else if len(address) != len(addresses) {
 		t.Fatalf("invalid address, exp: %d, got: %d", len(addresses), len(address))
@@ -51,7 +51,7 @@ func TestGetGeographicAddressByFieldedAddress(t *testing.T) {
 	}
 
 	fa := addresses[0].FieldedAddress
-	if address, err := GetGeographicAddressByFieldedAddress(db, &models.FieldedAddressRequest{
+	if address, err := GetGeographicAddressByFieldedAddress(&models.FieldedAddressRequest{
 		City:                 fa.City,
 		Country:              fa.Country,
 		GeographicSubAddress: nil,
@@ -68,7 +68,7 @@ func TestGetGeographicAddressByFieldedAddress(t *testing.T) {
 	}
 
 	fa2 := addresses[0].FormattedAddress
-	if address, err := GetGeographicAddressByFormattedAddress(db, &models.FormattedAddressRequest{
+	if address, err := GetGeographicAddressByFormattedAddress(&models.FormattedAddressRequest{
 		AddrLine1: fa2.AddrLine1,
 		City:      fa2.City,
 	}); err != nil {

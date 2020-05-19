@@ -14,8 +14,9 @@ import (
 )
 
 type DebugCfg struct {
-	Verbose bool `json:"verbose" short:"V" long:"verbose" description:"Show verbose debug information"`
-	Mock    bool `json:"mock"  long:"mock" description:"Mock sample data"`
+	Verbose bool `json:"verbose" short:"V" long:"verbose" description:"show verbose debug information"`
+	IsMock  bool `json:"mock" short:"m" long:"mock" description:"mock sample data"`
+	IsFile  bool `json:"file" short:"f" long:"file" description:"set database as file mode"`
 }
 
 type ServerCfg struct {

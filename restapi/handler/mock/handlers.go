@@ -8,13 +8,7 @@
 package mock
 
 import (
-	"github.com/qlcchain/go-sonata-server/schema"
-
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	log "github.com/sirupsen/logrus"
-
-	"github.com/qlcchain/go-sonata-server/models"
 
 	"github.com/qlcchain/go-sonata-server/restapi/operations"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/cancel_product_order"
@@ -28,56 +22,6 @@ import (
 	po "github.com/qlcchain/go-sonata-server/restapi/operations/product_order"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/quote"
 )
-
-var (
-	Store *gorm.DB
-)
-
-func init() {
-	var err error
-	//prepare db
-	//dir := config.DBDir()
-	//Store, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
-	//	SkipDefaultTransaction: false,
-	//	NamingStrategy:         nil,
-	//	Logger: logger.New(log.New(os.Stdout, "\r\n", log.LstdFlags), logger.Config{
-	//		SlowThreshold: 100 * time.Millisecond,
-	//		LogLevel:      logger.Info,
-	//		Colorful:      true,
-	//	}),
-	//})
-	//file := path.Join(dir, "sonata.db")
-	file := "file:mockdb?mode=memory&cache=shared"
-	Store, err = gorm.Open("sqlite3", file)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	if err := Store.AutoMigrate(
-		// user management
-		&schema.User{}, &schema.HubSubscriber{},
-		// GeographicAddress
-		&schema.GeographicAddress{}, &schema.FieldedAddress{}, &schema.FormattedAddress{},
-		&schema.GeographicLocation{}, &schema.GeographicAddress{}, &schema.GeographicSubAddress{}, &schema.GeographicPoint{},
-		&schema.SubUnit{}, &models.ReferencedAddress{},
-		// GeographicSite
-		&schema.GeographicSite{}, &schema.FormattedAddress{}, &schema.FieldedAddress{},
-		&schema.GeographicSubAddress{}, &schema.SubUnit{}, &schema.GeographicLocation{}, &schema.GeographicPoint{},
-		&models.ReferencedAddress{}, &schema.GeographicSite{},
-		// Product
-		&schema.Product{}, &models.Agreement{}, &schema.ProductRelationship{}, &models.ProductRef{}, &schema.ProductSpecificationRef{},
-		&schema.ProductTerm{}, &models.ProductOfferingRef{}, &models.ProductOfferingQualificationItemRelationship{}, &schema.ProductOrderRef{},
-		&schema.ProductPrice{}, &models.TerminationError{}, &models.ProductOfferingQualificationRef{},
-		// Order
-		// POQ
-		&schema.ProductOfferingQualification{}, &schema.ProductOfferingQualificationItem{}, &schema.StatusChange{}, &schema.StateChange{},
-		&models.BillingAccountRef{},
-		&schema.RelatedParty{}, &schema.AlternateProductProposal{},
-		// Quote
-		&schema.Quote{}, &models.AgreementRef{}, &schema.Note{}, &schema.QuoteItem{}, &models.QuoteItemRelationship{},
-	).Error; err != nil {
-		log.Fatalln(err)
-	}
-}
 
 type MockBinder struct {
 }

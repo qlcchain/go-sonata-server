@@ -8,6 +8,10 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/jinzhu/gorm"
+
+	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
+
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 
 	"github.com/qlcchain/go-sonata-server/schema"
@@ -741,12 +745,41 @@ func configureFlags(api *operations.SonataAPI) {
 
 func configureAPI(api *operations.SonataAPI) http.Handler {
 	cfg := config.Cfg
-	if cfg.Debug.Verbose {
-		log.SetLevel(log.DebugLevel)
-		mock.Store.LogMode(true)
+
+	var (
+		err  error
+		file string
+	)
+	if config.Cfg.Debug.IsFile {
+		dir := config.DBDir()
+		file = path.Join(dir, "sonata.db")
+	} else {
+		file = "file:mockdb?mode=memory&cache=shared"
+	}
+	//Store, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
+	//	SkipDefaultTransaction: false,
+	//	NamingStrategy:         nil,
+	//	Logger: logger.New(log.New(os.Stdout, "\r\n", log.LstdFlags), logger.Config{
+	//		SlowThreshold: 100 * time.Millisecond,
+	//		LogLevel:      logger.Info,
+	//		Colorful:      true,
+	//	}),
+	//})
+	db.Store, err = gorm.Open("sqlite3", file)
+	if err != nil {
+		log.Fatalln(err)
 	}
 
-	if cfg.Debug.Mock {
+	if cfg.Debug.Verbose {
+		log.SetLevel(log.DebugLevel)
+		db.Store.LogMode(true)
+	}
+
+	if err := db.CreateTables(); err != nil {
+		log.Fatalln(err)
+	}
+
+	if cfg.Debug.IsMock {
 		if err := mockData(); err != nil {
 			log.Fatal(err)
 		} else {
@@ -818,9 +851,9 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 
 	api.ServerShutdown = func() {
 		// clear all subscriber
-		mock.Store.Delete(&schema.HubSubscriber{})
-		if mock.Store != nil {
-			if err := mock.Store.Close(); err != nil {
+		db.Store.Delete(&schema.HubSubscriber{})
+		if db.Store != nil {
+			if err := db.Store.Close(); err != nil {
 				log.Error(err)
 			}
 		}
@@ -883,7 +916,7 @@ func mockData() error {
 		return err
 	} else {
 		for _, geographicAddress := range address {
-			if err := mock.Store.Create(geographicAddress).Error; err != nil {
+			if err := db.Store.Create(geographicAddress).Error; err != nil {
 				log.Error(err)
 			}
 		}
@@ -894,7 +927,7 @@ func mockData() error {
 		return err
 	} else {
 		for _, geographicSite := range site {
-			if err := mock.Store.Create(geographicSite).Error; err != nil {
+			if err := db.Store.Create(geographicSite).Error; err != nil {
 				log.Error(err)
 			}
 		}
@@ -903,7 +936,7 @@ func mockData() error {
 	for i := 0; i < 10; i++ {
 		from := handler.Product()
 		to := schema.FromProduct(from)
-		if err := mock.Store.Create(to).Error; err != nil {
+		if err := db.Store.Create(to).Error; err != nil {
 			log.Error(err)
 		}
 	}

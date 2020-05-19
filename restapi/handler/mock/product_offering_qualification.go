@@ -107,7 +107,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 	}
 
 	var err error
-	if err = Store.Save(qualification).Error; err == nil {
+	if err = db.Store.Save(qualification).Error; err == nil {
 		payload := &models.ProductOfferingQualification{}
 		if err = util.Convert(qualification, payload); err == nil {
 			now := strfmt.DateTime(time.Now())
@@ -135,7 +135,7 @@ func ProductOfferingQualificationProductOfferingQualificationFindHandler(params 
 		return poq.NewProductOfferingQualificationFindBadRequest().WithPayload(payload)
 	}
 	var poqs []*schema.ProductOfferingQualification
-	tx := Store.Set(db.AutoPreLoad, true)
+	tx := db.Store.Set(db.AutoPreLoad, true)
 	if v, b := handler.VerifyField(params.ProjectID); b {
 		tx = tx.Where("projectId=?", v)
 	}
@@ -184,7 +184,7 @@ func ProductOfferingQualificationProductOfferingQualificationGetHandler(params p
 		return poq.NewProductOfferingQualificationGetUnauthorized().WithPayload(payload)
 	}
 
-	if p, err := db.GetProductOfferingQualification(Store, params.ProductOfferingQualificationID); err == nil {
+	if p, err := db.GetProductOfferingQualification(params.ProductOfferingQualificationID); err == nil {
 		return poq.NewProductOfferingQualificationGetOK().WithPayload(p)
 	} else if err == gorm.ErrRecordNotFound {
 		return poq.NewProductOfferingQualificationGetNotFound()
@@ -202,9 +202,9 @@ func HubProductOfferingQualificationManagementHubDeleteHandler(params hub.Produc
 	// verify id
 	id := params.HubID
 
-	if s, err := db.FindSubscriber(Store, id); err == nil {
+	if s, err := db.FindSubscriber(id); err == nil {
 		if err := poqBus.Unsubscribe(handler.ParseType(s.Query), id); err == nil {
-			if err := db.DeleteSubscriber(Store, id); err == nil {
+			if err := db.DeleteSubscriber(id); err == nil {
 				return hub.NewProductOfferingQualificationManagementHubDeleteNoContent()
 			} else {
 				return hub.NewProductOrderManagementHubDeleteInternalServerError().WithPayload(&models.ErrorRepresentation{
@@ -229,7 +229,7 @@ func HubProductOfferingQualificationManagementHubGetHandler(params hub.ProductOf
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOfferingQualificationManagementHubGetUnauthorized().WithPayload(payload)
 	}
-	if subscribers, err := db.ListSubscribers(Store, poqType); err == nil {
+	if subscribers, err := db.ListSubscribers(poqType); err == nil {
 		var payload []*models.Hub
 		for _, s := range subscribers {
 			payload = append(payload, &models.Hub{
@@ -285,7 +285,7 @@ func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductO
 			Reason: swag.String(err.Error()),
 		})
 	} else {
-		if err := db.AddSubscriber(Store, &schema.HubSubscriber{
+		if err := db.AddSubscriber(&schema.HubSubscriber{
 			ID:       id,
 			Type:     poqType,
 			Query:    *input.Query,

@@ -8,6 +8,8 @@
 package mock
 
 import (
+	"time"
+
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
@@ -33,6 +35,71 @@ const (
 
 var poBus = event.GetEventBus(productOrderTopic)
 
+// create/get/find product order
+func ProductOrderProductOrderCreateHandler(params po.ProductOrderCreateParams, principal *models.Principal) middleware.Responder {
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return po.NewProductOrderGetUnauthorized().WithPayload(payload)
+	}
+
+	if order, err := db.ProductOrderCreateToProductOrder(params.ProductOrder); err == nil {
+		if err := db.Store.Save(order).Error; err == nil {
+			ev := models.PoEventPlus{
+				PoEvent: models.PoEvent{
+					Event:     order.ProductOrderEvent(),
+					EventID:   util.NewIDPtr(),
+					EventTime: handler.NewDatetime(time.Now()),
+					EventType: models.ProductOrderEventTypeProductOrderCreationNotification,
+				},
+				FieldPath:    []string{},
+				ResourcePath: swag.String(""),
+			}
+			poBus.Publish(string(models.ProductOrderEventTypeProductOrderCreationNotification), ev)
+			return po.NewProductOrderCreateCreated().WithPayload(order.To())
+		} else {
+			return po.NewProductOrderCreateInternalServerError().WithPayload(&models.ErrorRepresentation{
+				Reason: swag.String(err.Error()),
+			})
+		}
+	} else {
+		return po.NewProductOrderCreateInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
+}
+
+func ProductOrderProductOrderFindHandler(params po.ProductOrderFindParams, principal *models.Principal) middleware.Responder {
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return po.NewProductOrderFindUnauthorized().WithPayload(payload)
+	}
+
+	if r, err := db.GetProductOrderByParams(&params); err == nil {
+		return po.NewProductOrderFindOK().WithPayload(r)
+	} else if err == gorm.ErrRecordNotFound {
+		return po.NewProductOrderFindNotFound()
+	} else {
+		return po.NewProductOrderFindInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
+}
+
+func ProductOrderProductOrderGetHandler(params po.ProductOrderGetParams, principal *models.Principal) middleware.Responder {
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return po.NewProductOrderGetUnauthorized().WithPayload(payload)
+	}
+
+	if o, err := db.GetProductOrder(params.ProductOrderID); err == nil {
+		return po.NewProductOrderGetOK().WithPayload(o)
+	} else if err == gorm.ErrRecordNotFound {
+		return po.NewProductOrderGetNotFound()
+	} else {
+		return po.NewProductOrderGetInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
+}
+
+// cancel product order
 func CancelProductOrderCancelProductOrderCreateHandler(params cancel_product_order.CancelProductOrderCreateParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderCreate has not yet been implemented")
 }
@@ -43,30 +110,6 @@ func CancelProductOrderCancelProductOrderFindHandler(params cancel_product_order
 
 func CancelProductOrderCancelProductOrderGetHandler(params cancel_product_order.CancelProductOrderGetParams, principal *models.Principal) middleware.Responder {
 	return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderGet has not yet been implemented")
-}
-
-func ProductOrderProductOrderCreateHandler(params po.ProductOrderCreateParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation product_order.ProductOrderCreate has not yet been implemented")
-}
-
-func ProductOrderProductOrderFindHandler(params po.ProductOrderFindParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation product_order.ProductOrderFind has not yet been implemented")
-}
-
-func ProductOrderProductOrderGetHandler(params po.ProductOrderGetParams, principal *models.Principal) middleware.Responder {
-	if payload := handler.ToErrorRepresentation(principal); payload != nil {
-		return po.NewProductOrderGetBadRequest().WithPayload(payload)
-	}
-
-	if o, err := db.GetProductOrder(Store, params.ProductOrderID); err == nil {
-		return po.NewProductOrderGetOK().WithPayload(o)
-	} else if err == gorm.ErrRecordNotFound {
-		return po.NewProductOrderGetNotFound()
-	} else {
-		return po.NewProductOrderGetInternalServerError().WithPayload(&models.ErrorRepresentation{
-			Reason: swag.String(err.Error()),
-		})
-	}
 }
 
 func HubProductOrderManagementHubCreateHandler(params hub.ProductOrderManagementHubCreateParams, principal *models.Principal) middleware.Responder {
@@ -106,9 +149,9 @@ func HubProductOrderManagementHubCreateHandler(params hub.ProductOrderManagement
 			Reason: swag.String(err.Error()),
 		})
 	} else {
-		if err := db.AddSubscriber(Store, &schema.HubSubscriber{
+		if err := db.AddSubscriber(&schema.HubSubscriber{
 			ID:       id,
-			Type:     quoteTopic,
+			Type:     productOrderTopic,
 			Query:    *input.Query,
 			Callback: *input.Callback,
 		}); err == nil {
@@ -132,9 +175,9 @@ func HubProductOrderManagementHubDeleteHandler(params hub.ProductOrderManagement
 	// verify id
 	id := params.HubID
 
-	if s, err := db.FindSubscriber(Store, id); err == nil {
+	if s, err := db.FindSubscriber(id); err == nil {
 		if err := poBus.Unsubscribe(handler.ParseType(s.Query), id); err == nil {
-			if err := db.DeleteSubscriber(Store, id); err == nil {
+			if err := db.DeleteSubscriber(id); err == nil {
 				return hub.NewProductOrderManagementHubDeleteNoContent()
 			} else {
 				return hub.NewProductOrderManagementHubDeleteBadRequest().WithPayload(&models.ErrorRepresentation{
@@ -160,7 +203,7 @@ func HubProductOrderManagementHubFindHandler(params hub.ProductOrderManagementHu
 		return hub.NewProductOrderManagementHubFindUnauthorized().WithPayload(payload)
 	}
 
-	if subscribers, err := db.ListSubscribers(Store, productOrderTopic); err == nil {
+	if subscribers, err := db.ListSubscribers(productOrderTopic); err == nil {
 		var payload []*models.Hub
 		for _, s := range subscribers {
 			payload = append(payload, &models.Hub{

@@ -3,6 +3,8 @@ package schema
 import (
 	"github.com/go-openapi/strfmt"
 
+	"github.com/qlcchain/go-sonata-server/util"
+
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
@@ -126,6 +128,28 @@ type ProductOrder struct {
 	TspRestorationPriority string `json:"tspRestorationPriority,omitempty"`
 }
 
+func (po *ProductOrder) To() *models.ProductOrder {
+	if po == nil {
+		return nil
+	}
+
+	to := &models.ProductOrder{}
+	_ = util.Convert(po, to)
+
+	return to
+}
+
+func (po *ProductOrder) ProductOrderEvent() *models.ProductOrderEvent {
+	if po == nil {
+		return nil
+	}
+
+	to := &models.ProductOrderEvent{}
+	_ = util.Convert(po, to)
+
+	return to
+}
+
 type OrderMessage struct {
 	ID *string `json:"id"`
 
@@ -187,7 +211,7 @@ type OrderItem struct {
 	ProductOffering *models.ProductOfferingRef `json:"productOffering,omitempty" gorm:"foreignkey:ID"`
 
 	// qualification
-	Qualification *models.QualificationRef `json:"qualification,omitempty" gorm:"foreignkey:ID"`
+	Qualification *QualificationRef `json:"qualification,omitempty" gorm:"foreignkey:ID"`
 
 	// quote
 	Quote *models.QuoteRef `json:"quote,omitempty" gorm:"foreignkey:ID"`
@@ -206,7 +230,7 @@ type OrderItem struct {
 type OrderItemPrice struct {
 	ID *string `json:"id"`
 	// Technical attribute to extend the class
-	AtType string `json:"@type,omitempty"`
+	AtType string `json:"@type,omitempty" gorm:"column:base_type"`
 
 	// A narrative that explains in detail the semantics of yhis order item price
 	Description string `json:"description,omitempty"`

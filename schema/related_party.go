@@ -1,7 +1,10 @@
 package schema
 
 import (
+	"encoding/json"
 	"strings"
+
+	"github.com/go-openapi/swag"
 
 	"github.com/qlcchain/go-sonata-server/util"
 
@@ -34,6 +37,23 @@ type RelatedParty struct {
 	// Required: true
 	Role  []string `json:"role" gorm:"-"`
 	Roles string   `json:"-" gorm:"column:roles"`
+}
+
+func (r *RelatedParty) MarshalJSON() ([]byte, error) {
+	to := r.To()
+	return json.Marshal(to)
+}
+
+func (r *RelatedParty) UnmarshalJSON(bytes []byte) error {
+	to := &models.RelatedParty{}
+	if err := swag.ReadJSON(bytes, to); err == nil {
+		tmp := &RelatedParty{}
+		tmp = tmp.From(to)
+		*r = *tmp
+		return nil
+	} else {
+		return err
+	}
 }
 
 func (r *RelatedParty) To() *models.RelatedParty {

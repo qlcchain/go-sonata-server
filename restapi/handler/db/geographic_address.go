@@ -10,7 +10,6 @@ package db
 import (
 	"errors"
 
-	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 
 	"github.com/qlcchain/go-sonata-server/util"
@@ -19,9 +18,10 @@ import (
 	"github.com/qlcchain/go-sonata-server/schema"
 )
 
-func ListGeographicAddress(db *gorm.DB) ([]*models.GeographicAddress, error) {
+func ListGeographicAddress() ([]*models.GeographicAddress, error) {
 	var addresses []schema.GeographicAddress
-	if err := db.Set(AutoPreLoad, true).Find(&addresses).Error; err != nil {
+	tx := Store.Set(AutoPreLoad, true)
+	if err := tx.Find(&addresses).Error; err != nil {
 		return nil, err
 	}
 
@@ -37,19 +37,20 @@ func ListGeographicAddress(db *gorm.DB) ([]*models.GeographicAddress, error) {
 	return result, nil
 }
 
-func GetGeographicAddressByIds(db *gorm.DB, ids []string) ([]*schema.GeographicAddress, error) {
+func GetGeographicAddressByIds(ids []string) ([]*schema.GeographicAddress, error) {
 	if len(ids) == 0 {
 		return nil, errors.New("invalid ids")
 	}
-	tx := db.Set(AutoPreLoad, true)
+	tx := Store.Set(AutoPreLoad, true)
 	var address []*schema.GeographicAddress
 	err := tx.Where("id IN (?)", ids).Find(&address).Error
 	return address, err
 }
 
-func GetGeographicAddress(db *gorm.DB, id string) (*models.GeographicAddress, error) {
+func GetGeographicAddress(id string) (*models.GeographicAddress, error) {
 	address := &schema.GeographicAddress{}
-	if err := db.Set(AutoPreLoad, true).Where("id=?", id).First(address).Error; err != nil {
+	tx := Store.Set(AutoPreLoad, true)
+	if err := tx.Where("id=?", id).First(address).Error; err != nil {
 		return nil, err
 	}
 	to := &models.GeographicAddress{}
@@ -60,9 +61,9 @@ func GetGeographicAddress(db *gorm.DB, id string) (*models.GeographicAddress, er
 	}
 }
 
-func GetGeographicAddressByFieldedAddress(db *gorm.DB, req *models.FieldedAddressRequest) ([]*schema.GeographicAddress, error) {
+func GetGeographicAddressByFieldedAddress(req *models.FieldedAddressRequest) ([]*schema.GeographicAddress, error) {
 	var r []*schema.FieldedAddress
-	tx := db.Set(AutoPreLoad, true)
+	tx := Store.Set(AutoPreLoad, true)
 	tx = tx.Where(&schema.FieldedAddress{
 		City:               req.City,
 		Country:            req.Country,
@@ -80,7 +81,7 @@ func GetGeographicAddressByFieldedAddress(db *gorm.DB, req *models.FieldedAddres
 	})
 	if req.GeographicSubAddress != nil {
 		var sub []*schema.GeographicSubAddress
-		if err := db.Find(&sub, req.GeographicSubAddress).Error; err == nil {
+		if err := Store.Find(&sub, req.GeographicSubAddress).Error; err == nil {
 			var ids []string
 			for _, address := range sub {
 				ids = append(ids, address.ID)
@@ -93,21 +94,22 @@ func GetGeographicAddressByFieldedAddress(db *gorm.DB, req *models.FieldedAddres
 		for _, fieldedAddress := range r {
 			ids = append(ids, fieldedAddress.ID)
 		}
-		return GetGeographicAddressByIds(db, ids)
+		return GetGeographicAddressByIds(ids)
 	} else {
 		return nil, err
 	}
 }
 
-func GetGeographicAddressByFormattedAddress(db *gorm.DB, param *models.FormattedAddressRequest) ([]*schema.GeographicAddress, error) {
+func GetGeographicAddressByFormattedAddress(param *models.FormattedAddressRequest) ([]*schema.GeographicAddress, error) {
 	fa := request2FormattedAddress(param)
 	var r []*schema.FormattedAddress
-	if err := db.Where(fa).Find(&r).Error; err == nil {
+	tx := Store.Set(AutoPreLoad, true)
+	if err := tx.Where(fa).Find(&r).Error; err == nil {
 		var ids []string
 		for _, formattedAddress := range r {
 			ids = append(ids, formattedAddress.ID)
 		}
-		return GetGeographicAddressByIds(db, ids)
+		return GetGeographicAddressByIds(ids)
 	} else {
 		return nil, err
 	}

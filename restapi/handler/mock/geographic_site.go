@@ -26,7 +26,7 @@ func GeographicSiteGeographicSiteFindHandler(params gs.GeographicSiteFindParams,
 
 	//log.Debug(util.ToString(params))
 
-	if sites, err := db.GetGeographicSiteByParams(Store, &params); err == nil {
+	if sites, err := db.GetGeographicSiteByParams(&params); err == nil {
 		var payload []*models.GeographicSiteFindResp
 		for _, site := range sites {
 			payload = append(payload, &models.GeographicSiteFindResp{
@@ -59,7 +59,7 @@ func GeographicSiteGeographicSiteGetHandler(params gs.GeographicSiteGetParams, p
 		return gs.NewGeographicSiteGetUnauthorized().WithPayload(payload)
 	}
 
-	if site, err := db.GetGeographicSite(Store, params.SiteID); err == nil {
+	if site, err := db.GetGeographicSite(params.SiteID); err == nil {
 		return gs.NewGeographicSiteGetOK().WithPayload(site)
 	} else if err == gorm.ErrRecordNotFound {
 		return gs.NewGeographicSiteGetNotFound()

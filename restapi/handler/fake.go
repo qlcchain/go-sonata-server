@@ -168,23 +168,27 @@ func Agreement() *models.Agreement {
 	}
 }
 
+func Price() *models.Price {
+	return &models.Price{
+		//AtType:            "",
+		DutyFreeAmount: &models.Money{
+			Unit:  swag.String("USD"),
+			Value: swag.Float32(gofakeit.Float32()),
+		},
+		TaxIncludedAmount: &models.Money{
+			Unit:  swag.String("USD"),
+			Value: swag.Float32(gofakeit.Float32()),
+		},
+		TaxRate: 0.01,
+	}
+}
+
 func ProductPrice() *models.ProductPrice {
 	return &models.ProductPrice{
 		//AtType:      "",
-		Description: gofakeit.Phrase(),
-		Name:        swag.String("Subscription price"),
-		Price: &models.Price{
-			//AtType:            "",
-			DutyFreeAmount: &models.Money{
-				Unit:  swag.String("USD"),
-				Value: swag.Float32(gofakeit.Float32()),
-			},
-			TaxIncludedAmount: &models.Money{
-				Unit:  swag.String("USD"),
-				Value: swag.Float32(gofakeit.Float32()),
-			},
-			TaxRate: 0.01,
-		},
+		Description:           gofakeit.Phrase(),
+		Name:                  swag.String("Subscription price"),
+		Price:                 Price(),
 		PriceType:             models.PriceTypeRecurring,
 		RecurringChargePeriod: models.ChargePeriodMonth,
 		UnitOfMeasure:         "Gb",
@@ -455,5 +459,83 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 			RelatedParty(),
 		},
 		RequestedResponseDate: strfmt.Date(time.Now().AddDate(0, 0, 2)),
+	}
+}
+
+func ProductOrderCreate() *models.ProductOrderCreate {
+	billAccount := &models.BillingAccountRef{
+		ID: util.NewIDPtr(),
+	}
+	parties := []*models.RelatedParty{
+		RelatedParty(),
+	}
+	return &models.ProductOrderCreate{
+		AtBaseType:       "",
+		AtSchemaLocation: "",
+		AtType:           "",
+		BillingAccount:   billAccount,
+		BuyerRequestDate: NewDatetime(time.Now()),
+		DesiredResponse:  models.DesiredOrderResponsesConfirmationOnly,
+		ExpeditePriority: false,
+		ExternalID:       util.NewIDPtr(),
+		Note: []*models.Note{
+			Note(),
+		},
+		OrderActivity: models.OrderActivityInstall,
+		OrderItem: []*models.ProductOrderItemCreate{
+			{
+				AtSchemaLocation: "",
+				AtType:           "",
+				Action:           models.ProductActionTypeAdd,
+				BillingAccount:   billAccount,
+				ID:               util.NewIDPtr(),
+				OrderItemPrice: []*models.OrderItemPrice{
+					{
+						AtType:                "",
+						Description:           "",
+						Name:                  swag.String(gofakeit.Name()),
+						Price:                 Price(),
+						PriceType:             models.PriceTypeRecurring,
+						RecurringChargePeriod: models.ChargePeriodMonth,
+					},
+				},
+				OrderItemRelationship: []*models.OrderItemRelationShip{
+					{
+						ID:             util.NewIDPtr(),
+						ProductOrderID: util.NewID(),
+						Type:           swag.String(""),
+					},
+				},
+				PricingMethod:    models.PricingMethodIndividualCaseBasis,
+				PricingReference: "",
+				PricingTerm:      swag.Int32(24),
+				Product:          Product(),
+				ProductOffering:  &models.ProductOfferingRef{ID: util.NewIDPtr()},
+				Qualification: &models.QualificationRef{
+					//AtReferredType:    "",
+					//Href:              ,
+					ID:                util.NewID(),
+					QualificationItem: util.NewID(),
+				},
+				Quote: &models.QuoteRef{
+					//AtReferredType: "",
+					//Href:           "",
+					ID:        util.NewIDPtr(),
+					QuoteItem: util.NewID(),
+				},
+				RelatedParty: parties,
+			},
+		},
+		OrderVersion:            swag.String("1"),
+		PricingMethod:           models.PricingMethodIndividualCaseBasis,
+		PricingReference:        "",
+		PricingTerm:             24,
+		Priority:                0,
+		ProjectID:               util.NewID(),
+		RelatedBuyerPON:         util.NewID(),
+		RelatedParty:            parties,
+		RequestedCompletionDate: NewDatetime(time.Now().AddDate(0, 0, 5)),
+		RequestedStartDate:      strfmt.DateTime(time.Now().AddDate(0, 0, 2)),
+		TspRestorationPriority:  "01",
 	}
 }

@@ -55,8 +55,8 @@ func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangePar
 		State:      models.QuoteStateType(input.State),
 	}
 
-	if err := Store.Model(&schema.Quote{}).Update(state).Error; err == nil {
-		if q, err := db.GetQuote(Store, *input.ID); err != nil {
+	if err := db.Store.Model(&schema.Quote{}).Update(state).Error; err == nil {
+		if q, err := db.GetQuote(*input.ID); err != nil {
 			//FIXME: calculate file path and resource path
 			ev := models.QuoteEventPlus{
 				QuoteEvent: models.QuoteEvent{
@@ -137,7 +137,7 @@ func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.P
 		RequestedQuoteCompletionDate: input.RequestedQuoteCompletionDate,
 		Href:                         handler.HrefToID("", id),
 	}
-	if err := Store.Save(q).Error; err == nil {
+	if err := db.Store.Save(q).Error; err == nil {
 		//FIXME: calculate file path and resource path
 		ev := models.QuoteEventPlus{
 			QuoteEvent: models.QuoteEvent{
@@ -164,7 +164,7 @@ func QuoteQuoteFindHandler(params quote.QuoteFindParams, principal *models.Princ
 	}
 
 	// build query sql
-	tx := Store.Set(db.AutoPreLoad, true)
+	tx := db.Store.Set(db.AutoPreLoad, true)
 	if v, b := handler.VerifyField(params.ExternalID); b {
 		tx = tx.Where("externalId=?", v)
 	}
@@ -224,7 +224,7 @@ func QuoteQuoteGetHandler(params quote.QuoteGetParams, principal *models.Princip
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return quote.NewQuoteGetUnauthorized().WithPayload(payload)
 	}
-	if q, err := db.GetQuote(Store, params.ID); err == nil {
+	if q, err := db.GetQuote(params.ID); err == nil {
 		return quote.NewQuoteGetOK().WithPayload(q.ToQuote())
 	} else if err == gorm.ErrRecordNotFound {
 		return quote.NewQuoteGetNotFound()
@@ -272,7 +272,7 @@ func HubQuoteManagementHubCreateHandler(params hub.QuoteManagementHubCreateParam
 			Reason: swag.String(err.Error()),
 		})
 	} else {
-		if err := db.AddSubscriber(Store, &schema.HubSubscriber{
+		if err := db.AddSubscriber(&schema.HubSubscriber{
 			ID:       id,
 			Type:     quoteTopic,
 			Query:    *input.Query,
@@ -298,9 +298,9 @@ func HubQuoteManagementHubDeleteHandler(params hub.QuoteManagementHubDeleteParam
 	// verify id
 	id := params.HubID
 
-	if s, err := db.FindSubscriber(Store, id); err == nil {
+	if s, err := db.FindSubscriber(id); err == nil {
 		if err := quoteBus.Unsubscribe(handler.ParseType(s.Query), id); err == nil {
-			if err := db.DeleteSubscriber(Store, id); err == nil {
+			if err := db.DeleteSubscriber(id); err == nil {
 				return hub.NewProductOfferingQualificationManagementHubDeleteNoContent()
 			} else {
 				return hub.NewQuoteManagementHubDeleteInternalServerError().WithPayload(&models.ErrorRepresentation{
@@ -326,7 +326,7 @@ func HubQuoteManagementHubFindHandler(params hub.QuoteManagementHubFindParams, p
 		return hub.NewQuoteManagementHubFindUnauthorized().WithPayload(payload)
 	}
 
-	if subscribers, err := db.ListSubscribers(Store, quoteTopic); err == nil {
+	if subscribers, err := db.ListSubscribers(quoteTopic); err == nil {
 		var payload []*models.Hub
 		for _, s := range subscribers {
 			payload = append(payload, &models.Hub{
@@ -366,7 +366,7 @@ func NotificationNotificationQuoteStateChangeNotificationHandler(params notifica
 }
 
 func commonCallbackHandler(option *event.CallbackOption, v interface{}) {
-	if subscriber, err := db.FindSubscriber(Store, option.ID); err == nil {
+	if subscriber, err := db.FindSubscriber(option.ID); err == nil {
 		if v != nil {
 			if content, err := handler.HttpPost(subscriber.Callback, v); err != nil {
 				log.Error(err)

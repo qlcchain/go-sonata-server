@@ -32,7 +32,7 @@ func GeographicAddressGeographicAddressGetHandler(params ga.GeographicAddressGet
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return ga.NewGeographicAddressGetUnauthorized().WithPayload(payload)
 	}
-	if address, err := db.GetGeographicAddress(Store, params.GeographicAddressID); err == nil {
+	if address, err := db.GetGeographicAddress(params.GeographicAddressID); err == nil {
 		return ga.NewGeographicAddressGetOK().WithPayload(address)
 	} else if err == gorm.ErrRecordNotFound {
 		return ga.NewGeographicAddressGetNotFound()
@@ -53,7 +53,7 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 	filter := make(map[string]interface{})
 	result := models.ValidationResultFails
 
-	if address, err := db.GetGeographicAddressByFieldedAddress(Store, input.FieldedAddress); err == nil {
+	if address, err := db.GetGeographicAddressByFieldedAddress(input.FieldedAddress); err == nil {
 		if len(address) > 0 {
 			result = models.ValidationResultPartial
 		}
@@ -77,7 +77,7 @@ func GeographicAddressValidationGeographicAddressValidationCreateHandler(params 
 		log.Error(err)
 	}
 
-	if address, err := db.GetGeographicAddressByFormattedAddress(Store, input.FormattedAddress); err == nil {
+	if address, err := db.GetGeographicAddressByFormattedAddress(input.FormattedAddress); err == nil {
 		if len(address) > 0 {
 			if result == models.ValidationResultPartial {
 				result = models.ValidationResultSuccess

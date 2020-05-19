@@ -12,6 +12,8 @@ import (
 	"os/user"
 	"path/filepath"
 	osRuntime "runtime"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func homeDir() string {
@@ -45,7 +47,9 @@ func joinDir(dir string) string {
 		d = "/tmp"
 	}
 	p := filepath.Join(d, dir)
-	_ = createDirIfNotExist(p)
+	if err := createDirIfNotExist(p); err != nil {
+		log.Error(err)
+	}
 	return p
 }
 

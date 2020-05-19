@@ -13,7 +13,6 @@ import (
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 
-	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/schema"
 
 	"github.com/jinzhu/gorm"
@@ -22,17 +21,17 @@ import (
 )
 
 func setupTestCase(t *testing.T) (func(t *testing.T), *gorm.DB) {
-	t.Parallel()
 	file := fmt.Sprintf("file:%s?mode=memory&cache=shared", util.NewID())
-	db, err := gorm.Open("sqlite3", file)
+	var err error
+	Store, err = gorm.Open("sqlite3", file)
 	if err != nil {
 		t.Fatal(err)
 	}
-	db.LogMode(true)
-	db.AutoMigrate(&schema.GeographicAddress{}, &schema.FormattedAddress{}, &schema.FieldedAddress{},
-		&schema.GeographicSubAddress{}, &schema.SubUnit{}, &schema.GeographicLocation{}, &schema.GeographicPoint{},
-		&models.ReferencedAddress{}, &schema.GeographicSite{}, &schema.RelatedParty{},
-	)
+	db := Store
+	db.LogMode(false)
+	if err = CreateTables(); err != nil {
+		t.Fatal(err)
+	}
 	return func(t *testing.T) {
 		if err := db.Close(); err != nil {
 			t.Error(err)
@@ -40,7 +39,8 @@ func setupTestCase(t *testing.T) (func(t *testing.T), *gorm.DB) {
 	}, db
 }
 
-func TestT(t *testing.T) {
+func TestLogAddress(t *testing.T) {
+	t.Skip()
 	var address []*schema.GeographicAddress
 	var site []*schema.GeographicSite
 	for i := 0; i < 5; i++ {

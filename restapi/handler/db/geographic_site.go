@@ -18,19 +18,20 @@ import (
 	"github.com/qlcchain/go-sonata-server/schema"
 )
 
-func GetGeographicSite(db *gorm.DB, id string) (*models.GeographicSite, error) {
+func GetGeographicSite(id string) (*models.GeographicSite, error) {
 	address := &schema.GeographicSite{}
-	if err := db.Set(AutoPreLoad, true).Where("id=?", id).First(address).Error; err != nil {
+	tx := Store.Set(AutoPreLoad, true)
+	if err := tx.Where("id=?", id).First(address).Error; err != nil {
 		return nil, err
 	} else {
 		return address.To(), nil
 	}
 }
 
-func GetGeographicSiteByParams(db *gorm.DB, params *gs.GeographicSiteFindParams) ([]*schema.GeographicSite, error) {
+func GetGeographicSiteByParams(params *gs.GeographicSiteFindParams) ([]*schema.GeographicSite, error) {
 	var r []*schema.GeographicSite
 
-	tx := db.Set(AutoPreLoad, true)
+	tx := Store.Set(AutoPreLoad, true)
 	filter := make(map[string]interface{}, 0)
 
 	// query by best match

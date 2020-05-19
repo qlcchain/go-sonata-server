@@ -24,7 +24,7 @@ func ProductProductFindHandler(params product.ProductFindParams, principal *mode
 	}
 
 	var summaryList []*models.ProductSummary
-	if products, err := db.GetProductsByParams(Store, &params); err == nil {
+	if products, err := db.GetProductsByParams(&params); err == nil {
 		for _, p := range products {
 			item := &models.ProductSummary{
 				BuyerProductID:  swag.StringValue(params.BuyerID),
@@ -56,7 +56,7 @@ func ProductProductGetHandler(params product.ProductGetParams, principal *models
 		return product.NewProductGetUnauthorized().WithPayload(payload)
 	}
 
-	if p, err := db.GetProduct(Store, params.ProductID); err == nil {
+	if p, err := db.GetProduct(params.ProductID); err == nil {
 		return product.NewProductGetOK().WithPayload(p)
 	} else if err == gorm.ErrRecordNotFound {
 		return product.NewProductGetNotFound()
