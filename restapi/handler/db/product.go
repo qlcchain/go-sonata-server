@@ -21,7 +21,7 @@ import (
 
 func GetProduct(id string) (*models.Product, error) {
 	r := &schema.Product{}
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Where("id=?", id).First(r).Error; err != nil {
 		return nil, err
 	} else {
@@ -30,7 +30,7 @@ func GetProduct(id string) (*models.Product, error) {
 }
 
 func GetProductsByParams(params *product.ProductFindParams) ([]*schema.Product, error) {
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	var r []*schema.Product
 	var ids []*string
 	filter := make(map[*string]interface{}, 0)

@@ -20,7 +20,7 @@ import (
 
 func ListGeographicAddress() ([]*models.GeographicAddress, error) {
 	var addresses []schema.GeographicAddress
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Find(&addresses).Error; err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func GetGeographicAddressByIds(ids []string) ([]*schema.GeographicAddress, error
 	if len(ids) == 0 {
 		return nil, errors.New("invalid ids")
 	}
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	var address []*schema.GeographicAddress
 	err := tx.Where("id IN (?)", ids).Find(&address).Error
 	return address, err
@@ -49,7 +49,7 @@ func GetGeographicAddressByIds(ids []string) ([]*schema.GeographicAddress, error
 
 func GetGeographicAddress(id string) (*models.GeographicAddress, error) {
 	address := &schema.GeographicAddress{}
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Where("id=?", id).First(address).Error; err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func GetGeographicAddress(id string) (*models.GeographicAddress, error) {
 
 func GetGeographicAddressByFieldedAddress(req *models.FieldedAddressRequest) ([]*schema.GeographicAddress, error) {
 	var r []*schema.FieldedAddress
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	tx = tx.Where(&schema.FieldedAddress{
 		City:               req.City,
 		Country:            req.Country,
@@ -103,7 +103,7 @@ func GetGeographicAddressByFieldedAddress(req *models.FieldedAddressRequest) ([]
 func GetGeographicAddressByFormattedAddress(param *models.FormattedAddressRequest) ([]*schema.GeographicAddress, error) {
 	fa := request2FormattedAddress(param)
 	var r []*schema.FormattedAddress
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Where(fa).Find(&r).Error; err == nil {
 		var ids []string
 		for _, formattedAddress := range r {

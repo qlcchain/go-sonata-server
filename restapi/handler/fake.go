@@ -539,3 +539,20 @@ func ProductOrderCreate() *models.ProductOrderCreate {
 		TspRestorationPriority:  "01",
 	}
 }
+
+func CancelProductOrderCreate() *models.CancelProductOrderCreate {
+	return &models.CancelProductOrderCreate{
+		AtSchemaLocation:   "",
+		AtType:             "",
+		CancellationReason: "cancel by bot",
+		ProductOrder: &models.ProductOrderRefCancel{
+			AtReferredType: "",
+			ExternalID:     util.NewID(),
+			Href:           gofakeit.URL(),
+			ID:             util.NewIDPtr(),
+			State:          models.ProductOrderStateTypeInProgress,
+			Version:        "01",
+		},
+		RequestedCancellationDate: NewDatetime(time.Now()),
+	}
+}

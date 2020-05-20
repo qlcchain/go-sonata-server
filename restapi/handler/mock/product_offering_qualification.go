@@ -135,7 +135,7 @@ func ProductOfferingQualificationProductOfferingQualificationFindHandler(params 
 		return poq.NewProductOfferingQualificationFindBadRequest().WithPayload(payload)
 	}
 	var poqs []*schema.ProductOfferingQualification
-	tx := db.Store.Set(db.AutoPreLoad, true)
+	tx := db.GetTx()
 	if v, b := handler.VerifyField(params.ProjectID); b {
 		tx = tx.Where("projectId=?", v)
 	}

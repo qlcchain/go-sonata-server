@@ -20,7 +20,7 @@ import (
 
 func GetGeographicSite(id string) (*models.GeographicSite, error) {
 	address := &schema.GeographicSite{}
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Where("id=?", id).First(address).Error; err != nil {
 		return nil, err
 	} else {
@@ -31,7 +31,7 @@ func GetGeographicSite(id string) (*models.GeographicSite, error) {
 func GetGeographicSiteByParams(params *gs.GeographicSiteFindParams) ([]*schema.GeographicSite, error) {
 	var r []*schema.GeographicSite
 
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	filter := make(map[string]interface{}, 0)
 
 	// query by best match

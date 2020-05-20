@@ -55,3 +55,7 @@ func CreateTables() error {
 		return errors.New("store is nil")
 	}
 }
+
+func GetTx() *gorm.DB {
+	return Store.Set(AutoPreLoad, true)
+}

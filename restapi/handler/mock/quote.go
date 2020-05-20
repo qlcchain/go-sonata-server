@@ -164,7 +164,7 @@ func QuoteQuoteFindHandler(params quote.QuoteFindParams, principal *models.Princ
 	}
 
 	// build query sql
-	tx := db.Store.Set(db.AutoPreLoad, true)
+	tx := db.GetTx()
 	if v, b := handler.VerifyField(params.ExternalID); b {
 		tx = tx.Where("externalId=?", v)
 	}

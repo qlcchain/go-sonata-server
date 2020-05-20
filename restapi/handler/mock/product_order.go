@@ -23,7 +23,7 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 	"github.com/qlcchain/go-sonata-server/restapi/handler"
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
-	"github.com/qlcchain/go-sonata-server/restapi/operations/cancel_product_order"
+	cpo "github.com/qlcchain/go-sonata-server/restapi/operations/cancel_product_order"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/hub"
 	"github.com/qlcchain/go-sonata-server/restapi/operations/notification"
 	po "github.com/qlcchain/go-sonata-server/restapi/operations/product_order"
@@ -100,16 +100,143 @@ func ProductOrderProductOrderGetHandler(params po.ProductOrderGetParams, princip
 }
 
 // cancel product order
-func CancelProductOrderCancelProductOrderCreateHandler(params cancel_product_order.CancelProductOrderCreateParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderCreate has not yet been implemented")
+func CancelProductOrderCancelProductOrderCreateHandler(params cpo.CancelProductOrderCreateParams, principal *models.Principal) middleware.Responder {
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return cpo.NewCancelProductOrderCreateUnauthorized().WithPayload(payload)
+	}
+
+	input := params.CancelProductOrder
+	tx := db.GetTx()
+
+	var orders []*schema.ProductOrder
+	if v, b := handler.VerifyField(input.ProductOrder.ExternalID); b {
+		tx = tx.Where("external_id=?", v)
+	}
+	if v, b := handler.VerifyField(input.ProductOrder.ID); b {
+		tx = tx.Where("id=?", v)
+	}
+	if v, b := handler.VerifyField(input.ProductOrder.State); b {
+		tx = tx.Where("state=?", v)
+	}
+
+	if err := tx.Find(&orders).Error; err == nil {
+		if len(orders) == 0 {
+			return cpo.NewCancelProductOrderCreateNotFound()
+		}
+		order := orders[0]
+		if err := db.Store.Model(order).Updates(&schema.ProductOrder{
+			CancellationDate:          *input.RequestedCancellationDate,
+			CancellationReason:        input.CancellationReason,
+			State:                     models.ProductOrderStateTypeCancelled,
+			TaskState:                 models.TaskStateTypeDone,
+			CancellationDeniedReason:  "",
+			RequestedCancellationDate: input.RequestedCancellationDate,
+			Version:                   input.ProductOrder.Version,
+		}).Error; err != nil {
+			log.Error(err)
+		}
+		return cpo.NewCancelProductOrderCreateCreated().WithPayload(&models.CancelProductOrder{
+			AtSchemaLocation:         "",
+			AtType:                   "",
+			CancellationDeniedReason: "",
+			CancellationReason:       input.CancellationReason,
+			Href:                     "",
+			ID:                       input.ProductOrder.ID,
+			ProductOrder: &models.ProductOrderRefCancel{
+				AtReferredType: "",
+				ExternalID:     swag.StringValue(order.ExternalID),
+				Href:           swag.StringValue(order.Href),
+				ID:             order.ID,
+				State:          order.State,
+				Version:        input.ProductOrder.Version,
+			},
+			RequestedCancellationDate: input.RequestedCancellationDate,
+			State:                     models.TaskStateTypeDone,
+		})
+	} else if err == gorm.ErrRecordNotFound {
+		return cpo.NewCancelProductOrderCreateNotFound()
+	} else {
+		return cpo.NewCancelProductOrderCreateInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
 }
 
-func CancelProductOrderCancelProductOrderFindHandler(params cancel_product_order.CancelProductOrderFindParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderFind has not yet been implemented")
+func CancelProductOrderCancelProductOrderFindHandler(params cpo.CancelProductOrderFindParams, principal *models.Principal) middleware.Responder {
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return cpo.NewCancelProductOrderFindUnauthorized().WithPayload(payload)
+	}
+
+	tx := db.GetTx()
+	var orders []*schema.ProductOrder
+	if err := tx.Where(&schema.ProductOrder{
+		ExternalID: params.ProductOrderExternalID,
+		ID:         params.ProductOrderID,
+	}).Find(&orders).Error; err == nil {
+		var payload []*models.CancelProductOrder
+		for _, order := range orders {
+			payload = append(payload, &models.CancelProductOrder{
+				AtSchemaLocation:         order.AtSchemaLocation,
+				AtType:                   order.AtType,
+				CancellationDeniedReason: order.CancellationReason,
+				CancellationReason:       order.CancellationReason,
+				Href:                     swag.StringValue(order.Href),
+				ID:                       order.ID,
+				ProductOrder: &models.ProductOrderRefCancel{
+					AtReferredType: "",
+					ExternalID:     swag.StringValue(order.ExternalID),
+					Href:           swag.StringValue(order.Href),
+					ID:             order.ID,
+					State:          order.State,
+					Version:        "1",
+				},
+				RequestedCancellationDate: order.RequestedCancellationDate,
+				State:                     order.TaskState,
+			})
+		}
+		return cpo.NewCancelProductOrderFindOK().WithPayload(payload)
+	} else if err == gorm.ErrRecordNotFound {
+		return cpo.NewCancelProductOrderFindNotFound()
+	} else {
+		return cpo.NewCancelProductOrderFindInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
 }
 
-func CancelProductOrderCancelProductOrderGetHandler(params cancel_product_order.CancelProductOrderGetParams, principal *models.Principal) middleware.Responder {
-	return middleware.NotImplemented("operation cancel_product_order.CancelProductOrderGet has not yet been implemented")
+func CancelProductOrderCancelProductOrderGetHandler(params cpo.CancelProductOrderGetParams, principal *models.Principal) middleware.Responder {
+	if payload := handler.ToErrorRepresentation(principal); payload != nil {
+		return cpo.NewCancelProductOrderGetUnauthorized().WithPayload(payload)
+	}
+
+	tx := db.GetTx()
+	order := &schema.ProductOrder{}
+	if err := tx.Where("id=?", params.CancelProductOrderID).First(order).Error; err == nil {
+		return cpo.NewCancelProductOrderGetOK().WithPayload(&models.CancelProductOrder{
+			AtSchemaLocation:         order.AtSchemaLocation,
+			AtType:                   order.AtType,
+			CancellationDeniedReason: order.CancellationReason,
+			CancellationReason:       order.CancellationReason,
+			Href:                     swag.StringValue(order.Href),
+			ID:                       order.ID,
+			ProductOrder: &models.ProductOrderRefCancel{
+				AtReferredType: "",
+				ExternalID:     swag.StringValue(order.ExternalID),
+				Href:           swag.StringValue(order.Href),
+				ID:             order.ID,
+				State:          order.State,
+				Version:        order.Version,
+			},
+			RequestedCancellationDate: order.RequestedCancellationDate,
+			State:                     order.TaskState,
+		})
+	} else if err == gorm.ErrRecordNotFound {
+		return cpo.NewCancelProductOrderGetNotFound()
+	} else {
+		return cpo.NewCancelProductOrderGetInternalServerError().WithPayload(&models.ErrorRepresentation{
+			Reason: swag.String(err.Error()),
+		})
+	}
 }
 
 func HubProductOrderManagementHubCreateHandler(params hub.ProductOrderManagementHubCreateParams, principal *models.Principal) middleware.Responder {

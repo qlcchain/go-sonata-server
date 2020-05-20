@@ -25,7 +25,7 @@ import (
 
 func GetProductOrder(id string) (*models.ProductOrder, error) {
 	from := &schema.ProductOrder{}
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Where("id=?", id).First(from).Error; err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func GetProductOrder(id string) (*models.ProductOrder, error) {
 
 func GetProductOrderByParams(param *po.ProductOrderFindParams) ([]*models.ProductOrderSummary, error) {
 	var r []*models.ProductOrderSummary
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 
 	var ids []*string
 	filter := make(map[*string]interface{}, 0)

@@ -126,6 +126,11 @@ type ProductOrder struct {
 
 	// Within the United States, indicates the provisioning and restoration priority as defined under the TSP Service Vendor Handbook, The valid values are defined in ATIS OBF document: ATIS-0404001
 	TspRestorationPriority string `json:"tspRestorationPriority,omitempty"`
+
+	RequestedCancellationDate *strfmt.DateTime     `json:"requestedCancellationDate"`
+	CancellationDeniedReason  string               `json:"cancellationDeniedReason,omitempty"`
+	TaskState                 models.TaskStateType `json:"taskState"`
+	Version                   string               `json:"version,omitempty"`
 }
 
 func (po *ProductOrder) To() *models.ProductOrder {

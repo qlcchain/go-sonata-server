@@ -13,7 +13,7 @@ import (
 
 func GetQuote(id string) (*schema.Quote, error) {
 	q := &schema.Quote{}
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Where("id=?", id).First(q).Error; err != nil {
 		return nil, err
 	} else {

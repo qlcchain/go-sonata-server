@@ -15,7 +15,7 @@ import (
 
 func GetProductOfferingQualification(id string) (*models.ProductOfferingQualification, error) {
 	poq := &schema.ProductOfferingQualification{}
-	tx := Store.Set(AutoPreLoad, true)
+	tx := GetTx()
 	if err := tx.Where("id=?", id).First(poq).Error; err != nil {
 		return nil, err
 	}
