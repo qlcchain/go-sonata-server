@@ -2802,7 +2802,7 @@ paths:
           description: "Service Unavailable\n\n"
           schema:
             $ref: "#/definitions/ErrorRepresentation"
-  /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder:
+  /productOrderManagement/v3/productOrder:
     get:
       description: This operation is used to retrieve one or more product orders based upon filter criteria specified on input.
       produces:

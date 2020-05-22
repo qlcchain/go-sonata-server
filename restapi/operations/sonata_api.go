@@ -679,11 +679,11 @@ func (o *SonataAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderCreate(o.context, o.ProductOrderProductOrderCreateHandler)
+	o.handlers["POST"]["/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderCreate(o.context, o.ProductOrderProductOrderCreateHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderFind(o.context, o.ProductOrderProductOrderFindHandler)
+	o.handlers["GET"]["/productOrderManagement/v3/productOrder"] = product_order.NewProductOrderFind(o.context, o.ProductOrderProductOrderFindHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

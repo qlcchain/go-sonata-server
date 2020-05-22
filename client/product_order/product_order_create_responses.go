@@ -103,7 +103,7 @@ type ProductOrderCreateCreated struct {
 }
 
 func (o *ProductOrderCreateCreated) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateCreated  %+v", 201, o.Payload)
 }
 
 func (o *ProductOrderCreateCreated) GetPayload() *models.ProductOrder {
@@ -147,7 +147,7 @@ type ProductOrderCreateBadRequest struct {
 }
 
 func (o *ProductOrderCreateBadRequest) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateBadRequest  %+v", 400, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateBadRequest  %+v", 400, o.Payload)
 }
 
 func (o *ProductOrderCreateBadRequest) GetPayload() *models.ErrorRepresentation {
@@ -185,7 +185,7 @@ type ProductOrderCreateUnauthorized struct {
 }
 
 func (o *ProductOrderCreateUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateUnauthorized  %+v", 401, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateUnauthorized  %+v", 401, o.Payload)
 }
 
 func (o *ProductOrderCreateUnauthorized) GetPayload() *models.ErrorRepresentation {
@@ -224,7 +224,7 @@ type ProductOrderCreateForbidden struct {
 }
 
 func (o *ProductOrderCreateForbidden) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ProductOrderCreateForbidden) GetPayload() *models.ErrorRepresentation {
@@ -260,7 +260,7 @@ type ProductOrderCreateNotFound struct {
 }
 
 func (o *ProductOrderCreateNotFound) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ProductOrderCreateNotFound) GetPayload() *models.ErrorRepresentation {
@@ -296,7 +296,7 @@ type ProductOrderCreateMethodNotAllowed struct {
 }
 
 func (o *ProductOrderCreateMethodNotAllowed) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateMethodNotAllowed  %+v", 405, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateMethodNotAllowed  %+v", 405, o.Payload)
 }
 
 func (o *ProductOrderCreateMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
@@ -332,7 +332,7 @@ type ProductOrderCreateRequestTimeout struct {
 }
 
 func (o *ProductOrderCreateRequestTimeout) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateRequestTimeout  %+v", 408, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateRequestTimeout  %+v", 408, o.Payload)
 }
 
 func (o *ProductOrderCreateRequestTimeout) GetPayload() *models.ErrorRepresentation {
@@ -475,7 +475,7 @@ type ProductOrderCreateUnprocessableEntity struct {
 }
 
 func (o *ProductOrderCreateUnprocessableEntity) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateUnprocessableEntity  %+v", 422, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateUnprocessableEntity  %+v", 422, o.Payload)
 }
 
 func (o *ProductOrderCreateUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
@@ -511,7 +511,7 @@ type ProductOrderCreateInternalServerError struct {
 }
 
 func (o *ProductOrderCreateInternalServerError) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateInternalServerError  %+v", 500, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateInternalServerError  %+v", 500, o.Payload)
 }
 
 func (o *ProductOrderCreateInternalServerError) GetPayload() *models.ErrorRepresentation {
@@ -546,7 +546,7 @@ type ProductOrderCreateServiceUnavailable struct {
 }
 
 func (o *ProductOrderCreateServiceUnavailable) Error() string {
-	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder][%d] productOrderCreateServiceUnavailable  %+v", 503, o.Payload)
+	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateServiceUnavailable  %+v", 503, o.Payload)
 }
 
 func (o *ProductOrderCreateServiceUnavailable) GetPayload() *models.ErrorRepresentation {

@@ -73,6 +73,9 @@ func ProductOrderProductOrderFindHandler(params po.ProductOrderFindParams, princ
 	}
 
 	if r, err := db.GetProductOrderByParams(&params); err == nil {
+		if len(r) == 0 {
+			return po.NewProductOrderFindNotFound()
+		}
 		return po.NewProductOrderFindOK().WithPayload(r)
 	} else if err == gorm.ErrRecordNotFound {
 		return po.NewProductOrderFindNotFound()
@@ -173,6 +176,9 @@ func CancelProductOrderCancelProductOrderFindHandler(params cpo.CancelProductOrd
 		ExternalID: params.ProductOrderExternalID,
 		ID:         params.ProductOrderID,
 	}).Find(&orders).Error; err == nil {
+		if len(orders) == 0 {
+			return cpo.NewCancelProductOrderFindNotFound()
+		}
 		var payload []*models.CancelProductOrder
 		for _, order := range orders {
 			payload = append(payload, &models.CancelProductOrder{

@@ -50,7 +50,7 @@ func (a *Client) ProductOrderCreate(params *ProductOrderCreateParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "productOrderCreate",
 		Method:             "POST",
-		PathPattern:        "/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder",
+		PathPattern:        "/productOrderManagement/v3/productOrder",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -87,7 +87,7 @@ func (a *Client) ProductOrderFind(params *ProductOrderFindParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "productOrderFind",
 		Method:             "GET",
-		PathPattern:        "/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder",
+		PathPattern:        "/productOrderManagement/v3/productOrder",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},

@@ -64,7 +64,7 @@ func (o *ProductOrderFindURL) SetBasePath(bp string) {
 func (o *ProductOrderFindURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/productOfferingQualificationNotification/v3/productOrderManagement/v3/productOrder"
+	var _path = "/productOrderManagement/v3/productOrder"
 
 	_basePath := o._basePath
 	if _basePath == "" {
