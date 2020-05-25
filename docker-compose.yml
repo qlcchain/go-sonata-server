@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+  sonata:
+    image: qlcchain/go-sonata-server:latest
+    container_name: sonata
+    ports:
+      - 127.0.0.1:9999:9999
+    networks:
+      - sonata-test
+      - traefik
+    # stdin_open: true
+    # tty: true
+    restart: unless-stopped
+    volumes:
+      - ./data:/qlcchain/Gsonata
+    user: ${CURRENT_USER}
+    command: 
+      - --host=0.0.0.0
+      - --domain=https://sonata.qlcchain.online
+      - -m
+      - -V
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.middlewares.redirect-https.redirectScheme.scheme=https
+      - traefik.http.middlewares.redirect-https.redirectScheme.permanent=true
+      # sonata http/https
+      - traefik.http.routers.sonata-https.rule=Host(`sonata.qlcchain.online`)
+      - traefik.http.routers.sonata-https.entrypoints=websecure
+      - traefik.http.routers.sonata-https.tls=true
+      - traefik.http.routers.sonata-https.tls.certresolver=cloudflare
+      - traefik.http.routers.sonata-https.service=sonata
+      - traefik.http.routers.sonata-http.rule=Host(`sonata.qlcchain.online`)
+      - traefik.http.routers.sonata-http.entrypoints=web
+      - traefik.http.routers.sonata-http.middlewares=redirect-https
+      - traefik.http.routers.sonata-http.service=sonata
+      - traefik.http.services.sonata.loadbalancer.server.port=9999
+
+networks:
+  sonata-test:
+    name: sonata-test
+  traefik:
+    external: true
