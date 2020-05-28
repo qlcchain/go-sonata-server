@@ -8,6 +8,9 @@ import (
 	"net/http"
 	"path"
 
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
+
 	"github.com/jinzhu/gorm"
 
 	"github.com/qlcchain/go-sonata-server/restapi/handler/db"
@@ -872,6 +875,9 @@ func configureTLS(tlsConfig *tls.Config) {
 // This function can be called multiple times, depending on the number of serving schemes.
 // scheme value will be set accordingly: "http", "https" or "unix"
 func configureServer(s *http.Server, scheme, addr string) {
+	h := s.Handler
+	s.Addr = addr
+	s.Handler = h2c.NewHandler(h, &http2.Server{})
 }
 
 // The middleware configuration is for the handler executors. These do not apply to the swagger.json document.
