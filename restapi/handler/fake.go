@@ -179,14 +179,14 @@ func Price() *models.Price {
 			Unit:  swag.String("USD"),
 			Value: swag.Float32(gofakeit.Float32()),
 		},
-		TaxRate: 0.01,
+		TaxRate: 0.1,
 	}
 }
 
 func ProductPrice() *models.ProductPrice {
 	return &models.ProductPrice{
 		//AtType:      "",
-		Description:           gofakeit.Phrase(),
+		Description:           "ProductPrice",
 		Name:                  swag.String("Subscription price"),
 		Price:                 Price(),
 		PriceType:             models.PriceTypeRecurring,

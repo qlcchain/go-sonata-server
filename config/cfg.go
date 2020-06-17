@@ -20,7 +20,7 @@ type DebugCfg struct {
 }
 
 type ServerCfg struct {
-	Domain         string   `json:"domain" long:"domain" description:"bind domain" default:"localhost"`
+	Domain         string   `json:"domain" long:"domain" description:"bind domain" default:"http://127.0.0.1:9999"`
 	AllowedOrigins []string `json:"allowedOrigins" long:"allowedOrigins" description:"AllowedOrigins of CORS" default:"*"`
 }
 

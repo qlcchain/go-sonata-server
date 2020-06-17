@@ -32,21 +32,38 @@ func GetGeographicSiteByParams(params *gs.GeographicSiteFindParams) ([]*schema.G
 	var r []*schema.GeographicSite
 
 	tx := GetTx()
+	if params.SiteCompanyName == nil && params.SiteCustomerName == nil && params.SiteName == nil &&
+		params.SiteType == nil && params.Status == nil && params.GeographicAddressCity == nil &&
+		params.GeographicAddressCountry == nil && params.GeographicAddressID == nil &&
+		params.GeographicAddressPostcode == nil && params.GeographicAddressStreetName == nil &&
+		params.GeographicAddressStreetNr == nil {
+		if err := tx.Find(&r).Error; err == nil {
+			return r, nil
+		} else {
+			return nil, err
+		}
+	}
+
 	filter := make(map[string]interface{}, 0)
 
 	// query by best match
-	var sites []*schema.GeographicSite
-	if err := tx.Where(&schema.GeographicSite{
-		SiteCompanyName:  swag.StringValue(params.SiteCompanyName),
-		SiteCustomerName: swag.StringValue(params.SiteCustomerName),
-		SiteName:         swag.StringValue(params.SiteName),
-		SiteType:         swag.StringValue(params.SiteType),
-		Status:           models.Status(swag.StringValue(params.Status)),
-	}).Find(&sites).Error; err == nil {
-		for _, site := range sites {
-			if _, ok := filter[site.ID]; !ok {
-				r = append(r, site)
-				filter[site.ID] = struct{}{}
+	if params.SiteCompanyName == nil && params.SiteCustomerName == nil && params.SiteName == nil &&
+		params.SiteType == nil && params.Status == nil {
+		log.Warnln("all geographic site are empty, ignore...")
+	} else {
+		var sites []*schema.GeographicSite
+		if err := tx.Where(&schema.GeographicSite{
+			SiteCompanyName:  swag.StringValue(params.SiteCompanyName),
+			SiteCustomerName: swag.StringValue(params.SiteCustomerName),
+			SiteName:         swag.StringValue(params.SiteName),
+			SiteType:         swag.StringValue(params.SiteType),
+			Status:           models.Status(swag.StringValue(params.Status)),
+		}).Find(&sites).Error; err == nil {
+			for _, site := range sites {
+				if _, ok := filter[site.ID]; !ok {
+					r = append(r, site)
+					filter[site.ID] = struct{}{}
+				}
 			}
 		}
 	}
