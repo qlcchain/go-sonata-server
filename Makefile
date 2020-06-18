@@ -1,4 +1,4 @@
-.PHONY: deps clean build lint changelog snapshot release
+.PHONY: deps clean build lint changelog snapshot release client
 
 # Check for required command tools to build or stop immediately
 EXECUTABLES = git go find pwd
@@ -28,6 +28,10 @@ deps:
 build:
 	go build ${LDFLAGS} -o $(BUILDDIR)/${BINARY} -i $(MAIN)
 	@echo 'Build $(BINARY) done.'
+
+client:
+	go build ${LDFLAGS} -o $(BUILDDIR)/client -i $(shell pwd)/cmd/client/main.go
+	@echo 'Build client done.'
 
 changelog:
 	git-chglog $(VERSION) > CHANGELOG.md
