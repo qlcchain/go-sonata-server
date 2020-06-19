@@ -48,6 +48,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	log.SetFormatter(&log.TextFormatter{ForceColors: true})
+	//log.SetOutput(ansicolor.NewAnsiColorWriter(os.Stdout))
 	log.SetLevel(log.DebugLevel)
 
 	c := client.New(httptransport.New(opts.EndPoint, "/api/mef", []string{opts.Schema}), strfmt.Default)
