@@ -33,6 +33,12 @@ import (
 )
 
 var (
+	version string
+	date    string
+	commit  string
+)
+
+var (
 	token = httptransport.BearerToken(`eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJhZG1pbiJdLCJhdWQiOiJRTENDaGFpbiBCb3QiLCJleHAiOjE2MjA3OTQzMTIsImp0aSI6IjE3Y2E4MWU1LTA2YzYtNDZhMi1iMTU2LTdkMzJlMGRjZmIyNSIsImlhdCI6MTU4OTI1ODMxMiwiaXNzIjoiUUxDQ2hhaW4gQm90Iiwic3ViIjoic29uYXRhIn0.AN01SFxQWJ--LOwie9xQSb5IUZUXt6HFuF6kUSSvtUhH0Q5tG7hUU0tc0I-vvJZoRyo8humQ2KwU3-qbp6rbMAS5AHz5tGkja-JI4MT9MYMABLQZcPCy6n9VjKPuxhv2rP74HfJ8fEBC7Vo6JHDMXYOzrfO13i_3oNqQ6aX6miW3tFrg`)
 )
 

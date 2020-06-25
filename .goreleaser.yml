@@ -43,6 +43,18 @@ builds:
       - windows
     goarch:
       - amd64
+  - id: client
+    ldflags: main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
+    binary: gsonata-client
+    env:
+      - CGO_ENABLED=0
+    main: ./cmd/client/main.go
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
 
 archives:
   - format: tar.gz
