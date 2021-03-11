@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationProductOfferingQualificationCreationNotificationParams creates a new NotificationProductOfferingQualificationCreationNotificationParams object
-// with the default values initialized.
+// NewNotificationProductOfferingQualificationCreationNotificationParams creates a new NotificationProductOfferingQualificationCreationNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationProductOfferingQualificationCreationNotificationParams() *NotificationProductOfferingQualificationCreationNotificationParams {
-	var ()
 	return &NotificationProductOfferingQualificationCreationNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationProductOfferingQualificationCreationNotificationParamsWithTimeout creates a new NotificationProductOfferingQualificationCreationNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationProductOfferingQualificationCreationNotificationParamsWithTimeout(timeout time.Duration) *NotificationProductOfferingQualificationCreationNotificationParams {
-	var ()
 	return &NotificationProductOfferingQualificationCreationNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationProductOfferingQualificationCreationNotificationParamsWithContext creates a new NotificationProductOfferingQualificationCreationNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationProductOfferingQualificationCreationNotificationParamsWithContext(ctx context.Context) *NotificationProductOfferingQualificationCreationNotificationParams {
-	var ()
 	return &NotificationProductOfferingQualificationCreationNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationProductOfferingQualificationCreationNotificationParamsWithHTTPClient creates a new NotificationProductOfferingQualificationCreationNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationProductOfferingQualificationCreationNotificationParamsWithHTTPClient(client *http.Client) *NotificationProductOfferingQualificationCreationNotificationParams {
-	var ()
 	return &NotificationProductOfferingQualificationCreationNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationParams contains all the parameters to send to the API endpoint
-for the notification product offering qualification creation notification operation typically these are written to a http.Request
+/* NotificationProductOfferingQualificationCreationNotificationParams contains all the parameters to send to the API endpoint
+   for the notification product offering qualification creation notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationProductOfferingQualificationCreationNotificationParams struct {
 
-	/*ProductOfferingQualificationCreationNotification*/
+	// ProductOfferingQualificationCreationNotification.
 	ProductOfferingQualificationCreationNotification *models.PoQEventContainer
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification product offering qualification creation notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOfferingQualificationCreationNotificationParams) WithDefaults() *NotificationProductOfferingQualificationCreationNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification product offering qualification creation notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOfferingQualificationCreationNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification product offering qualification creation notification params
@@ -121,7 +135,6 @@ func (o *NotificationProductOfferingQualificationCreationNotificationParams) Wri
 		return err
 	}
 	var res []error
-
 	if o.ProductOfferingQualificationCreationNotification != nil {
 		if err := r.SetBodyParam(o.ProductOfferingQualificationCreationNotification); err != nil {
 			return err

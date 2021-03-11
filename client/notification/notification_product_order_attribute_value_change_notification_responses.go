@@ -83,9 +83,8 @@ func (o *NotificationProductOrderAttributeValueChangeNotificationReader) ReadRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -94,7 +93,7 @@ func NewNotificationProductOrderAttributeValueChangeNotificationNoContent() *Not
 	return &NotificationProductOrderAttributeValueChangeNotificationNoContent{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationNoContent handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationNoContent describes a response with status code 204, with default header values.
 
 No Content
 */
@@ -115,9 +114,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationBadRequest() *No
 	return &NotificationProductOrderAttributeValueChangeNotificationBadRequest{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationBadRequest handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -137,7 +136,6 @@ type NotificationProductOrderAttributeValueChangeNotificationBadRequest struct {
 func (o *NotificationProductOrderAttributeValueChangeNotificationBadRequest) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -159,9 +157,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationUnauthorized() *
 	return &NotificationProductOrderAttributeValueChangeNotificationUnauthorized{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationUnauthorized handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -175,7 +173,6 @@ type NotificationProductOrderAttributeValueChangeNotificationUnauthorized struct
 func (o *NotificationProductOrderAttributeValueChangeNotificationUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -197,9 +194,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationForbidden() *Not
 	return &NotificationProductOrderAttributeValueChangeNotificationForbidden{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationForbidden handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -214,7 +211,6 @@ type NotificationProductOrderAttributeValueChangeNotificationForbidden struct {
 func (o *NotificationProductOrderAttributeValueChangeNotificationForbidden) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationForbidden  %+v", 403, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -236,9 +232,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationNotFound() *Noti
 	return &NotificationProductOrderAttributeValueChangeNotificationNotFound{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationNotFound handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -250,7 +246,6 @@ type NotificationProductOrderAttributeValueChangeNotificationNotFound struct {
 func (o *NotificationProductOrderAttributeValueChangeNotificationNotFound) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationNotFound  %+v", 404, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -272,9 +267,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationMethodNotAllowed
 	return &NotificationProductOrderAttributeValueChangeNotificationMethodNotAllowed{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationMethodNotAllowed handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -286,7 +281,6 @@ type NotificationProductOrderAttributeValueChangeNotificationMethodNotAllowed st
 func (o *NotificationProductOrderAttributeValueChangeNotificationMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -308,9 +302,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationRequestTimeout()
 	return &NotificationProductOrderAttributeValueChangeNotificationRequestTimeout{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationRequestTimeout handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -322,7 +316,6 @@ type NotificationProductOrderAttributeValueChangeNotificationRequestTimeout stru
 func (o *NotificationProductOrderAttributeValueChangeNotificationRequestTimeout) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -344,9 +337,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationUnprocessableEnt
 	return &NotificationProductOrderAttributeValueChangeNotificationUnprocessableEntity{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationUnprocessableEntity handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -357,7 +350,6 @@ type NotificationProductOrderAttributeValueChangeNotificationUnprocessableEntity
 func (o *NotificationProductOrderAttributeValueChangeNotificationUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -379,9 +371,9 @@ func NewNotificationProductOrderAttributeValueChangeNotificationInternalServerEr
 	return &NotificationProductOrderAttributeValueChangeNotificationInternalServerError{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationInternalServerError handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -393,7 +385,6 @@ type NotificationProductOrderAttributeValueChangeNotificationInternalServerError
 func (o *NotificationProductOrderAttributeValueChangeNotificationInternalServerError) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -415,7 +406,7 @@ func NewNotificationProductOrderAttributeValueChangeNotificationServiceUnavailab
 	return &NotificationProductOrderAttributeValueChangeNotificationServiceUnavailable{}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationServiceUnavailable handles this case with default header values.
+/* NotificationProductOrderAttributeValueChangeNotificationServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -428,7 +419,6 @@ type NotificationProductOrderAttributeValueChangeNotificationServiceUnavailable 
 func (o *NotificationProductOrderAttributeValueChangeNotificationServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification][%d] notificationProductOrderAttributeValueChangeNotificationServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *NotificationProductOrderAttributeValueChangeNotificationServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

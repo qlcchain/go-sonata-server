@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -71,7 +73,6 @@ func (m *GeographicAddress) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GeographicAddress) validateFieldedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.FieldedAddress) { // not required
 		return nil
 	}
@@ -89,7 +90,6 @@ func (m *GeographicAddress) validateFieldedAddress(formats strfmt.Registry) erro
 }
 
 func (m *GeographicAddress) validateFormattedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.FormattedAddress) { // not required
 		return nil
 	}
@@ -107,7 +107,6 @@ func (m *GeographicAddress) validateFormattedAddress(formats strfmt.Registry) er
 }
 
 func (m *GeographicAddress) validateGeographicLocation(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.GeographicLocation) { // not required
 		return nil
 	}
@@ -125,13 +124,94 @@ func (m *GeographicAddress) validateGeographicLocation(formats strfmt.Registry) 
 }
 
 func (m *GeographicAddress) validateReferencedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ReferencedAddress) { // not required
 		return nil
 	}
 
 	if m.ReferencedAddress != nil {
 		if err := m.ReferencedAddress.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("referencedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this geographic address based on the context it is used
+func (m *GeographicAddress) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateFieldedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateFormattedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateGeographicLocation(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateReferencedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GeographicAddress) contextValidateFieldedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.FieldedAddress != nil {
+		if err := m.FieldedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("fieldedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicAddress) contextValidateFormattedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.FormattedAddress != nil {
+		if err := m.FormattedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("formattedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicAddress) contextValidateGeographicLocation(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.GeographicLocation != nil {
+		if err := m.GeographicLocation.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("geographicLocation")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicAddress) contextValidateReferencedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ReferencedAddress != nil {
+		if err := m.ReferencedAddress.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("referencedAddress")
 			}

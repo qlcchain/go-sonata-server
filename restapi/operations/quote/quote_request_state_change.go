@@ -31,7 +31,7 @@ func NewQuoteRequestStateChange(ctx *middleware.Context, handler QuoteRequestSta
 	return &QuoteRequestStateChange{Context: ctx, Handler: handler}
 }
 
-/*QuoteRequestStateChange swagger:route POST /quoteManagement/v2/quote/requestStateChange Quote quoteRequestStateChange
+/* QuoteRequestStateChange swagger:route POST /quoteManagement/v2/quote/requestStateChange Quote quoteRequestStateChange
 
 request a quote state change
 
@@ -51,7 +51,6 @@ func (o *QuoteRequestStateChange) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 		r = rCtx
 	}
 	var Params = NewQuoteRequestStateChangeParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -71,7 +70,6 @@ func (o *QuoteRequestStateChange) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

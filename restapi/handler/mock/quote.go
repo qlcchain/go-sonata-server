@@ -37,7 +37,9 @@ var (
 	quoteBus = event.GetEventBus(quoteTopic)
 )
 
-func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangeParams, principal *models.Principal) middleware.Responder {
+func QuoteQuoteRequestStateChangeHandler(
+	params quote.QuoteRequestStateChangeParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return quote.NewQuoteRequestStateChangeUnauthorized().WithPayload(payload)
 	}
@@ -52,29 +54,31 @@ func QuoteQuoteRequestStateChangeHandler(params quote.QuoteRequestStateChangePar
 	state := &schema.Quote{
 		ID:         *input.ID,
 		ExternalID: input.ExternalID,
-		State:      models.QuoteStateType(input.State),
+		State:      models.QuoteStateType(*input.State),
 	}
 
 	if err := db.Store.Model(&schema.Quote{}).Update(state).Error; err == nil {
 		if q, err := db.GetQuote(*input.ID); err != nil {
 			//FIXME: calculate file path and resource path
+			quoteEventType := models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION
 			ev := models.QuoteEventPlus{
 				QuoteEvent: models.QuoteEvent{
 					Event:     q.ToQuoteSummaryView(),
 					EventID:   util.NewIDPtr(),
 					EventTime: &now,
-					EventType: models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION,
+					EventType: &quoteEventType,
 				},
 				FieldPath:    []string{},
 				ResourcePath: nil,
 			}
-			quoteBus.Publish(string(models.QuoteEventTypeQUOTESTATECHANGENOTIFICATION), ev)
+			quoteBus.Publish(string(quoteEventType), ev)
 		}
+		accepted := models.QuoteStateTypeACCEPTED
 		return quote.NewQuoteRequestStateChangeOK().WithPayload(&models.ChangeQuoteStateResponse{
 			ExternalID:                    input.ExternalID,
 			ID:                            input.ID,
 			QuoteEffectiveStateChangeDate: &now,
-			State:                         models.QuoteStateType(input.State),
+			State:                         &accepted,
 		})
 	} else if err == gorm.ErrRecordNotFound {
 		return quote.NewQuoteRequestStateChangeNotFound()
@@ -132,24 +136,25 @@ func QuoteQuoteCreateHandler(params quote.QuoteCreateParams, principal *models.P
 		Note:                         schema.FromNotes(input.Note),
 		ProjectID:                    input.ProjectID,
 		QuoteItem:                    items,
-		QuoteLevel:                   input.QuoteLevel,
+		QuoteLevel:                   &input.QuoteLevel,
 		RelatedParty:                 handler.ConvertRelatedParty(input.RelatedParty),
 		RequestedQuoteCompletionDate: input.RequestedQuoteCompletionDate,
 		Href:                         handler.HrefToID("", id),
 	}
 	if err := db.Store.Save(q).Error; err == nil {
 		//FIXME: calculate file path and resource path
+		quoteEventType := models.QuoteEventTypeQUOTECREATIONNOTIFICATION
 		ev := models.QuoteEventPlus{
 			QuoteEvent: models.QuoteEvent{
 				Event:     q.ToQuoteSummaryView(),
 				EventID:   util.NewIDPtr(),
 				EventTime: &now,
-				EventType: models.QuoteEventTypeQUOTECREATIONNOTIFICATION,
+				EventType: &quoteEventType,
 			},
 			FieldPath:    []string{},
 			ResourcePath: swag.String(""),
 		}
-		quoteBus.Publish(string(models.QuoteEventTypeQUOTECREATIONNOTIFICATION), ev)
+		quoteBus.Publish(string(quoteEventType), ev)
 		return quote.NewQuoteCreateCreated().WithPayload(q.ToQuote())
 	} else {
 		return quote.NewQuoteCreateInternalServerError().WithPayload(&models.ErrorRepresentation{
@@ -235,7 +240,9 @@ func QuoteQuoteGetHandler(params quote.QuoteGetParams, principal *models.Princip
 	}
 }
 
-func HubQuoteManagementHubCreateHandler(params hub.QuoteManagementHubCreateParams, principal *models.Principal) middleware.Responder {
+func HubQuoteManagementHubCreateHandler(
+	params hub.QuoteManagementHubCreateParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewQuoteManagementHubCreateUnauthorized().WithPayload(payload)
 	}
@@ -291,7 +298,9 @@ func HubQuoteManagementHubCreateHandler(params hub.QuoteManagementHubCreateParam
 	}
 }
 
-func HubQuoteManagementHubDeleteHandler(params hub.QuoteManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
+func HubQuoteManagementHubDeleteHandler(
+	params hub.QuoteManagementHubDeleteParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewQuoteManagementHubDeleteUnauthorized().WithPayload(payload)
 	}
@@ -321,7 +330,9 @@ func HubQuoteManagementHubDeleteHandler(params hub.QuoteManagementHubDeleteParam
 	}
 }
 
-func HubQuoteManagementHubFindHandler(params hub.QuoteManagementHubFindParams, principal *models.Principal) middleware.Responder {
+func HubQuoteManagementHubFindHandler(
+	params hub.QuoteManagementHubFindParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewQuoteManagementHubFindUnauthorized().WithPayload(payload)
 	}

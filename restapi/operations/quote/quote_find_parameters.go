@@ -16,7 +16,8 @@ import (
 )
 
 // NewQuoteFindParams creates a new QuoteFindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewQuoteFindParams() QuoteFindParams {
 
 	return QuoteFindParams{}
@@ -133,7 +134,6 @@ func (o *QuoteFindParams) BindRequest(r *http.Request, route *middleware.Matched
 	if err := o.bindState(qState, qhkState, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -149,10 +149,10 @@ func (o *QuoteFindParams) bindExternalID(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ExternalID = &raw
 
 	return nil
@@ -167,10 +167,10 @@ func (o *QuoteFindParams) bindLimit(rawData []string, hasKey bool, formats strfm
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Limit = &raw
 
 	return nil
@@ -185,10 +185,10 @@ func (o *QuoteFindParams) bindOffset(rawData []string, hasKey bool, formats strf
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Offset = &raw
 
 	return nil
@@ -203,10 +203,10 @@ func (o *QuoteFindParams) bindProjectID(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ProjectID = &raw
 
 	return nil
@@ -221,6 +221,7 @@ func (o *QuoteFindParams) bindQuoteCompletionDateGt(rawData []string, hasKey boo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -257,6 +258,7 @@ func (o *QuoteFindParams) bindQuoteCompletionDateLt(rawData []string, hasKey boo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -293,6 +295,7 @@ func (o *QuoteFindParams) bindQuoteDateGt(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -329,6 +332,7 @@ func (o *QuoteFindParams) bindQuoteDateLt(rawData []string, hasKey bool, formats
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -365,10 +369,10 @@ func (o *QuoteFindParams) bindQuoteLevel(rawData []string, hasKey bool, formats 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.QuoteLevel = &raw
 
 	if err := o.validateQuoteLevel(formats); err != nil {
@@ -397,10 +401,10 @@ func (o *QuoteFindParams) bindState(rawData []string, hasKey bool, formats strfm
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.State = &raw
 
 	if err := o.validateState(formats); err != nil {

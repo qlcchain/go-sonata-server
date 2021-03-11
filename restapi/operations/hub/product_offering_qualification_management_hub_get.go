@@ -31,7 +31,7 @@ func NewProductOfferingQualificationManagementHubGet(ctx *middleware.Context, ha
 	return &ProductOfferingQualificationManagementHubGet{Context: ctx, Handler: handler}
 }
 
-/*ProductOfferingQualificationManagementHubGet swagger:route GET /productOfferingQualificationManagement/v3/hub Hub productOfferingQualificationManagementHubGet
+/* ProductOfferingQualificationManagementHubGet swagger:route GET /productOfferingQualificationManagement/v3/hub Hub productOfferingQualificationManagementHubGet
 
 hubFind
 
@@ -49,7 +49,6 @@ func (o *ProductOfferingQualificationManagementHubGet) ServeHTTP(rw http.Respons
 		r = rCtx
 	}
 	var Params = NewProductOfferingQualificationManagementHubGetParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *ProductOfferingQualificationManagementHubGet) ServeHTTP(rw http.Respons
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

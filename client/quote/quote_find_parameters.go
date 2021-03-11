@@ -16,104 +16,135 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewQuoteFindParams creates a new QuoteFindParams object
-// with the default values initialized.
+// NewQuoteFindParams creates a new QuoteFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewQuoteFindParams() *QuoteFindParams {
-	var ()
 	return &QuoteFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewQuoteFindParamsWithTimeout creates a new QuoteFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewQuoteFindParamsWithTimeout(timeout time.Duration) *QuoteFindParams {
-	var ()
 	return &QuoteFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewQuoteFindParamsWithContext creates a new QuoteFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewQuoteFindParamsWithContext(ctx context.Context) *QuoteFindParams {
-	var ()
 	return &QuoteFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewQuoteFindParamsWithHTTPClient creates a new QuoteFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewQuoteFindParamsWithHTTPClient(client *http.Client) *QuoteFindParams {
-	var ()
 	return &QuoteFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*QuoteFindParams contains all the parameters to send to the API endpoint
-for the quote find operation typically these are written to a http.Request
+/* QuoteFindParams contains all the parameters to send to the API endpoint
+   for the quote find operation.
+
+   Typically these are written to a http.Request.
 */
 type QuoteFindParams struct {
 
-	/*ExternalID
-	  ID given by the consumer and only understandable by him (to facilitate his searches afterwards)
+	/* ExternalID.
 
+	   ID given by the consumer and only understandable by him (to facilitate his searches afterwards)
 	*/
 	ExternalID *string
-	/*Limit
-	  Requested number of resources to be provided in response requested by client
 
+	/* Limit.
+
+	   Requested number of resources to be provided in response requested by client
 	*/
 	Limit *string
-	/*Offset
-	  Requested index for start of resources to be provided in response requested by client
 
+	/* Offset.
+
+	   Requested index for start of resources to be provided in response requested by client
 	*/
 	Offset *string
-	/*ProjectID
-	  This value MAY be assigned by the Buyer/Seller to identify a project the quoting request is associated with.
 
+	/* ProjectID.
+
+	   This value MAY be assigned by the Buyer/Seller to identify a project the quoting request is associated with.
 	*/
 	ProjectID *string
-	/*QuoteCompletionDateGt
-	  Date when the quote was completed -  greater than
 
+	/* QuoteCompletionDateGt.
+
+	   Date when the quote was completed -  greater than
+
+	   Format: date-time
 	*/
 	QuoteCompletionDateGt *strfmt.DateTime
-	/*QuoteCompletionDateLt
-	  Date when the quote was completed -  lower than
 
+	/* QuoteCompletionDateLt.
+
+	   Date when the quote was completed -  lower than
+
+	   Format: date-time
 	*/
 	QuoteCompletionDateLt *strfmt.DateTime
-	/*QuoteDateGt
-	  Date when the quote was created - greater than
 
+	/* QuoteDateGt.
+
+	   Date when the quote was created - greater than
+
+	   Format: date-time
 	*/
 	QuoteDateGt *strfmt.DateTime
-	/*QuoteDateLt
-	  Date when the quote was created - lower than
 
+	/* QuoteDateLt.
+
+	   Date when the quote was created - lower than
+
+	   Format: date-time
 	*/
 	QuoteDateLt *strfmt.DateTime
-	/*QuoteLevel
-	  Level of the quote - could be indicative, budgetary or firm
 
+	/* QuoteLevel.
+
+	   Level of the quote - could be indicative, budgetary or firm
 	*/
 	QuoteLevel *string
-	/*State
-	  State of the Quote
 
+	/* State.
+
+	   State of the Quote
 	*/
 	State *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the quote find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteFindParams) WithDefaults() *QuoteFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the quote find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the quote find params
@@ -271,160 +302,170 @@ func (o *QuoteFindParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 
 		// query param externalId
 		var qrExternalID string
+
 		if o.ExternalID != nil {
 			qrExternalID = *o.ExternalID
 		}
 		qExternalID := qrExternalID
 		if qExternalID != "" {
+
 			if err := r.SetQueryParam("externalId", qExternalID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Limit != nil {
 
 		// query param limit
 		var qrLimit string
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := qrLimit
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Offset != nil {
 
 		// query param offset
 		var qrOffset string
+
 		if o.Offset != nil {
 			qrOffset = *o.Offset
 		}
 		qOffset := qrOffset
 		if qOffset != "" {
+
 			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ProjectID != nil {
 
 		// query param projectId
 		var qrProjectID string
+
 		if o.ProjectID != nil {
 			qrProjectID = *o.ProjectID
 		}
 		qProjectID := qrProjectID
 		if qProjectID != "" {
+
 			if err := r.SetQueryParam("projectId", qProjectID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.QuoteCompletionDateGt != nil {
 
 		// query param quoteCompletionDate.gt
 		var qrQuoteCompletionDateGt strfmt.DateTime
+
 		if o.QuoteCompletionDateGt != nil {
 			qrQuoteCompletionDateGt = *o.QuoteCompletionDateGt
 		}
 		qQuoteCompletionDateGt := qrQuoteCompletionDateGt.String()
 		if qQuoteCompletionDateGt != "" {
+
 			if err := r.SetQueryParam("quoteCompletionDate.gt", qQuoteCompletionDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.QuoteCompletionDateLt != nil {
 
 		// query param quoteCompletionDate.lt
 		var qrQuoteCompletionDateLt strfmt.DateTime
+
 		if o.QuoteCompletionDateLt != nil {
 			qrQuoteCompletionDateLt = *o.QuoteCompletionDateLt
 		}
 		qQuoteCompletionDateLt := qrQuoteCompletionDateLt.String()
 		if qQuoteCompletionDateLt != "" {
+
 			if err := r.SetQueryParam("quoteCompletionDate.lt", qQuoteCompletionDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.QuoteDateGt != nil {
 
 		// query param quoteDate.gt
 		var qrQuoteDateGt strfmt.DateTime
+
 		if o.QuoteDateGt != nil {
 			qrQuoteDateGt = *o.QuoteDateGt
 		}
 		qQuoteDateGt := qrQuoteDateGt.String()
 		if qQuoteDateGt != "" {
+
 			if err := r.SetQueryParam("quoteDate.gt", qQuoteDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.QuoteDateLt != nil {
 
 		// query param quoteDate.lt
 		var qrQuoteDateLt strfmt.DateTime
+
 		if o.QuoteDateLt != nil {
 			qrQuoteDateLt = *o.QuoteDateLt
 		}
 		qQuoteDateLt := qrQuoteDateLt.String()
 		if qQuoteDateLt != "" {
+
 			if err := r.SetQueryParam("quoteDate.lt", qQuoteDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.QuoteLevel != nil {
 
 		// query param quoteLevel
 		var qrQuoteLevel string
+
 		if o.QuoteLevel != nil {
 			qrQuoteLevel = *o.QuoteLevel
 		}
 		qQuoteLevel := qrQuoteLevel
 		if qQuoteLevel != "" {
+
 			if err := r.SetQueryParam("quoteLevel", qQuoteLevel); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.State != nil {
 
 		// query param state
 		var qrState string
+
 		if o.State != nil {
 			qrState = *o.State
 		}
 		qState := qrState
 		if qState != "" {
+
 			if err := r.SetQueryParam("state", qState); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

@@ -14,7 +14,8 @@ import (
 )
 
 // NewGeographicAddressGetParams creates a new GeographicAddressGetParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGeographicAddressGetParams() GeographicAddressGetParams {
 
 	return GeographicAddressGetParams{}
@@ -49,7 +50,6 @@ func (o *GeographicAddressGetParams) BindRequest(r *http.Request, route *middlew
 	if err := o.bindGeographicAddressID(rGeographicAddressID, rhkGeographicAddressID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -65,7 +65,6 @@ func (o *GeographicAddressGetParams) bindGeographicAddressID(rawData []string, h
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.GeographicAddressID = raw
 
 	return nil

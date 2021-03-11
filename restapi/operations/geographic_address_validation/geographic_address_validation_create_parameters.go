@@ -6,18 +6,21 @@ package geographic_address_validation
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NewGeographicAddressValidationCreateParams creates a new GeographicAddressValidationCreateParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGeographicAddressValidationCreateParams() GeographicAddressValidationCreateParams {
 
 	return GeographicAddressValidationCreateParams{}
@@ -53,7 +56,7 @@ func (o *GeographicAddressValidationCreateParams) BindRequest(r *http.Request, r
 		var body models.GeographicAddressValidationCreate
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("addressValidationRequest", "body"))
+				res = append(res, errors.Required("addressValidationRequest", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("addressValidationRequest", "body", "", err))
 			}
@@ -63,12 +66,17 @@ func (o *GeographicAddressValidationCreateParams) BindRequest(r *http.Request, r
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.AddressValidationRequest = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("addressValidationRequest", "body"))
+		res = append(res, errors.Required("addressValidationRequest", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

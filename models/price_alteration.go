@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -71,7 +73,6 @@ func (m *PriceAlteration) Validate(formats strfmt.Registry) error {
 }
 
 func (m *PriceAlteration) validatePrice(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Price) { // not required
 		return nil
 	}
@@ -92,6 +93,34 @@ func (m *PriceAlteration) validatePriceType(formats strfmt.Registry) error {
 
 	if err := validate.Required("priceType", "body", m.PriceType); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this price alteration based on the context it is used
+func (m *PriceAlteration) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidatePrice(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *PriceAlteration) contextValidatePrice(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Price != nil {
+		if err := m.Price.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("price")
+			}
+			return err
+		}
 	}
 
 	return nil

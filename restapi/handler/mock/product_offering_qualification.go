@@ -38,7 +38,9 @@ var (
 	poqBus = event.GetEventBus(poqType)
 )
 
-func ProductOfferingQualificationProductOfferingQualificationCreateHandler(params poq.ProductOfferingQualificationCreateParams, principal *models.Principal) middleware.Responder {
+func ProductOfferingQualificationProductOfferingQualificationCreateHandler(
+	params poq.ProductOfferingQualificationCreateParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return poq.NewProductOfferingQualificationCreateBadRequest().WithPayload(payload)
 	}
@@ -49,6 +51,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 	for _, i := range input.ProductOfferingQualificationItem {
 		p := &schema.Product{}
 		if err := util.Convert(i.Product, p); err == nil {
+			days := models.TimeUnitBusinessDays
 			items = append(items, &schema.ProductOfferingQualificationItem{
 				AtType:                   i.AtType,
 				Action:                   i.Action,
@@ -58,7 +61,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 				ID:                       swag.String(xid.New().String()),
 				InstallationInterval: &models.TimeInterval{
 					Amount:   swag.Int32(15),
-					TimeUnit: models.TimeUnitBusinessDays,
+					TimeUnit: &days,
 				},
 				Product:         p,
 				ProductOffering: i.ProductOffering,
@@ -119,7 +122,7 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 				},
 				EventID:   util.NewIDPtr(),
 				EventTime: &now,
-				EventType: t,
+				EventType: &t,
 			})
 			return poq.NewProductOfferingQualificationCreateCreated().WithPayload(payload)
 		}
@@ -130,7 +133,9 @@ func ProductOfferingQualificationProductOfferingQualificationCreateHandler(param
 	})
 }
 
-func ProductOfferingQualificationProductOfferingQualificationFindHandler(params poq.ProductOfferingQualificationFindParams, principal *models.Principal) middleware.Responder {
+func ProductOfferingQualificationProductOfferingQualificationFindHandler(
+	params poq.ProductOfferingQualificationFindParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return poq.NewProductOfferingQualificationFindBadRequest().WithPayload(payload)
 	}
@@ -179,7 +184,9 @@ func ProductOfferingQualificationProductOfferingQualificationFindHandler(params 
 	}
 }
 
-func ProductOfferingQualificationProductOfferingQualificationGetHandler(params poq.ProductOfferingQualificationGetParams, principal *models.Principal) middleware.Responder {
+func ProductOfferingQualificationProductOfferingQualificationGetHandler(
+	params poq.ProductOfferingQualificationGetParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return poq.NewProductOfferingQualificationGetUnauthorized().WithPayload(payload)
 	}
@@ -195,7 +202,9 @@ func ProductOfferingQualificationProductOfferingQualificationGetHandler(params p
 	}
 }
 
-func HubProductOfferingQualificationManagementHubDeleteHandler(params hub.ProductOfferingQualificationManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
+func HubProductOfferingQualificationManagementHubDeleteHandler(
+	params hub.ProductOfferingQualificationManagementHubDeleteParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOfferingQualificationManagementHubDeleteUnauthorized().WithPayload(payload)
 	}
@@ -225,7 +234,9 @@ func HubProductOfferingQualificationManagementHubDeleteHandler(params hub.Produc
 	}
 }
 
-func HubProductOfferingQualificationManagementHubGetHandler(params hub.ProductOfferingQualificationManagementHubGetParams, principal *models.Principal) middleware.Responder {
+func HubProductOfferingQualificationManagementHubGetHandler(
+	params hub.ProductOfferingQualificationManagementHubGetParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOfferingQualificationManagementHubGetUnauthorized().WithPayload(payload)
 	}
@@ -248,7 +259,9 @@ func HubProductOfferingQualificationManagementHubGetHandler(params hub.ProductOf
 	}
 }
 
-func HubProductOfferingQualificationManagementHubPostHandler(params hub.ProductOfferingQualificationManagementHubPostParams, principal *models.Principal) middleware.Responder {
+func HubProductOfferingQualificationManagementHubPostHandler(
+	params hub.ProductOfferingQualificationManagementHubPostParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOfferingQualificationManagementHubPostUnauthorized().WithPayload(payload)
 	}

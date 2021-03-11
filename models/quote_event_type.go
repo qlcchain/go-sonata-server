@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -17,6 +18,11 @@ import (
 //
 // swagger:model QuoteEventType
 type QuoteEventType string
+
+func NewQuoteEventType(value QuoteEventType) *QuoteEventType {
+	v := value
+	return &v
+}
 
 const (
 
@@ -65,5 +71,10 @@ func (m QuoteEventType) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// ContextValidate validates this quote event type based on context it is used
+func (m QuoteEventType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

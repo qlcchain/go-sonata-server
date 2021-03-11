@@ -14,7 +14,8 @@ import (
 )
 
 // NewQuoteManagementHubFindParams creates a new QuoteManagementHubFindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewQuoteManagementHubFindParams() QuoteManagementHubFindParams {
 
 	return QuoteManagementHubFindParams{}
@@ -47,7 +48,6 @@ func (o *QuoteManagementHubFindParams) BindRequest(r *http.Request, route *middl
 	if err := o.bindFields(r.Header[http.CanonicalHeaderKey("fields")], true, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -66,7 +66,6 @@ func (o *QuoteManagementHubFindParams) bindFields(rawData []string, hasKey bool,
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Fields = &raw
 
 	return nil

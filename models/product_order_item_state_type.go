@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -17,6 +18,11 @@ import (
 //
 // swagger:model ProductOrderItemStateType
 type ProductOrderItemStateType string
+
+func NewProductOrderItemStateType(value ProductOrderItemStateType) *ProductOrderItemStateType {
+	v := value
+	return &v
+}
 
 const (
 
@@ -44,8 +50,8 @@ const (
 	// ProductOrderItemStateTypeCancelled captures enum value "cancelled"
 	ProductOrderItemStateTypeCancelled ProductOrderItemStateType = "cancelled"
 
-	// ProductOrderItemStateTypeInProgressConfigured captures enum value "inProgress.configured"
-	ProductOrderItemStateTypeInProgressConfigured ProductOrderItemStateType = "inProgress.configured"
+	// ProductOrderItemStateTypeInProgressDotConfigured captures enum value "inProgress.configured"
+	ProductOrderItemStateTypeInProgressDotConfigured ProductOrderItemStateType = "inProgress.configured"
 
 	// ProductOrderItemStateTypeFailed captures enum value "failed"
 	ProductOrderItemStateTypeFailed ProductOrderItemStateType = "failed"
@@ -86,5 +92,10 @@ func (m ProductOrderItemStateType) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// ContextValidate validates this product order item state type based on context it is used
+func (m ProductOrderItemStateType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

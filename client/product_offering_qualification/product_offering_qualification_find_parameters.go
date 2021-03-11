@@ -16,84 +16,107 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewProductOfferingQualificationFindParams creates a new ProductOfferingQualificationFindParams object
-// with the default values initialized.
+// NewProductOfferingQualificationFindParams creates a new ProductOfferingQualificationFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOfferingQualificationFindParams() *ProductOfferingQualificationFindParams {
-	var ()
 	return &ProductOfferingQualificationFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOfferingQualificationFindParamsWithTimeout creates a new ProductOfferingQualificationFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOfferingQualificationFindParamsWithTimeout(timeout time.Duration) *ProductOfferingQualificationFindParams {
-	var ()
 	return &ProductOfferingQualificationFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOfferingQualificationFindParamsWithContext creates a new ProductOfferingQualificationFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOfferingQualificationFindParamsWithContext(ctx context.Context) *ProductOfferingQualificationFindParams {
-	var ()
 	return &ProductOfferingQualificationFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOfferingQualificationFindParamsWithHTTPClient creates a new ProductOfferingQualificationFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOfferingQualificationFindParamsWithHTTPClient(client *http.Client) *ProductOfferingQualificationFindParams {
-	var ()
 	return &ProductOfferingQualificationFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOfferingQualificationFindParams contains all the parameters to send to the API endpoint
-for the product offering qualification find operation typically these are written to a http.Request
+/* ProductOfferingQualificationFindParams contains all the parameters to send to the API endpoint
+   for the product offering qualification find operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOfferingQualificationFindParams struct {
 
-	/*Limit
-	  Requested number of resources to be provided in response requested by client
+	/* Limit.
 
+	   Requested number of resources to be provided in response requested by client
 	*/
 	Limit *string
-	/*Offset
-	  Requested index for start of resources to be provided in response requested by client
 
+	/* Offset.
+
+	   Requested index for start of resources to be provided in response requested by client
 	*/
 	Offset *string
-	/*ProjectID
-	  Identifier of buyer project associated to POQ
 
+	/* ProjectID.
+
+	   Identifier of buyer project associated to POQ
 	*/
 	ProjectID *string
-	/*RequestedResponseDateGt
-	  POQ expected response date is after this date
 
+	/* RequestedResponseDateGt.
+
+	   POQ expected response date is after this date
+
+	   Format: date-time
 	*/
 	RequestedResponseDateGt *strfmt.DateTime
-	/*RequestedResponseDateLt
-	  POQ expected response date is before this date
 
+	/* RequestedResponseDateLt.
+
+	   POQ expected response date is before this date
+
+	   Format: date-time
 	*/
 	RequestedResponseDateLt *strfmt.DateTime
-	/*State
-	  State of the POQ to be retrieeved
 
+	/* State.
+
+	   State of the POQ to be retrieeved
 	*/
 	State *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product offering qualification find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationFindParams) WithDefaults() *ProductOfferingQualificationFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product offering qualification find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product offering qualification find params
@@ -207,96 +230,102 @@ func (o *ProductOfferingQualificationFindParams) WriteToRequest(r runtime.Client
 
 		// query param limit
 		var qrLimit string
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := qrLimit
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Offset != nil {
 
 		// query param offset
 		var qrOffset string
+
 		if o.Offset != nil {
 			qrOffset = *o.Offset
 		}
 		qOffset := qrOffset
 		if qOffset != "" {
+
 			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ProjectID != nil {
 
 		// query param projectId
 		var qrProjectID string
+
 		if o.ProjectID != nil {
 			qrProjectID = *o.ProjectID
 		}
 		qProjectID := qrProjectID
 		if qProjectID != "" {
+
 			if err := r.SetQueryParam("projectId", qProjectID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.RequestedResponseDateGt != nil {
 
 		// query param requestedResponseDate.gt
 		var qrRequestedResponseDateGt strfmt.DateTime
+
 		if o.RequestedResponseDateGt != nil {
 			qrRequestedResponseDateGt = *o.RequestedResponseDateGt
 		}
 		qRequestedResponseDateGt := qrRequestedResponseDateGt.String()
 		if qRequestedResponseDateGt != "" {
+
 			if err := r.SetQueryParam("requestedResponseDate.gt", qRequestedResponseDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.RequestedResponseDateLt != nil {
 
 		// query param requestedResponseDate.lt
 		var qrRequestedResponseDateLt strfmt.DateTime
+
 		if o.RequestedResponseDateLt != nil {
 			qrRequestedResponseDateLt = *o.RequestedResponseDateLt
 		}
 		qRequestedResponseDateLt := qrRequestedResponseDateLt.String()
 		if qRequestedResponseDateLt != "" {
+
 			if err := r.SetQueryParam("requestedResponseDate.lt", qRequestedResponseDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.State != nil {
 
 		// query param state
 		var qrState string
+
 		if o.State != nil {
 			qrState = *o.State
 		}
 		qState := qrState
 		if qState != "" {
+
 			if err := r.SetQueryParam("state", qState); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewProductOfferingQualificationManagementHubPostParams creates a new ProductOfferingQualificationManagementHubPostParams object
-// with the default values initialized.
+// NewProductOfferingQualificationManagementHubPostParams creates a new ProductOfferingQualificationManagementHubPostParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOfferingQualificationManagementHubPostParams() *ProductOfferingQualificationManagementHubPostParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubPostParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOfferingQualificationManagementHubPostParamsWithTimeout creates a new ProductOfferingQualificationManagementHubPostParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOfferingQualificationManagementHubPostParamsWithTimeout(timeout time.Duration) *ProductOfferingQualificationManagementHubPostParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubPostParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOfferingQualificationManagementHubPostParamsWithContext creates a new ProductOfferingQualificationManagementHubPostParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOfferingQualificationManagementHubPostParamsWithContext(ctx context.Context) *ProductOfferingQualificationManagementHubPostParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubPostParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOfferingQualificationManagementHubPostParamsWithHTTPClient creates a new ProductOfferingQualificationManagementHubPostParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOfferingQualificationManagementHubPostParamsWithHTTPClient(client *http.Client) *ProductOfferingQualificationManagementHubPostParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubPostParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOfferingQualificationManagementHubPostParams contains all the parameters to send to the API endpoint
-for the product offering qualification management hub post operation typically these are written to a http.Request
+/* ProductOfferingQualificationManagementHubPostParams contains all the parameters to send to the API endpoint
+   for the product offering qualification management hub post operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOfferingQualificationManagementHubPostParams struct {
 
-	/*Hub*/
+	// Hub.
 	Hub *models.HubInput
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product offering qualification management hub post params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationManagementHubPostParams) WithDefaults() *ProductOfferingQualificationManagementHubPostParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product offering qualification management hub post params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationManagementHubPostParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product offering qualification management hub post params
@@ -121,7 +135,6 @@ func (o *ProductOfferingQualificationManagementHubPostParams) WriteToRequest(r r
 		return err
 	}
 	var res []error
-
 	if o.Hub != nil {
 		if err := r.SetBodyParam(o.Hub); err != nil {
 			return err

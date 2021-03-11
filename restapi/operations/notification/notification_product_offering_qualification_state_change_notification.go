@@ -29,7 +29,7 @@ func NewNotificationProductOfferingQualificationStateChangeNotification(ctx *mid
 	return &NotificationProductOfferingQualificationStateChangeNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationProductOfferingQualificationStateChangeNotification swagger:route POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification Notification notificationProductOfferingQualificationStateChangeNotification
+/* NotificationProductOfferingQualificationStateChangeNotification swagger:route POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification Notification notificationProductOfferingQualificationStateChangeNotification
 
 Product Offering Qualification State Change Notification structure
 
@@ -47,14 +47,12 @@ func (o *NotificationProductOfferingQualificationStateChangeNotification) ServeH
 		r = rCtx
 	}
 	var Params = NewNotificationProductOfferingQualificationStateChangeNotificationParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

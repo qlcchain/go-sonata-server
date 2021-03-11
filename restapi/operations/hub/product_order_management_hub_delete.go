@@ -31,7 +31,7 @@ func NewProductOrderManagementHubDelete(ctx *middleware.Context, handler Product
 	return &ProductOrderManagementHubDelete{Context: ctx, Handler: handler}
 }
 
-/*ProductOrderManagementHubDelete swagger:route DELETE /productOrderManagement/v3/hub/{HubId} Hub productOrderManagementHubDelete
+/* ProductOrderManagementHubDelete swagger:route DELETE /productOrderManagement/v3/hub/{HubId} Hub productOrderManagementHubDelete
 
 Delete a Hub
 
@@ -49,7 +49,6 @@ func (o *ProductOrderManagementHubDelete) ServeHTTP(rw http.ResponseWriter, r *h
 		r = rCtx
 	}
 	var Params = NewProductOrderManagementHubDeleteParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *ProductOrderManagementHubDelete) ServeHTTP(rw http.ResponseWriter, r *h
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

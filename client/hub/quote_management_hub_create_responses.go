@@ -77,9 +77,8 @@ func (o *QuoteManagementHubCreateReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -88,7 +87,7 @@ func NewQuoteManagementHubCreateCreated() *QuoteManagementHubCreateCreated {
 	return &QuoteManagementHubCreateCreated{}
 }
 
-/*QuoteManagementHubCreateCreated handles this case with default header values.
+/* QuoteManagementHubCreateCreated describes a response with status code 201, with default header values.
 
 Created
 */
@@ -99,7 +98,6 @@ type QuoteManagementHubCreateCreated struct {
 func (o *QuoteManagementHubCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateCreated  %+v", 201, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateCreated) GetPayload() *models.Hub {
 	return o.Payload
 }
@@ -121,9 +119,9 @@ func NewQuoteManagementHubCreateBadRequest() *QuoteManagementHubCreateBadRequest
 	return &QuoteManagementHubCreateBadRequest{}
 }
 
-/*QuoteManagementHubCreateBadRequest handles this case with default header values.
+/* QuoteManagementHubCreateBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -143,7 +141,6 @@ type QuoteManagementHubCreateBadRequest struct {
 func (o *QuoteManagementHubCreateBadRequest) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -165,9 +162,9 @@ func NewQuoteManagementHubCreateUnauthorized() *QuoteManagementHubCreateUnauthor
 	return &QuoteManagementHubCreateUnauthorized{}
 }
 
-/*QuoteManagementHubCreateUnauthorized handles this case with default header values.
+/* QuoteManagementHubCreateUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -181,7 +178,6 @@ type QuoteManagementHubCreateUnauthorized struct {
 func (o *QuoteManagementHubCreateUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -203,9 +199,9 @@ func NewQuoteManagementHubCreateForbidden() *QuoteManagementHubCreateForbidden {
 	return &QuoteManagementHubCreateForbidden{}
 }
 
-/*QuoteManagementHubCreateForbidden handles this case with default header values.
+/* QuoteManagementHubCreateForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -220,7 +216,6 @@ type QuoteManagementHubCreateForbidden struct {
 func (o *QuoteManagementHubCreateForbidden) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateForbidden  %+v", 403, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -242,9 +237,9 @@ func NewQuoteManagementHubCreateNotFound() *QuoteManagementHubCreateNotFound {
 	return &QuoteManagementHubCreateNotFound{}
 }
 
-/*QuoteManagementHubCreateNotFound handles this case with default header values.
+/* QuoteManagementHubCreateNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -256,7 +251,6 @@ type QuoteManagementHubCreateNotFound struct {
 func (o *QuoteManagementHubCreateNotFound) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateNotFound  %+v", 404, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -278,9 +272,9 @@ func NewQuoteManagementHubCreateMethodNotAllowed() *QuoteManagementHubCreateMeth
 	return &QuoteManagementHubCreateMethodNotAllowed{}
 }
 
-/*QuoteManagementHubCreateMethodNotAllowed handles this case with default header values.
+/* QuoteManagementHubCreateMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -292,7 +286,6 @@ type QuoteManagementHubCreateMethodNotAllowed struct {
 func (o *QuoteManagementHubCreateMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -314,9 +307,9 @@ func NewQuoteManagementHubCreateUnprocessableEntity() *QuoteManagementHubCreateU
 	return &QuoteManagementHubCreateUnprocessableEntity{}
 }
 
-/*QuoteManagementHubCreateUnprocessableEntity handles this case with default header values.
+/* QuoteManagementHubCreateUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -327,7 +320,6 @@ type QuoteManagementHubCreateUnprocessableEntity struct {
 func (o *QuoteManagementHubCreateUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -349,9 +341,9 @@ func NewQuoteManagementHubCreateInternalServerError() *QuoteManagementHubCreateI
 	return &QuoteManagementHubCreateInternalServerError{}
 }
 
-/*QuoteManagementHubCreateInternalServerError handles this case with default header values.
+/* QuoteManagementHubCreateInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -363,7 +355,6 @@ type QuoteManagementHubCreateInternalServerError struct {
 func (o *QuoteManagementHubCreateInternalServerError) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -385,7 +376,7 @@ func NewQuoteManagementHubCreateServiceUnavailable() *QuoteManagementHubCreateSe
 	return &QuoteManagementHubCreateServiceUnavailable{}
 }
 
-/*QuoteManagementHubCreateServiceUnavailable handles this case with default header values.
+/* QuoteManagementHubCreateServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -398,7 +389,6 @@ type QuoteManagementHubCreateServiceUnavailable struct {
 func (o *QuoteManagementHubCreateServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/hub][%d] quoteManagementHubCreateServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *QuoteManagementHubCreateServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

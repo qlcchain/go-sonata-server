@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -18,6 +19,11 @@ import (
 // swagger:model QualificationState
 type QualificationState string
 
+func NewQualificationState(value QualificationState) *QualificationState {
+	v := value
+	return &v
+}
+
 const (
 
 	// QualificationStateInProgress captures enum value "inProgress"
@@ -26,11 +32,11 @@ const (
 	// QualificationStateDone captures enum value "done"
 	QualificationStateDone QualificationState = "done"
 
-	// QualificationStateTerminatedWithErrorUnableToProvide captures enum value "terminatedWithError.unableToProvide"
-	QualificationStateTerminatedWithErrorUnableToProvide QualificationState = "terminatedWithError.unableToProvide"
+	// QualificationStateTerminatedWithErrorDotUnableToProvide captures enum value "terminatedWithError.unableToProvide"
+	QualificationStateTerminatedWithErrorDotUnableToProvide QualificationState = "terminatedWithError.unableToProvide"
 
-	// QualificationStateTerminatedWithErrorInsufficientInformationProvided captures enum value "terminatedWithError.insufficientInformationProvided"
-	QualificationStateTerminatedWithErrorInsufficientInformationProvided QualificationState = "terminatedWithError.insufficientInformationProvided"
+	// QualificationStateTerminatedWithErrorDotInsufficientInformationProvided captures enum value "terminatedWithError.insufficientInformationProvided"
+	QualificationStateTerminatedWithErrorDotInsufficientInformationProvided QualificationState = "terminatedWithError.insufficientInformationProvided"
 )
 
 // for schema
@@ -65,5 +71,10 @@ func (m QualificationState) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// ContextValidate validates this qualification state based on context it is used
+func (m QualificationState) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

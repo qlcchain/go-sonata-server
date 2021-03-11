@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -23,7 +25,7 @@ type TimeInterval struct {
 
 	// time unit
 	// Required: true
-	TimeUnit TimeUnit `json:"timeUnit"`
+	TimeUnit *TimeUnit `json:"timeUnit"`
 }
 
 // Validate validates this time interval
@@ -55,11 +57,49 @@ func (m *TimeInterval) validateAmount(formats strfmt.Registry) error {
 
 func (m *TimeInterval) validateTimeUnit(formats strfmt.Registry) error {
 
-	if err := m.TimeUnit.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("timeUnit")
-		}
+	if err := validate.Required("timeUnit", "body", m.TimeUnit); err != nil {
 		return err
+	}
+
+	if err := validate.Required("timeUnit", "body", m.TimeUnit); err != nil {
+		return err
+	}
+
+	if m.TimeUnit != nil {
+		if err := m.TimeUnit.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("timeUnit")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this time interval based on the context it is used
+func (m *TimeInterval) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateTimeUnit(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *TimeInterval) contextValidateTimeUnit(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.TimeUnit != nil {
+		if err := m.TimeUnit.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("timeUnit")
+			}
+			return err
+		}
 	}
 
 	return nil

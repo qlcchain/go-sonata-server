@@ -31,7 +31,7 @@ func NewQuoteManagementHubCreate(ctx *middleware.Context, handler QuoteManagemen
 	return &QuoteManagementHubCreate{Context: ctx, Handler: handler}
 }
 
-/*QuoteManagementHubCreate swagger:route POST /quoteManagement/v2/hub Hub quoteManagementHubCreate
+/* QuoteManagementHubCreate swagger:route POST /quoteManagement/v2/hub Hub quoteManagementHubCreate
 
 Register a listener
 
@@ -49,7 +49,6 @@ func (o *QuoteManagementHubCreate) ServeHTTP(rw http.ResponseWriter, r *http.Req
 		r = rCtx
 	}
 	var Params = NewQuoteManagementHubCreateParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *QuoteManagementHubCreate) ServeHTTP(rw http.ResponseWriter, r *http.Req
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

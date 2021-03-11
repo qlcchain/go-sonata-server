@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationQuoteInformationRequiredNotificationParams creates a new NotificationQuoteInformationRequiredNotificationParams object
-// with the default values initialized.
+// NewNotificationQuoteInformationRequiredNotificationParams creates a new NotificationQuoteInformationRequiredNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationQuoteInformationRequiredNotificationParams() *NotificationQuoteInformationRequiredNotificationParams {
-	var ()
 	return &NotificationQuoteInformationRequiredNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationQuoteInformationRequiredNotificationParamsWithTimeout creates a new NotificationQuoteInformationRequiredNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationQuoteInformationRequiredNotificationParamsWithTimeout(timeout time.Duration) *NotificationQuoteInformationRequiredNotificationParams {
-	var ()
 	return &NotificationQuoteInformationRequiredNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationQuoteInformationRequiredNotificationParamsWithContext creates a new NotificationQuoteInformationRequiredNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationQuoteInformationRequiredNotificationParamsWithContext(ctx context.Context) *NotificationQuoteInformationRequiredNotificationParams {
-	var ()
 	return &NotificationQuoteInformationRequiredNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationQuoteInformationRequiredNotificationParamsWithHTTPClient creates a new NotificationQuoteInformationRequiredNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationQuoteInformationRequiredNotificationParamsWithHTTPClient(client *http.Client) *NotificationQuoteInformationRequiredNotificationParams {
-	var ()
 	return &NotificationQuoteInformationRequiredNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationQuoteInformationRequiredNotificationParams contains all the parameters to send to the API endpoint
-for the notification quote information required notification operation typically these are written to a http.Request
+/* NotificationQuoteInformationRequiredNotificationParams contains all the parameters to send to the API endpoint
+   for the notification quote information required notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationQuoteInformationRequiredNotificationParams struct {
 
-	/*QuoteInformationRequiredNotification*/
+	// QuoteInformationRequiredNotification.
 	QuoteInformationRequiredNotification []*models.QuoteEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification quote information required notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteInformationRequiredNotificationParams) WithDefaults() *NotificationQuoteInformationRequiredNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification quote information required notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteInformationRequiredNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification quote information required notification params
@@ -121,7 +135,6 @@ func (o *NotificationQuoteInformationRequiredNotificationParams) WriteToRequest(
 		return err
 	}
 	var res []error
-
 	if o.QuoteInformationRequiredNotification != nil {
 		if err := r.SetBodyParam(o.QuoteInformationRequiredNotification); err != nil {
 			return err

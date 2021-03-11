@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -64,7 +65,7 @@ type ProductOfferingQualification struct {
 
 	// state
 	// Required: true
-	State ProductOfferingQualificationStateType `json:"state"`
+	State *ProductOfferingQualificationStateType `json:"state"`
 
 	// state change
 	StateChange []*StateChange `json:"stateChange"`
@@ -113,7 +114,6 @@ func (m *ProductOfferingQualification) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ProductOfferingQualification) validateEffectiveQualificationCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EffectiveQualificationCompletionDate) { // not required
 		return nil
 	}
@@ -126,7 +126,6 @@ func (m *ProductOfferingQualification) validateEffectiveQualificationCompletionD
 }
 
 func (m *ProductOfferingQualification) validateExpectedResponseDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedResponseDate) { // not required
 		return nil
 	}
@@ -204,7 +203,6 @@ func (m *ProductOfferingQualification) validateRelatedParty(formats strfmt.Regis
 }
 
 func (m *ProductOfferingQualification) validateRequestedResponseDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestedResponseDate) { // not required
 		return nil
 	}
@@ -218,18 +216,27 @@ func (m *ProductOfferingQualification) validateRequestedResponseDate(formats str
 
 func (m *ProductOfferingQualification) validateState(formats strfmt.Registry) error {
 
-	if err := m.State.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
+	if err := validate.Required("state", "body", m.State); err != nil {
 		return err
+	}
+
+	if err := validate.Required("state", "body", m.State); err != nil {
+		return err
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
 func (m *ProductOfferingQualification) validateStateChange(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StateChange) { // not required
 		return nil
 	}
@@ -241,6 +248,100 @@ func (m *ProductOfferingQualification) validateStateChange(formats strfmt.Regist
 
 		if m.StateChange[i] != nil {
 			if err := m.StateChange[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("stateChange" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product offering qualification based on the context it is used
+func (m *ProductOfferingQualification) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateProductOfferingQualificationItem(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStateChange(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductOfferingQualification) contextValidateProductOfferingQualificationItem(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ProductOfferingQualificationItem); i++ {
+
+		if m.ProductOfferingQualificationItem[i] != nil {
+			if err := m.ProductOfferingQualificationItem[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("productOfferingQualificationItem" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualification) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualification) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualification) contextValidateStateChange(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.StateChange); i++ {
+
+		if m.StateChange[i] != nil {
+			if err := m.StateChange[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("stateChange" + "." + strconv.Itoa(i))
 				}

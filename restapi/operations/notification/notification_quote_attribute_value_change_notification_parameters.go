@@ -17,7 +17,8 @@ import (
 )
 
 // NewNotificationQuoteAttributeValueChangeNotificationParams creates a new NotificationQuoteAttributeValueChangeNotificationParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewNotificationQuoteAttributeValueChangeNotificationParams() NotificationQuoteAttributeValueChangeNotificationParams {
 
 	return NotificationQuoteAttributeValueChangeNotificationParams{}
@@ -53,11 +54,12 @@ func (o *NotificationQuoteAttributeValueChangeNotificationParams) BindRequest(r 
 		var body []*models.QuoteEventPlus
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("quoteAttributeValueChangeNotification", "body"))
+				res = append(res, errors.Required("quoteAttributeValueChangeNotification", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("quoteAttributeValueChangeNotification", "body", "", err))
 			}
 		} else {
+
 			// validate array of body objects
 			for i := range body {
 				if body[i] == nil {
@@ -68,12 +70,13 @@ func (o *NotificationQuoteAttributeValueChangeNotificationParams) BindRequest(r 
 					break
 				}
 			}
+
 			if len(res) == 0 {
 				o.QuoteAttributeValueChangeNotification = body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("quoteAttributeValueChangeNotification", "body"))
+		res = append(res, errors.Required("quoteAttributeValueChangeNotification", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -50,7 +51,6 @@ func (m *ProductEvent) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ProductEvent) validateProductSpecification(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ProductSpecification) { // not required
 		return nil
 	}
@@ -68,7 +68,6 @@ func (m *ProductEvent) validateProductSpecification(formats strfmt.Registry) err
 }
 
 func (m *ProductEvent) validateRelatedParty(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RelatedParty) { // not required
 		return nil
 	}
@@ -80,6 +79,56 @@ func (m *ProductEvent) validateRelatedParty(formats strfmt.Registry) error {
 
 		if m.RelatedParty[i] != nil {
 			if err := m.RelatedParty[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product event based on the context it is used
+func (m *ProductEvent) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateProductSpecification(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductEvent) contextValidateProductSpecification(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ProductSpecification != nil {
+		if err := m.ProductSpecification.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("productSpecification")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductEvent) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
 				}

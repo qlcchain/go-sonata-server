@@ -29,7 +29,7 @@ func NewNotificationProductOrderCreationNotification(ctx *middleware.Context, ha
 	return &NotificationProductOrderCreationNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationProductOrderCreationNotification swagger:route POST /productOrderNotification/v3/notification/productOrderCreationNotification Notification notificationProductOrderCreationNotification
+/* NotificationProductOrderCreationNotification swagger:route POST /productOrderNotification/v3/notification/productOrderCreationNotification Notification notificationProductOrderCreationNotification
 
 Product order creation notification structure
 
@@ -47,14 +47,12 @@ func (o *NotificationProductOrderCreationNotification) ServeHTTP(rw http.Respons
 		r = rCtx
 	}
 	var Params = NewNotificationProductOrderCreationNotificationParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

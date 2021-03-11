@@ -29,7 +29,7 @@ func NewNotificationProductOrderAttributeValueChangeNotification(ctx *middleware
 	return &NotificationProductOrderAttributeValueChangeNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotification swagger:route POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification Notification notificationProductOrderAttributeValueChangeNotification
+/* NotificationProductOrderAttributeValueChangeNotification swagger:route POST /productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification Notification notificationProductOrderAttributeValueChangeNotification
 
 Product Order attribute value change structure
 
@@ -47,14 +47,12 @@ func (o *NotificationProductOrderAttributeValueChangeNotification) ServeHTTP(rw 
 		r = rCtx
 	}
 	var Params = NewNotificationProductOrderAttributeValueChangeNotificationParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

@@ -31,7 +31,7 @@ func NewCancelProductOrderFind(ctx *middleware.Context, handler CancelProductOrd
 	return &CancelProductOrderFind{Context: ctx, Handler: handler}
 }
 
-/*CancelProductOrderFind swagger:route GET /productOrderManagement/v3/cancelProductOrder CancelProductOrder cancelProductOrderFind
+/* CancelProductOrderFind swagger:route GET /productOrderManagement/v3/cancelProductOrder CancelProductOrder cancelProductOrderFind
 
 Find a lost of product order cancellation request(s)
 
@@ -49,7 +49,6 @@ func (o *CancelProductOrderFind) ServeHTTP(rw http.ResponseWriter, r *http.Reque
 		r = rCtx
 	}
 	var Params = NewCancelProductOrderFindParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *CancelProductOrderFind) ServeHTTP(rw http.ResponseWriter, r *http.Reque
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

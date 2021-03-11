@@ -83,9 +83,8 @@ func (o *ProductOrderCreateReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -94,7 +93,7 @@ func NewProductOrderCreateCreated() *ProductOrderCreateCreated {
 	return &ProductOrderCreateCreated{}
 }
 
-/*ProductOrderCreateCreated handles this case with default header values.
+/* ProductOrderCreateCreated describes a response with status code 201, with default header values.
 
 Created
 */
@@ -105,7 +104,6 @@ type ProductOrderCreateCreated struct {
 func (o *ProductOrderCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateCreated  %+v", 201, o.Payload)
 }
-
 func (o *ProductOrderCreateCreated) GetPayload() *models.ProductOrder {
 	return o.Payload
 }
@@ -127,9 +125,9 @@ func NewProductOrderCreateBadRequest() *ProductOrderCreateBadRequest {
 	return &ProductOrderCreateBadRequest{}
 }
 
-/*ProductOrderCreateBadRequest handles this case with default header values.
+/* ProductOrderCreateBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -149,7 +147,6 @@ type ProductOrderCreateBadRequest struct {
 func (o *ProductOrderCreateBadRequest) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ProductOrderCreateBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -171,9 +168,9 @@ func NewProductOrderCreateUnauthorized() *ProductOrderCreateUnauthorized {
 	return &ProductOrderCreateUnauthorized{}
 }
 
-/*ProductOrderCreateUnauthorized handles this case with default header values.
+/* ProductOrderCreateUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -187,7 +184,6 @@ type ProductOrderCreateUnauthorized struct {
 func (o *ProductOrderCreateUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *ProductOrderCreateUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -209,9 +205,9 @@ func NewProductOrderCreateForbidden() *ProductOrderCreateForbidden {
 	return &ProductOrderCreateForbidden{}
 }
 
-/*ProductOrderCreateForbidden handles this case with default header values.
+/* ProductOrderCreateForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -226,7 +222,6 @@ type ProductOrderCreateForbidden struct {
 func (o *ProductOrderCreateForbidden) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ProductOrderCreateForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -248,9 +243,9 @@ func NewProductOrderCreateNotFound() *ProductOrderCreateNotFound {
 	return &ProductOrderCreateNotFound{}
 }
 
-/*ProductOrderCreateNotFound handles this case with default header values.
+/* ProductOrderCreateNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -262,7 +257,6 @@ type ProductOrderCreateNotFound struct {
 func (o *ProductOrderCreateNotFound) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ProductOrderCreateNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -284,9 +278,9 @@ func NewProductOrderCreateMethodNotAllowed() *ProductOrderCreateMethodNotAllowed
 	return &ProductOrderCreateMethodNotAllowed{}
 }
 
-/*ProductOrderCreateMethodNotAllowed handles this case with default header values.
+/* ProductOrderCreateMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -298,7 +292,6 @@ type ProductOrderCreateMethodNotAllowed struct {
 func (o *ProductOrderCreateMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *ProductOrderCreateMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -320,9 +313,9 @@ func NewProductOrderCreateRequestTimeout() *ProductOrderCreateRequestTimeout {
 	return &ProductOrderCreateRequestTimeout{}
 }
 
-/*ProductOrderCreateRequestTimeout handles this case with default header values.
+/* ProductOrderCreateRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -334,7 +327,6 @@ type ProductOrderCreateRequestTimeout struct {
 func (o *ProductOrderCreateRequestTimeout) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *ProductOrderCreateRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -356,9 +348,9 @@ func NewProductOrderCreateUnprocessableEntity() *ProductOrderCreateUnprocessable
 	return &ProductOrderCreateUnprocessableEntity{}
 }
 
-/*ProductOrderCreateUnprocessableEntity handles this case with default header values.
+/* ProductOrderCreateUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -477,7 +469,6 @@ type ProductOrderCreateUnprocessableEntity struct {
 func (o *ProductOrderCreateUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *ProductOrderCreateUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -499,9 +490,9 @@ func NewProductOrderCreateInternalServerError() *ProductOrderCreateInternalServe
 	return &ProductOrderCreateInternalServerError{}
 }
 
-/*ProductOrderCreateInternalServerError handles this case with default header values.
+/* ProductOrderCreateInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -513,7 +504,6 @@ type ProductOrderCreateInternalServerError struct {
 func (o *ProductOrderCreateInternalServerError) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *ProductOrderCreateInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -535,7 +525,7 @@ func NewProductOrderCreateServiceUnavailable() *ProductOrderCreateServiceUnavail
 	return &ProductOrderCreateServiceUnavailable{}
 }
 
-/*ProductOrderCreateServiceUnavailable handles this case with default header values.
+/* ProductOrderCreateServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -548,7 +538,6 @@ type ProductOrderCreateServiceUnavailable struct {
 func (o *ProductOrderCreateServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/productOrder][%d] productOrderCreateServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *ProductOrderCreateServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

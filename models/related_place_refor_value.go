@@ -7,6 +7,7 @@ package models
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
 	"io/ioutil"
@@ -23,6 +24,7 @@ import (
 // swagger:discriminator RelatedPlaceReforValue @type
 type RelatedPlaceReforValue interface {
 	runtime.Validatable
+	runtime.ContextValidatable
 
 	// The actual type of the target instance when needed for disambiguation.
 	// Used when place is described by reference
@@ -190,12 +192,11 @@ func (m *relatedPlaceReforValue) Validate(formats strfmt.Registry) error {
 }
 
 func (m *relatedPlaceReforValue) validateID(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ID()) { // not required
 		return nil
 	}
 
-	if err := validate.MaxLength("id", "body", string(m.ID()), 45); err != nil {
+	if err := validate.MaxLength("id", "body", m.ID(), 45); err != nil {
 		return err
 	}
 
@@ -208,5 +209,10 @@ func (m *relatedPlaceReforValue) validateRole(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this related place refor value based on context it is used
+func (m *relatedPlaceReforValue) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GeographicSiteFind(params *GeographicSiteFindParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicSiteFindOK, error)
+	GeographicSiteFind(params *GeographicSiteFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicSiteFindOK, error)
 
-	GeographicSiteGet(params *GeographicSiteGetParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicSiteGetOK, error)
+	GeographicSiteGet(params *GeographicSiteGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicSiteGetOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   The Buyer requests that the Seller provides a list of Service Sites known to the Seller based on a set of Site/Address filter criteria.  For each Service Site returned, the Seller also provides a Service Site Identifier, which uniquely identifies this Service Site within the Seller.
 */
-func (a *Client) GeographicSiteFind(params *GeographicSiteFindParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicSiteFindOK, error) {
+func (a *Client) GeographicSiteFind(params *GeographicSiteFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicSiteFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGeographicSiteFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "geographicSiteFind",
 		Method:             "GET",
 		PathPattern:        "/geographicSiteManagement/v3/geographicSite",
@@ -57,7 +59,12 @@ func (a *Client) GeographicSiteFind(params *GeographicSiteFindParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -76,13 +83,12 @@ func (a *Client) GeographicSiteFind(params *GeographicSiteFindParams, authInfo r
 
   The Buyer requests the full details for a single Service Site based on a Service Site identifier that was previously provided by the Seller.
 */
-func (a *Client) GeographicSiteGet(params *GeographicSiteGetParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicSiteGetOK, error) {
+func (a *Client) GeographicSiteGet(params *GeographicSiteGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicSiteGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGeographicSiteGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "geographicSiteGet",
 		Method:             "GET",
 		PathPattern:        "/geographicSiteManagement/v3/geographicSite/{SiteId}",
@@ -94,7 +100,12 @@ func (a *Client) GeographicSiteGet(params *GeographicSiteGetParams, authInfo run
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

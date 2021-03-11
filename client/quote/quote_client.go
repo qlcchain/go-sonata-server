@@ -25,15 +25,18 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	QuoteCreate(params *QuoteCreateParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteCreateCreated, error)
+	QuoteCreate(params *QuoteCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteCreateCreated, error)
 
-	QuoteFind(params *QuoteFindParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteFindOK, error)
+	QuoteFind(params *QuoteFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteFindOK, error)
 
-	QuoteGet(params *QuoteGetParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteGetOK, error)
+	QuoteGet(params *QuoteGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteGetOK, error)
 
-	QuoteRequestStateChange(params *QuoteRequestStateChangeParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteRequestStateChangeOK, error)
+	QuoteRequestStateChange(params *QuoteRequestStateChangeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteRequestStateChangeOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -43,13 +46,12 @@ type ClientService interface {
 
   This operation is used to create a new quote.
 */
-func (a *Client) QuoteCreate(params *QuoteCreateParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteCreateCreated, error) {
+func (a *Client) QuoteCreate(params *QuoteCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewQuoteCreateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "quoteCreate",
 		Method:             "POST",
 		PathPattern:        "/quoteManagement/v2/quote",
@@ -61,7 +63,12 @@ func (a *Client) QuoteCreate(params *QuoteCreateParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -80,13 +87,12 @@ func (a *Client) QuoteCreate(params *QuoteCreateParams, authInfo runtime.ClientA
 
   This operation is used to retrieve quote information using filter criteria.
 */
-func (a *Client) QuoteFind(params *QuoteFindParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteFindOK, error) {
+func (a *Client) QuoteFind(params *QuoteFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewQuoteFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "quoteFind",
 		Method:             "GET",
 		PathPattern:        "/quoteManagement/v2/quote",
@@ -98,7 +104,12 @@ func (a *Client) QuoteFind(params *QuoteFindParams, authInfo runtime.ClientAuthI
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -117,13 +128,12 @@ func (a *Client) QuoteFind(params *QuoteFindParams, authInfo runtime.ClientAuthI
 
   This operation is used to retrieve quote information using the ID.
 */
-func (a *Client) QuoteGet(params *QuoteGetParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteGetOK, error) {
+func (a *Client) QuoteGet(params *QuoteGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewQuoteGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "quoteGet",
 		Method:             "GET",
 		PathPattern:        "/quoteManagement/v2/quote/{id}",
@@ -135,7 +145,12 @@ func (a *Client) QuoteGet(params *QuoteGetParams, authInfo runtime.ClientAuthInf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -156,13 +171,12 @@ func (a *Client) QuoteGet(params *QuoteGetParams, authInfo runtime.ClientAuthInf
 When seller receive cancel request, seller will shift quote state to CANCELLED (no change on order item state)
 When seller receive reject request, seller will shift quote state to REJECTED (no change on order item state)
 */
-func (a *Client) QuoteRequestStateChange(params *QuoteRequestStateChangeParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteRequestStateChangeOK, error) {
+func (a *Client) QuoteRequestStateChange(params *QuoteRequestStateChangeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteRequestStateChangeOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewQuoteRequestStateChangeParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "quoteRequestStateChange",
 		Method:             "POST",
 		PathPattern:        "/quoteManagement/v2/quote/requestStateChange",
@@ -174,7 +188,12 @@ func (a *Client) QuoteRequestStateChange(params *QuoteRequestStateChangeParams, 
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

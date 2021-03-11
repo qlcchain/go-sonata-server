@@ -14,7 +14,8 @@ import (
 )
 
 // NewCancelProductOrderGetParams creates a new CancelProductOrderGetParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewCancelProductOrderGetParams() CancelProductOrderGetParams {
 
 	return CancelProductOrderGetParams{}
@@ -49,7 +50,6 @@ func (o *CancelProductOrderGetParams) BindRequest(r *http.Request, route *middle
 	if err := o.bindCancelProductOrderID(rCancelProductOrderID, rhkCancelProductOrderID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -65,7 +65,6 @@ func (o *CancelProductOrderGetParams) bindCancelProductOrderID(rawData []string,
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.CancelProductOrderID = raw
 
 	return nil

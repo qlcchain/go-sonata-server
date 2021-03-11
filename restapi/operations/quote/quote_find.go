@@ -31,7 +31,7 @@ func NewQuoteFind(ctx *middleware.Context, handler QuoteFindHandler) *QuoteFind 
 	return &QuoteFind{Context: ctx, Handler: handler}
 }
 
-/*QuoteFind swagger:route GET /quoteManagement/v2/quote Quote quoteFind
+/* QuoteFind swagger:route GET /quoteManagement/v2/quote Quote quoteFind
 
 List quotes
 
@@ -49,7 +49,6 @@ func (o *QuoteFind) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		r = rCtx
 	}
 	var Params = NewQuoteFindParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *QuoteFind) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

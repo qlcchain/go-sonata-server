@@ -31,7 +31,7 @@ func NewGeographicAddressGet(ctx *middleware.Context, handler GeographicAddressG
 	return &GeographicAddressGet{Context: ctx, Handler: handler}
 }
 
-/*GeographicAddressGet swagger:route GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId} GeographicAddress geographicAddressGet
+/* GeographicAddressGet swagger:route GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId} GeographicAddress geographicAddressGet
 
 retrieveAddress
 
@@ -49,7 +49,6 @@ func (o *GeographicAddressGet) ServeHTTP(rw http.ResponseWriter, r *http.Request
 		r = rCtx
 	}
 	var Params = NewGeographicAddressGetParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *GeographicAddressGet) ServeHTTP(rw http.ResponseWriter, r *http.Request
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -100,7 +101,6 @@ func (m *GeographicSite) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GeographicSite) validateFieldedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.FieldedAddress) { // not required
 		return nil
 	}
@@ -118,7 +118,6 @@ func (m *GeographicSite) validateFieldedAddress(formats strfmt.Registry) error {
 }
 
 func (m *GeographicSite) validateFormattedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.FormattedAddress) { // not required
 		return nil
 	}
@@ -136,7 +135,6 @@ func (m *GeographicSite) validateFormattedAddress(formats strfmt.Registry) error
 }
 
 func (m *GeographicSite) validateGeographicLocation(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.GeographicLocation) { // not required
 		return nil
 	}
@@ -154,7 +152,6 @@ func (m *GeographicSite) validateGeographicLocation(formats strfmt.Registry) err
 }
 
 func (m *GeographicSite) validateReferencedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ReferencedAddress) { // not required
 		return nil
 	}
@@ -172,7 +169,6 @@ func (m *GeographicSite) validateReferencedAddress(formats strfmt.Registry) erro
 }
 
 func (m *GeographicSite) validateRelatedParty(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RelatedParty) { // not required
 		return nil
 	}
@@ -197,12 +193,131 @@ func (m *GeographicSite) validateRelatedParty(formats strfmt.Registry) error {
 }
 
 func (m *GeographicSite) validateStatus(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Status) { // not required
 		return nil
 	}
 
 	if err := m.Status.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("status")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this geographic site based on the context it is used
+func (m *GeographicSite) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateFieldedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateFormattedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateGeographicLocation(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateReferencedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatus(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GeographicSite) contextValidateFieldedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.FieldedAddress != nil {
+		if err := m.FieldedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("fieldedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicSite) contextValidateFormattedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.FormattedAddress != nil {
+		if err := m.FormattedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("formattedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicSite) contextValidateGeographicLocation(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.GeographicLocation != nil {
+		if err := m.GeographicLocation.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("geographicLocation")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicSite) contextValidateReferencedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ReferencedAddress != nil {
+		if err := m.ReferencedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("referencedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicSite) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *GeographicSite) contextValidateStatus(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.Status.ContextValidate(ctx, formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("status")
 		}

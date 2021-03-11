@@ -73,9 +73,8 @@ func (o *ProductOfferingQualificationFindReader) ReadResponse(response runtime.C
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -84,16 +83,22 @@ func NewProductOfferingQualificationFindOK() *ProductOfferingQualificationFindOK
 	return &ProductOfferingQualificationFindOK{}
 }
 
-/*ProductOfferingQualificationFindOK handles this case with default header values.
+/* ProductOfferingQualificationFindOK describes a response with status code 200, with default header values.
 
 Ok
 */
 type ProductOfferingQualificationFindOK struct {
-	/*The number of resources retrieved in the response
-	 */
+
+	/* The number of resources retrieved in the response
+
+	   Format: int32
+	*/
 	XResultCount int32
-	/*The total number of matching resources
-	 */
+
+	/* The total number of matching resources
+
+	   Format: int32
+	*/
 	XTotalCount int32
 
 	Payload []*models.ProductOfferingQualificationFind
@@ -102,26 +107,33 @@ type ProductOfferingQualificationFindOK struct {
 func (o *ProductOfferingQualificationFindOK) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindOK  %+v", 200, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindOK) GetPayload() []*models.ProductOfferingQualificationFind {
 	return o.Payload
 }
 
 func (o *ProductOfferingQualificationFindOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	// response header X-Result-Count
-	xResultCount, err := swag.ConvertInt32(response.GetHeader("X-Result-Count"))
-	if err != nil {
-		return errors.InvalidType("X-Result-Count", "header", "int32", response.GetHeader("X-Result-Count"))
-	}
-	o.XResultCount = xResultCount
+	// hydrates response header X-Result-Count
+	hdrXResultCount := response.GetHeader("X-Result-Count")
 
-	// response header X-Total-Count
-	xTotalCount, err := swag.ConvertInt32(response.GetHeader("X-Total-Count"))
-	if err != nil {
-		return errors.InvalidType("X-Total-Count", "header", "int32", response.GetHeader("X-Total-Count"))
+	if hdrXResultCount != "" {
+		valxResultCount, err := swag.ConvertInt32(hdrXResultCount)
+		if err != nil {
+			return errors.InvalidType("X-Result-Count", "header", "int32", hdrXResultCount)
+		}
+		o.XResultCount = valxResultCount
 	}
-	o.XTotalCount = xTotalCount
+
+	// hydrates response header X-Total-Count
+	hdrXTotalCount := response.GetHeader("X-Total-Count")
+
+	if hdrXTotalCount != "" {
+		valxTotalCount, err := swag.ConvertInt32(hdrXTotalCount)
+		if err != nil {
+			return errors.InvalidType("X-Total-Count", "header", "int32", hdrXTotalCount)
+		}
+		o.XTotalCount = valxTotalCount
+	}
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -136,9 +148,9 @@ func NewProductOfferingQualificationFindBadRequest() *ProductOfferingQualificati
 	return &ProductOfferingQualificationFindBadRequest{}
 }
 
-/*ProductOfferingQualificationFindBadRequest handles this case with default header values.
+/* ProductOfferingQualificationFindBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -158,7 +170,6 @@ type ProductOfferingQualificationFindBadRequest struct {
 func (o *ProductOfferingQualificationFindBadRequest) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -180,9 +191,9 @@ func NewProductOfferingQualificationFindUnauthorized() *ProductOfferingQualifica
 	return &ProductOfferingQualificationFindUnauthorized{}
 }
 
-/*ProductOfferingQualificationFindUnauthorized handles this case with default header values.
+/* ProductOfferingQualificationFindUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -196,7 +207,6 @@ type ProductOfferingQualificationFindUnauthorized struct {
 func (o *ProductOfferingQualificationFindUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -218,9 +228,9 @@ func NewProductOfferingQualificationFindForbidden() *ProductOfferingQualificatio
 	return &ProductOfferingQualificationFindForbidden{}
 }
 
-/*ProductOfferingQualificationFindForbidden handles this case with default header values.
+/* ProductOfferingQualificationFindForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -235,7 +245,6 @@ type ProductOfferingQualificationFindForbidden struct {
 func (o *ProductOfferingQualificationFindForbidden) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -257,9 +266,9 @@ func NewProductOfferingQualificationFindNotFound() *ProductOfferingQualification
 	return &ProductOfferingQualificationFindNotFound{}
 }
 
-/*ProductOfferingQualificationFindNotFound handles this case with default header values.
+/* ProductOfferingQualificationFindNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -271,7 +280,6 @@ type ProductOfferingQualificationFindNotFound struct {
 func (o *ProductOfferingQualificationFindNotFound) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -293,9 +301,9 @@ func NewProductOfferingQualificationFindRequestTimeout() *ProductOfferingQualifi
 	return &ProductOfferingQualificationFindRequestTimeout{}
 }
 
-/*ProductOfferingQualificationFindRequestTimeout handles this case with default header values.
+/* ProductOfferingQualificationFindRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -307,7 +315,6 @@ type ProductOfferingQualificationFindRequestTimeout struct {
 func (o *ProductOfferingQualificationFindRequestTimeout) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -329,9 +336,9 @@ func NewProductOfferingQualificationFindUnprocessableEntity() *ProductOfferingQu
 	return &ProductOfferingQualificationFindUnprocessableEntity{}
 }
 
-/*ProductOfferingQualificationFindUnprocessableEntity handles this case with default header values.
+/* ProductOfferingQualificationFindUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -350,7 +357,6 @@ type ProductOfferingQualificationFindUnprocessableEntity struct {
 func (o *ProductOfferingQualificationFindUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -372,7 +378,7 @@ func NewProductOfferingQualificationFindServiceUnavailable() *ProductOfferingQua
 	return &ProductOfferingQualificationFindServiceUnavailable{}
 }
 
-/*ProductOfferingQualificationFindServiceUnavailable handles this case with default header values.
+/* ProductOfferingQualificationFindServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -385,7 +391,6 @@ type ProductOfferingQualificationFindServiceUnavailable struct {
 func (o *ProductOfferingQualificationFindServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationFindServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *ProductOfferingQualificationFindServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -25,7 +27,7 @@ type OrderItemEvent struct {
 
 	// action
 	// Required: true
-	Action ProductActionType `json:"action"`
+	Action *ProductActionType `json:"action"`
 
 	// billing account
 	BillingAccount *BillingAccountRef `json:"billingAccount,omitempty"`
@@ -39,7 +41,7 @@ type OrderItemEvent struct {
 
 	// state
 	// Required: true
-	State ProductOrderItemStateType `json:"state"`
+	State *ProductOrderItemStateType `json:"state"`
 }
 
 // Validate validates this order item event
@@ -74,18 +76,27 @@ func (m *OrderItemEvent) Validate(formats strfmt.Registry) error {
 
 func (m *OrderItemEvent) validateAction(formats strfmt.Registry) error {
 
-	if err := m.Action.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("action")
-		}
+	if err := validate.Required("action", "body", m.Action); err != nil {
 		return err
+	}
+
+	if err := validate.Required("action", "body", m.Action); err != nil {
+		return err
+	}
+
+	if m.Action != nil {
+		if err := m.Action.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("action")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
 func (m *OrderItemEvent) validateBillingAccount(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.BillingAccount) { // not required
 		return nil
 	}
@@ -112,7 +123,6 @@ func (m *OrderItemEvent) validateID(formats strfmt.Registry) error {
 }
 
 func (m *OrderItemEvent) validateProduct(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Product) { // not required
 		return nil
 	}
@@ -131,11 +141,103 @@ func (m *OrderItemEvent) validateProduct(formats strfmt.Registry) error {
 
 func (m *OrderItemEvent) validateState(formats strfmt.Registry) error {
 
-	if err := m.State.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
+	if err := validate.Required("state", "body", m.State); err != nil {
 		return err
+	}
+
+	if err := validate.Required("state", "body", m.State); err != nil {
+		return err
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this order item event based on the context it is used
+func (m *OrderItemEvent) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAction(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateBillingAccount(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProduct(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *OrderItemEvent) contextValidateAction(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Action != nil {
+		if err := m.Action.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("action")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *OrderItemEvent) contextValidateBillingAccount(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.BillingAccount != nil {
+		if err := m.BillingAccount.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("billingAccount")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *OrderItemEvent) contextValidateProduct(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Product != nil {
+		if err := m.Product.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("product")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *OrderItemEvent) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
 	}
 
 	return nil

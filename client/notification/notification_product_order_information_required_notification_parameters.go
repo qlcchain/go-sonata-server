@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationProductOrderInformationRequiredNotificationParams creates a new NotificationProductOrderInformationRequiredNotificationParams object
-// with the default values initialized.
+// NewNotificationProductOrderInformationRequiredNotificationParams creates a new NotificationProductOrderInformationRequiredNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationProductOrderInformationRequiredNotificationParams() *NotificationProductOrderInformationRequiredNotificationParams {
-	var ()
 	return &NotificationProductOrderInformationRequiredNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationProductOrderInformationRequiredNotificationParamsWithTimeout creates a new NotificationProductOrderInformationRequiredNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationProductOrderInformationRequiredNotificationParamsWithTimeout(timeout time.Duration) *NotificationProductOrderInformationRequiredNotificationParams {
-	var ()
 	return &NotificationProductOrderInformationRequiredNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationProductOrderInformationRequiredNotificationParamsWithContext creates a new NotificationProductOrderInformationRequiredNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationProductOrderInformationRequiredNotificationParamsWithContext(ctx context.Context) *NotificationProductOrderInformationRequiredNotificationParams {
-	var ()
 	return &NotificationProductOrderInformationRequiredNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationProductOrderInformationRequiredNotificationParamsWithHTTPClient creates a new NotificationProductOrderInformationRequiredNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationProductOrderInformationRequiredNotificationParamsWithHTTPClient(client *http.Client) *NotificationProductOrderInformationRequiredNotificationParams {
-	var ()
 	return &NotificationProductOrderInformationRequiredNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationProductOrderInformationRequiredNotificationParams contains all the parameters to send to the API endpoint
-for the notification product order information required notification operation typically these are written to a http.Request
+/* NotificationProductOrderInformationRequiredNotificationParams contains all the parameters to send to the API endpoint
+   for the notification product order information required notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationProductOrderInformationRequiredNotificationParams struct {
 
-	/*ProductOrderInformationRequired*/
+	// ProductOrderInformationRequired.
 	ProductOrderInformationRequired *models.PoEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification product order information required notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOrderInformationRequiredNotificationParams) WithDefaults() *NotificationProductOrderInformationRequiredNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification product order information required notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOrderInformationRequiredNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification product order information required notification params
@@ -121,7 +135,6 @@ func (o *NotificationProductOrderInformationRequiredNotificationParams) WriteToR
 		return err
 	}
 	var res []error
-
 	if o.ProductOrderInformationRequired != nil {
 		if err := r.SetBodyParam(o.ProductOrderInformationRequired); err != nil {
 			return err

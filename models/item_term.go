@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,6 +52,34 @@ func (m *ItemTerm) validateDuration(formats strfmt.Registry) error {
 
 	if m.Duration != nil {
 		if err := m.Duration.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("duration")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this item term based on the context it is used
+func (m *ItemTerm) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDuration(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ItemTerm) contextValidateDuration(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Duration != nil {
+		if err := m.Duration.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("duration")
 			}

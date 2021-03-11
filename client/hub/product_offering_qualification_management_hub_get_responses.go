@@ -71,9 +71,8 @@ func (o *ProductOfferingQualificationManagementHubGetReader) ReadResponse(respon
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -82,7 +81,7 @@ func NewProductOfferingQualificationManagementHubGetOK() *ProductOfferingQualifi
 	return &ProductOfferingQualificationManagementHubGetOK{}
 }
 
-/*ProductOfferingQualificationManagementHubGetOK handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -93,7 +92,6 @@ type ProductOfferingQualificationManagementHubGetOK struct {
 func (o *ProductOfferingQualificationManagementHubGetOK) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetOK  %+v", 200, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetOK) GetPayload() []*models.Hub {
 	return o.Payload
 }
@@ -113,9 +111,9 @@ func NewProductOfferingQualificationManagementHubGetBadRequest() *ProductOfferin
 	return &ProductOfferingQualificationManagementHubGetBadRequest{}
 }
 
-/*ProductOfferingQualificationManagementHubGetBadRequest handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -135,7 +133,6 @@ type ProductOfferingQualificationManagementHubGetBadRequest struct {
 func (o *ProductOfferingQualificationManagementHubGetBadRequest) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -157,9 +154,9 @@ func NewProductOfferingQualificationManagementHubGetUnauthorized() *ProductOffer
 	return &ProductOfferingQualificationManagementHubGetUnauthorized{}
 }
 
-/*ProductOfferingQualificationManagementHubGetUnauthorized handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -173,7 +170,6 @@ type ProductOfferingQualificationManagementHubGetUnauthorized struct {
 func (o *ProductOfferingQualificationManagementHubGetUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -195,9 +191,9 @@ func NewProductOfferingQualificationManagementHubGetForbidden() *ProductOffering
 	return &ProductOfferingQualificationManagementHubGetForbidden{}
 }
 
-/*ProductOfferingQualificationManagementHubGetForbidden handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -212,7 +208,6 @@ type ProductOfferingQualificationManagementHubGetForbidden struct {
 func (o *ProductOfferingQualificationManagementHubGetForbidden) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -234,9 +229,9 @@ func NewProductOfferingQualificationManagementHubGetNotFound() *ProductOfferingQ
 	return &ProductOfferingQualificationManagementHubGetNotFound{}
 }
 
-/*ProductOfferingQualificationManagementHubGetNotFound handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -248,7 +243,6 @@ type ProductOfferingQualificationManagementHubGetNotFound struct {
 func (o *ProductOfferingQualificationManagementHubGetNotFound) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -270,9 +264,9 @@ func NewProductOfferingQualificationManagementHubGetRequestTimeout() *ProductOff
 	return &ProductOfferingQualificationManagementHubGetRequestTimeout{}
 }
 
-/*ProductOfferingQualificationManagementHubGetRequestTimeout handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -284,7 +278,6 @@ type ProductOfferingQualificationManagementHubGetRequestTimeout struct {
 func (o *ProductOfferingQualificationManagementHubGetRequestTimeout) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -306,9 +299,9 @@ func NewProductOfferingQualificationManagementHubGetUnprocessableEntity() *Produ
 	return &ProductOfferingQualificationManagementHubGetUnprocessableEntity{}
 }
 
-/*ProductOfferingQualificationManagementHubGetUnprocessableEntity handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -319,7 +312,6 @@ type ProductOfferingQualificationManagementHubGetUnprocessableEntity struct {
 func (o *ProductOfferingQualificationManagementHubGetUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -341,7 +333,7 @@ func NewProductOfferingQualificationManagementHubGetServiceUnavailable() *Produc
 	return &ProductOfferingQualificationManagementHubGetServiceUnavailable{}
 }
 
-/*ProductOfferingQualificationManagementHubGetServiceUnavailable handles this case with default header values.
+/* ProductOfferingQualificationManagementHubGetServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -354,7 +346,6 @@ type ProductOfferingQualificationManagementHubGetServiceUnavailable struct {
 func (o *ProductOfferingQualificationManagementHubGetServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /productOfferingQualificationManagement/v3/hub][%d] productOfferingQualificationManagementHubGetServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubGetServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

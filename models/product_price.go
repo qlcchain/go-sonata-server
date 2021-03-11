@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -76,7 +78,6 @@ func (m *ProductPrice) validateName(formats strfmt.Registry) error {
 }
 
 func (m *ProductPrice) validatePrice(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Price) { // not required
 		return nil
 	}
@@ -94,7 +95,6 @@ func (m *ProductPrice) validatePrice(formats strfmt.Registry) error {
 }
 
 func (m *ProductPrice) validatePriceType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.PriceType) { // not required
 		return nil
 	}
@@ -110,12 +110,71 @@ func (m *ProductPrice) validatePriceType(formats strfmt.Registry) error {
 }
 
 func (m *ProductPrice) validateRecurringChargePeriod(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RecurringChargePeriod) { // not required
 		return nil
 	}
 
 	if err := m.RecurringChargePeriod.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("recurringChargePeriod")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product price based on the context it is used
+func (m *ProductPrice) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidatePrice(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePriceType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRecurringChargePeriod(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductPrice) contextValidatePrice(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Price != nil {
+		if err := m.Price.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("price")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductPrice) contextValidatePriceType(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.PriceType.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("priceType")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *ProductPrice) contextValidateRecurringChargePeriod(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.RecurringChargePeriod.ContextValidate(ctx, formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("recurringChargePeriod")
 		}

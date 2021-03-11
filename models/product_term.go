@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -48,7 +50,6 @@ func (m *ProductTerm) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ProductTerm) validateDuration(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Duration) { // not required
 		return nil
 	}
@@ -66,13 +67,58 @@ func (m *ProductTerm) validateDuration(formats strfmt.Registry) error {
 }
 
 func (m *ProductTerm) validateValidFor(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ValidFor) { // not required
 		return nil
 	}
 
 	if m.ValidFor != nil {
 		if err := m.ValidFor.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("validFor")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product term based on the context it is used
+func (m *ProductTerm) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDuration(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateValidFor(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductTerm) contextValidateDuration(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Duration != nil {
+		if err := m.Duration.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("duration")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductTerm) contextValidateValidFor(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ValidFor != nil {
+		if err := m.ValidFor.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("validFor")
 			}

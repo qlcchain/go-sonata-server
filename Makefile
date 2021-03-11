@@ -3,7 +3,7 @@
 # Check for required command tools to build or stop immediately
 EXECUTABLES = git go find pwd
 K := $(foreach exec,$(EXECUTABLES),\
-        $(if $(shell which $(exec)),some string,$(error "No $(exec) in PATH)))
+        $(if $(shell which $(exec)),some string,$(error "No $(exec) in PATH")))
 
 GO ?= latest
 
@@ -15,7 +15,7 @@ VERSION ?= 0.0.1
 GITREV = $(shell git rev-parse --short HEAD)
 BUILDTIME = $(shell date +'%FT%TZ%z')
 LDFLAGS=-ldflags '-X main.version=${VERSION} -X main.commit=${GITREV} -X main.date=${BUILDTIME}'
-GO_BUILDER_VERSION=v1.14.4
+GO_BUILDER_VERSION=v1.16
 
 default: build
 
@@ -26,11 +26,11 @@ deps:
 	go get -u golang.org/x/tools/cmd/goimports
 
 build:
-	go build ${LDFLAGS} -o $(BUILDDIR)/${BINARY} -i $(MAIN)
+	go build ${LDFLAGS} -o $(BUILDDIR)/${BINARY}  $(MAIN)
 	@echo 'Build $(BINARY) done.'
 
 client:
-	go build ${LDFLAGS} -o $(BUILDDIR)/client -i $(shell pwd)/cmd/client/main.go
+	go build ${LDFLAGS} -o $(BUILDDIR)/client $(shell pwd)/cmd/client/main.go
 	@echo 'Build client done.'
 
 changelog:

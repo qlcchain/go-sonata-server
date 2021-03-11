@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -63,7 +64,6 @@ func (m *AlternateProductProposal) Validate(formats strfmt.Registry) error {
 }
 
 func (m *AlternateProductProposal) validateEligibleProductOffering(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EligibleProductOffering) { // not required
 		return nil
 	}
@@ -97,7 +97,6 @@ func (m *AlternateProductProposal) validateID(formats strfmt.Registry) error {
 }
 
 func (m *AlternateProductProposal) validateInstallationInterval(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.InstallationInterval) { // not required
 		return nil
 	}
@@ -115,13 +114,80 @@ func (m *AlternateProductProposal) validateInstallationInterval(formats strfmt.R
 }
 
 func (m *AlternateProductProposal) validateProductSpecification(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ProductSpecification) { // not required
 		return nil
 	}
 
 	if m.ProductSpecification != nil {
 		if err := m.ProductSpecification.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("productSpecification")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this alternate product proposal based on the context it is used
+func (m *AlternateProductProposal) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateEligibleProductOffering(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateInstallationInterval(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProductSpecification(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *AlternateProductProposal) contextValidateEligibleProductOffering(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.EligibleProductOffering); i++ {
+
+		if m.EligibleProductOffering[i] != nil {
+			if err := m.EligibleProductOffering[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("eligibleProductOffering" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *AlternateProductProposal) contextValidateInstallationInterval(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.InstallationInterval != nil {
+		if err := m.InstallationInterval.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("installationInterval")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AlternateProductProposal) contextValidateProductSpecification(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ProductSpecification != nil {
+		if err := m.ProductSpecification.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("productSpecification")
 			}

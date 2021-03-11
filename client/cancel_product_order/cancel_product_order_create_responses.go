@@ -83,9 +83,8 @@ func (o *CancelProductOrderCreateReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -94,7 +93,7 @@ func NewCancelProductOrderCreateCreated() *CancelProductOrderCreateCreated {
 	return &CancelProductOrderCreateCreated{}
 }
 
-/*CancelProductOrderCreateCreated handles this case with default header values.
+/* CancelProductOrderCreateCreated describes a response with status code 201, with default header values.
 
 Created
 */
@@ -105,7 +104,6 @@ type CancelProductOrderCreateCreated struct {
 func (o *CancelProductOrderCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateCreated  %+v", 201, o.Payload)
 }
-
 func (o *CancelProductOrderCreateCreated) GetPayload() *models.CancelProductOrder {
 	return o.Payload
 }
@@ -127,9 +125,9 @@ func NewCancelProductOrderCreateBadRequest() *CancelProductOrderCreateBadRequest
 	return &CancelProductOrderCreateBadRequest{}
 }
 
-/*CancelProductOrderCreateBadRequest handles this case with default header values.
+/* CancelProductOrderCreateBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -149,7 +147,6 @@ type CancelProductOrderCreateBadRequest struct {
 func (o *CancelProductOrderCreateBadRequest) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *CancelProductOrderCreateBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -171,9 +168,9 @@ func NewCancelProductOrderCreateUnauthorized() *CancelProductOrderCreateUnauthor
 	return &CancelProductOrderCreateUnauthorized{}
 }
 
-/*CancelProductOrderCreateUnauthorized handles this case with default header values.
+/* CancelProductOrderCreateUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -187,7 +184,6 @@ type CancelProductOrderCreateUnauthorized struct {
 func (o *CancelProductOrderCreateUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *CancelProductOrderCreateUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -209,9 +205,9 @@ func NewCancelProductOrderCreateForbidden() *CancelProductOrderCreateForbidden {
 	return &CancelProductOrderCreateForbidden{}
 }
 
-/*CancelProductOrderCreateForbidden handles this case with default header values.
+/* CancelProductOrderCreateForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -226,7 +222,6 @@ type CancelProductOrderCreateForbidden struct {
 func (o *CancelProductOrderCreateForbidden) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateForbidden  %+v", 403, o.Payload)
 }
-
 func (o *CancelProductOrderCreateForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -248,9 +243,9 @@ func NewCancelProductOrderCreateNotFound() *CancelProductOrderCreateNotFound {
 	return &CancelProductOrderCreateNotFound{}
 }
 
-/*CancelProductOrderCreateNotFound handles this case with default header values.
+/* CancelProductOrderCreateNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -262,7 +257,6 @@ type CancelProductOrderCreateNotFound struct {
 func (o *CancelProductOrderCreateNotFound) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateNotFound  %+v", 404, o.Payload)
 }
-
 func (o *CancelProductOrderCreateNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -284,9 +278,9 @@ func NewCancelProductOrderCreateMethodNotAllowed() *CancelProductOrderCreateMeth
 	return &CancelProductOrderCreateMethodNotAllowed{}
 }
 
-/*CancelProductOrderCreateMethodNotAllowed handles this case with default header values.
+/* CancelProductOrderCreateMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -298,7 +292,6 @@ type CancelProductOrderCreateMethodNotAllowed struct {
 func (o *CancelProductOrderCreateMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *CancelProductOrderCreateMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -320,9 +313,9 @@ func NewCancelProductOrderCreateRequestTimeout() *CancelProductOrderCreateReques
 	return &CancelProductOrderCreateRequestTimeout{}
 }
 
-/*CancelProductOrderCreateRequestTimeout handles this case with default header values.
+/* CancelProductOrderCreateRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -334,7 +327,6 @@ type CancelProductOrderCreateRequestTimeout struct {
 func (o *CancelProductOrderCreateRequestTimeout) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *CancelProductOrderCreateRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -356,9 +348,9 @@ func NewCancelProductOrderCreateUnprocessableEntity() *CancelProductOrderCreateU
 	return &CancelProductOrderCreateUnprocessableEntity{}
 }
 
-/*CancelProductOrderCreateUnprocessableEntity handles this case with default header values.
+/* CancelProductOrderCreateUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -387,7 +379,6 @@ type CancelProductOrderCreateUnprocessableEntity struct {
 func (o *CancelProductOrderCreateUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *CancelProductOrderCreateUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -409,9 +400,9 @@ func NewCancelProductOrderCreateInternalServerError() *CancelProductOrderCreateI
 	return &CancelProductOrderCreateInternalServerError{}
 }
 
-/*CancelProductOrderCreateInternalServerError handles this case with default header values.
+/* CancelProductOrderCreateInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -423,7 +414,6 @@ type CancelProductOrderCreateInternalServerError struct {
 func (o *CancelProductOrderCreateInternalServerError) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *CancelProductOrderCreateInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -445,7 +435,7 @@ func NewCancelProductOrderCreateServiceUnavailable() *CancelProductOrderCreateSe
 	return &CancelProductOrderCreateServiceUnavailable{}
 }
 
-/*CancelProductOrderCreateServiceUnavailable handles this case with default header values.
+/* CancelProductOrderCreateServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -458,7 +448,6 @@ type CancelProductOrderCreateServiceUnavailable struct {
 func (o *CancelProductOrderCreateServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /productOrderManagement/v3/cancelProductOrder][%d] cancelProductOrderCreateServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *CancelProductOrderCreateServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

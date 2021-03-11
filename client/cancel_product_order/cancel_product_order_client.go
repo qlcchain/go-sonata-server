@@ -25,13 +25,16 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CancelProductOrderCreate(params *CancelProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter) (*CancelProductOrderCreateCreated, error)
+	CancelProductOrderCreate(params *CancelProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelProductOrderCreateCreated, error)
 
-	CancelProductOrderFind(params *CancelProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter) (*CancelProductOrderFindOK, error)
+	CancelProductOrderFind(params *CancelProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelProductOrderFindOK, error)
 
-	CancelProductOrderGet(params *CancelProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter) (*CancelProductOrderGetOK, error)
+	CancelProductOrderGet(params *CancelProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelProductOrderGetOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -41,13 +44,12 @@ type ClientService interface {
 
   This operation allows buyer to request a product order cancellation request
 */
-func (a *Client) CancelProductOrderCreate(params *CancelProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter) (*CancelProductOrderCreateCreated, error) {
+func (a *Client) CancelProductOrderCreate(params *CancelProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelProductOrderCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCancelProductOrderCreateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "cancelProductOrderCreate",
 		Method:             "POST",
 		PathPattern:        "/productOrderManagement/v3/cancelProductOrder",
@@ -59,7 +61,12 @@ func (a *Client) CancelProductOrderCreate(params *CancelProductOrderCreateParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -78,13 +85,12 @@ func (a *Client) CancelProductOrderCreate(params *CancelProductOrderCreateParams
 
   This operation allows buyer to retrieve a list of product order cancellation request
 */
-func (a *Client) CancelProductOrderFind(params *CancelProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter) (*CancelProductOrderFindOK, error) {
+func (a *Client) CancelProductOrderFind(params *CancelProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelProductOrderFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCancelProductOrderFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "cancelProductOrderFind",
 		Method:             "GET",
 		PathPattern:        "/productOrderManagement/v3/cancelProductOrder",
@@ -96,7 +102,12 @@ func (a *Client) CancelProductOrderFind(params *CancelProductOrderFindParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -115,13 +126,12 @@ func (a *Client) CancelProductOrderFind(params *CancelProductOrderFindParams, au
 
   This operation allows buyer to retrieve one product order cancellation request
 */
-func (a *Client) CancelProductOrderGet(params *CancelProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter) (*CancelProductOrderGetOK, error) {
+func (a *Client) CancelProductOrderGet(params *CancelProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelProductOrderGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCancelProductOrderGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "cancelProductOrderGet",
 		Method:             "GET",
 		PathPattern:        "/productOrderManagement/v3/cancelProductOrder/{CancelProductOrderId}",
@@ -133,7 +143,12 @@ func (a *Client) CancelProductOrderGet(params *CancelProductOrderGetParams, auth
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

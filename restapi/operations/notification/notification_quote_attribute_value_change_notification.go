@@ -29,7 +29,7 @@ func NewNotificationQuoteAttributeValueChangeNotification(ctx *middleware.Contex
 	return &NotificationQuoteAttributeValueChangeNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationQuoteAttributeValueChangeNotification swagger:route POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification Notification notificationQuoteAttributeValueChangeNotification
+/* NotificationQuoteAttributeValueChangeNotification swagger:route POST /quoteNotification/v1/notification/quoteAttributeValueChangeNotification Notification notificationQuoteAttributeValueChangeNotification
 
 Quote attribute value change notification structure
 
@@ -54,14 +54,12 @@ func (o *NotificationQuoteAttributeValueChangeNotification) ServeHTTP(rw http.Re
 		r = rCtx
 	}
 	var Params = NewNotificationQuoteAttributeValueChangeNotificationParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -63,7 +65,6 @@ func (m *GeographicSiteFindResp) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GeographicSiteFindResp) validateGeographicAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.GeographicAddress) { // not required
 		return nil
 	}
@@ -81,12 +82,55 @@ func (m *GeographicSiteFindResp) validateGeographicAddress(formats strfmt.Regist
 }
 
 func (m *GeographicSiteFindResp) validateStatus(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Status) { // not required
 		return nil
 	}
 
 	if err := m.Status.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("status")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this geographic site find resp based on the context it is used
+func (m *GeographicSiteFindResp) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateGeographicAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStatus(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GeographicSiteFindResp) contextValidateGeographicAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.GeographicAddress != nil {
+		if err := m.GeographicAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("geographicAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicSiteFindResp) contextValidateStatus(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.Status.ContextValidate(ctx, formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("status")
 		}

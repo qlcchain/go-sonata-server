@@ -16,56 +16,70 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewProductOfferingQualificationManagementHubDeleteParams creates a new ProductOfferingQualificationManagementHubDeleteParams object
-// with the default values initialized.
+// NewProductOfferingQualificationManagementHubDeleteParams creates a new ProductOfferingQualificationManagementHubDeleteParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOfferingQualificationManagementHubDeleteParams() *ProductOfferingQualificationManagementHubDeleteParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubDeleteParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOfferingQualificationManagementHubDeleteParamsWithTimeout creates a new ProductOfferingQualificationManagementHubDeleteParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOfferingQualificationManagementHubDeleteParamsWithTimeout(timeout time.Duration) *ProductOfferingQualificationManagementHubDeleteParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubDeleteParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOfferingQualificationManagementHubDeleteParamsWithContext creates a new ProductOfferingQualificationManagementHubDeleteParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOfferingQualificationManagementHubDeleteParamsWithContext(ctx context.Context) *ProductOfferingQualificationManagementHubDeleteParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubDeleteParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOfferingQualificationManagementHubDeleteParamsWithHTTPClient creates a new ProductOfferingQualificationManagementHubDeleteParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOfferingQualificationManagementHubDeleteParamsWithHTTPClient(client *http.Client) *ProductOfferingQualificationManagementHubDeleteParams {
-	var ()
 	return &ProductOfferingQualificationManagementHubDeleteParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteParams contains all the parameters to send to the API endpoint
-for the product offering qualification management hub delete operation typically these are written to a http.Request
+/* ProductOfferingQualificationManagementHubDeleteParams contains all the parameters to send to the API endpoint
+   for the product offering qualification management hub delete operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOfferingQualificationManagementHubDeleteParams struct {
 
-	/*HubID*/
+	// HubID.
 	HubID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product offering qualification management hub delete params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationManagementHubDeleteParams) WithDefaults() *ProductOfferingQualificationManagementHubDeleteParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product offering qualification management hub delete params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationManagementHubDeleteParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product offering qualification management hub delete params

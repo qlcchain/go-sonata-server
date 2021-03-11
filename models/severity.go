@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -17,6 +18,11 @@ import (
 //
 // swagger:model Severity
 type Severity string
+
+func NewSeverity(value Severity) *Severity {
+	v := value
+	return &v
+}
 
 const (
 
@@ -59,5 +65,10 @@ func (m Severity) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// ContextValidate validates this severity based on context it is used
+func (m Severity) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

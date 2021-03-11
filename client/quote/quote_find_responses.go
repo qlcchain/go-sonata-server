@@ -79,9 +79,8 @@ func (o *QuoteFindReader) ReadResponse(response runtime.ClientResponse, consumer
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -90,16 +89,22 @@ func NewQuoteFindOK() *QuoteFindOK {
 	return &QuoteFindOK{}
 }
 
-/*QuoteFindOK handles this case with default header values.
+/* QuoteFindOK describes a response with status code 200, with default header values.
 
 Ok
 */
 type QuoteFindOK struct {
-	/*The number of resources retrieved in the response
-	 */
+
+	/* The number of resources retrieved in the response
+
+	   Format: int32
+	*/
 	XResultCount int32
-	/*Total number of items matching criteria
-	 */
+
+	/* Total number of items matching criteria
+
+	   Format: int32
+	*/
 	XTotalCount int32
 
 	Payload []*models.QuoteFind
@@ -108,26 +113,33 @@ type QuoteFindOK struct {
 func (o *QuoteFindOK) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindOK  %+v", 200, o.Payload)
 }
-
 func (o *QuoteFindOK) GetPayload() []*models.QuoteFind {
 	return o.Payload
 }
 
 func (o *QuoteFindOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	// response header X-Result-Count
-	xResultCount, err := swag.ConvertInt32(response.GetHeader("X-Result-Count"))
-	if err != nil {
-		return errors.InvalidType("X-Result-Count", "header", "int32", response.GetHeader("X-Result-Count"))
-	}
-	o.XResultCount = xResultCount
+	// hydrates response header X-Result-Count
+	hdrXResultCount := response.GetHeader("X-Result-Count")
 
-	// response header X-Total-Count
-	xTotalCount, err := swag.ConvertInt32(response.GetHeader("X-Total-Count"))
-	if err != nil {
-		return errors.InvalidType("X-Total-Count", "header", "int32", response.GetHeader("X-Total-Count"))
+	if hdrXResultCount != "" {
+		valxResultCount, err := swag.ConvertInt32(hdrXResultCount)
+		if err != nil {
+			return errors.InvalidType("X-Result-Count", "header", "int32", hdrXResultCount)
+		}
+		o.XResultCount = valxResultCount
 	}
-	o.XTotalCount = xTotalCount
+
+	// hydrates response header X-Total-Count
+	hdrXTotalCount := response.GetHeader("X-Total-Count")
+
+	if hdrXTotalCount != "" {
+		valxTotalCount, err := swag.ConvertInt32(hdrXTotalCount)
+		if err != nil {
+			return errors.InvalidType("X-Total-Count", "header", "int32", hdrXTotalCount)
+		}
+		o.XTotalCount = valxTotalCount
+	}
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -142,9 +154,9 @@ func NewQuoteFindBadRequest() *QuoteFindBadRequest {
 	return &QuoteFindBadRequest{}
 }
 
-/*QuoteFindBadRequest handles this case with default header values.
+/* QuoteFindBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -164,7 +176,6 @@ type QuoteFindBadRequest struct {
 func (o *QuoteFindBadRequest) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *QuoteFindBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -186,9 +197,9 @@ func NewQuoteFindUnauthorized() *QuoteFindUnauthorized {
 	return &QuoteFindUnauthorized{}
 }
 
-/*QuoteFindUnauthorized handles this case with default header values.
+/* QuoteFindUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -202,7 +213,6 @@ type QuoteFindUnauthorized struct {
 func (o *QuoteFindUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *QuoteFindUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -224,9 +234,9 @@ func NewQuoteFindForbidden() *QuoteFindForbidden {
 	return &QuoteFindForbidden{}
 }
 
-/*QuoteFindForbidden handles this case with default header values.
+/* QuoteFindForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -241,7 +251,6 @@ type QuoteFindForbidden struct {
 func (o *QuoteFindForbidden) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindForbidden  %+v", 403, o.Payload)
 }
-
 func (o *QuoteFindForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -263,9 +272,9 @@ func NewQuoteFindNotFound() *QuoteFindNotFound {
 	return &QuoteFindNotFound{}
 }
 
-/*QuoteFindNotFound handles this case with default header values.
+/* QuoteFindNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -277,7 +286,6 @@ type QuoteFindNotFound struct {
 func (o *QuoteFindNotFound) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindNotFound  %+v", 404, o.Payload)
 }
-
 func (o *QuoteFindNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -299,9 +307,9 @@ func NewQuoteFindMethodNotAllowed() *QuoteFindMethodNotAllowed {
 	return &QuoteFindMethodNotAllowed{}
 }
 
-/*QuoteFindMethodNotAllowed handles this case with default header values.
+/* QuoteFindMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -313,7 +321,6 @@ type QuoteFindMethodNotAllowed struct {
 func (o *QuoteFindMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *QuoteFindMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -335,9 +342,9 @@ func NewQuoteFindUnprocessableEntity() *QuoteFindUnprocessableEntity {
 	return &QuoteFindUnprocessableEntity{}
 }
 
-/*QuoteFindUnprocessableEntity handles this case with default header values.
+/* QuoteFindUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -356,7 +363,6 @@ type QuoteFindUnprocessableEntity struct {
 func (o *QuoteFindUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *QuoteFindUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -378,9 +384,9 @@ func NewQuoteFindInternalServerError() *QuoteFindInternalServerError {
 	return &QuoteFindInternalServerError{}
 }
 
-/*QuoteFindInternalServerError handles this case with default header values.
+/* QuoteFindInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -392,7 +398,6 @@ type QuoteFindInternalServerError struct {
 func (o *QuoteFindInternalServerError) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *QuoteFindInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -414,7 +419,7 @@ func NewQuoteFindServiceUnavailable() *QuoteFindServiceUnavailable {
 	return &QuoteFindServiceUnavailable{}
 }
 
-/*QuoteFindServiceUnavailable handles this case with default header values.
+/* QuoteFindServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -427,7 +432,6 @@ type QuoteFindServiceUnavailable struct {
 func (o *QuoteFindServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote][%d] quoteFindServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *QuoteFindServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

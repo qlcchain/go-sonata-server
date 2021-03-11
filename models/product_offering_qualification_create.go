@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -128,13 +129,66 @@ func (m *ProductOfferingQualificationCreate) validateRelatedParty(formats strfmt
 }
 
 func (m *ProductOfferingQualificationCreate) validateRequestedResponseDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestedResponseDate) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("requestedResponseDate", "body", "date", m.RequestedResponseDate.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product offering qualification create based on the context it is used
+func (m *ProductOfferingQualificationCreate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateProductOfferingQualificationItem(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductOfferingQualificationCreate) contextValidateProductOfferingQualificationItem(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ProductOfferingQualificationItem); i++ {
+
+		if m.ProductOfferingQualificationItem[i] != nil {
+			if err := m.ProductOfferingQualificationItem[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("productOfferingQualificationItem" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationCreate) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

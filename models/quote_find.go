@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -91,7 +93,6 @@ func (m *QuoteFind) Validate(formats strfmt.Registry) error {
 }
 
 func (m *QuoteFind) validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EffectiveQuoteCompletionDate) { // not required
 		return nil
 	}
@@ -104,7 +105,6 @@ func (m *QuoteFind) validateEffectiveQuoteCompletionDate(formats strfmt.Registry
 }
 
 func (m *QuoteFind) validateExpectedQuoteCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedQuoteCompletionDate) { // not required
 		return nil
 	}
@@ -117,7 +117,6 @@ func (m *QuoteFind) validateExpectedQuoteCompletionDate(formats strfmt.Registry)
 }
 
 func (m *QuoteFind) validateQuoteDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.QuoteDate) { // not required
 		return nil
 	}
@@ -130,7 +129,6 @@ func (m *QuoteFind) validateQuoteDate(formats strfmt.Registry) error {
 }
 
 func (m *QuoteFind) validateQuoteLevel(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.QuoteLevel) { // not required
 		return nil
 	}
@@ -159,12 +157,53 @@ func (m *QuoteFind) validateRequestedQuoteCompletionDate(formats strfmt.Registry
 }
 
 func (m *QuoteFind) validateState(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.State) { // not required
 		return nil
 	}
 
 	if err := m.State.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("state")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this quote find based on the context it is used
+func (m *QuoteFind) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateQuoteLevel(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *QuoteFind) contextValidateQuoteLevel(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.QuoteLevel.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("quoteLevel")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *QuoteFind) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.State.ContextValidate(ctx, formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("state")
 		}

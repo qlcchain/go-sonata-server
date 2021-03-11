@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -24,7 +25,7 @@ type ProductOfferingQualificationItem struct {
 
 	// action
 	// Required: true
-	Action ProductActionType `json:"action"`
+	Action *ProductActionType `json:"action"`
 
 	// alternate product proposal
 	AlternateProductProposal []*AlternateProductProposal `json:"alternateProductProposal"`
@@ -63,7 +64,7 @@ type ProductOfferingQualificationItem struct {
 
 	// state
 	// Required: true
-	State ProductOfferingQualificationItemStateType `json:"state"`
+	State *ProductOfferingQualificationItemStateType `json:"state"`
 
 	// state change
 	StateChange []*StateChange `json:"stateChange"`
@@ -140,18 +141,27 @@ func (m *ProductOfferingQualificationItem) Validate(formats strfmt.Registry) err
 
 func (m *ProductOfferingQualificationItem) validateAction(formats strfmt.Registry) error {
 
-	if err := m.Action.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("action")
-		}
+	if err := validate.Required("action", "body", m.Action); err != nil {
 		return err
+	}
+
+	if err := validate.Required("action", "body", m.Action); err != nil {
+		return err
+	}
+
+	if m.Action != nil {
+		if err := m.Action.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("action")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
 func (m *ProductOfferingQualificationItem) validateAlternateProductProposal(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.AlternateProductProposal) { // not required
 		return nil
 	}
@@ -176,7 +186,6 @@ func (m *ProductOfferingQualificationItem) validateAlternateProductProposal(form
 }
 
 func (m *ProductOfferingQualificationItem) validateEligibleProductOffering(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EligibleProductOffering) { // not required
 		return nil
 	}
@@ -201,7 +210,6 @@ func (m *ProductOfferingQualificationItem) validateEligibleProductOffering(forma
 }
 
 func (m *ProductOfferingQualificationItem) validateGuaranteedUntilDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.GuaranteedUntilDate) { // not required
 		return nil
 	}
@@ -223,7 +231,6 @@ func (m *ProductOfferingQualificationItem) validateID(formats strfmt.Registry) e
 }
 
 func (m *ProductOfferingQualificationItem) validateInstallationInterval(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.InstallationInterval) { // not required
 		return nil
 	}
@@ -241,7 +248,6 @@ func (m *ProductOfferingQualificationItem) validateInstallationInterval(formats 
 }
 
 func (m *ProductOfferingQualificationItem) validateProduct(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Product) { // not required
 		return nil
 	}
@@ -259,7 +265,6 @@ func (m *ProductOfferingQualificationItem) validateProduct(formats strfmt.Regist
 }
 
 func (m *ProductOfferingQualificationItem) validateProductOffering(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ProductOffering) { // not required
 		return nil
 	}
@@ -277,7 +282,6 @@ func (m *ProductOfferingQualificationItem) validateProductOffering(formats strfm
 }
 
 func (m *ProductOfferingQualificationItem) validateProductOfferingQualificationItemRelationship(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ProductOfferingQualificationItemRelationship) { // not required
 		return nil
 	}
@@ -302,7 +306,6 @@ func (m *ProductOfferingQualificationItem) validateProductOfferingQualificationI
 }
 
 func (m *ProductOfferingQualificationItem) validateRelatedParty(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RelatedParty) { // not required
 		return nil
 	}
@@ -327,7 +330,6 @@ func (m *ProductOfferingQualificationItem) validateRelatedParty(formats strfmt.R
 }
 
 func (m *ProductOfferingQualificationItem) validateServiceabilityConfidence(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ServiceabilityConfidence) { // not required
 		return nil
 	}
@@ -344,18 +346,27 @@ func (m *ProductOfferingQualificationItem) validateServiceabilityConfidence(form
 
 func (m *ProductOfferingQualificationItem) validateState(formats strfmt.Registry) error {
 
-	if err := m.State.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
+	if err := validate.Required("state", "body", m.State); err != nil {
 		return err
+	}
+
+	if err := validate.Required("state", "body", m.State); err != nil {
+		return err
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
 func (m *ProductOfferingQualificationItem) validateStateChange(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StateChange) { // not required
 		return nil
 	}
@@ -380,7 +391,6 @@ func (m *ProductOfferingQualificationItem) validateStateChange(formats strfmt.Re
 }
 
 func (m *ProductOfferingQualificationItem) validateTerminationError(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.TerminationError) { // not required
 		return nil
 	}
@@ -392,6 +402,254 @@ func (m *ProductOfferingQualificationItem) validateTerminationError(formats strf
 
 		if m.TerminationError[i] != nil {
 			if err := m.TerminationError[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("terminationError" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product offering qualification item based on the context it is used
+func (m *ProductOfferingQualificationItem) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAction(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateAlternateProductProposal(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateEligibleProductOffering(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateInstallationInterval(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProduct(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProductOffering(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProductOfferingQualificationItemRelationship(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateServiceabilityConfidence(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStateChange(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTerminationError(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateAction(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Action != nil {
+		if err := m.Action.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("action")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateAlternateProductProposal(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.AlternateProductProposal); i++ {
+
+		if m.AlternateProductProposal[i] != nil {
+			if err := m.AlternateProductProposal[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("alternateProductProposal" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateEligibleProductOffering(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.EligibleProductOffering); i++ {
+
+		if m.EligibleProductOffering[i] != nil {
+			if err := m.EligibleProductOffering[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("eligibleProductOffering" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateInstallationInterval(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.InstallationInterval != nil {
+		if err := m.InstallationInterval.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("installationInterval")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateProduct(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Product != nil {
+		if err := m.Product.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("product")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateProductOffering(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ProductOffering != nil {
+		if err := m.ProductOffering.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("productOffering")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateProductOfferingQualificationItemRelationship(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ProductOfferingQualificationItemRelationship); i++ {
+
+		if m.ProductOfferingQualificationItemRelationship[i] != nil {
+			if err := m.ProductOfferingQualificationItemRelationship[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("productOfferingQualificationItemRelationship" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateServiceabilityConfidence(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.ServiceabilityConfidence.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("serviceabilityConfidence")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateStateChange(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.StateChange); i++ {
+
+		if m.StateChange[i] != nil {
+			if err := m.StateChange[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("stateChange" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItem) contextValidateTerminationError(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.TerminationError); i++ {
+
+		if m.TerminationError[i] != nil {
+			if err := m.TerminationError[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("terminationError" + "." + strconv.Itoa(i))
 				}

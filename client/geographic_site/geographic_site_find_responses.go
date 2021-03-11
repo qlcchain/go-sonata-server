@@ -71,9 +71,8 @@ func (o *GeographicSiteFindReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -82,7 +81,7 @@ func NewGeographicSiteFindOK() *GeographicSiteFindOK {
 	return &GeographicSiteFindOK{}
 }
 
-/*GeographicSiteFindOK handles this case with default header values.
+/* GeographicSiteFindOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -93,7 +92,6 @@ type GeographicSiteFindOK struct {
 func (o *GeographicSiteFindOK) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindOK  %+v", 200, o.Payload)
 }
-
 func (o *GeographicSiteFindOK) GetPayload() []*models.GeographicSiteFindResp {
 	return o.Payload
 }
@@ -113,9 +111,9 @@ func NewGeographicSiteFindBadRequest() *GeographicSiteFindBadRequest {
 	return &GeographicSiteFindBadRequest{}
 }
 
-/*GeographicSiteFindBadRequest handles this case with default header values.
+/* GeographicSiteFindBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -135,7 +133,6 @@ type GeographicSiteFindBadRequest struct {
 func (o *GeographicSiteFindBadRequest) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GeographicSiteFindBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -157,9 +154,9 @@ func NewGeographicSiteFindUnauthorized() *GeographicSiteFindUnauthorized {
 	return &GeographicSiteFindUnauthorized{}
 }
 
-/*GeographicSiteFindUnauthorized handles this case with default header values.
+/* GeographicSiteFindUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -173,7 +170,6 @@ type GeographicSiteFindUnauthorized struct {
 func (o *GeographicSiteFindUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *GeographicSiteFindUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -195,9 +191,9 @@ func NewGeographicSiteFindNotFound() *GeographicSiteFindNotFound {
 	return &GeographicSiteFindNotFound{}
 }
 
-/*GeographicSiteFindNotFound handles this case with default header values.
+/* GeographicSiteFindNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -209,7 +205,6 @@ type GeographicSiteFindNotFound struct {
 func (o *GeographicSiteFindNotFound) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GeographicSiteFindNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -231,9 +226,9 @@ func NewGeographicSiteFindRequestTimeout() *GeographicSiteFindRequestTimeout {
 	return &GeographicSiteFindRequestTimeout{}
 }
 
-/*GeographicSiteFindRequestTimeout handles this case with default header values.
+/* GeographicSiteFindRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -245,7 +240,6 @@ type GeographicSiteFindRequestTimeout struct {
 func (o *GeographicSiteFindRequestTimeout) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *GeographicSiteFindRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -267,9 +261,9 @@ func NewGeographicSiteFindUnprocessableEntity() *GeographicSiteFindUnprocessable
 	return &GeographicSiteFindUnprocessableEntity{}
 }
 
-/*GeographicSiteFindUnprocessableEntity handles this case with default header values.
+/* GeographicSiteFindUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -288,7 +282,6 @@ type GeographicSiteFindUnprocessableEntity struct {
 func (o *GeographicSiteFindUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *GeographicSiteFindUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -310,9 +303,9 @@ func NewGeographicSiteFindInternalServerError() *GeographicSiteFindInternalServe
 	return &GeographicSiteFindInternalServerError{}
 }
 
-/*GeographicSiteFindInternalServerError handles this case with default header values.
+/* GeographicSiteFindInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -324,7 +317,6 @@ type GeographicSiteFindInternalServerError struct {
 func (o *GeographicSiteFindInternalServerError) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *GeographicSiteFindInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -346,7 +338,7 @@ func NewGeographicSiteFindServiceUnavailable() *GeographicSiteFindServiceUnavail
 	return &GeographicSiteFindServiceUnavailable{}
 }
 
-/*GeographicSiteFindServiceUnavailable handles this case with default header values.
+/* GeographicSiteFindServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -359,7 +351,6 @@ type GeographicSiteFindServiceUnavailable struct {
 func (o *GeographicSiteFindServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /geographicSiteManagement/v3/geographicSite][%d] geographicSiteFindServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *GeographicSiteFindServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

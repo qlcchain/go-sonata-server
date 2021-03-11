@@ -6,18 +6,21 @@ package cancel_product_order
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NewCancelProductOrderCreateParams creates a new CancelProductOrderCreateParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewCancelProductOrderCreateParams() CancelProductOrderCreateParams {
 
 	return CancelProductOrderCreateParams{}
@@ -53,7 +56,7 @@ func (o *CancelProductOrderCreateParams) BindRequest(r *http.Request, route *mid
 		var body models.CancelProductOrderCreate
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("cancelProductOrder", "body"))
+				res = append(res, errors.Required("cancelProductOrder", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("cancelProductOrder", "body", "", err))
 			}
@@ -63,12 +66,17 @@ func (o *CancelProductOrderCreateParams) BindRequest(r *http.Request, route *mid
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.CancelProductOrder = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("cancelProductOrder", "body"))
+		res = append(res, errors.Required("cancelProductOrder", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

@@ -176,7 +176,7 @@ func GetProductOrderByParams(param *po.ProductOrderFindParams) ([]*models.Produc
 				ExternalID: order.ExternalID,
 				ID:         order.ID,
 				OrderDate:  order.OrderDate,
-				State:      order.State,
+				State:      &order.State,
 			})
 		}
 		return r, nil

@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -66,7 +68,6 @@ func (m *GeographicAddressSellerResponse) Validate(formats strfmt.Registry) erro
 }
 
 func (m *GeographicAddressSellerResponse) validateFieldedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.FieldedAddress) { // not required
 		return nil
 	}
@@ -84,7 +85,6 @@ func (m *GeographicAddressSellerResponse) validateFieldedAddress(formats strfmt.
 }
 
 func (m *GeographicAddressSellerResponse) validateFormattedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.FormattedAddress) { // not required
 		return nil
 	}
@@ -105,6 +105,52 @@ func (m *GeographicAddressSellerResponse) validateIsBestMatch(formats strfmt.Reg
 
 	if err := validate.Required("isBestMatch", "body", m.IsBestMatch); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this geographic address seller response based on the context it is used
+func (m *GeographicAddressSellerResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateFieldedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateFormattedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GeographicAddressSellerResponse) contextValidateFieldedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.FieldedAddress != nil {
+		if err := m.FieldedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("fieldedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicAddressSellerResponse) contextValidateFormattedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.FormattedAddress != nil {
+		if err := m.FormattedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("formattedAddress")
+			}
+			return err
+		}
 	}
 
 	return nil

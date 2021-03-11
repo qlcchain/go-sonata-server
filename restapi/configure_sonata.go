@@ -93,6 +93,12 @@ func configureFlags(api *operations.SonataAPI) {
 func configureAPI(api *operations.SonataAPI) http.Handler {
 	cfg := config.Cfg
 
+	if cfg.Debug.Verbose {
+		log.SetLevel(log.DebugLevel)
+	}
+
+	log.Debug(util.ToIndentString(cfg))
+
 	var (
 		err  error
 		file string
@@ -100,8 +106,11 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 	if config.Cfg.Debug.IsFile {
 		dir := config.DBDir()
 		file = path.Join(dir, "sonata.db")
+
+		log.Debugf("save data to db @ %s", file)
 	} else {
 		file = "file:mockdb?mode=memory&cache=shared"
+		log.Debugf("use db memory mode...")
 	}
 	//Store, err = gorm.Open(sqlite.Open("file:mockdb?mode=memory&cache=shared"), &gorm.Config{
 	//	SkipDefaultTransaction: false,
@@ -118,7 +127,6 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 	}
 
 	if cfg.Debug.Verbose {
-		log.SetLevel(log.DebugLevel)
 		db.Store.LogMode(true)
 	}
 
@@ -139,6 +147,8 @@ func configureAPI(api *operations.SonataAPI) http.Handler {
 		var err error
 		if jwtCfg.PrivateKey, err = auth.FromBase64(jwtCfg.Key); err != nil {
 			log.Fatal(err)
+		} else {
+			jwtCfg.PublicKey = &jwtCfg.PrivateKey.PublicKey
 		}
 	}
 
@@ -287,6 +297,8 @@ func mockData(cfg *config.SonataCfg) error {
 	//mock sample product
 	id := util.NewIDPtr()
 	agreementId := util.NewIDPtr()
+	status := models.ProductStatusActive
+
 	from := &models.Product{
 		//AtBaseType:       "",
 		//AtSchemaLocation: "",
@@ -349,7 +361,7 @@ func mockData(cfg *config.SonataCfg) error {
 			},
 		},
 		RelatedParty: []*models.RelatedParty{
-			&models.RelatedParty{
+			{
 				AtReferredType:  "Organization",
 				EmailAddress:    "hi@cbccom.cn",
 				ID:              util.NewIDPtr(),
@@ -365,7 +377,7 @@ func mockData(cfg *config.SonataCfg) error {
 			china.To(),
 		},
 		StartDate: handler.NewDatetime(time.Now().AddDate(-1, 0, 0)),
-		Status:    models.ProductStatusActive,
+		Status:    &status,
 		//StatusChange: []*models.StatusChange{
 		//	StatusChange(),
 		//},

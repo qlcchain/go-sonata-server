@@ -6,18 +6,21 @@ package notification
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NewNotificationProductOfferingQualificationCreationNotificationParams creates a new NotificationProductOfferingQualificationCreationNotificationParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewNotificationProductOfferingQualificationCreationNotificationParams() NotificationProductOfferingQualificationCreationNotificationParams {
 
 	return NotificationProductOfferingQualificationCreationNotificationParams{}
@@ -53,7 +56,7 @@ func (o *NotificationProductOfferingQualificationCreationNotificationParams) Bin
 		var body models.PoQEventContainer
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("productOfferingQualificationCreationNotification", "body"))
+				res = append(res, errors.Required("productOfferingQualificationCreationNotification", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("productOfferingQualificationCreationNotification", "body", "", err))
 			}
@@ -63,12 +66,17 @@ func (o *NotificationProductOfferingQualificationCreationNotificationParams) Bin
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.ProductOfferingQualificationCreationNotification = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("productOfferingQualificationCreationNotification", "body"))
+		res = append(res, errors.Required("productOfferingQualificationCreationNotification", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

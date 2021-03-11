@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewGeographicAddressValidationCreateParams creates a new GeographicAddressValidationCreateParams object
-// with the default values initialized.
+// NewGeographicAddressValidationCreateParams creates a new GeographicAddressValidationCreateParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGeographicAddressValidationCreateParams() *GeographicAddressValidationCreateParams {
-	var ()
 	return &GeographicAddressValidationCreateParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGeographicAddressValidationCreateParamsWithTimeout creates a new GeographicAddressValidationCreateParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGeographicAddressValidationCreateParamsWithTimeout(timeout time.Duration) *GeographicAddressValidationCreateParams {
-	var ()
 	return &GeographicAddressValidationCreateParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGeographicAddressValidationCreateParamsWithContext creates a new GeographicAddressValidationCreateParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGeographicAddressValidationCreateParamsWithContext(ctx context.Context) *GeographicAddressValidationCreateParams {
-	var ()
 	return &GeographicAddressValidationCreateParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGeographicAddressValidationCreateParamsWithHTTPClient creates a new GeographicAddressValidationCreateParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGeographicAddressValidationCreateParamsWithHTTPClient(client *http.Client) *GeographicAddressValidationCreateParams {
-	var ()
 	return &GeographicAddressValidationCreateParams{
 		HTTPClient: client,
 	}
 }
 
-/*GeographicAddressValidationCreateParams contains all the parameters to send to the API endpoint
-for the geographic address validation create operation typically these are written to a http.Request
+/* GeographicAddressValidationCreateParams contains all the parameters to send to the API endpoint
+   for the geographic address validation create operation.
+
+   Typically these are written to a http.Request.
 */
 type GeographicAddressValidationCreateParams struct {
 
-	/*AddressValidationRequest*/
+	// AddressValidationRequest.
 	AddressValidationRequest *models.GeographicAddressValidationCreate
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the geographic address validation create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GeographicAddressValidationCreateParams) WithDefaults() *GeographicAddressValidationCreateParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the geographic address validation create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GeographicAddressValidationCreateParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the geographic address validation create params
@@ -121,7 +135,6 @@ func (o *GeographicAddressValidationCreateParams) WriteToRequest(r runtime.Clien
 		return err
 	}
 	var res []error
-
 	if o.AddressValidationRequest != nil {
 		if err := r.SetBodyParam(o.AddressValidationRequest); err != nil {
 			return err

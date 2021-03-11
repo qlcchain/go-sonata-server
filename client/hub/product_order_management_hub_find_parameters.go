@@ -16,52 +16,66 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewProductOrderManagementHubFindParams creates a new ProductOrderManagementHubFindParams object
-// with the default values initialized.
+// NewProductOrderManagementHubFindParams creates a new ProductOrderManagementHubFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOrderManagementHubFindParams() *ProductOrderManagementHubFindParams {
-
 	return &ProductOrderManagementHubFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOrderManagementHubFindParamsWithTimeout creates a new ProductOrderManagementHubFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOrderManagementHubFindParamsWithTimeout(timeout time.Duration) *ProductOrderManagementHubFindParams {
-
 	return &ProductOrderManagementHubFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOrderManagementHubFindParamsWithContext creates a new ProductOrderManagementHubFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOrderManagementHubFindParamsWithContext(ctx context.Context) *ProductOrderManagementHubFindParams {
-
 	return &ProductOrderManagementHubFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOrderManagementHubFindParamsWithHTTPClient creates a new ProductOrderManagementHubFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOrderManagementHubFindParamsWithHTTPClient(client *http.Client) *ProductOrderManagementHubFindParams {
-
 	return &ProductOrderManagementHubFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOrderManagementHubFindParams contains all the parameters to send to the API endpoint
-for the product order management hub find operation typically these are written to a http.Request
+/* ProductOrderManagementHubFindParams contains all the parameters to send to the API endpoint
+   for the product order management hub find operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOrderManagementHubFindParams struct {
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product order management hub find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderManagementHubFindParams) WithDefaults() *ProductOrderManagementHubFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product order management hub find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderManagementHubFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product order management hub find params

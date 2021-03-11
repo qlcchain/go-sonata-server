@@ -25,13 +25,16 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ProductOrderCreate(params *ProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderCreateCreated, error)
+	ProductOrderCreate(params *ProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderCreateCreated, error)
 
-	ProductOrderFind(params *ProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderFindOK, error)
+	ProductOrderFind(params *ProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderFindOK, error)
 
-	ProductOrderGet(params *ProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderGetOK, error)
+	ProductOrderGet(params *ProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderGetOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -41,13 +44,12 @@ type ClientService interface {
 
   This operation is used to create an order. Depending on the order activity, one can "INSTALL", "CHANGE", or "DISCONNECT" an associated product.
 */
-func (a *Client) ProductOrderCreate(params *ProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderCreateCreated, error) {
+func (a *Client) ProductOrderCreate(params *ProductOrderCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOrderCreateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOrderCreate",
 		Method:             "POST",
 		PathPattern:        "/productOrderManagement/v3/productOrder",
@@ -59,7 +61,12 @@ func (a *Client) ProductOrderCreate(params *ProductOrderCreateParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -78,13 +85,12 @@ func (a *Client) ProductOrderCreate(params *ProductOrderCreateParams, authInfo r
 
   This operation is used to retrieve one or more product orders based upon filter criteria specified on input.
 */
-func (a *Client) ProductOrderFind(params *ProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderFindOK, error) {
+func (a *Client) ProductOrderFind(params *ProductOrderFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOrderFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOrderFind",
 		Method:             "GET",
 		PathPattern:        "/productOrderManagement/v3/productOrder",
@@ -96,7 +102,12 @@ func (a *Client) ProductOrderFind(params *ProductOrderFindParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -115,13 +126,12 @@ func (a *Client) ProductOrderFind(params *ProductOrderFindParams, authInfo runti
 
   This operation is used to retrieve a single product order based upon a specified product order id.
 */
-func (a *Client) ProductOrderGet(params *ProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderGetOK, error) {
+func (a *Client) ProductOrderGet(params *ProductOrderGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOrderGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOrderGet",
 		Method:             "GET",
 		PathPattern:        "/productOrderManagement/v3/productOrder/{ProductOrderId}",
@@ -133,7 +143,12 @@ func (a *Client) ProductOrderGet(params *ProductOrderGetParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

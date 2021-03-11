@@ -15,7 +15,8 @@ import (
 )
 
 // NewCancelProductOrderFindParams creates a new CancelProductOrderFindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewCancelProductOrderFindParams() CancelProductOrderFindParams {
 
 	return CancelProductOrderFindParams{}
@@ -60,7 +61,6 @@ func (o *CancelProductOrderFindParams) BindRequest(r *http.Request, route *middl
 	if err := o.bindProductOrderID(qProductOrderID, qhkProductOrderID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -76,10 +76,10 @@ func (o *CancelProductOrderFindParams) bindProductOrderExternalID(rawData []stri
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ProductOrderExternalID = &raw
 
 	return nil
@@ -94,10 +94,10 @@ func (o *CancelProductOrderFindParams) bindProductOrderID(rawData []string, hasK
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ProductOrderID = &raw
 
 	return nil

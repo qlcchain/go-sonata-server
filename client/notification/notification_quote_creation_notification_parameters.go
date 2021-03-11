@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationQuoteCreationNotificationParams creates a new NotificationQuoteCreationNotificationParams object
-// with the default values initialized.
+// NewNotificationQuoteCreationNotificationParams creates a new NotificationQuoteCreationNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationQuoteCreationNotificationParams() *NotificationQuoteCreationNotificationParams {
-	var ()
 	return &NotificationQuoteCreationNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationQuoteCreationNotificationParamsWithTimeout creates a new NotificationQuoteCreationNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationQuoteCreationNotificationParamsWithTimeout(timeout time.Duration) *NotificationQuoteCreationNotificationParams {
-	var ()
 	return &NotificationQuoteCreationNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationQuoteCreationNotificationParamsWithContext creates a new NotificationQuoteCreationNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationQuoteCreationNotificationParamsWithContext(ctx context.Context) *NotificationQuoteCreationNotificationParams {
-	var ()
 	return &NotificationQuoteCreationNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationQuoteCreationNotificationParamsWithHTTPClient creates a new NotificationQuoteCreationNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationQuoteCreationNotificationParamsWithHTTPClient(client *http.Client) *NotificationQuoteCreationNotificationParams {
-	var ()
 	return &NotificationQuoteCreationNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationQuoteCreationNotificationParams contains all the parameters to send to the API endpoint
-for the notification quote creation notification operation typically these are written to a http.Request
+/* NotificationQuoteCreationNotificationParams contains all the parameters to send to the API endpoint
+   for the notification quote creation notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationQuoteCreationNotificationParams struct {
 
-	/*QuoteCreationNotification*/
+	// QuoteCreationNotification.
 	QuoteCreationNotification *models.QuoteEvent
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification quote creation notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteCreationNotificationParams) WithDefaults() *NotificationQuoteCreationNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification quote creation notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteCreationNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification quote creation notification params
@@ -121,7 +135,6 @@ func (o *NotificationQuoteCreationNotificationParams) WriteToRequest(r runtime.C
 		return err
 	}
 	var res []error
-
 	if o.QuoteCreationNotification != nil {
 		if err := r.SetBodyParam(o.QuoteCreationNotification); err != nil {
 			return err

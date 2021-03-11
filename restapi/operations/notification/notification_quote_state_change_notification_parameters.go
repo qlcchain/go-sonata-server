@@ -6,18 +6,21 @@ package notification
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NewNotificationQuoteStateChangeNotificationParams creates a new NotificationQuoteStateChangeNotificationParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewNotificationQuoteStateChangeNotificationParams() NotificationQuoteStateChangeNotificationParams {
 
 	return NotificationQuoteStateChangeNotificationParams{}
@@ -53,7 +56,7 @@ func (o *NotificationQuoteStateChangeNotificationParams) BindRequest(r *http.Req
 		var body models.QuoteEvent
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("quoteStateChangeNotification", "body"))
+				res = append(res, errors.Required("quoteStateChangeNotification", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("quoteStateChangeNotification", "body", "", err))
 			}
@@ -63,12 +66,17 @@ func (o *NotificationQuoteStateChangeNotificationParams) BindRequest(r *http.Req
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.QuoteStateChangeNotification = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("quoteStateChangeNotification", "body"))
+		res = append(res, errors.Required("quoteStateChangeNotification", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

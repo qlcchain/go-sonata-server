@@ -71,9 +71,8 @@ func (o *NotificationProductOfferingQualificationCreationNotificationReader) Rea
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -82,7 +81,7 @@ func NewNotificationProductOfferingQualificationCreationNotificationNoContent() 
 	return &NotificationProductOfferingQualificationCreationNotificationNoContent{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationNoContent handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationNoContent describes a response with status code 204, with default header values.
 
 No Content
 */
@@ -103,9 +102,9 @@ func NewNotificationProductOfferingQualificationCreationNotificationBadRequest()
 	return &NotificationProductOfferingQualificationCreationNotificationBadRequest{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationBadRequest handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -125,7 +124,6 @@ type NotificationProductOfferingQualificationCreationNotificationBadRequest stru
 func (o *NotificationProductOfferingQualificationCreationNotificationBadRequest) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *NotificationProductOfferingQualificationCreationNotificationBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -147,9 +145,9 @@ func NewNotificationProductOfferingQualificationCreationNotificationUnauthorized
 	return &NotificationProductOfferingQualificationCreationNotificationUnauthorized{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationUnauthorized handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -163,7 +161,6 @@ type NotificationProductOfferingQualificationCreationNotificationUnauthorized st
 func (o *NotificationProductOfferingQualificationCreationNotificationUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *NotificationProductOfferingQualificationCreationNotificationUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -185,9 +182,9 @@ func NewNotificationProductOfferingQualificationCreationNotificationForbidden() 
 	return &NotificationProductOfferingQualificationCreationNotificationForbidden{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationForbidden handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -202,7 +199,6 @@ type NotificationProductOfferingQualificationCreationNotificationForbidden struc
 func (o *NotificationProductOfferingQualificationCreationNotificationForbidden) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationForbidden  %+v", 403, o.Payload)
 }
-
 func (o *NotificationProductOfferingQualificationCreationNotificationForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -224,9 +220,9 @@ func NewNotificationProductOfferingQualificationCreationNotificationNotFound() *
 	return &NotificationProductOfferingQualificationCreationNotificationNotFound{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationNotFound handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -238,7 +234,6 @@ type NotificationProductOfferingQualificationCreationNotificationNotFound struct
 func (o *NotificationProductOfferingQualificationCreationNotificationNotFound) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationNotFound  %+v", 404, o.Payload)
 }
-
 func (o *NotificationProductOfferingQualificationCreationNotificationNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -260,9 +255,9 @@ func NewNotificationProductOfferingQualificationCreationNotificationRequestTimeo
 	return &NotificationProductOfferingQualificationCreationNotificationRequestTimeout{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationRequestTimeout handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -274,7 +269,6 @@ type NotificationProductOfferingQualificationCreationNotificationRequestTimeout 
 func (o *NotificationProductOfferingQualificationCreationNotificationRequestTimeout) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *NotificationProductOfferingQualificationCreationNotificationRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -296,9 +290,9 @@ func NewNotificationProductOfferingQualificationCreationNotificationUnprocessabl
 	return &NotificationProductOfferingQualificationCreationNotificationUnprocessableEntity{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationUnprocessableEntity handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -309,7 +303,6 @@ type NotificationProductOfferingQualificationCreationNotificationUnprocessableEn
 func (o *NotificationProductOfferingQualificationCreationNotificationUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *NotificationProductOfferingQualificationCreationNotificationUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -331,7 +324,7 @@ func NewNotificationProductOfferingQualificationCreationNotificationServiceUnava
 	return &NotificationProductOfferingQualificationCreationNotificationServiceUnavailable{}
 }
 
-/*NotificationProductOfferingQualificationCreationNotificationServiceUnavailable handles this case with default header values.
+/* NotificationProductOfferingQualificationCreationNotificationServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -344,7 +337,6 @@ type NotificationProductOfferingQualificationCreationNotificationServiceUnavaila
 func (o *NotificationProductOfferingQualificationCreationNotificationServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification][%d] notificationProductOfferingQualificationCreationNotificationServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *NotificationProductOfferingQualificationCreationNotificationServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

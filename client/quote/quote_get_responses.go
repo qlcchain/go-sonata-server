@@ -77,9 +77,8 @@ func (o *QuoteGetReader) ReadResponse(response runtime.ClientResponse, consumer 
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -88,7 +87,7 @@ func NewQuoteGetOK() *QuoteGetOK {
 	return &QuoteGetOK{}
 }
 
-/*QuoteGetOK handles this case with default header values.
+/* QuoteGetOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -99,7 +98,6 @@ type QuoteGetOK struct {
 func (o *QuoteGetOK) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetOK  %+v", 200, o.Payload)
 }
-
 func (o *QuoteGetOK) GetPayload() *models.Quote {
 	return o.Payload
 }
@@ -121,9 +119,9 @@ func NewQuoteGetBadRequest() *QuoteGetBadRequest {
 	return &QuoteGetBadRequest{}
 }
 
-/*QuoteGetBadRequest handles this case with default header values.
+/* QuoteGetBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -143,7 +141,6 @@ type QuoteGetBadRequest struct {
 func (o *QuoteGetBadRequest) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *QuoteGetBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -165,9 +162,9 @@ func NewQuoteGetUnauthorized() *QuoteGetUnauthorized {
 	return &QuoteGetUnauthorized{}
 }
 
-/*QuoteGetUnauthorized handles this case with default header values.
+/* QuoteGetUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -181,7 +178,6 @@ type QuoteGetUnauthorized struct {
 func (o *QuoteGetUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *QuoteGetUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -203,9 +199,9 @@ func NewQuoteGetForbidden() *QuoteGetForbidden {
 	return &QuoteGetForbidden{}
 }
 
-/*QuoteGetForbidden handles this case with default header values.
+/* QuoteGetForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -220,7 +216,6 @@ type QuoteGetForbidden struct {
 func (o *QuoteGetForbidden) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetForbidden  %+v", 403, o.Payload)
 }
-
 func (o *QuoteGetForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -242,9 +237,9 @@ func NewQuoteGetNotFound() *QuoteGetNotFound {
 	return &QuoteGetNotFound{}
 }
 
-/*QuoteGetNotFound handles this case with default header values.
+/* QuoteGetNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -256,7 +251,6 @@ type QuoteGetNotFound struct {
 func (o *QuoteGetNotFound) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetNotFound  %+v", 404, o.Payload)
 }
-
 func (o *QuoteGetNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -278,9 +272,9 @@ func NewQuoteGetMethodNotAllowed() *QuoteGetMethodNotAllowed {
 	return &QuoteGetMethodNotAllowed{}
 }
 
-/*QuoteGetMethodNotAllowed handles this case with default header values.
+/* QuoteGetMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -292,7 +286,6 @@ type QuoteGetMethodNotAllowed struct {
 func (o *QuoteGetMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *QuoteGetMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -314,9 +307,9 @@ func NewQuoteGetUnprocessableEntity() *QuoteGetUnprocessableEntity {
 	return &QuoteGetUnprocessableEntity{}
 }
 
-/*QuoteGetUnprocessableEntity handles this case with default header values.
+/* QuoteGetUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -327,7 +320,6 @@ type QuoteGetUnprocessableEntity struct {
 func (o *QuoteGetUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *QuoteGetUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -349,9 +341,9 @@ func NewQuoteGetInternalServerError() *QuoteGetInternalServerError {
 	return &QuoteGetInternalServerError{}
 }
 
-/*QuoteGetInternalServerError handles this case with default header values.
+/* QuoteGetInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -363,7 +355,6 @@ type QuoteGetInternalServerError struct {
 func (o *QuoteGetInternalServerError) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *QuoteGetInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -385,7 +376,7 @@ func NewQuoteGetServiceUnavailable() *QuoteGetServiceUnavailable {
 	return &QuoteGetServiceUnavailable{}
 }
 
-/*QuoteGetServiceUnavailable handles this case with default header values.
+/* QuoteGetServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -398,7 +389,6 @@ type QuoteGetServiceUnavailable struct {
 func (o *QuoteGetServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /quoteManagement/v2/quote/{id}][%d] quoteGetServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *QuoteGetServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

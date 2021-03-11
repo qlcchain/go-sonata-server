@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -17,6 +18,11 @@ import (
 //
 // swagger:model ProductOrderStateType
 type ProductOrderStateType string
+
+func NewProductOrderStateType(value ProductOrderStateType) *ProductOrderStateType {
+	v := value
+	return &v
+}
 
 const (
 
@@ -44,14 +50,14 @@ const (
 	// ProductOrderStateTypeCancelled captures enum value "cancelled"
 	ProductOrderStateTypeCancelled ProductOrderStateType = "cancelled"
 
-	// ProductOrderStateTypeInProgressConfigured captures enum value "inProgress.configured"
-	ProductOrderStateTypeInProgressConfigured ProductOrderStateType = "inProgress.configured"
+	// ProductOrderStateTypeInProgressDotConfigured captures enum value "inProgress.configured"
+	ProductOrderStateTypeInProgressDotConfigured ProductOrderStateType = "inProgress.configured"
 
-	// ProductOrderStateTypeInProgressConfirmed captures enum value "inProgress.confirmed"
-	ProductOrderStateTypeInProgressConfirmed ProductOrderStateType = "inProgress.confirmed"
+	// ProductOrderStateTypeInProgressDotConfirmed captures enum value "inProgress.confirmed"
+	ProductOrderStateTypeInProgressDotConfirmed ProductOrderStateType = "inProgress.confirmed"
 
-	// ProductOrderStateTypeInProgressJeopardy captures enum value "inProgress.jeopardy"
-	ProductOrderStateTypeInProgressJeopardy ProductOrderStateType = "inProgress.jeopardy"
+	// ProductOrderStateTypeInProgressDotJeopardy captures enum value "inProgress.jeopardy"
+	ProductOrderStateTypeInProgressDotJeopardy ProductOrderStateType = "inProgress.jeopardy"
 
 	// ProductOrderStateTypeFailed captures enum value "failed"
 	ProductOrderStateTypeFailed ProductOrderStateType = "failed"
@@ -95,5 +101,10 @@ func (m ProductOrderStateType) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// ContextValidate validates this product order state type based on context it is used
+func (m ProductOrderStateType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

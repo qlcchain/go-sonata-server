@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -18,16 +19,21 @@ import (
 // swagger:model ProductOfferingQualificationStateType
 type ProductOfferingQualificationStateType string
 
+func NewProductOfferingQualificationStateType(value ProductOfferingQualificationStateType) *ProductOfferingQualificationStateType {
+	v := value
+	return &v
+}
+
 const (
 
 	// ProductOfferingQualificationStateTypeDone captures enum value "done"
 	ProductOfferingQualificationStateTypeDone ProductOfferingQualificationStateType = "done"
 
-	// ProductOfferingQualificationStateTypeTerminatedWithErrorUnableToProvide captures enum value "terminatedWithError.unableToProvide"
-	ProductOfferingQualificationStateTypeTerminatedWithErrorUnableToProvide ProductOfferingQualificationStateType = "terminatedWithError.unableToProvide"
+	// ProductOfferingQualificationStateTypeTerminatedWithErrorDotUnableToProvide captures enum value "terminatedWithError.unableToProvide"
+	ProductOfferingQualificationStateTypeTerminatedWithErrorDotUnableToProvide ProductOfferingQualificationStateType = "terminatedWithError.unableToProvide"
 
-	// ProductOfferingQualificationStateTypeTerminatedWithErrorInsufficientInformationProvided captures enum value "terminatedWithError.insufficientInformationProvided"
-	ProductOfferingQualificationStateTypeTerminatedWithErrorInsufficientInformationProvided ProductOfferingQualificationStateType = "terminatedWithError.insufficientInformationProvided"
+	// ProductOfferingQualificationStateTypeTerminatedWithErrorDotInsufficientInformationProvided captures enum value "terminatedWithError.insufficientInformationProvided"
+	ProductOfferingQualificationStateTypeTerminatedWithErrorDotInsufficientInformationProvided ProductOfferingQualificationStateType = "terminatedWithError.insufficientInformationProvided"
 
 	// ProductOfferingQualificationStateTypeInProgress captures enum value "inProgress"
 	ProductOfferingQualificationStateTypeInProgress ProductOfferingQualificationStateType = "inProgress"
@@ -65,5 +71,10 @@ func (m ProductOfferingQualificationStateType) Validate(formats strfmt.Registry)
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// ContextValidate validates this product offering qualification state type based on context it is used
+func (m ProductOfferingQualificationStateType) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

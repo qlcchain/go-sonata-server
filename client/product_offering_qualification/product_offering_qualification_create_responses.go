@@ -71,9 +71,8 @@ func (o *ProductOfferingQualificationCreateReader) ReadResponse(response runtime
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -82,7 +81,7 @@ func NewProductOfferingQualificationCreateCreated() *ProductOfferingQualificatio
 	return &ProductOfferingQualificationCreateCreated{}
 }
 
-/*ProductOfferingQualificationCreateCreated handles this case with default header values.
+/* ProductOfferingQualificationCreateCreated describes a response with status code 201, with default header values.
 
 Created
 */
@@ -93,7 +92,6 @@ type ProductOfferingQualificationCreateCreated struct {
 func (o *ProductOfferingQualificationCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateCreated  %+v", 201, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateCreated) GetPayload() *models.ProductOfferingQualification {
 	return o.Payload
 }
@@ -115,9 +113,9 @@ func NewProductOfferingQualificationCreateBadRequest() *ProductOfferingQualifica
 	return &ProductOfferingQualificationCreateBadRequest{}
 }
 
-/*ProductOfferingQualificationCreateBadRequest handles this case with default header values.
+/* ProductOfferingQualificationCreateBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -137,7 +135,6 @@ type ProductOfferingQualificationCreateBadRequest struct {
 func (o *ProductOfferingQualificationCreateBadRequest) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -159,9 +156,9 @@ func NewProductOfferingQualificationCreateUnauthorized() *ProductOfferingQualifi
 	return &ProductOfferingQualificationCreateUnauthorized{}
 }
 
-/*ProductOfferingQualificationCreateUnauthorized handles this case with default header values.
+/* ProductOfferingQualificationCreateUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -175,7 +172,6 @@ type ProductOfferingQualificationCreateUnauthorized struct {
 func (o *ProductOfferingQualificationCreateUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -197,9 +193,9 @@ func NewProductOfferingQualificationCreateForbidden() *ProductOfferingQualificat
 	return &ProductOfferingQualificationCreateForbidden{}
 }
 
-/*ProductOfferingQualificationCreateForbidden handles this case with default header values.
+/* ProductOfferingQualificationCreateForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -214,7 +210,6 @@ type ProductOfferingQualificationCreateForbidden struct {
 func (o *ProductOfferingQualificationCreateForbidden) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -236,9 +231,9 @@ func NewProductOfferingQualificationCreateNotFound() *ProductOfferingQualificati
 	return &ProductOfferingQualificationCreateNotFound{}
 }
 
-/*ProductOfferingQualificationCreateNotFound handles this case with default header values.
+/* ProductOfferingQualificationCreateNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -250,7 +245,6 @@ type ProductOfferingQualificationCreateNotFound struct {
 func (o *ProductOfferingQualificationCreateNotFound) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -272,9 +266,9 @@ func NewProductOfferingQualificationCreateRequestTimeout() *ProductOfferingQuali
 	return &ProductOfferingQualificationCreateRequestTimeout{}
 }
 
-/*ProductOfferingQualificationCreateRequestTimeout handles this case with default header values.
+/* ProductOfferingQualificationCreateRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -286,7 +280,6 @@ type ProductOfferingQualificationCreateRequestTimeout struct {
 func (o *ProductOfferingQualificationCreateRequestTimeout) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -308,9 +301,9 @@ func NewProductOfferingQualificationCreateUnprocessableEntity() *ProductOffering
 	return &ProductOfferingQualificationCreateUnprocessableEntity{}
 }
 
-/*ProductOfferingQualificationCreateUnprocessableEntity handles this case with default header values.
+/* ProductOfferingQualificationCreateUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -364,7 +357,6 @@ type ProductOfferingQualificationCreateUnprocessableEntity struct {
 func (o *ProductOfferingQualificationCreateUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -386,7 +378,7 @@ func NewProductOfferingQualificationCreateServiceUnavailable() *ProductOfferingQ
 	return &ProductOfferingQualificationCreateServiceUnavailable{}
 }
 
-/*ProductOfferingQualificationCreateServiceUnavailable handles this case with default header values.
+/* ProductOfferingQualificationCreateServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -399,7 +391,6 @@ type ProductOfferingQualificationCreateServiceUnavailable struct {
 func (o *ProductOfferingQualificationCreateServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /productOfferingQualificationManagement/v3/productOfferingQualification][%d] productOfferingQualificationCreateServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *ProductOfferingQualificationCreateServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

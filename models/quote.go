@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -76,7 +77,7 @@ type Quote struct {
 
 	// quote level
 	// Required: true
-	QuoteLevel QuoteLevel `json:"quoteLevel"`
+	QuoteLevel *QuoteLevel `json:"quoteLevel"`
 
 	// related party
 	// Required: true
@@ -89,7 +90,7 @@ type Quote struct {
 
 	// state
 	// Required: true
-	State QuoteStateType `json:"state"`
+	State *QuoteStateType `json:"state"`
 
 	// valid for
 	ValidFor *TimePeriod `json:"validFor,omitempty"`
@@ -158,7 +159,6 @@ func (m *Quote) Validate(formats strfmt.Registry) error {
 }
 
 func (m *Quote) validateAgreement(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Agreement) { // not required
 		return nil
 	}
@@ -183,7 +183,6 @@ func (m *Quote) validateAgreement(formats strfmt.Registry) error {
 }
 
 func (m *Quote) validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EffectiveQuoteCompletionDate) { // not required
 		return nil
 	}
@@ -196,7 +195,6 @@ func (m *Quote) validateEffectiveQuoteCompletionDate(formats strfmt.Registry) er
 }
 
 func (m *Quote) validateExpectedFulfillmentStartDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedFulfillmentStartDate) { // not required
 		return nil
 	}
@@ -209,7 +207,6 @@ func (m *Quote) validateExpectedFulfillmentStartDate(formats strfmt.Registry) er
 }
 
 func (m *Quote) validateExpectedQuoteCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedQuoteCompletionDate) { // not required
 		return nil
 	}
@@ -231,7 +228,6 @@ func (m *Quote) validateInstantSyncQuoting(formats strfmt.Registry) error {
 }
 
 func (m *Quote) validateNote(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Note) { // not required
 		return nil
 	}
@@ -256,7 +252,6 @@ func (m *Quote) validateNote(formats strfmt.Registry) error {
 }
 
 func (m *Quote) validateQuoteDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.QuoteDate) { // not required
 		return nil
 	}
@@ -295,11 +290,21 @@ func (m *Quote) validateQuoteItem(formats strfmt.Registry) error {
 
 func (m *Quote) validateQuoteLevel(formats strfmt.Registry) error {
 
-	if err := m.QuoteLevel.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("quoteLevel")
-		}
+	if err := validate.Required("quoteLevel", "body", m.QuoteLevel); err != nil {
 		return err
+	}
+
+	if err := validate.Required("quoteLevel", "body", m.QuoteLevel); err != nil {
+		return err
+	}
+
+	if m.QuoteLevel != nil {
+		if err := m.QuoteLevel.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("quoteLevel")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -345,24 +350,185 @@ func (m *Quote) validateRequestedQuoteCompletionDate(formats strfmt.Registry) er
 
 func (m *Quote) validateState(formats strfmt.Registry) error {
 
-	if err := m.State.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
+	if err := validate.Required("state", "body", m.State); err != nil {
 		return err
+	}
+
+	if err := validate.Required("state", "body", m.State); err != nil {
+		return err
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
 func (m *Quote) validateValidFor(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ValidFor) { // not required
 		return nil
 	}
 
 	if m.ValidFor != nil {
 		if err := m.ValidFor.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("validFor")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this quote based on the context it is used
+func (m *Quote) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAgreement(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateNote(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQuoteItem(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQuoteLevel(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateValidFor(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Quote) contextValidateAgreement(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Agreement); i++ {
+
+		if m.Agreement[i] != nil {
+			if err := m.Agreement[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("agreement" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Quote) contextValidateNote(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Note); i++ {
+
+		if m.Note[i] != nil {
+			if err := m.Note[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("note" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Quote) contextValidateQuoteItem(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.QuoteItem); i++ {
+
+		if m.QuoteItem[i] != nil {
+			if err := m.QuoteItem[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("quoteItem" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Quote) contextValidateQuoteLevel(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.QuoteLevel != nil {
+		if err := m.QuoteLevel.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("quoteLevel")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Quote) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Quote) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Quote) contextValidateValidFor(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ValidFor != nil {
+		if err := m.ValidFor.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("validFor")
 			}
