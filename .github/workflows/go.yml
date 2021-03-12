@@ -30,7 +30,7 @@ jobs:
           go test ./... -coverprofile=coverage.txt -covermode=atomic
           make clean build
 
-      - uses: codecov/codecov-action@v1.0.2
+      - uses: codecov/codecov-action@v1.2.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.txt
