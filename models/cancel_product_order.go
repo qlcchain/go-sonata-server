@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -47,7 +49,7 @@ type CancelProductOrder struct {
 
 	// state
 	// Required: true
-	State TaskStateType `json:"state"`
+	State *TaskStateType `json:"state"`
 }
 
 // Validate validates this cancel product order
@@ -118,11 +120,67 @@ func (m *CancelProductOrder) validateRequestedCancellationDate(formats strfmt.Re
 
 func (m *CancelProductOrder) validateState(formats strfmt.Registry) error {
 
-	if err := m.State.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
+	if err := validate.Required("state", "body", m.State); err != nil {
 		return err
+	}
+
+	if err := validate.Required("state", "body", m.State); err != nil {
+		return err
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this cancel product order based on the context it is used
+func (m *CancelProductOrder) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateProductOrder(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *CancelProductOrder) contextValidateProductOrder(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ProductOrder != nil {
+		if err := m.ProductOrder.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("productOrder")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *CancelProductOrder) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
 	}
 
 	return nil

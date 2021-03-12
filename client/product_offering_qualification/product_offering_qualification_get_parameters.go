@@ -16,56 +16,70 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewProductOfferingQualificationGetParams creates a new ProductOfferingQualificationGetParams object
-// with the default values initialized.
+// NewProductOfferingQualificationGetParams creates a new ProductOfferingQualificationGetParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOfferingQualificationGetParams() *ProductOfferingQualificationGetParams {
-	var ()
 	return &ProductOfferingQualificationGetParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOfferingQualificationGetParamsWithTimeout creates a new ProductOfferingQualificationGetParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOfferingQualificationGetParamsWithTimeout(timeout time.Duration) *ProductOfferingQualificationGetParams {
-	var ()
 	return &ProductOfferingQualificationGetParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOfferingQualificationGetParamsWithContext creates a new ProductOfferingQualificationGetParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOfferingQualificationGetParamsWithContext(ctx context.Context) *ProductOfferingQualificationGetParams {
-	var ()
 	return &ProductOfferingQualificationGetParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOfferingQualificationGetParamsWithHTTPClient creates a new ProductOfferingQualificationGetParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOfferingQualificationGetParamsWithHTTPClient(client *http.Client) *ProductOfferingQualificationGetParams {
-	var ()
 	return &ProductOfferingQualificationGetParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOfferingQualificationGetParams contains all the parameters to send to the API endpoint
-for the product offering qualification get operation typically these are written to a http.Request
+/* ProductOfferingQualificationGetParams contains all the parameters to send to the API endpoint
+   for the product offering qualification get operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOfferingQualificationGetParams struct {
 
-	/*ProductOfferingQualificationID*/
+	// ProductOfferingQualificationID.
 	ProductOfferingQualificationID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product offering qualification get params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationGetParams) WithDefaults() *ProductOfferingQualificationGetParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product offering qualification get params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationGetParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product offering qualification get params

@@ -29,7 +29,7 @@ func NewNotificationQuoteCreationNotification(ctx *middleware.Context, handler N
 	return &NotificationQuoteCreationNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationQuoteCreationNotification swagger:route POST /quoteNotification/v1/notification/quoteCreationNotification Notification notificationQuoteCreationNotification
+/* NotificationQuoteCreationNotification swagger:route POST /quoteNotification/v1/notification/quoteCreationNotification Notification notificationQuoteCreationNotification
 
 Quote creation notification structure
 
@@ -52,14 +52,12 @@ func (o *NotificationQuoteCreationNotification) ServeHTTP(rw http.ResponseWriter
 		r = rCtx
 	}
 	var Params = NewNotificationQuoteCreationNotificationParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

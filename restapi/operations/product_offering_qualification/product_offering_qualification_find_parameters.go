@@ -16,7 +16,8 @@ import (
 )
 
 // NewProductOfferingQualificationFindParams creates a new ProductOfferingQualificationFindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewProductOfferingQualificationFindParams() ProductOfferingQualificationFindParams {
 
 	return ProductOfferingQualificationFindParams{}
@@ -97,7 +98,6 @@ func (o *ProductOfferingQualificationFindParams) BindRequest(r *http.Request, ro
 	if err := o.bindState(qState, qhkState, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -113,10 +113,10 @@ func (o *ProductOfferingQualificationFindParams) bindLimit(rawData []string, has
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Limit = &raw
 
 	return nil
@@ -131,10 +131,10 @@ func (o *ProductOfferingQualificationFindParams) bindOffset(rawData []string, ha
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Offset = &raw
 
 	return nil
@@ -149,10 +149,10 @@ func (o *ProductOfferingQualificationFindParams) bindProjectID(rawData []string,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ProjectID = &raw
 
 	return nil
@@ -167,6 +167,7 @@ func (o *ProductOfferingQualificationFindParams) bindRequestedResponseDateGt(raw
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -203,6 +204,7 @@ func (o *ProductOfferingQualificationFindParams) bindRequestedResponseDateLt(raw
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -239,10 +241,10 @@ func (o *ProductOfferingQualificationFindParams) bindState(rawData []string, has
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.State = &raw
 
 	return nil

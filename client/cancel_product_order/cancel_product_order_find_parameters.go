@@ -16,58 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewCancelProductOrderFindParams creates a new CancelProductOrderFindParams object
-// with the default values initialized.
+// NewCancelProductOrderFindParams creates a new CancelProductOrderFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCancelProductOrderFindParams() *CancelProductOrderFindParams {
-	var ()
 	return &CancelProductOrderFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCancelProductOrderFindParamsWithTimeout creates a new CancelProductOrderFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCancelProductOrderFindParamsWithTimeout(timeout time.Duration) *CancelProductOrderFindParams {
-	var ()
 	return &CancelProductOrderFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCancelProductOrderFindParamsWithContext creates a new CancelProductOrderFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCancelProductOrderFindParamsWithContext(ctx context.Context) *CancelProductOrderFindParams {
-	var ()
 	return &CancelProductOrderFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCancelProductOrderFindParamsWithHTTPClient creates a new CancelProductOrderFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCancelProductOrderFindParamsWithHTTPClient(client *http.Client) *CancelProductOrderFindParams {
-	var ()
 	return &CancelProductOrderFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*CancelProductOrderFindParams contains all the parameters to send to the API endpoint
-for the cancel product order find operation typically these are written to a http.Request
+/* CancelProductOrderFindParams contains all the parameters to send to the API endpoint
+   for the cancel product order find operation.
+
+   Typically these are written to a http.Request.
 */
 type CancelProductOrderFindParams struct {
 
-	/*ProductOrderExternalID*/
+	// ProductOrderExternalID.
 	ProductOrderExternalID *string
-	/*ProductOrderID*/
+
+	// ProductOrderID.
 	ProductOrderID *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the cancel product order find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CancelProductOrderFindParams) WithDefaults() *CancelProductOrderFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the cancel product order find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CancelProductOrderFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the cancel product order find params
@@ -137,32 +152,34 @@ func (o *CancelProductOrderFindParams) WriteToRequest(r runtime.ClientRequest, r
 
 		// query param productOrderExternalId
 		var qrProductOrderExternalID string
+
 		if o.ProductOrderExternalID != nil {
 			qrProductOrderExternalID = *o.ProductOrderExternalID
 		}
 		qProductOrderExternalID := qrProductOrderExternalID
 		if qProductOrderExternalID != "" {
+
 			if err := r.SetQueryParam("productOrderExternalId", qProductOrderExternalID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ProductOrderID != nil {
 
 		// query param productOrderId
 		var qrProductOrderID string
+
 		if o.ProductOrderID != nil {
 			qrProductOrderID = *o.ProductOrderID
 		}
 		qProductOrderID := qrProductOrderID
 		if qProductOrderID != "" {
+
 			if err := r.SetQueryParam("productOrderId", qProductOrderID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

@@ -83,9 +83,8 @@ func (o *ProductOrderManagementHubFindReader) ReadResponse(response runtime.Clie
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -94,7 +93,7 @@ func NewProductOrderManagementHubFindOK() *ProductOrderManagementHubFindOK {
 	return &ProductOrderManagementHubFindOK{}
 }
 
-/*ProductOrderManagementHubFindOK handles this case with default header values.
+/* ProductOrderManagementHubFindOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -105,7 +104,6 @@ type ProductOrderManagementHubFindOK struct {
 func (o *ProductOrderManagementHubFindOK) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindOK  %+v", 200, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindOK) GetPayload() []*models.Hub {
 	return o.Payload
 }
@@ -125,9 +123,9 @@ func NewProductOrderManagementHubFindBadRequest() *ProductOrderManagementHubFind
 	return &ProductOrderManagementHubFindBadRequest{}
 }
 
-/*ProductOrderManagementHubFindBadRequest handles this case with default header values.
+/* ProductOrderManagementHubFindBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -147,7 +145,6 @@ type ProductOrderManagementHubFindBadRequest struct {
 func (o *ProductOrderManagementHubFindBadRequest) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -169,9 +166,9 @@ func NewProductOrderManagementHubFindUnauthorized() *ProductOrderManagementHubFi
 	return &ProductOrderManagementHubFindUnauthorized{}
 }
 
-/*ProductOrderManagementHubFindUnauthorized handles this case with default header values.
+/* ProductOrderManagementHubFindUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -185,7 +182,6 @@ type ProductOrderManagementHubFindUnauthorized struct {
 func (o *ProductOrderManagementHubFindUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -207,9 +203,9 @@ func NewProductOrderManagementHubFindForbidden() *ProductOrderManagementHubFindF
 	return &ProductOrderManagementHubFindForbidden{}
 }
 
-/*ProductOrderManagementHubFindForbidden handles this case with default header values.
+/* ProductOrderManagementHubFindForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -224,7 +220,6 @@ type ProductOrderManagementHubFindForbidden struct {
 func (o *ProductOrderManagementHubFindForbidden) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -246,9 +241,9 @@ func NewProductOrderManagementHubFindNotFound() *ProductOrderManagementHubFindNo
 	return &ProductOrderManagementHubFindNotFound{}
 }
 
-/*ProductOrderManagementHubFindNotFound handles this case with default header values.
+/* ProductOrderManagementHubFindNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -260,7 +255,6 @@ type ProductOrderManagementHubFindNotFound struct {
 func (o *ProductOrderManagementHubFindNotFound) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -282,9 +276,9 @@ func NewProductOrderManagementHubFindMethodNotAllowed() *ProductOrderManagementH
 	return &ProductOrderManagementHubFindMethodNotAllowed{}
 }
 
-/*ProductOrderManagementHubFindMethodNotAllowed handles this case with default header values.
+/* ProductOrderManagementHubFindMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -296,7 +290,6 @@ type ProductOrderManagementHubFindMethodNotAllowed struct {
 func (o *ProductOrderManagementHubFindMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -318,9 +311,9 @@ func NewProductOrderManagementHubFindRequestTimeout() *ProductOrderManagementHub
 	return &ProductOrderManagementHubFindRequestTimeout{}
 }
 
-/*ProductOrderManagementHubFindRequestTimeout handles this case with default header values.
+/* ProductOrderManagementHubFindRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -332,7 +325,6 @@ type ProductOrderManagementHubFindRequestTimeout struct {
 func (o *ProductOrderManagementHubFindRequestTimeout) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -354,9 +346,9 @@ func NewProductOrderManagementHubFindUnprocessableEntity() *ProductOrderManageme
 	return &ProductOrderManagementHubFindUnprocessableEntity{}
 }
 
-/*ProductOrderManagementHubFindUnprocessableEntity handles this case with default header values.
+/* ProductOrderManagementHubFindUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -367,7 +359,6 @@ type ProductOrderManagementHubFindUnprocessableEntity struct {
 func (o *ProductOrderManagementHubFindUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -389,9 +380,9 @@ func NewProductOrderManagementHubFindInternalServerError() *ProductOrderManageme
 	return &ProductOrderManagementHubFindInternalServerError{}
 }
 
-/*ProductOrderManagementHubFindInternalServerError handles this case with default header values.
+/* ProductOrderManagementHubFindInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -403,7 +394,6 @@ type ProductOrderManagementHubFindInternalServerError struct {
 func (o *ProductOrderManagementHubFindInternalServerError) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -425,7 +415,7 @@ func NewProductOrderManagementHubFindServiceUnavailable() *ProductOrderManagemen
 	return &ProductOrderManagementHubFindServiceUnavailable{}
 }
 
-/*ProductOrderManagementHubFindServiceUnavailable handles this case with default header values.
+/* ProductOrderManagementHubFindServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -438,7 +428,6 @@ type ProductOrderManagementHubFindServiceUnavailable struct {
 func (o *ProductOrderManagementHubFindServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /productOrderManagement/v3/hub][%d] productOrderManagementHubFindServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *ProductOrderManagementHubFindServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

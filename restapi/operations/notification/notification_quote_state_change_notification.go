@@ -29,7 +29,7 @@ func NewNotificationQuoteStateChangeNotification(ctx *middleware.Context, handle
 	return &NotificationQuoteStateChangeNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationQuoteStateChangeNotification swagger:route POST /quoteNotification/v1/notification/quoteStateChangeNotification Notification notificationQuoteStateChangeNotification
+/* NotificationQuoteStateChangeNotification swagger:route POST /quoteNotification/v1/notification/quoteStateChangeNotification Notification notificationQuoteStateChangeNotification
 
 Quote state change notification structure
 
@@ -52,14 +52,12 @@ func (o *NotificationQuoteStateChangeNotification) ServeHTTP(rw http.ResponseWri
 		r = rCtx
 	}
 	var Params = NewNotificationQuoteStateChangeNotificationParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

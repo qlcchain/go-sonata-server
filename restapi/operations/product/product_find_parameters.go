@@ -16,7 +16,8 @@ import (
 )
 
 // NewProductFindParams creates a new ProductFindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewProductFindParams() ProductFindParams {
 
 	return ProductFindParams{}
@@ -179,7 +180,6 @@ func (o *ProductFindParams) BindRequest(r *http.Request, route *middleware.Match
 	if err := o.bindStatus(qStatus, qhkStatus, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -195,10 +195,10 @@ func (o *ProductFindParams) bindBillingAccountID(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.BillingAccountID = &raw
 
 	return nil
@@ -213,10 +213,10 @@ func (o *ProductFindParams) bindBuyerID(rawData []string, hasKey bool, formats s
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.BuyerID = &raw
 
 	return nil
@@ -231,10 +231,10 @@ func (o *ProductFindParams) bindBuyerProductID(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.BuyerProductID = &raw
 
 	return nil
@@ -249,10 +249,10 @@ func (o *ProductFindParams) bindGeographicalSiteID(rawData []string, hasKey bool
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicalSiteID = &raw
 
 	return nil
@@ -267,6 +267,7 @@ func (o *ProductFindParams) bindLastUpdateDateGt(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -303,6 +304,7 @@ func (o *ProductFindParams) bindLastUpdateDateLt(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -339,10 +341,10 @@ func (o *ProductFindParams) bindLimit(rawData []string, hasKey bool, formats str
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Limit = &raw
 
 	return nil
@@ -357,10 +359,10 @@ func (o *ProductFindParams) bindOffset(rawData []string, hasKey bool, formats st
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Offset = &raw
 
 	return nil
@@ -375,10 +377,10 @@ func (o *ProductFindParams) bindProductOfferingID(rawData []string, hasKey bool,
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ProductOfferingID = &raw
 
 	return nil
@@ -393,10 +395,10 @@ func (o *ProductFindParams) bindProductOrderID(rawData []string, hasKey bool, fo
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ProductOrderID = &raw
 
 	return nil
@@ -411,10 +413,10 @@ func (o *ProductFindParams) bindProductSpecificationID(rawData []string, hasKey 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.ProductSpecificationID = &raw
 
 	return nil
@@ -429,10 +431,10 @@ func (o *ProductFindParams) bindRelatedProductID(rawData []string, hasKey bool, 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.RelatedProductID = &raw
 
 	return nil
@@ -447,6 +449,7 @@ func (o *ProductFindParams) bindStartDateGt(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -483,6 +486,7 @@ func (o *ProductFindParams) bindStartDateLt(rawData []string, hasKey bool, forma
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
@@ -519,10 +523,10 @@ func (o *ProductFindParams) bindStatus(rawData []string, hasKey bool, formats st
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Status = &raw
 
 	if err := o.validateStatus(formats); err != nil {

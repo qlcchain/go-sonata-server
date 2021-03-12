@@ -66,7 +66,7 @@ type Quote struct {
 
 	// quote level
 	// Required: true
-	QuoteLevel models.QuoteLevel `json:"quoteLevel"`
+	QuoteLevel *models.QuoteLevel `json:"quoteLevel"`
 
 	// related party
 	// Required: true
@@ -116,7 +116,7 @@ func (m *Quote) ToQuoteSummaryView() *models.QuoteSummaryView {
 		ID:                           m.ID,
 		QuoteDate:                    m.QuoteDate,
 		QuoteItem:                    quoteItem,
-		QuoteLevel:                   m.QuoteLevel,
+		QuoteLevel:                   *m.QuoteLevel,
 		RequestedQuoteCompletionDate: m.RequestedQuoteCompletionDate,
 		State:                        models.QuoteState(m.State),
 		ValidFor:                     m.ValidFor,
@@ -134,7 +134,7 @@ func (m *Quote) ToQuoteFind() *models.QuoteFind {
 		ID:                           m.ID,
 		ProjectID:                    m.ProjectID,
 		QuoteDate:                    m.QuoteDate,
-		QuoteLevel:                   m.QuoteLevel,
+		QuoteLevel:                   *m.QuoteLevel,
 		RequestedQuoteCompletionDate: m.RequestedQuoteCompletionDate,
 		State:                        m.State,
 	}
@@ -161,7 +161,7 @@ func (m *Quote) ToQuote() *models.Quote {
 		QuoteLevel:                   m.QuoteLevel,
 		RelatedParty:                 ToRelatedParty(m.RelatedParty),
 		RequestedQuoteCompletionDate: m.RequestedQuoteCompletionDate,
-		State:                        m.State,
+		State:                        &m.State,
 		ValidFor:                     m.ValidFor,
 	}
 }
@@ -176,7 +176,7 @@ type QuoteItem struct {
 
 	// action
 	// Required: true
-	Action models.ProductActionType `json:"action"`
+	Action *models.ProductActionType `json:"action"`
 
 	// Identifier of the quote item (generally it is a sequence number 01, 02, 03, ...).
 	// Required: true
@@ -229,7 +229,7 @@ func (m *QuoteItem) To() *models.QuoteItem {
 		QuoteItemTerm:          m.QuoteItemTerm,
 		RelatedParty:           ToRelatedParty(m.RelatedParty),
 		RequestedQuoteItemTerm: m.RequestedQuoteItemTerm,
-		State:                  m.State,
+		State:                  &m.State,
 	}
 }
 

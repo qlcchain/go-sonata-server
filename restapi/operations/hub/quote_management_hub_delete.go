@@ -31,7 +31,7 @@ func NewQuoteManagementHubDelete(ctx *middleware.Context, handler QuoteManagemen
 	return &QuoteManagementHubDelete{Context: ctx, Handler: handler}
 }
 
-/*QuoteManagementHubDelete swagger:route DELETE /quoteManagement/v2/hub/{HubId} Hub quoteManagementHubDelete
+/* QuoteManagementHubDelete swagger:route DELETE /quoteManagement/v2/hub/{HubId} Hub quoteManagementHubDelete
 
 Unregister a listener
 
@@ -49,7 +49,6 @@ func (o *QuoteManagementHubDelete) ServeHTTP(rw http.ResponseWriter, r *http.Req
 		r = rCtx
 	}
 	var Params = NewQuoteManagementHubDeleteParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *QuoteManagementHubDelete) ServeHTTP(rw http.ResponseWriter, r *http.Req
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

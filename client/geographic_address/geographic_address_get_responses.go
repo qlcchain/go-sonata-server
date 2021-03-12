@@ -77,9 +77,8 @@ func (o *GeographicAddressGetReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -88,7 +87,7 @@ func NewGeographicAddressGetOK() *GeographicAddressGetOK {
 	return &GeographicAddressGetOK{}
 }
 
-/*GeographicAddressGetOK handles this case with default header values.
+/* GeographicAddressGetOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -99,7 +98,6 @@ type GeographicAddressGetOK struct {
 func (o *GeographicAddressGetOK) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetOK  %+v", 200, o.Payload)
 }
-
 func (o *GeographicAddressGetOK) GetPayload() *models.GeographicAddress {
 	return o.Payload
 }
@@ -121,9 +119,9 @@ func NewGeographicAddressGetBadRequest() *GeographicAddressGetBadRequest {
 	return &GeographicAddressGetBadRequest{}
 }
 
-/*GeographicAddressGetBadRequest handles this case with default header values.
+/* GeographicAddressGetBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -143,7 +141,6 @@ type GeographicAddressGetBadRequest struct {
 func (o *GeographicAddressGetBadRequest) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GeographicAddressGetBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -165,9 +162,9 @@ func NewGeographicAddressGetUnauthorized() *GeographicAddressGetUnauthorized {
 	return &GeographicAddressGetUnauthorized{}
 }
 
-/*GeographicAddressGetUnauthorized handles this case with default header values.
+/* GeographicAddressGetUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -181,7 +178,6 @@ type GeographicAddressGetUnauthorized struct {
 func (o *GeographicAddressGetUnauthorized) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *GeographicAddressGetUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -203,9 +199,9 @@ func NewGeographicAddressGetForbidden() *GeographicAddressGetForbidden {
 	return &GeographicAddressGetForbidden{}
 }
 
-/*GeographicAddressGetForbidden handles this case with default header values.
+/* GeographicAddressGetForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -220,7 +216,6 @@ type GeographicAddressGetForbidden struct {
 func (o *GeographicAddressGetForbidden) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GeographicAddressGetForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -242,9 +237,9 @@ func NewGeographicAddressGetNotFound() *GeographicAddressGetNotFound {
 	return &GeographicAddressGetNotFound{}
 }
 
-/*GeographicAddressGetNotFound handles this case with default header values.
+/* GeographicAddressGetNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -256,7 +251,6 @@ type GeographicAddressGetNotFound struct {
 func (o *GeographicAddressGetNotFound) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GeographicAddressGetNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -278,9 +272,9 @@ func NewGeographicAddressGetMethodNotAllowed() *GeographicAddressGetMethodNotAll
 	return &GeographicAddressGetMethodNotAllowed{}
 }
 
-/*GeographicAddressGetMethodNotAllowed handles this case with default header values.
+/* GeographicAddressGetMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -292,7 +286,6 @@ type GeographicAddressGetMethodNotAllowed struct {
 func (o *GeographicAddressGetMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *GeographicAddressGetMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -314,9 +307,9 @@ func NewGeographicAddressGetUnprocessableEntity() *GeographicAddressGetUnprocess
 	return &GeographicAddressGetUnprocessableEntity{}
 }
 
-/*GeographicAddressGetUnprocessableEntity handles this case with default header values.
+/* GeographicAddressGetUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -327,7 +320,6 @@ type GeographicAddressGetUnprocessableEntity struct {
 func (o *GeographicAddressGetUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *GeographicAddressGetUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -349,9 +341,9 @@ func NewGeographicAddressGetInternalServerError() *GeographicAddressGetInternalS
 	return &GeographicAddressGetInternalServerError{}
 }
 
-/*GeographicAddressGetInternalServerError handles this case with default header values.
+/* GeographicAddressGetInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -363,7 +355,6 @@ type GeographicAddressGetInternalServerError struct {
 func (o *GeographicAddressGetInternalServerError) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *GeographicAddressGetInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -385,7 +376,7 @@ func NewGeographicAddressGetServiceUnavailable() *GeographicAddressGetServiceUna
 	return &GeographicAddressGetServiceUnavailable{}
 }
 
-/*GeographicAddressGetServiceUnavailable handles this case with default header values.
+/* GeographicAddressGetServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -398,7 +389,6 @@ type GeographicAddressGetServiceUnavailable struct {
 func (o *GeographicAddressGetServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}][%d] geographicAddressGetServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *GeographicAddressGetServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

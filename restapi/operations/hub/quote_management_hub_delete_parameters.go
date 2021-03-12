@@ -14,7 +14,8 @@ import (
 )
 
 // NewQuoteManagementHubDeleteParams creates a new QuoteManagementHubDeleteParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewQuoteManagementHubDeleteParams() QuoteManagementHubDeleteParams {
 
 	return QuoteManagementHubDeleteParams{}
@@ -49,7 +50,6 @@ func (o *QuoteManagementHubDeleteParams) BindRequest(r *http.Request, route *mid
 	if err := o.bindHubID(rHubID, rhkHubID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -65,7 +65,6 @@ func (o *QuoteManagementHubDeleteParams) bindHubID(rawData []string, hasKey bool
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.HubID = raw
 
 	return nil

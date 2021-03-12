@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GeographicAddressValidationCreate(params *GeographicAddressValidationCreateParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicAddressValidationCreateCreated, error)
+	GeographicAddressValidationCreate(params *GeographicAddressValidationCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicAddressValidationCreateCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   The Buyer sends Address information known to the Buyer to the Seller.  The Seller re-sponds with a list of Addresses known to the Seller that likely match the Address infor-mation sent by the Buyer.  For each Address returned, the Seller generally also provides an Address Identifier, which uniquely identifies this Address within the Seller.
 */
-func (a *Client) GeographicAddressValidationCreate(params *GeographicAddressValidationCreateParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicAddressValidationCreateCreated, error) {
+func (a *Client) GeographicAddressValidationCreate(params *GeographicAddressValidationCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicAddressValidationCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGeographicAddressValidationCreateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "geographicAddressValidationCreate",
 		Method:             "POST",
 		PathPattern:        "/geographicAddressManagement/v3/geographicAddressValidation",
@@ -55,7 +57,12 @@ func (a *Client) GeographicAddressValidationCreate(params *GeographicAddressVali
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

@@ -7,6 +7,7 @@ package models
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
 	"io/ioutil"
@@ -22,6 +23,7 @@ import (
 // swagger:discriminator RelatedPlaceRefOrValue @type
 type RelatedPlaceRefOrValue interface {
 	runtime.Validatable
+	runtime.ContextValidatable
 
 	// at type
 	AtType() string
@@ -169,5 +171,10 @@ func (m *relatedPlaceRefOrValue) validateRole(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this related place ref or value based on context it is used
+func (m *relatedPlaceRefOrValue) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }

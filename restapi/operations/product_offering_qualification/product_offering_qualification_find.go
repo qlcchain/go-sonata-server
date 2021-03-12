@@ -31,7 +31,7 @@ func NewProductOfferingQualificationFind(ctx *middleware.Context, handler Produc
 	return &ProductOfferingQualificationFind{Context: ctx, Handler: handler}
 }
 
-/*ProductOfferingQualificationFind swagger:route GET /productOfferingQualificationManagement/v3/productOfferingQualification ProductOfferingQualification productOfferingQualificationFind
+/* ProductOfferingQualificationFind swagger:route GET /productOfferingQualificationManagement/v3/productOfferingQualification ProductOfferingQualification productOfferingQualificationFind
 
 Retrieve a list of ProductOfferingQualifications based on a set of criteria
 
@@ -49,7 +49,6 @@ func (o *ProductOfferingQualificationFind) ServeHTTP(rw http.ResponseWriter, r *
 		r = rCtx
 	}
 	var Params = NewProductOfferingQualificationFindParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *ProductOfferingQualificationFind) ServeHTTP(rw http.ResponseWriter, r *
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

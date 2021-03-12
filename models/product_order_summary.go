@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -34,7 +36,7 @@ type ProductOrderSummary struct {
 
 	// state
 	// Required: true
-	State ProductOrderStateType `json:"state"`
+	State *ProductOrderStateType `json:"state"`
 }
 
 // Validate validates this product order summary
@@ -96,11 +98,49 @@ func (m *ProductOrderSummary) validateOrderDate(formats strfmt.Registry) error {
 
 func (m *ProductOrderSummary) validateState(formats strfmt.Registry) error {
 
-	if err := m.State.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
+	if err := validate.Required("state", "body", m.State); err != nil {
 		return err
+	}
+
+	if err := validate.Required("state", "body", m.State); err != nil {
+		return err
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product order summary based on the context it is used
+func (m *ProductOrderSummary) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductOrderSummary) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
 	}
 
 	return nil

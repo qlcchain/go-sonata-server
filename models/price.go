@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -48,7 +50,6 @@ func (m *Price) Validate(formats strfmt.Registry) error {
 }
 
 func (m *Price) validateDutyFreeAmount(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.DutyFreeAmount) { // not required
 		return nil
 	}
@@ -66,13 +67,58 @@ func (m *Price) validateDutyFreeAmount(formats strfmt.Registry) error {
 }
 
 func (m *Price) validateTaxIncludedAmount(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.TaxIncludedAmount) { // not required
 		return nil
 	}
 
 	if m.TaxIncludedAmount != nil {
 		if err := m.TaxIncludedAmount.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("taxIncludedAmount")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this price based on the context it is used
+func (m *Price) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDutyFreeAmount(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTaxIncludedAmount(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Price) contextValidateDutyFreeAmount(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.DutyFreeAmount != nil {
+		if err := m.DutyFreeAmount.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dutyFreeAmount")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Price) contextValidateTaxIncludedAmount(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.TaxIncludedAmount != nil {
+		if err := m.TaxIncludedAmount.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("taxIncludedAmount")
 			}

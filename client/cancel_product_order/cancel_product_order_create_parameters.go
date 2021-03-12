@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewCancelProductOrderCreateParams creates a new CancelProductOrderCreateParams object
-// with the default values initialized.
+// NewCancelProductOrderCreateParams creates a new CancelProductOrderCreateParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCancelProductOrderCreateParams() *CancelProductOrderCreateParams {
-	var ()
 	return &CancelProductOrderCreateParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCancelProductOrderCreateParamsWithTimeout creates a new CancelProductOrderCreateParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCancelProductOrderCreateParamsWithTimeout(timeout time.Duration) *CancelProductOrderCreateParams {
-	var ()
 	return &CancelProductOrderCreateParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCancelProductOrderCreateParamsWithContext creates a new CancelProductOrderCreateParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCancelProductOrderCreateParamsWithContext(ctx context.Context) *CancelProductOrderCreateParams {
-	var ()
 	return &CancelProductOrderCreateParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCancelProductOrderCreateParamsWithHTTPClient creates a new CancelProductOrderCreateParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCancelProductOrderCreateParamsWithHTTPClient(client *http.Client) *CancelProductOrderCreateParams {
-	var ()
 	return &CancelProductOrderCreateParams{
 		HTTPClient: client,
 	}
 }
 
-/*CancelProductOrderCreateParams contains all the parameters to send to the API endpoint
-for the cancel product order create operation typically these are written to a http.Request
+/* CancelProductOrderCreateParams contains all the parameters to send to the API endpoint
+   for the cancel product order create operation.
+
+   Typically these are written to a http.Request.
 */
 type CancelProductOrderCreateParams struct {
 
-	/*CancelProductOrder*/
+	// CancelProductOrder.
 	CancelProductOrder *models.CancelProductOrderCreate
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the cancel product order create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CancelProductOrderCreateParams) WithDefaults() *CancelProductOrderCreateParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the cancel product order create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CancelProductOrderCreateParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the cancel product order create params
@@ -121,7 +135,6 @@ func (o *CancelProductOrderCreateParams) WriteToRequest(r runtime.ClientRequest,
 		return err
 	}
 	var res []error
-
 	if o.CancelProductOrder != nil {
 		if err := r.SetBodyParam(o.CancelProductOrder); err != nil {
 			return err

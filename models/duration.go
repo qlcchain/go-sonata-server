@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -19,7 +21,7 @@ type Duration struct {
 
 	// unit
 	// Required: true
-	Unit DurationUnit `json:"unit"`
+	Unit *DurationUnit `json:"unit"`
 
 	// value of the duration
 	// Required: true
@@ -46,11 +48,21 @@ func (m *Duration) Validate(formats strfmt.Registry) error {
 
 func (m *Duration) validateUnit(formats strfmt.Registry) error {
 
-	if err := m.Unit.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("unit")
-		}
+	if err := validate.Required("unit", "body", m.Unit); err != nil {
 		return err
+	}
+
+	if err := validate.Required("unit", "body", m.Unit); err != nil {
+		return err
+	}
+
+	if m.Unit != nil {
+		if err := m.Unit.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("unit")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -60,6 +72,34 @@ func (m *Duration) validateValue(formats strfmt.Registry) error {
 
 	if err := validate.Required("value", "body", m.Value); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this duration based on the context it is used
+func (m *Duration) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateUnit(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Duration) contextValidateUnit(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Unit != nil {
+		if err := m.Unit.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("unit")
+			}
+			return err
+		}
 	}
 
 	return nil

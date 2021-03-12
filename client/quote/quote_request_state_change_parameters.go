@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewQuoteRequestStateChangeParams creates a new QuoteRequestStateChangeParams object
-// with the default values initialized.
+// NewQuoteRequestStateChangeParams creates a new QuoteRequestStateChangeParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewQuoteRequestStateChangeParams() *QuoteRequestStateChangeParams {
-	var ()
 	return &QuoteRequestStateChangeParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewQuoteRequestStateChangeParamsWithTimeout creates a new QuoteRequestStateChangeParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewQuoteRequestStateChangeParamsWithTimeout(timeout time.Duration) *QuoteRequestStateChangeParams {
-	var ()
 	return &QuoteRequestStateChangeParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewQuoteRequestStateChangeParamsWithContext creates a new QuoteRequestStateChangeParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewQuoteRequestStateChangeParamsWithContext(ctx context.Context) *QuoteRequestStateChangeParams {
-	var ()
 	return &QuoteRequestStateChangeParams{
-
 		Context: ctx,
 	}
 }
 
 // NewQuoteRequestStateChangeParamsWithHTTPClient creates a new QuoteRequestStateChangeParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewQuoteRequestStateChangeParamsWithHTTPClient(client *http.Client) *QuoteRequestStateChangeParams {
-	var ()
 	return &QuoteRequestStateChangeParams{
 		HTTPClient: client,
 	}
 }
 
-/*QuoteRequestStateChangeParams contains all the parameters to send to the API endpoint
-for the quote request state change operation typically these are written to a http.Request
+/* QuoteRequestStateChangeParams contains all the parameters to send to the API endpoint
+   for the quote request state change operation.
+
+   Typically these are written to a http.Request.
 */
 type QuoteRequestStateChangeParams struct {
 
-	/*ChangeQuoteStateRequest*/
+	// ChangeQuoteStateRequest.
 	ChangeQuoteStateRequest *models.ChangelQuoteStateRequest
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the quote request state change params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteRequestStateChangeParams) WithDefaults() *QuoteRequestStateChangeParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the quote request state change params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteRequestStateChangeParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the quote request state change params
@@ -121,7 +135,6 @@ func (o *QuoteRequestStateChangeParams) WriteToRequest(r runtime.ClientRequest, 
 		return err
 	}
 	var res []error
-
 	if o.ChangeQuoteStateRequest != nil {
 		if err := r.SetBodyParam(o.ChangeQuoteStateRequest); err != nil {
 			return err

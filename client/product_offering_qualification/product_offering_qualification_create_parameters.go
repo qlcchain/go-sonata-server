@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewProductOfferingQualificationCreateParams creates a new ProductOfferingQualificationCreateParams object
-// with the default values initialized.
+// NewProductOfferingQualificationCreateParams creates a new ProductOfferingQualificationCreateParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOfferingQualificationCreateParams() *ProductOfferingQualificationCreateParams {
-	var ()
 	return &ProductOfferingQualificationCreateParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOfferingQualificationCreateParamsWithTimeout creates a new ProductOfferingQualificationCreateParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOfferingQualificationCreateParamsWithTimeout(timeout time.Duration) *ProductOfferingQualificationCreateParams {
-	var ()
 	return &ProductOfferingQualificationCreateParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOfferingQualificationCreateParamsWithContext creates a new ProductOfferingQualificationCreateParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOfferingQualificationCreateParamsWithContext(ctx context.Context) *ProductOfferingQualificationCreateParams {
-	var ()
 	return &ProductOfferingQualificationCreateParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOfferingQualificationCreateParamsWithHTTPClient creates a new ProductOfferingQualificationCreateParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOfferingQualificationCreateParamsWithHTTPClient(client *http.Client) *ProductOfferingQualificationCreateParams {
-	var ()
 	return &ProductOfferingQualificationCreateParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOfferingQualificationCreateParams contains all the parameters to send to the API endpoint
-for the product offering qualification create operation typically these are written to a http.Request
+/* ProductOfferingQualificationCreateParams contains all the parameters to send to the API endpoint
+   for the product offering qualification create operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOfferingQualificationCreateParams struct {
 
-	/*ProductOfferingQualification*/
+	// ProductOfferingQualification.
 	ProductOfferingQualification *models.ProductOfferingQualificationCreate
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product offering qualification create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationCreateParams) WithDefaults() *ProductOfferingQualificationCreateParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product offering qualification create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOfferingQualificationCreateParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product offering qualification create params
@@ -121,7 +135,6 @@ func (o *ProductOfferingQualificationCreateParams) WriteToRequest(r runtime.Clie
 		return err
 	}
 	var res []error
-
 	if o.ProductOfferingQualification != nil {
 		if err := r.SetBodyParam(o.ProductOfferingQualification); err != nil {
 			return err

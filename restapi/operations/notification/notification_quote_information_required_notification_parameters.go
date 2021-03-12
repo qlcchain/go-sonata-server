@@ -17,7 +17,8 @@ import (
 )
 
 // NewNotificationQuoteInformationRequiredNotificationParams creates a new NotificationQuoteInformationRequiredNotificationParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewNotificationQuoteInformationRequiredNotificationParams() NotificationQuoteInformationRequiredNotificationParams {
 
 	return NotificationQuoteInformationRequiredNotificationParams{}
@@ -53,11 +54,12 @@ func (o *NotificationQuoteInformationRequiredNotificationParams) BindRequest(r *
 		var body []*models.QuoteEventPlus
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("quoteInformationRequiredNotification", "body"))
+				res = append(res, errors.Required("quoteInformationRequiredNotification", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("quoteInformationRequiredNotification", "body", "", err))
 			}
 		} else {
+
 			// validate array of body objects
 			for i := range body {
 				if body[i] == nil {
@@ -68,12 +70,13 @@ func (o *NotificationQuoteInformationRequiredNotificationParams) BindRequest(r *
 					break
 				}
 			}
+
 			if len(res) == 0 {
 				o.QuoteInformationRequiredNotification = body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("quoteInformationRequiredNotification", "body"))
+		res = append(res, errors.Required("quoteInformationRequiredNotification", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

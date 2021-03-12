@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewProductOrderCreateParams creates a new ProductOrderCreateParams object
-// with the default values initialized.
+// NewProductOrderCreateParams creates a new ProductOrderCreateParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOrderCreateParams() *ProductOrderCreateParams {
-	var ()
 	return &ProductOrderCreateParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOrderCreateParamsWithTimeout creates a new ProductOrderCreateParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOrderCreateParamsWithTimeout(timeout time.Duration) *ProductOrderCreateParams {
-	var ()
 	return &ProductOrderCreateParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOrderCreateParamsWithContext creates a new ProductOrderCreateParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOrderCreateParamsWithContext(ctx context.Context) *ProductOrderCreateParams {
-	var ()
 	return &ProductOrderCreateParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOrderCreateParamsWithHTTPClient creates a new ProductOrderCreateParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOrderCreateParamsWithHTTPClient(client *http.Client) *ProductOrderCreateParams {
-	var ()
 	return &ProductOrderCreateParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOrderCreateParams contains all the parameters to send to the API endpoint
-for the product order create operation typically these are written to a http.Request
+/* ProductOrderCreateParams contains all the parameters to send to the API endpoint
+   for the product order create operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOrderCreateParams struct {
 
-	/*ProductOrder*/
+	// ProductOrder.
 	ProductOrder *models.ProductOrderCreate
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product order create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderCreateParams) WithDefaults() *ProductOrderCreateParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product order create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderCreateParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product order create params
@@ -121,7 +135,6 @@ func (o *ProductOrderCreateParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.ProductOrder != nil {
 		if err := r.SetBodyParam(o.ProductOrder); err != nil {
 			return err

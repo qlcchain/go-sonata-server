@@ -31,7 +31,7 @@ func NewCancelProductOrderGet(ctx *middleware.Context, handler CancelProductOrde
 	return &CancelProductOrderGet{Context: ctx, Handler: handler}
 }
 
-/*CancelProductOrderGet swagger:route GET /productOrderManagement/v3/cancelProductOrder/{CancelProductOrderId} CancelProductOrder cancelProductOrderGet
+/* CancelProductOrderGet swagger:route GET /productOrderManagement/v3/cancelProductOrder/{CancelProductOrderId} CancelProductOrder cancelProductOrderGet
 
 Get a product order cancellation request (by id)
 
@@ -49,7 +49,6 @@ func (o *CancelProductOrderGet) ServeHTTP(rw http.ResponseWriter, r *http.Reques
 		r = rCtx
 	}
 	var Params = NewCancelProductOrderGetParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *CancelProductOrderGet) ServeHTTP(rw http.ResponseWriter, r *http.Reques
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

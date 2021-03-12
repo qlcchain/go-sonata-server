@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GeographicAddressGet(params *GeographicAddressGetParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicAddressGetOK, error)
+	GeographicAddressGet(params *GeographicAddressGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicAddressGetOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   The Buyer requests the full details of a single Address based on an Address identifier that was previously provided by the Seller.
 */
-func (a *Client) GeographicAddressGet(params *GeographicAddressGetParams, authInfo runtime.ClientAuthInfoWriter) (*GeographicAddressGetOK, error) {
+func (a *Client) GeographicAddressGet(params *GeographicAddressGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GeographicAddressGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGeographicAddressGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "geographicAddressGet",
 		Method:             "GET",
 		PathPattern:        "/geographicAddressManagement/v3/geographicAddress/{GeographicAddressId}",
@@ -55,7 +57,12 @@ func (a *Client) GeographicAddressGet(params *GeographicAddressGetParams, authIn
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

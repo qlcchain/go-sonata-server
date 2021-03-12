@@ -72,7 +72,7 @@ type Product struct {
 
 	// status
 	// Required: true
-	Status models.ProductStatus `json:"status"`
+	Status *models.ProductStatus `json:"status"`
 
 	// status change
 	StatusChange []*StatusChange `json:"statusChange" gorm:"foreignkey:ID"`

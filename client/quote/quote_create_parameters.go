@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewQuoteCreateParams creates a new QuoteCreateParams object
-// with the default values initialized.
+// NewQuoteCreateParams creates a new QuoteCreateParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewQuoteCreateParams() *QuoteCreateParams {
-	var ()
 	return &QuoteCreateParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewQuoteCreateParamsWithTimeout creates a new QuoteCreateParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewQuoteCreateParamsWithTimeout(timeout time.Duration) *QuoteCreateParams {
-	var ()
 	return &QuoteCreateParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewQuoteCreateParamsWithContext creates a new QuoteCreateParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewQuoteCreateParamsWithContext(ctx context.Context) *QuoteCreateParams {
-	var ()
 	return &QuoteCreateParams{
-
 		Context: ctx,
 	}
 }
 
 // NewQuoteCreateParamsWithHTTPClient creates a new QuoteCreateParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewQuoteCreateParamsWithHTTPClient(client *http.Client) *QuoteCreateParams {
-	var ()
 	return &QuoteCreateParams{
 		HTTPClient: client,
 	}
 }
 
-/*QuoteCreateParams contains all the parameters to send to the API endpoint
-for the quote create operation typically these are written to a http.Request
+/* QuoteCreateParams contains all the parameters to send to the API endpoint
+   for the quote create operation.
+
+   Typically these are written to a http.Request.
 */
 type QuoteCreateParams struct {
 
-	/*Quote*/
+	// Quote.
 	Quote *models.QuoteCreate
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the quote create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteCreateParams) WithDefaults() *QuoteCreateParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the quote create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteCreateParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the quote create params
@@ -121,7 +135,6 @@ func (o *QuoteCreateParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 		return err
 	}
 	var res []error
-
 	if o.Quote != nil {
 		if err := r.SetBodyParam(o.Quote); err != nil {
 			return err

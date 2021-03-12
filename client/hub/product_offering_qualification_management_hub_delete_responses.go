@@ -71,9 +71,8 @@ func (o *ProductOfferingQualificationManagementHubDeleteReader) ReadResponse(res
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -82,7 +81,7 @@ func NewProductOfferingQualificationManagementHubDeleteNoContent() *ProductOffer
 	return &ProductOfferingQualificationManagementHubDeleteNoContent{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteNoContent handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteNoContent describes a response with status code 204, with default header values.
 
 No Content
 */
@@ -103,9 +102,9 @@ func NewProductOfferingQualificationManagementHubDeleteBadRequest() *ProductOffe
 	return &ProductOfferingQualificationManagementHubDeleteBadRequest{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteBadRequest handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -125,7 +124,6 @@ type ProductOfferingQualificationManagementHubDeleteBadRequest struct {
 func (o *ProductOfferingQualificationManagementHubDeleteBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /productOfferingQualificationManagement/v3/hub/{HubId}][%d] productOfferingQualificationManagementHubDeleteBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubDeleteBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -147,9 +145,9 @@ func NewProductOfferingQualificationManagementHubDeleteUnauthorized() *ProductOf
 	return &ProductOfferingQualificationManagementHubDeleteUnauthorized{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteUnauthorized handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -163,7 +161,6 @@ type ProductOfferingQualificationManagementHubDeleteUnauthorized struct {
 func (o *ProductOfferingQualificationManagementHubDeleteUnauthorized) Error() string {
 	return fmt.Sprintf("[DELETE /productOfferingQualificationManagement/v3/hub/{HubId}][%d] productOfferingQualificationManagementHubDeleteUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubDeleteUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -185,9 +182,9 @@ func NewProductOfferingQualificationManagementHubDeleteForbidden() *ProductOffer
 	return &ProductOfferingQualificationManagementHubDeleteForbidden{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteForbidden handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -202,7 +199,6 @@ type ProductOfferingQualificationManagementHubDeleteForbidden struct {
 func (o *ProductOfferingQualificationManagementHubDeleteForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /productOfferingQualificationManagement/v3/hub/{HubId}][%d] productOfferingQualificationManagementHubDeleteForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubDeleteForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -224,9 +220,9 @@ func NewProductOfferingQualificationManagementHubDeleteNotFound() *ProductOfferi
 	return &ProductOfferingQualificationManagementHubDeleteNotFound{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteNotFound handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -238,7 +234,6 @@ type ProductOfferingQualificationManagementHubDeleteNotFound struct {
 func (o *ProductOfferingQualificationManagementHubDeleteNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /productOfferingQualificationManagement/v3/hub/{HubId}][%d] productOfferingQualificationManagementHubDeleteNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubDeleteNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -260,9 +255,9 @@ func NewProductOfferingQualificationManagementHubDeleteRequestTimeout() *Product
 	return &ProductOfferingQualificationManagementHubDeleteRequestTimeout{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteRequestTimeout handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -274,7 +269,6 @@ type ProductOfferingQualificationManagementHubDeleteRequestTimeout struct {
 func (o *ProductOfferingQualificationManagementHubDeleteRequestTimeout) Error() string {
 	return fmt.Sprintf("[DELETE /productOfferingQualificationManagement/v3/hub/{HubId}][%d] productOfferingQualificationManagementHubDeleteRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubDeleteRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -296,9 +290,9 @@ func NewProductOfferingQualificationManagementHubDeleteUnprocessableEntity() *Pr
 	return &ProductOfferingQualificationManagementHubDeleteUnprocessableEntity{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteUnprocessableEntity handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -309,7 +303,6 @@ type ProductOfferingQualificationManagementHubDeleteUnprocessableEntity struct {
 func (o *ProductOfferingQualificationManagementHubDeleteUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[DELETE /productOfferingQualificationManagement/v3/hub/{HubId}][%d] productOfferingQualificationManagementHubDeleteUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubDeleteUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -331,7 +324,7 @@ func NewProductOfferingQualificationManagementHubDeleteServiceUnavailable() *Pro
 	return &ProductOfferingQualificationManagementHubDeleteServiceUnavailable{}
 }
 
-/*ProductOfferingQualificationManagementHubDeleteServiceUnavailable handles this case with default header values.
+/* ProductOfferingQualificationManagementHubDeleteServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -344,7 +337,6 @@ type ProductOfferingQualificationManagementHubDeleteServiceUnavailable struct {
 func (o *ProductOfferingQualificationManagementHubDeleteServiceUnavailable) Error() string {
 	return fmt.Sprintf("[DELETE /productOfferingQualificationManagement/v3/hub/{HubId}][%d] productOfferingQualificationManagementHubDeleteServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *ProductOfferingQualificationManagementHubDeleteServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

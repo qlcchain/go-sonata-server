@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationProductOrderAttributeValueChangeNotificationParams creates a new NotificationProductOrderAttributeValueChangeNotificationParams object
-// with the default values initialized.
+// NewNotificationProductOrderAttributeValueChangeNotificationParams creates a new NotificationProductOrderAttributeValueChangeNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationProductOrderAttributeValueChangeNotificationParams() *NotificationProductOrderAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderAttributeValueChangeNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationProductOrderAttributeValueChangeNotificationParamsWithTimeout creates a new NotificationProductOrderAttributeValueChangeNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationProductOrderAttributeValueChangeNotificationParamsWithTimeout(timeout time.Duration) *NotificationProductOrderAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderAttributeValueChangeNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationProductOrderAttributeValueChangeNotificationParamsWithContext creates a new NotificationProductOrderAttributeValueChangeNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationProductOrderAttributeValueChangeNotificationParamsWithContext(ctx context.Context) *NotificationProductOrderAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderAttributeValueChangeNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationProductOrderAttributeValueChangeNotificationParamsWithHTTPClient creates a new NotificationProductOrderAttributeValueChangeNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationProductOrderAttributeValueChangeNotificationParamsWithHTTPClient(client *http.Client) *NotificationProductOrderAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderAttributeValueChangeNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationProductOrderAttributeValueChangeNotificationParams contains all the parameters to send to the API endpoint
-for the notification product order attribute value change notification operation typically these are written to a http.Request
+/* NotificationProductOrderAttributeValueChangeNotificationParams contains all the parameters to send to the API endpoint
+   for the notification product order attribute value change notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationProductOrderAttributeValueChangeNotificationParams struct {
 
-	/*ProductOrderAttributeValueChange*/
+	// ProductOrderAttributeValueChange.
 	ProductOrderAttributeValueChange *models.PoEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification product order attribute value change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOrderAttributeValueChangeNotificationParams) WithDefaults() *NotificationProductOrderAttributeValueChangeNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification product order attribute value change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOrderAttributeValueChangeNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification product order attribute value change notification params
@@ -121,7 +135,6 @@ func (o *NotificationProductOrderAttributeValueChangeNotificationParams) WriteTo
 		return err
 	}
 	var res []error
-
 	if o.ProductOrderAttributeValueChange != nil {
 		if err := r.SetBodyParam(o.ProductOrderAttributeValueChange); err != nil {
 			return err

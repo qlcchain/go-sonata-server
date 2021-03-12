@@ -16,7 +16,8 @@ import (
 )
 
 // NewGeographicSiteFindParams creates a new GeographicSiteFindParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewGeographicSiteFindParams() GeographicSiteFindParams {
 
 	return GeographicSiteFindParams{}
@@ -170,7 +171,6 @@ func (o *GeographicSiteFindParams) BindRequest(r *http.Request, route *middlewar
 	if err := o.bindStatus(qStatus, qhkStatus, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -186,10 +186,10 @@ func (o *GeographicSiteFindParams) bindGeographicAddressCity(rawData []string, h
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicAddressCity = &raw
 
 	return nil
@@ -204,10 +204,10 @@ func (o *GeographicSiteFindParams) bindGeographicAddressCountry(rawData []string
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicAddressCountry = &raw
 
 	return nil
@@ -222,10 +222,10 @@ func (o *GeographicSiteFindParams) bindGeographicAddressID(rawData []string, has
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicAddressID = &raw
 
 	return nil
@@ -240,10 +240,10 @@ func (o *GeographicSiteFindParams) bindGeographicAddressPostcode(rawData []strin
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicAddressPostcode = &raw
 
 	return nil
@@ -258,10 +258,10 @@ func (o *GeographicSiteFindParams) bindGeographicAddressStreetName(rawData []str
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicAddressStreetName = &raw
 
 	return nil
@@ -276,10 +276,10 @@ func (o *GeographicSiteFindParams) bindGeographicAddressStreetNr(rawData []strin
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicAddressStreetNr = &raw
 
 	return nil
@@ -294,10 +294,10 @@ func (o *GeographicSiteFindParams) bindGeographicAddressStreetType(rawData []str
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.GeographicAddressStreetType = &raw
 
 	return nil
@@ -312,10 +312,10 @@ func (o *GeographicSiteFindParams) bindSiteCompanyName(rawData []string, hasKey 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.SiteCompanyName = &raw
 
 	return nil
@@ -330,10 +330,10 @@ func (o *GeographicSiteFindParams) bindSiteContactName(rawData []string, hasKey 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.SiteContactName = &raw
 
 	return nil
@@ -348,10 +348,10 @@ func (o *GeographicSiteFindParams) bindSiteCustomerName(rawData []string, hasKey
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.SiteCustomerName = &raw
 
 	return nil
@@ -366,10 +366,10 @@ func (o *GeographicSiteFindParams) bindSiteDescription(rawData []string, hasKey 
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.SiteDescription = &raw
 
 	return nil
@@ -384,10 +384,10 @@ func (o *GeographicSiteFindParams) bindSiteName(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.SiteName = &raw
 
 	return nil
@@ -402,10 +402,10 @@ func (o *GeographicSiteFindParams) bindSiteType(rawData []string, hasKey bool, f
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.SiteType = &raw
 
 	return nil
@@ -420,10 +420,10 @@ func (o *GeographicSiteFindParams) bindStatus(rawData []string, hasKey bool, for
 
 	// Required: false
 	// AllowEmptyValue: false
+
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-
 	o.Status = &raw
 
 	if err := o.validateStatus(formats); err != nil {

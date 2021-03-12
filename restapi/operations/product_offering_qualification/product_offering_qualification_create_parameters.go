@@ -6,18 +6,21 @@ package product_offering_qualification
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"io"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/validate"
 
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
 // NewProductOfferingQualificationCreateParams creates a new ProductOfferingQualificationCreateParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewProductOfferingQualificationCreateParams() ProductOfferingQualificationCreateParams {
 
 	return ProductOfferingQualificationCreateParams{}
@@ -53,7 +56,7 @@ func (o *ProductOfferingQualificationCreateParams) BindRequest(r *http.Request, 
 		var body models.ProductOfferingQualificationCreate
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
-				res = append(res, errors.Required("productOfferingQualification", "body"))
+				res = append(res, errors.Required("productOfferingQualification", "body", ""))
 			} else {
 				res = append(res, errors.NewParseError("productOfferingQualification", "body", "", err))
 			}
@@ -63,12 +66,17 @@ func (o *ProductOfferingQualificationCreateParams) BindRequest(r *http.Request, 
 				res = append(res, err)
 			}
 
+			ctx := validate.WithOperationRequest(context.Background())
+			if err := body.ContextValidate(ctx, route.Formats); err != nil {
+				res = append(res, err)
+			}
+
 			if len(res) == 0 {
 				o.ProductOfferingQualification = &body
 			}
 		}
 	} else {
-		res = append(res, errors.Required("productOfferingQualification", "body"))
+		res = append(res, errors.Required("productOfferingQualification", "body", ""))
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

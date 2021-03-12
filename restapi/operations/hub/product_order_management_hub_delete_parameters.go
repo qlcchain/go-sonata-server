@@ -14,7 +14,8 @@ import (
 )
 
 // NewProductOrderManagementHubDeleteParams creates a new ProductOrderManagementHubDeleteParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewProductOrderManagementHubDeleteParams() ProductOrderManagementHubDeleteParams {
 
 	return ProductOrderManagementHubDeleteParams{}
@@ -49,7 +50,6 @@ func (o *ProductOrderManagementHubDeleteParams) BindRequest(r *http.Request, rou
 	if err := o.bindHubID(rHubID, rhkHubID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -65,7 +65,6 @@ func (o *ProductOrderManagementHubDeleteParams) bindHubID(rawData []string, hasK
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.HubID = raw
 
 	return nil

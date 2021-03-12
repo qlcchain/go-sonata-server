@@ -16,56 +16,70 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewProductOrderManagementHubDeleteParams creates a new ProductOrderManagementHubDeleteParams object
-// with the default values initialized.
+// NewProductOrderManagementHubDeleteParams creates a new ProductOrderManagementHubDeleteParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOrderManagementHubDeleteParams() *ProductOrderManagementHubDeleteParams {
-	var ()
 	return &ProductOrderManagementHubDeleteParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOrderManagementHubDeleteParamsWithTimeout creates a new ProductOrderManagementHubDeleteParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOrderManagementHubDeleteParamsWithTimeout(timeout time.Duration) *ProductOrderManagementHubDeleteParams {
-	var ()
 	return &ProductOrderManagementHubDeleteParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOrderManagementHubDeleteParamsWithContext creates a new ProductOrderManagementHubDeleteParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOrderManagementHubDeleteParamsWithContext(ctx context.Context) *ProductOrderManagementHubDeleteParams {
-	var ()
 	return &ProductOrderManagementHubDeleteParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOrderManagementHubDeleteParamsWithHTTPClient creates a new ProductOrderManagementHubDeleteParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOrderManagementHubDeleteParamsWithHTTPClient(client *http.Client) *ProductOrderManagementHubDeleteParams {
-	var ()
 	return &ProductOrderManagementHubDeleteParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOrderManagementHubDeleteParams contains all the parameters to send to the API endpoint
-for the product order management hub delete operation typically these are written to a http.Request
+/* ProductOrderManagementHubDeleteParams contains all the parameters to send to the API endpoint
+   for the product order management hub delete operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOrderManagementHubDeleteParams struct {
 
-	/*HubID*/
+	// HubID.
 	HubID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product order management hub delete params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderManagementHubDeleteParams) WithDefaults() *ProductOrderManagementHubDeleteParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product order management hub delete params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderManagementHubDeleteParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product order management hub delete params

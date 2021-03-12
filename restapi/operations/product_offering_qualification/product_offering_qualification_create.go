@@ -31,7 +31,7 @@ func NewProductOfferingQualificationCreate(ctx *middleware.Context, handler Prod
 	return &ProductOfferingQualificationCreate{Context: ctx, Handler: handler}
 }
 
-/*ProductOfferingQualificationCreate swagger:route POST /productOfferingQualificationManagement/v3/productOfferingQualification ProductOfferingQualification productOfferingQualificationCreate
+/* ProductOfferingQualificationCreate swagger:route POST /productOfferingQualificationManagement/v3/productOfferingQualification ProductOfferingQualification productOfferingQualificationCreate
 
 Create a ProductOfferingQualification
 
@@ -49,7 +49,6 @@ func (o *ProductOfferingQualificationCreate) ServeHTTP(rw http.ResponseWriter, r
 		r = rCtx
 	}
 	var Params = NewProductOfferingQualificationCreateParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *ProductOfferingQualificationCreate) ServeHTTP(rw http.ResponseWriter, r
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

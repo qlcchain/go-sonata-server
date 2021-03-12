@@ -77,9 +77,8 @@ func (o *QuoteRequestStateChangeReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -88,7 +87,7 @@ func NewQuoteRequestStateChangeOK() *QuoteRequestStateChangeOK {
 	return &QuoteRequestStateChangeOK{}
 }
 
-/*QuoteRequestStateChangeOK handles this case with default header values.
+/* QuoteRequestStateChangeOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -99,7 +98,6 @@ type QuoteRequestStateChangeOK struct {
 func (o *QuoteRequestStateChangeOK) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeOK  %+v", 200, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeOK) GetPayload() *models.ChangeQuoteStateResponse {
 	return o.Payload
 }
@@ -121,9 +119,9 @@ func NewQuoteRequestStateChangeBadRequest() *QuoteRequestStateChangeBadRequest {
 	return &QuoteRequestStateChangeBadRequest{}
 }
 
-/*QuoteRequestStateChangeBadRequest handles this case with default header values.
+/* QuoteRequestStateChangeBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -143,7 +141,6 @@ type QuoteRequestStateChangeBadRequest struct {
 func (o *QuoteRequestStateChangeBadRequest) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -165,9 +162,9 @@ func NewQuoteRequestStateChangeUnauthorized() *QuoteRequestStateChangeUnauthoriz
 	return &QuoteRequestStateChangeUnauthorized{}
 }
 
-/*QuoteRequestStateChangeUnauthorized handles this case with default header values.
+/* QuoteRequestStateChangeUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -181,7 +178,6 @@ type QuoteRequestStateChangeUnauthorized struct {
 func (o *QuoteRequestStateChangeUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -203,9 +199,9 @@ func NewQuoteRequestStateChangeForbidden() *QuoteRequestStateChangeForbidden {
 	return &QuoteRequestStateChangeForbidden{}
 }
 
-/*QuoteRequestStateChangeForbidden handles this case with default header values.
+/* QuoteRequestStateChangeForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -220,7 +216,6 @@ type QuoteRequestStateChangeForbidden struct {
 func (o *QuoteRequestStateChangeForbidden) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeForbidden  %+v", 403, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -242,9 +237,9 @@ func NewQuoteRequestStateChangeNotFound() *QuoteRequestStateChangeNotFound {
 	return &QuoteRequestStateChangeNotFound{}
 }
 
-/*QuoteRequestStateChangeNotFound handles this case with default header values.
+/* QuoteRequestStateChangeNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -256,7 +251,6 @@ type QuoteRequestStateChangeNotFound struct {
 func (o *QuoteRequestStateChangeNotFound) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeNotFound  %+v", 404, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -278,9 +272,9 @@ func NewQuoteRequestStateChangeMethodNotAllowed() *QuoteRequestStateChangeMethod
 	return &QuoteRequestStateChangeMethodNotAllowed{}
 }
 
-/*QuoteRequestStateChangeMethodNotAllowed handles this case with default header values.
+/* QuoteRequestStateChangeMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -292,7 +286,6 @@ type QuoteRequestStateChangeMethodNotAllowed struct {
 func (o *QuoteRequestStateChangeMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -314,9 +307,9 @@ func NewQuoteRequestStateChangeUnprocessableEntity() *QuoteRequestStateChangeUnp
 	return &QuoteRequestStateChangeUnprocessableEntity{}
 }
 
-/*QuoteRequestStateChangeUnprocessableEntity handles this case with default header values.
+/* QuoteRequestStateChangeUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -340,7 +333,6 @@ type QuoteRequestStateChangeUnprocessableEntity struct {
 func (o *QuoteRequestStateChangeUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -362,9 +354,9 @@ func NewQuoteRequestStateChangeInternalServerError() *QuoteRequestStateChangeInt
 	return &QuoteRequestStateChangeInternalServerError{}
 }
 
-/*QuoteRequestStateChangeInternalServerError handles this case with default header values.
+/* QuoteRequestStateChangeInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -376,7 +368,6 @@ type QuoteRequestStateChangeInternalServerError struct {
 func (o *QuoteRequestStateChangeInternalServerError) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -398,7 +389,7 @@ func NewQuoteRequestStateChangeServiceUnavailable() *QuoteRequestStateChangeServ
 	return &QuoteRequestStateChangeServiceUnavailable{}
 }
 
-/*QuoteRequestStateChangeServiceUnavailable handles this case with default header values.
+/* QuoteRequestStateChangeServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -411,7 +402,6 @@ type QuoteRequestStateChangeServiceUnavailable struct {
 func (o *QuoteRequestStateChangeServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /quoteManagement/v2/quote/requestStateChange][%d] quoteRequestStateChangeServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *QuoteRequestStateChangeServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

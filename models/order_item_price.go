@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -34,7 +36,7 @@ type OrderItemPrice struct {
 
 	// price type
 	// Required: true
-	PriceType PriceType `json:"priceType"`
+	PriceType *PriceType `json:"priceType"`
 
 	// recurring charge period
 	RecurringChargePeriod ChargePeriod `json:"recurringChargePeriod,omitempty"`
@@ -95,9 +97,34 @@ func (m *OrderItemPrice) validatePrice(formats strfmt.Registry) error {
 
 func (m *OrderItemPrice) validatePriceType(formats strfmt.Registry) error {
 
-	if err := m.PriceType.Validate(formats); err != nil {
+	if err := validate.Required("priceType", "body", m.PriceType); err != nil {
+		return err
+	}
+
+	if err := validate.Required("priceType", "body", m.PriceType); err != nil {
+		return err
+	}
+
+	if m.PriceType != nil {
+		if err := m.PriceType.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("priceType")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *OrderItemPrice) validateRecurringChargePeriod(formats strfmt.Registry) error {
+	if swag.IsZero(m.RecurringChargePeriod) { // not required
+		return nil
+	}
+
+	if err := m.RecurringChargePeriod.Validate(formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("priceType")
+			return ve.ValidateName("recurringChargePeriod")
 		}
 		return err
 	}
@@ -105,13 +132,59 @@ func (m *OrderItemPrice) validatePriceType(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *OrderItemPrice) validateRecurringChargePeriod(formats strfmt.Registry) error {
+// ContextValidate validate this order item price based on the context it is used
+func (m *OrderItemPrice) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
 
-	if swag.IsZero(m.RecurringChargePeriod) { // not required
-		return nil
+	if err := m.contextValidatePrice(ctx, formats); err != nil {
+		res = append(res, err)
 	}
 
-	if err := m.RecurringChargePeriod.Validate(formats); err != nil {
+	if err := m.contextValidatePriceType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRecurringChargePeriod(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *OrderItemPrice) contextValidatePrice(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Price != nil {
+		if err := m.Price.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("price")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *OrderItemPrice) contextValidatePriceType(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.PriceType != nil {
+		if err := m.PriceType.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("priceType")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *OrderItemPrice) contextValidateRecurringChargePeriod(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.RecurringChargePeriod.ContextValidate(ctx, formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("recurringChargePeriod")
 		}

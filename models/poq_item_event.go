@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,7 +61,6 @@ func (m *PoqItemEvent) Validate(formats strfmt.Registry) error {
 }
 
 func (m *PoqItemEvent) validateDesiredActivationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.DesiredActivationDate) { // not required
 		return nil
 	}
@@ -81,7 +82,6 @@ func (m *PoqItemEvent) validateID(formats strfmt.Registry) error {
 }
 
 func (m *PoqItemEvent) validateServiceabilityConfidence(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ServiceabilityConfidence) { // not required
 		return nil
 	}
@@ -97,12 +97,53 @@ func (m *PoqItemEvent) validateServiceabilityConfidence(formats strfmt.Registry)
 }
 
 func (m *PoqItemEvent) validateState(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.State) { // not required
 		return nil
 	}
 
 	if err := m.State.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("state")
+		}
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this poq item event based on the context it is used
+func (m *PoqItemEvent) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateServiceabilityConfidence(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *PoqItemEvent) contextValidateServiceabilityConfidence(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.ServiceabilityConfidence.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("serviceabilityConfidence")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *PoqItemEvent) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.State.ContextValidate(ctx, formats); err != nil {
 		if ve, ok := err.(*errors.Validation); ok {
 			return ve.ValidateName("state")
 		}

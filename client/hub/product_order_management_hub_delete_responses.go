@@ -83,9 +83,8 @@ func (o *ProductOrderManagementHubDeleteReader) ReadResponse(response runtime.Cl
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -94,7 +93,7 @@ func NewProductOrderManagementHubDeleteNoContent() *ProductOrderManagementHubDel
 	return &ProductOrderManagementHubDeleteNoContent{}
 }
 
-/*ProductOrderManagementHubDeleteNoContent handles this case with default header values.
+/* ProductOrderManagementHubDeleteNoContent describes a response with status code 204, with default header values.
 
 No Content
 */
@@ -115,9 +114,9 @@ func NewProductOrderManagementHubDeleteBadRequest() *ProductOrderManagementHubDe
 	return &ProductOrderManagementHubDeleteBadRequest{}
 }
 
-/*ProductOrderManagementHubDeleteBadRequest handles this case with default header values.
+/* ProductOrderManagementHubDeleteBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -137,7 +136,6 @@ type ProductOrderManagementHubDeleteBadRequest struct {
 func (o *ProductOrderManagementHubDeleteBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -159,9 +157,9 @@ func NewProductOrderManagementHubDeleteUnauthorized() *ProductOrderManagementHub
 	return &ProductOrderManagementHubDeleteUnauthorized{}
 }
 
-/*ProductOrderManagementHubDeleteUnauthorized handles this case with default header values.
+/* ProductOrderManagementHubDeleteUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -175,7 +173,6 @@ type ProductOrderManagementHubDeleteUnauthorized struct {
 func (o *ProductOrderManagementHubDeleteUnauthorized) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -197,9 +194,9 @@ func NewProductOrderManagementHubDeleteForbidden() *ProductOrderManagementHubDel
 	return &ProductOrderManagementHubDeleteForbidden{}
 }
 
-/*ProductOrderManagementHubDeleteForbidden handles this case with default header values.
+/* ProductOrderManagementHubDeleteForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -214,7 +211,6 @@ type ProductOrderManagementHubDeleteForbidden struct {
 func (o *ProductOrderManagementHubDeleteForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteForbidden  %+v", 403, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -236,9 +232,9 @@ func NewProductOrderManagementHubDeleteNotFound() *ProductOrderManagementHubDele
 	return &ProductOrderManagementHubDeleteNotFound{}
 }
 
-/*ProductOrderManagementHubDeleteNotFound handles this case with default header values.
+/* ProductOrderManagementHubDeleteNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -250,7 +246,6 @@ type ProductOrderManagementHubDeleteNotFound struct {
 func (o *ProductOrderManagementHubDeleteNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteNotFound  %+v", 404, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -272,9 +267,9 @@ func NewProductOrderManagementHubDeleteMethodNotAllowed() *ProductOrderManagemen
 	return &ProductOrderManagementHubDeleteMethodNotAllowed{}
 }
 
-/*ProductOrderManagementHubDeleteMethodNotAllowed handles this case with default header values.
+/* ProductOrderManagementHubDeleteMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -286,7 +281,6 @@ type ProductOrderManagementHubDeleteMethodNotAllowed struct {
 func (o *ProductOrderManagementHubDeleteMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -308,9 +302,9 @@ func NewProductOrderManagementHubDeleteRequestTimeout() *ProductOrderManagementH
 	return &ProductOrderManagementHubDeleteRequestTimeout{}
 }
 
-/*ProductOrderManagementHubDeleteRequestTimeout handles this case with default header values.
+/* ProductOrderManagementHubDeleteRequestTimeout describes a response with status code 408, with default header values.
 
-Request Time-out
+ Request Time-out
 
 List of supported error codes:
 - 63: Request time-out
@@ -322,7 +316,6 @@ type ProductOrderManagementHubDeleteRequestTimeout struct {
 func (o *ProductOrderManagementHubDeleteRequestTimeout) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteRequestTimeout  %+v", 408, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteRequestTimeout) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -344,9 +337,9 @@ func NewProductOrderManagementHubDeleteUnprocessableEntity() *ProductOrderManage
 	return &ProductOrderManagementHubDeleteUnprocessableEntity{}
 }
 
-/*ProductOrderManagementHubDeleteUnprocessableEntity handles this case with default header values.
+/* ProductOrderManagementHubDeleteUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -357,7 +350,6 @@ type ProductOrderManagementHubDeleteUnprocessableEntity struct {
 func (o *ProductOrderManagementHubDeleteUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -379,9 +371,9 @@ func NewProductOrderManagementHubDeleteInternalServerError() *ProductOrderManage
 	return &ProductOrderManagementHubDeleteInternalServerError{}
 }
 
-/*ProductOrderManagementHubDeleteInternalServerError handles this case with default header values.
+/* ProductOrderManagementHubDeleteInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -393,7 +385,6 @@ type ProductOrderManagementHubDeleteInternalServerError struct {
 func (o *ProductOrderManagementHubDeleteInternalServerError) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -415,7 +406,7 @@ func NewProductOrderManagementHubDeleteServiceUnavailable() *ProductOrderManagem
 	return &ProductOrderManagementHubDeleteServiceUnavailable{}
 }
 
-/*ProductOrderManagementHubDeleteServiceUnavailable handles this case with default header values.
+/* ProductOrderManagementHubDeleteServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -428,7 +419,6 @@ type ProductOrderManagementHubDeleteServiceUnavailable struct {
 func (o *ProductOrderManagementHubDeleteServiceUnavailable) Error() string {
 	return fmt.Sprintf("[DELETE /productOrderManagement/v3/hub/{HubId}][%d] productOrderManagementHubDeleteServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *ProductOrderManagementHubDeleteServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

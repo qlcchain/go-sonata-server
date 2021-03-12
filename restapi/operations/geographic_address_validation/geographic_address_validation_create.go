@@ -31,7 +31,7 @@ func NewGeographicAddressValidationCreate(ctx *middleware.Context, handler Geogr
 	return &GeographicAddressValidationCreate{Context: ctx, Handler: handler}
 }
 
-/*GeographicAddressValidationCreate swagger:route POST /geographicAddressManagement/v3/geographicAddressValidation GeographicAddressValidation geographicAddressValidationCreate
+/* GeographicAddressValidationCreate swagger:route POST /geographicAddressManagement/v3/geographicAddressValidation GeographicAddressValidation geographicAddressValidationCreate
 
 validate a Geographic Address
 
@@ -49,7 +49,6 @@ func (o *GeographicAddressValidationCreate) ServeHTTP(rw http.ResponseWriter, r 
 		r = rCtx
 	}
 	var Params = NewGeographicAddressValidationCreateParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *GeographicAddressValidationCreate) ServeHTTP(rw http.ResponseWriter, r 
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

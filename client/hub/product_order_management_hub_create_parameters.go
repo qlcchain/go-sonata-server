@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewProductOrderManagementHubCreateParams creates a new ProductOrderManagementHubCreateParams object
-// with the default values initialized.
+// NewProductOrderManagementHubCreateParams creates a new ProductOrderManagementHubCreateParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOrderManagementHubCreateParams() *ProductOrderManagementHubCreateParams {
-	var ()
 	return &ProductOrderManagementHubCreateParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOrderManagementHubCreateParamsWithTimeout creates a new ProductOrderManagementHubCreateParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOrderManagementHubCreateParamsWithTimeout(timeout time.Duration) *ProductOrderManagementHubCreateParams {
-	var ()
 	return &ProductOrderManagementHubCreateParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOrderManagementHubCreateParamsWithContext creates a new ProductOrderManagementHubCreateParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOrderManagementHubCreateParamsWithContext(ctx context.Context) *ProductOrderManagementHubCreateParams {
-	var ()
 	return &ProductOrderManagementHubCreateParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOrderManagementHubCreateParamsWithHTTPClient creates a new ProductOrderManagementHubCreateParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOrderManagementHubCreateParamsWithHTTPClient(client *http.Client) *ProductOrderManagementHubCreateParams {
-	var ()
 	return &ProductOrderManagementHubCreateParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOrderManagementHubCreateParams contains all the parameters to send to the API endpoint
-for the product order management hub create operation typically these are written to a http.Request
+/* ProductOrderManagementHubCreateParams contains all the parameters to send to the API endpoint
+   for the product order management hub create operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOrderManagementHubCreateParams struct {
 
-	/*Hub*/
+	// Hub.
 	Hub *models.HubInput
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product order management hub create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderManagementHubCreateParams) WithDefaults() *ProductOrderManagementHubCreateParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product order management hub create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderManagementHubCreateParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product order management hub create params
@@ -121,7 +135,6 @@ func (o *ProductOrderManagementHubCreateParams) WriteToRequest(r runtime.ClientR
 		return err
 	}
 	var res []error
-
 	if o.Hub != nil {
 		if err := r.SetBodyParam(o.Hub); err != nil {
 			return err

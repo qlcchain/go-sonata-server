@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewQuoteManagementHubCreateParams creates a new QuoteManagementHubCreateParams object
-// with the default values initialized.
+// NewQuoteManagementHubCreateParams creates a new QuoteManagementHubCreateParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewQuoteManagementHubCreateParams() *QuoteManagementHubCreateParams {
-	var ()
 	return &QuoteManagementHubCreateParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewQuoteManagementHubCreateParamsWithTimeout creates a new QuoteManagementHubCreateParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewQuoteManagementHubCreateParamsWithTimeout(timeout time.Duration) *QuoteManagementHubCreateParams {
-	var ()
 	return &QuoteManagementHubCreateParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewQuoteManagementHubCreateParamsWithContext creates a new QuoteManagementHubCreateParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewQuoteManagementHubCreateParamsWithContext(ctx context.Context) *QuoteManagementHubCreateParams {
-	var ()
 	return &QuoteManagementHubCreateParams{
-
 		Context: ctx,
 	}
 }
 
 // NewQuoteManagementHubCreateParamsWithHTTPClient creates a new QuoteManagementHubCreateParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewQuoteManagementHubCreateParamsWithHTTPClient(client *http.Client) *QuoteManagementHubCreateParams {
-	var ()
 	return &QuoteManagementHubCreateParams{
 		HTTPClient: client,
 	}
 }
 
-/*QuoteManagementHubCreateParams contains all the parameters to send to the API endpoint
-for the quote management hub create operation typically these are written to a http.Request
+/* QuoteManagementHubCreateParams contains all the parameters to send to the API endpoint
+   for the quote management hub create operation.
+
+   Typically these are written to a http.Request.
 */
 type QuoteManagementHubCreateParams struct {
 
-	/*Hub*/
+	// Hub.
 	Hub *models.HubInput
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the quote management hub create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteManagementHubCreateParams) WithDefaults() *QuoteManagementHubCreateParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the quote management hub create params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteManagementHubCreateParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the quote management hub create params
@@ -121,7 +135,6 @@ func (o *QuoteManagementHubCreateParams) WriteToRequest(r runtime.ClientRequest,
 		return err
 	}
 	var res []error
-
 	if o.Hub != nil {
 		if err := r.SetBodyParam(o.Hub); err != nil {
 			return err

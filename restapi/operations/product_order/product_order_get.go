@@ -31,7 +31,7 @@ func NewProductOrderGet(ctx *middleware.Context, handler ProductOrderGetHandler)
 	return &ProductOrderGet{Context: ctx, Handler: handler}
 }
 
-/*ProductOrderGet swagger:route GET /productOrderManagement/v3/productOrder/{ProductOrderId} ProductOrder productOrderGet
+/* ProductOrderGet swagger:route GET /productOrderManagement/v3/productOrder/{ProductOrderId} ProductOrder productOrderGet
 
 Get a product order (by id)
 
@@ -49,7 +49,6 @@ func (o *ProductOrderGet) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		r = rCtx
 	}
 	var Params = NewProductOrderGetParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *ProductOrderGet) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

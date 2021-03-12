@@ -88,6 +88,8 @@ func main() {
 						time.Sleep(time.Second)
 						log.Debugf("STEP2: create quote for product %s", swag.StringValue(p.ID))
 						quoteCreateParams := quote.NewQuoteCreateParams()
+						actionTypeAdd := models.ProductActionTypeAdd
+						month := models.DurationUnitMONTH
 						quoteCreateParams.WithQuote(&models.QuoteCreate{
 							//AtBaseType:       "",
 							//AtSchemaLocation: "",
@@ -116,7 +118,7 @@ func main() {
 								{
 									//AtSchemaLocation:       "",
 									//AtType:                 "",
-									Action: models.ProductActionTypeAdd,
+									Action: &actionTypeAdd,
 									ID:     util.NewIDPtr(),
 									//Note:                   nil,
 									Product:         p,
@@ -132,7 +134,7 @@ func main() {
 									RequestedQuoteItemTerm: &models.ItemTerm{
 										//Description: "",
 										Duration: &models.Duration{
-											Unit:  models.DurationUnitMONTH,
+											Unit:  &month,
 											Value: swag.Int32(6),
 										},
 										//Name:        "",
@@ -156,15 +158,19 @@ func main() {
 						})
 						if resp, err := c.Quote.QuoteCreate(quoteCreateParams, token); err == nil {
 							q := resp.Payload
-							q.QuoteItem[0].State = models.QuoteItemStateTypeREADY
+							quoteItemStateType := models.QuoteItemStateTypeREADY
+							q.QuoteItem[0].State = &quoteItemStateType
 							q.QuoteItem[0].Product.StatusChange = []*models.StatusChange{}
-							q.State = models.QuoteStateTypeACCEPTED
-							log.Infof("create quote: id(%s); status(%s)", q.ID, q.State)
+							quoteStateTypeACCEPTED := models.QuoteStateTypeACCEPTED
+							q.State = &quoteStateTypeACCEPTED
+							log.Infof("create quote: id(%s); status(%s)", q.ID, *q.State)
 							log.Debugf("Quote payload: %s", util.ToIndentString(q))
 							time.Sleep(time.Second)
 
 							log.Debugf("STEP3: place order of product(%s), quote(%s)", swag.StringValue(p.ID), q.ID)
 							orderCreateParams := po.NewProductOrderCreateParams()
+							desiredOrderResponses := models.DesiredOrderResponsesConfirmationAndEngineeringDesign
+							activityInstall := models.OrderActivityInstall
 							orderCreateParams.WithProductOrder(&models.ProductOrderCreate{
 								//AtBaseType: "",
 								//AtSchemaLocation:        "",
@@ -173,16 +179,16 @@ func main() {
 									ID: billingAccount,
 								},
 								BuyerRequestDate: handler.NewDatetime(time.Now().Add(time.Hour * 12)),
-								DesiredResponse:  models.DesiredOrderResponsesConfirmationAndEngineeringDesign,
+								DesiredResponse:  &desiredOrderResponses,
 								ExpeditePriority: false,
 								ExternalID:       util.NewIDPtr(),
 								//Note:             nil,
-								OrderActivity: models.OrderActivityInstall,
+								OrderActivity: &activityInstall,
 								OrderItem: []*models.ProductOrderItemCreate{
 									{
 										//AtSchemaLocation:      "",
 										//AtType:                "",
-										Action: models.ProductActionTypeAdd,
+										Action: &actionTypeAdd,
 										BillingAccount: &models.BillingAccountRef{
 											ID: billingAccount,
 										},

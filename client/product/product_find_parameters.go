@@ -16,130 +16,166 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewProductFindParams creates a new ProductFindParams object
-// with the default values initialized.
+// NewProductFindParams creates a new ProductFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductFindParams() *ProductFindParams {
-	var ()
 	return &ProductFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductFindParamsWithTimeout creates a new ProductFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductFindParamsWithTimeout(timeout time.Duration) *ProductFindParams {
-	var ()
 	return &ProductFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductFindParamsWithContext creates a new ProductFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductFindParamsWithContext(ctx context.Context) *ProductFindParams {
-	var ()
 	return &ProductFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductFindParamsWithHTTPClient creates a new ProductFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductFindParamsWithHTTPClient(client *http.Client) *ProductFindParams {
-	var ()
 	return &ProductFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductFindParams contains all the parameters to send to the API endpoint
-for the product find operation typically these are written to a http.Request
+/* ProductFindParams contains all the parameters to send to the API endpoint
+   for the product find operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductFindParams struct {
 
-	/*BillingAccountID
-	  The Billing Account associated with the Product.
+	/* BillingAccountID.
 
+	   The Billing Account associated with the Product.
 	*/
 	BillingAccountID *string
-	/*BuyerID
-	  Identifier of the party who role is buyer.
 
+	/* BuyerID.
+
+	   Identifier of the party who role is buyer.
 	*/
 	BuyerID *string
-	/*BuyerProductID
-	  A reference to the buyerProductId provided in the order
 
+	/* BuyerProductID.
+
+	   A reference to the buyerProductId provided in the order
 	*/
 	BuyerProductID *string
-	/*GeographicalSiteID
-	  A site identifier which is associated to the product
 
+	/* GeographicalSiteID.
+
+	   A site identifier which is associated to the product
 	*/
 	GeographicalSiteID *string
-	/*LastUpdateDateGt
-	  Greater than the date that the last change affecting this Product was complet-ed
 
+	/* LastUpdateDateGt.
+
+	   Greater than the date that the last change affecting this Product was complet-ed
+
+	   Format: date-time
 	*/
 	LastUpdateDateGt *strfmt.DateTime
-	/*LastUpdateDateLt
-	  Less than date that the last change affecting this Product was completed
 
+	/* LastUpdateDateLt.
+
+	   Less than date that the last change affecting this Product was completed
+
+	   Format: date-time
 	*/
 	LastUpdateDateLt *strfmt.DateTime
-	/*Limit
-	  Requested number of resources to be provided in response requested by client
 
+	/* Limit.
+
+	   Requested number of resources to be provided in response requested by client
 	*/
 	Limit *string
-	/*Offset
-	  Requested index for start of resources to be provided in response requested by client
 
+	/* Offset.
+
+	   Requested index for start of resources to be provided in response requested by client
 	*/
 	Offset *string
-	/*ProductOfferingID
-	  A reference to a product offering by id
 
+	/* ProductOfferingID.
+
+	   A reference to a product offering by id
 	*/
 	ProductOfferingID *string
-	/*ProductOrderID
-	  Identifies Product Order(s) associated with the Product
 
+	/* ProductOrderID.
+
+	   Identifies Product Order(s) associated with the Product
 	*/
 	ProductOrderID *string
-	/*ProductSpecificationID
-	  A reference to a product spec by id
 
+	/* ProductSpecificationID.
+
+	   A reference to a product spec by id
 	*/
 	ProductSpecificationID *string
-	/*RelatedProductID
-	  This criteria allows to retrieve all Product records with a Product Relationship to a specified Product.
-	E.g. All Products related to Product with ID 5
 
+	/* RelatedProductID.
+
+	     This criteria allows to retrieve all Product records with a Product Relationship to a specified Product.
+	E.g. All Products related to Product with ID 5
 	*/
 	RelatedProductID *string
-	/*StartDateGt
-	  Greater than the date that is the initial install date for the Product
 
+	/* StartDateGt.
+
+	   Greater than the date that is the initial install date for the Product
+
+	   Format: date-time
 	*/
 	StartDateGt *strfmt.DateTime
-	/*StartDateLt
-	  Less than the date that is the initial install date for the Product
 
+	/* StartDateLt.
+
+	   Less than the date that is the initial install date for the Product
+
+	   Format: date-time
 	*/
 	StartDateLt *strfmt.DateTime
-	/*Status
-	  The status of the product
 
+	/* Status.
+
+	   The status of the product
 	*/
 	Status *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductFindParams) WithDefaults() *ProductFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product find params
@@ -352,240 +388,255 @@ func (o *ProductFindParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 
 		// query param billingAccountId
 		var qrBillingAccountID string
+
 		if o.BillingAccountID != nil {
 			qrBillingAccountID = *o.BillingAccountID
 		}
 		qBillingAccountID := qrBillingAccountID
 		if qBillingAccountID != "" {
+
 			if err := r.SetQueryParam("billingAccountId", qBillingAccountID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.BuyerID != nil {
 
 		// query param buyerId
 		var qrBuyerID string
+
 		if o.BuyerID != nil {
 			qrBuyerID = *o.BuyerID
 		}
 		qBuyerID := qrBuyerID
 		if qBuyerID != "" {
+
 			if err := r.SetQueryParam("buyerId", qBuyerID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.BuyerProductID != nil {
 
 		// query param buyerProductId
 		var qrBuyerProductID string
+
 		if o.BuyerProductID != nil {
 			qrBuyerProductID = *o.BuyerProductID
 		}
 		qBuyerProductID := qrBuyerProductID
 		if qBuyerProductID != "" {
+
 			if err := r.SetQueryParam("buyerProductId", qBuyerProductID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.GeographicalSiteID != nil {
 
 		// query param geographicalSiteId
 		var qrGeographicalSiteID string
+
 		if o.GeographicalSiteID != nil {
 			qrGeographicalSiteID = *o.GeographicalSiteID
 		}
 		qGeographicalSiteID := qrGeographicalSiteID
 		if qGeographicalSiteID != "" {
+
 			if err := r.SetQueryParam("geographicalSiteId", qGeographicalSiteID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.LastUpdateDateGt != nil {
 
 		// query param lastUpdateDate.gt
 		var qrLastUpdateDateGt strfmt.DateTime
+
 		if o.LastUpdateDateGt != nil {
 			qrLastUpdateDateGt = *o.LastUpdateDateGt
 		}
 		qLastUpdateDateGt := qrLastUpdateDateGt.String()
 		if qLastUpdateDateGt != "" {
+
 			if err := r.SetQueryParam("lastUpdateDate.gt", qLastUpdateDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.LastUpdateDateLt != nil {
 
 		// query param lastUpdateDate.lt
 		var qrLastUpdateDateLt strfmt.DateTime
+
 		if o.LastUpdateDateLt != nil {
 			qrLastUpdateDateLt = *o.LastUpdateDateLt
 		}
 		qLastUpdateDateLt := qrLastUpdateDateLt.String()
 		if qLastUpdateDateLt != "" {
+
 			if err := r.SetQueryParam("lastUpdateDate.lt", qLastUpdateDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Limit != nil {
 
 		// query param limit
 		var qrLimit string
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := qrLimit
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Offset != nil {
 
 		// query param offset
 		var qrOffset string
+
 		if o.Offset != nil {
 			qrOffset = *o.Offset
 		}
 		qOffset := qrOffset
 		if qOffset != "" {
+
 			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ProductOfferingID != nil {
 
 		// query param productOfferingId
 		var qrProductOfferingID string
+
 		if o.ProductOfferingID != nil {
 			qrProductOfferingID = *o.ProductOfferingID
 		}
 		qProductOfferingID := qrProductOfferingID
 		if qProductOfferingID != "" {
+
 			if err := r.SetQueryParam("productOfferingId", qProductOfferingID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ProductOrderID != nil {
 
 		// query param productOrderId
 		var qrProductOrderID string
+
 		if o.ProductOrderID != nil {
 			qrProductOrderID = *o.ProductOrderID
 		}
 		qProductOrderID := qrProductOrderID
 		if qProductOrderID != "" {
+
 			if err := r.SetQueryParam("productOrderId", qProductOrderID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ProductSpecificationID != nil {
 
 		// query param productSpecificationId
 		var qrProductSpecificationID string
+
 		if o.ProductSpecificationID != nil {
 			qrProductSpecificationID = *o.ProductSpecificationID
 		}
 		qProductSpecificationID := qrProductSpecificationID
 		if qProductSpecificationID != "" {
+
 			if err := r.SetQueryParam("productSpecificationId", qProductSpecificationID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.RelatedProductID != nil {
 
 		// query param relatedProductId
 		var qrRelatedProductID string
+
 		if o.RelatedProductID != nil {
 			qrRelatedProductID = *o.RelatedProductID
 		}
 		qRelatedProductID := qrRelatedProductID
 		if qRelatedProductID != "" {
+
 			if err := r.SetQueryParam("relatedProductId", qRelatedProductID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.StartDateGt != nil {
 
 		// query param startDate.gt
 		var qrStartDateGt strfmt.DateTime
+
 		if o.StartDateGt != nil {
 			qrStartDateGt = *o.StartDateGt
 		}
 		qStartDateGt := qrStartDateGt.String()
 		if qStartDateGt != "" {
+
 			if err := r.SetQueryParam("startDate.gt", qStartDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.StartDateLt != nil {
 
 		// query param startDate.lt
 		var qrStartDateLt strfmt.DateTime
+
 		if o.StartDateLt != nil {
 			qrStartDateLt = *o.StartDateLt
 		}
 		qStartDateLt := qrStartDateLt.String()
 		if qStartDateLt != "" {
+
 			if err := r.SetQueryParam("startDate.lt", qStartDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Status != nil {
 
 		// query param status
 		var qrStatus string
+
 		if o.Status != nil {
 			qrStatus = *o.Status
 		}
 		qStatus := qrStatus
 		if qStatus != "" {
+
 			if err := r.SetQueryParam("status", qStatus); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

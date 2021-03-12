@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -70,6 +72,52 @@ func (m *PriceRange) validateMinPreTaxAmount(formats strfmt.Registry) error {
 
 	if m.MinPreTaxAmount != nil {
 		if err := m.MinPreTaxAmount.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("minPreTaxAmount")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this price range based on the context it is used
+func (m *PriceRange) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateMaxPreTaxAmount(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateMinPreTaxAmount(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *PriceRange) contextValidateMaxPreTaxAmount(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.MaxPreTaxAmount != nil {
+		if err := m.MaxPreTaxAmount.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("maxPreTaxAmount")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PriceRange) contextValidateMinPreTaxAmount(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.MinPreTaxAmount != nil {
+		if err := m.MinPreTaxAmount.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("minPreTaxAmount")
 			}

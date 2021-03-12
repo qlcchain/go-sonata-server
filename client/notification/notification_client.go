@@ -25,27 +25,30 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error)
+	NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams, opts ...ClientOption) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error)
 
-	NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error)
+	NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams, opts ...ClientOption) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error)
 
-	NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error)
+	NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams, opts ...ClientOption) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error)
 
-	NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams) (*NotificationProductOrderCreationNotificationNoContent, error)
+	NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams, opts ...ClientOption) (*NotificationProductOrderCreationNotificationNoContent, error)
 
-	NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams) (*NotificationProductOrderInformationRequiredNotificationNoContent, error)
+	NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams, opts ...ClientOption) (*NotificationProductOrderInformationRequiredNotificationNoContent, error)
 
-	NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams) (*NotificationProductOrderStateChangeNotificationNoContent, error)
+	NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams, opts ...ClientOption) (*NotificationProductOrderStateChangeNotificationNoContent, error)
 
-	NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error)
+	NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams, opts ...ClientOption) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error)
 
-	NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams) (*NotificationQuoteCreationNotificationNoContent, error)
+	NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams, opts ...ClientOption) (*NotificationQuoteCreationNotificationNoContent, error)
 
-	NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams) (*NotificationQuoteInformationRequiredNotificationNoContent, error)
+	NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams, opts ...ClientOption) (*NotificationQuoteInformationRequiredNotificationNoContent, error)
 
-	NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams) (*NotificationQuoteStateChangeNotificationNoContent, error)
+	NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams, opts ...ClientOption) (*NotificationQuoteStateChangeNotificationNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -55,13 +58,12 @@ type ClientService interface {
 
   Product Offering Qualification Creation Notification structure definition
 */
-func (a *Client) NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error) {
+func (a *Client) NotificationProductOfferingQualificationCreationNotification(params *NotificationProductOfferingQualificationCreationNotificationParams, opts ...ClientOption) (*NotificationProductOfferingQualificationCreationNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOfferingQualificationCreationNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationProductOfferingQualificationCreationNotification",
 		Method:             "POST",
 		PathPattern:        "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationCreationNotification",
@@ -72,7 +74,12 @@ func (a *Client) NotificationProductOfferingQualificationCreationNotification(pa
 		Reader:             &NotificationProductOfferingQualificationCreationNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -91,13 +98,12 @@ func (a *Client) NotificationProductOfferingQualificationCreationNotification(pa
 
   Product Offering Qualification State Change Notification structure definition
 */
-func (a *Client) NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error) {
+func (a *Client) NotificationProductOfferingQualificationStateChangeNotification(params *NotificationProductOfferingQualificationStateChangeNotificationParams, opts ...ClientOption) (*NotificationProductOfferingQualificationStateChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOfferingQualificationStateChangeNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationProductOfferingQualificationStateChangeNotification",
 		Method:             "POST",
 		PathPattern:        "/productOfferingQualificationNotification/v3/notification/productOfferingQualificationStateChangeNotification",
@@ -108,7 +114,12 @@ func (a *Client) NotificationProductOfferingQualificationStateChangeNotification
 		Reader:             &NotificationProductOfferingQualificationStateChangeNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -127,13 +138,12 @@ func (a *Client) NotificationProductOfferingQualificationStateChangeNotification
 
   Product Order attribute value change structure description
 */
-func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params *NotificationProductOrderAttributeValueChangeNotificationParams, opts ...ClientOption) (*NotificationProductOrderAttributeValueChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderAttributeValueChangeNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationProductOrderAttributeValueChangeNotification",
 		Method:             "POST",
 		PathPattern:        "/productOrderNotification/v3/notification/productOrderAttributeValueChangeNotification",
@@ -144,7 +154,12 @@ func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params
 		Reader:             &NotificationProductOrderAttributeValueChangeNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -163,13 +178,12 @@ func (a *Client) NotificationProductOrderAttributeValueChangeNotification(params
 
   Product order creation notification structure description
 */
-func (a *Client) NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams) (*NotificationProductOrderCreationNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderCreationNotification(params *NotificationProductOrderCreationNotificationParams, opts ...ClientOption) (*NotificationProductOrderCreationNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderCreationNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationProductOrderCreationNotification",
 		Method:             "POST",
 		PathPattern:        "/productOrderNotification/v3/notification/productOrderCreationNotification",
@@ -180,7 +194,12 @@ func (a *Client) NotificationProductOrderCreationNotification(params *Notificati
 		Reader:             &NotificationProductOrderCreationNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -199,13 +218,12 @@ func (a *Client) NotificationProductOrderCreationNotification(params *Notificati
 
   Product Order information required structure description
 */
-func (a *Client) NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams) (*NotificationProductOrderInformationRequiredNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderInformationRequiredNotification(params *NotificationProductOrderInformationRequiredNotificationParams, opts ...ClientOption) (*NotificationProductOrderInformationRequiredNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderInformationRequiredNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationProductOrderInformationRequiredNotification",
 		Method:             "POST",
 		PathPattern:        "/productOrderNotification/v3/notification/productOrderInformationRequiredNotification",
@@ -216,7 +234,12 @@ func (a *Client) NotificationProductOrderInformationRequiredNotification(params 
 		Reader:             &NotificationProductOrderInformationRequiredNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -235,13 +258,12 @@ func (a *Client) NotificationProductOrderInformationRequiredNotification(params 
 
   Product order state change structure description
 */
-func (a *Client) NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams) (*NotificationProductOrderStateChangeNotificationNoContent, error) {
+func (a *Client) NotificationProductOrderStateChangeNotification(params *NotificationProductOrderStateChangeNotificationParams, opts ...ClientOption) (*NotificationProductOrderStateChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationProductOrderStateChangeNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationProductOrderStateChangeNotification",
 		Method:             "POST",
 		PathPattern:        "/productOrderNotification/v3/notification/productOrderStateChangeNotification",
@@ -252,7 +274,12 @@ func (a *Client) NotificationProductOrderStateChangeNotification(params *Notific
 		Reader:             &NotificationProductOrderStateChangeNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -278,13 +305,12 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error) {
+func (a *Client) NotificationQuoteAttributeValueChangeNotification(params *NotificationQuoteAttributeValueChangeNotificationParams, opts ...ClientOption) (*NotificationQuoteAttributeValueChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteAttributeValueChangeNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationQuoteAttributeValueChangeNotification",
 		Method:             "POST",
 		PathPattern:        "/quoteNotification/v1/notification/quoteAttributeValueChangeNotification",
@@ -295,7 +321,12 @@ func (a *Client) NotificationQuoteAttributeValueChangeNotification(params *Notif
 		Reader:             &NotificationQuoteAttributeValueChangeNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -319,13 +350,12 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams) (*NotificationQuoteCreationNotificationNoContent, error) {
+func (a *Client) NotificationQuoteCreationNotification(params *NotificationQuoteCreationNotificationParams, opts ...ClientOption) (*NotificationQuoteCreationNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteCreationNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationQuoteCreationNotification",
 		Method:             "POST",
 		PathPattern:        "/quoteNotification/v1/notification/quoteCreationNotification",
@@ -336,7 +366,12 @@ func (a *Client) NotificationQuoteCreationNotification(params *NotificationQuote
 		Reader:             &NotificationQuoteCreationNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -362,13 +397,12 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams) (*NotificationQuoteInformationRequiredNotificationNoContent, error) {
+func (a *Client) NotificationQuoteInformationRequiredNotification(params *NotificationQuoteInformationRequiredNotificationParams, opts ...ClientOption) (*NotificationQuoteInformationRequiredNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteInformationRequiredNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationQuoteInformationRequiredNotification",
 		Method:             "POST",
 		PathPattern:        "/quoteNotification/v1/notification/quoteInformationRequiredNotification",
@@ -379,7 +413,12 @@ func (a *Client) NotificationQuoteInformationRequiredNotification(params *Notifi
 		Reader:             &NotificationQuoteInformationRequiredNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -403,13 +442,12 @@ Specific business errors for current operation will be encapsulated in
 HTTP Response 422 Unprocessable entity
 
 */
-func (a *Client) NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams) (*NotificationQuoteStateChangeNotificationNoContent, error) {
+func (a *Client) NotificationQuoteStateChangeNotification(params *NotificationQuoteStateChangeNotificationParams, opts ...ClientOption) (*NotificationQuoteStateChangeNotificationNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNotificationQuoteStateChangeNotificationParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "notificationQuoteStateChangeNotification",
 		Method:             "POST",
 		PathPattern:        "/quoteNotification/v1/notification/quoteStateChangeNotification",
@@ -420,7 +458,12 @@ func (a *Client) NotificationQuoteStateChangeNotification(params *NotificationQu
 		Reader:             &NotificationQuoteStateChangeNotificationReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

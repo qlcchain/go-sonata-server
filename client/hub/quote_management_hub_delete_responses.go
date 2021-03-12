@@ -77,9 +77,8 @@ func (o *QuoteManagementHubDeleteReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -88,7 +87,7 @@ func NewQuoteManagementHubDeleteNoContent() *QuoteManagementHubDeleteNoContent {
 	return &QuoteManagementHubDeleteNoContent{}
 }
 
-/*QuoteManagementHubDeleteNoContent handles this case with default header values.
+/* QuoteManagementHubDeleteNoContent describes a response with status code 204, with default header values.
 
 No Content
 */
@@ -109,9 +108,9 @@ func NewQuoteManagementHubDeleteBadRequest() *QuoteManagementHubDeleteBadRequest
 	return &QuoteManagementHubDeleteBadRequest{}
 }
 
-/*QuoteManagementHubDeleteBadRequest handles this case with default header values.
+/* QuoteManagementHubDeleteBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -131,7 +130,6 @@ type QuoteManagementHubDeleteBadRequest struct {
 func (o *QuoteManagementHubDeleteBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -153,9 +151,9 @@ func NewQuoteManagementHubDeleteUnauthorized() *QuoteManagementHubDeleteUnauthor
 	return &QuoteManagementHubDeleteUnauthorized{}
 }
 
-/*QuoteManagementHubDeleteUnauthorized handles this case with default header values.
+/* QuoteManagementHubDeleteUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -169,7 +167,6 @@ type QuoteManagementHubDeleteUnauthorized struct {
 func (o *QuoteManagementHubDeleteUnauthorized) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -191,9 +188,9 @@ func NewQuoteManagementHubDeleteForbidden() *QuoteManagementHubDeleteForbidden {
 	return &QuoteManagementHubDeleteForbidden{}
 }
 
-/*QuoteManagementHubDeleteForbidden handles this case with default header values.
+/* QuoteManagementHubDeleteForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -208,7 +205,6 @@ type QuoteManagementHubDeleteForbidden struct {
 func (o *QuoteManagementHubDeleteForbidden) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteForbidden  %+v", 403, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -230,9 +226,9 @@ func NewQuoteManagementHubDeleteNotFound() *QuoteManagementHubDeleteNotFound {
 	return &QuoteManagementHubDeleteNotFound{}
 }
 
-/*QuoteManagementHubDeleteNotFound handles this case with default header values.
+/* QuoteManagementHubDeleteNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -244,7 +240,6 @@ type QuoteManagementHubDeleteNotFound struct {
 func (o *QuoteManagementHubDeleteNotFound) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteNotFound  %+v", 404, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -266,9 +261,9 @@ func NewQuoteManagementHubDeleteMethodNotAllowed() *QuoteManagementHubDeleteMeth
 	return &QuoteManagementHubDeleteMethodNotAllowed{}
 }
 
-/*QuoteManagementHubDeleteMethodNotAllowed handles this case with default header values.
+/* QuoteManagementHubDeleteMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -280,7 +275,6 @@ type QuoteManagementHubDeleteMethodNotAllowed struct {
 func (o *QuoteManagementHubDeleteMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -302,9 +296,9 @@ func NewQuoteManagementHubDeleteUnprocessableEntity() *QuoteManagementHubDeleteU
 	return &QuoteManagementHubDeleteUnprocessableEntity{}
 }
 
-/*QuoteManagementHubDeleteUnprocessableEntity handles this case with default header values.
+/* QuoteManagementHubDeleteUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -315,7 +309,6 @@ type QuoteManagementHubDeleteUnprocessableEntity struct {
 func (o *QuoteManagementHubDeleteUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -337,9 +330,9 @@ func NewQuoteManagementHubDeleteInternalServerError() *QuoteManagementHubDeleteI
 	return &QuoteManagementHubDeleteInternalServerError{}
 }
 
-/*QuoteManagementHubDeleteInternalServerError handles this case with default header values.
+/* QuoteManagementHubDeleteInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -351,7 +344,6 @@ type QuoteManagementHubDeleteInternalServerError struct {
 func (o *QuoteManagementHubDeleteInternalServerError) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -373,7 +365,7 @@ func NewQuoteManagementHubDeleteServiceUnavailable() *QuoteManagementHubDeleteSe
 	return &QuoteManagementHubDeleteServiceUnavailable{}
 }
 
-/*QuoteManagementHubDeleteServiceUnavailable handles this case with default header values.
+/* QuoteManagementHubDeleteServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -386,7 +378,6 @@ type QuoteManagementHubDeleteServiceUnavailable struct {
 func (o *QuoteManagementHubDeleteServiceUnavailable) Error() string {
 	return fmt.Sprintf("[DELETE /quoteManagement/v2/hub/{HubId}][%d] quoteManagementHubDeleteServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *QuoteManagementHubDeleteServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

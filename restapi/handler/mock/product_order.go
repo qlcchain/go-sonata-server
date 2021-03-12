@@ -36,24 +36,27 @@ const (
 var poBus = event.GetEventBus(productOrderTopic)
 
 // create/get/find product order
-func ProductOrderProductOrderCreateHandler(params po.ProductOrderCreateParams, principal *models.Principal) middleware.Responder {
+func ProductOrderProductOrderCreateHandler(
+	params po.ProductOrderCreateParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return po.NewProductOrderGetUnauthorized().WithPayload(payload)
 	}
 
 	if order, err := db.ProductOrderCreateToProductOrder(params.ProductOrder); err == nil {
 		if err := db.Store.Save(order).Error; err == nil {
+			orderEventType := models.ProductOrderEventTypeProductOrderCreationNotification
 			ev := models.PoEventPlus{
 				PoEvent: models.PoEvent{
 					Event:     order.ProductOrderEvent(),
 					EventID:   util.NewIDPtr(),
 					EventTime: handler.NewDatetime(time.Now()),
-					EventType: models.ProductOrderEventTypeProductOrderCreationNotification,
+					EventType: &orderEventType,
 				},
 				FieldPath:    []string{},
 				ResourcePath: swag.String(""),
 			}
-			poBus.Publish(string(models.ProductOrderEventTypeProductOrderCreationNotification), ev)
+			poBus.Publish(string(orderEventType), ev)
 			return po.NewProductOrderCreateCreated().WithPayload(order.To())
 		} else {
 			return po.NewProductOrderCreateInternalServerError().WithPayload(&models.ErrorRepresentation{
@@ -67,7 +70,9 @@ func ProductOrderProductOrderCreateHandler(params po.ProductOrderCreateParams, p
 	}
 }
 
-func ProductOrderProductOrderFindHandler(params po.ProductOrderFindParams, principal *models.Principal) middleware.Responder {
+func ProductOrderProductOrderFindHandler(
+	params po.ProductOrderFindParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return po.NewProductOrderFindUnauthorized().WithPayload(payload)
 	}
@@ -86,7 +91,9 @@ func ProductOrderProductOrderFindHandler(params po.ProductOrderFindParams, princ
 	}
 }
 
-func ProductOrderProductOrderGetHandler(params po.ProductOrderGetParams, principal *models.Principal) middleware.Responder {
+func ProductOrderProductOrderGetHandler(
+	params po.ProductOrderGetParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return po.NewProductOrderGetUnauthorized().WithPayload(payload)
 	}
@@ -103,7 +110,9 @@ func ProductOrderProductOrderGetHandler(params po.ProductOrderGetParams, princip
 }
 
 // cancel product order
-func CancelProductOrderCancelProductOrderCreateHandler(params cpo.CancelProductOrderCreateParams, principal *models.Principal) middleware.Responder {
+func CancelProductOrderCancelProductOrderCreateHandler(
+	params cpo.CancelProductOrderCreateParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return cpo.NewCancelProductOrderCreateUnauthorized().WithPayload(payload)
 	}
@@ -127,11 +136,12 @@ func CancelProductOrderCancelProductOrderCreateHandler(params cpo.CancelProductO
 			return cpo.NewCancelProductOrderCreateNotFound()
 		}
 		order := orders[0]
+		state := models.TaskStateTypeDone
 		if err := db.Store.Model(order).Updates(&schema.ProductOrder{
 			CancellationDate:          *input.RequestedCancellationDate,
 			CancellationReason:        input.CancellationReason,
 			State:                     models.ProductOrderStateTypeCancelled,
-			TaskState:                 models.TaskStateTypeDone,
+			TaskState:                 &state,
 			CancellationDeniedReason:  "",
 			RequestedCancellationDate: input.RequestedCancellationDate,
 			Version:                   input.ProductOrder.Version,
@@ -154,7 +164,7 @@ func CancelProductOrderCancelProductOrderCreateHandler(params cpo.CancelProductO
 				Version:        input.ProductOrder.Version,
 			},
 			RequestedCancellationDate: input.RequestedCancellationDate,
-			State:                     models.TaskStateTypeDone,
+			State:                     &state,
 		})
 	} else if err == gorm.ErrRecordNotFound {
 		return cpo.NewCancelProductOrderCreateNotFound()
@@ -165,7 +175,9 @@ func CancelProductOrderCancelProductOrderCreateHandler(params cpo.CancelProductO
 	}
 }
 
-func CancelProductOrderCancelProductOrderFindHandler(params cpo.CancelProductOrderFindParams, principal *models.Principal) middleware.Responder {
+func CancelProductOrderCancelProductOrderFindHandler(
+	params cpo.CancelProductOrderFindParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return cpo.NewCancelProductOrderFindUnauthorized().WithPayload(payload)
 	}
@@ -210,7 +222,9 @@ func CancelProductOrderCancelProductOrderFindHandler(params cpo.CancelProductOrd
 	}
 }
 
-func CancelProductOrderCancelProductOrderGetHandler(params cpo.CancelProductOrderGetParams, principal *models.Principal) middleware.Responder {
+func CancelProductOrderCancelProductOrderGetHandler(
+	params cpo.CancelProductOrderGetParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return cpo.NewCancelProductOrderGetUnauthorized().WithPayload(payload)
 	}
@@ -245,7 +259,9 @@ func CancelProductOrderCancelProductOrderGetHandler(params cpo.CancelProductOrde
 	}
 }
 
-func HubProductOrderManagementHubCreateHandler(params hub.ProductOrderManagementHubCreateParams, principal *models.Principal) middleware.Responder {
+func HubProductOrderManagementHubCreateHandler(
+	params hub.ProductOrderManagementHubCreateParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOrderManagementHubCreateUnauthorized().WithPayload(payload)
 	}
@@ -301,7 +317,9 @@ func HubProductOrderManagementHubCreateHandler(params hub.ProductOrderManagement
 	}
 }
 
-func HubProductOrderManagementHubDeleteHandler(params hub.ProductOrderManagementHubDeleteParams, principal *models.Principal) middleware.Responder {
+func HubProductOrderManagementHubDeleteHandler(
+	params hub.ProductOrderManagementHubDeleteParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOrderManagementHubDeleteUnauthorized().WithPayload(payload)
 	}
@@ -331,7 +349,9 @@ func HubProductOrderManagementHubDeleteHandler(params hub.ProductOrderManagement
 	}
 }
 
-func HubProductOrderManagementHubFindHandler(params hub.ProductOrderManagementHubFindParams, principal *models.Principal) middleware.Responder {
+func HubProductOrderManagementHubFindHandler(
+	params hub.ProductOrderManagementHubFindParams, principal *models.Principal,
+) middleware.Responder {
 	if payload := handler.ToErrorRepresentation(principal); payload != nil {
 		return hub.NewProductOrderManagementHubFindUnauthorized().WithPayload(payload)
 	}

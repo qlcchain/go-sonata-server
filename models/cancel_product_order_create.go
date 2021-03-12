@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -80,6 +82,34 @@ func (m *CancelProductOrderCreate) validateRequestedCancellationDate(formats str
 
 	if err := validate.FormatOf("requestedCancellationDate", "body", "date-time", m.RequestedCancellationDate.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this cancel product order create based on the context it is used
+func (m *CancelProductOrderCreate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateProductOrder(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *CancelProductOrderCreate) contextValidateProductOrder(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ProductOrder != nil {
+		if err := m.ProductOrder.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("productOrder")
+			}
+			return err
+		}
 	}
 
 	return nil

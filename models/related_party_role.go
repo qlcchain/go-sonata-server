@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -73,6 +75,34 @@ func (m *RelatedPartyRole) validateRole(formats strfmt.Registry) error {
 
 	if err := validate.Required("role", "body", m.Role); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this related party role based on the context it is used
+func (m *RelatedPartyRole) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *RelatedPartyRole) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RelatedParty != nil {
+		if err := m.RelatedParty.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("relatedParty")
+			}
+			return err
+		}
 	}
 
 	return nil

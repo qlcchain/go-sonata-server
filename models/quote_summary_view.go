@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -130,7 +131,6 @@ func (m *QuoteSummaryView) Validate(formats strfmt.Registry) error {
 }
 
 func (m *QuoteSummaryView) validateEffectiveQuoteCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EffectiveQuoteCompletionDate) { // not required
 		return nil
 	}
@@ -143,7 +143,6 @@ func (m *QuoteSummaryView) validateEffectiveQuoteCompletionDate(formats strfmt.R
 }
 
 func (m *QuoteSummaryView) validateExpectedFulfillmentStartDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedFulfillmentStartDate) { // not required
 		return nil
 	}
@@ -156,7 +155,6 @@ func (m *QuoteSummaryView) validateExpectedFulfillmentStartDate(formats strfmt.R
 }
 
 func (m *QuoteSummaryView) validateExpectedQuoteCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedQuoteCompletionDate) { // not required
 		return nil
 	}
@@ -169,7 +167,6 @@ func (m *QuoteSummaryView) validateExpectedQuoteCompletionDate(formats strfmt.Re
 }
 
 func (m *QuoteSummaryView) validateQuoteDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.QuoteDate) { // not required
 		return nil
 	}
@@ -207,7 +204,6 @@ func (m *QuoteSummaryView) validateQuoteItem(formats strfmt.Registry) error {
 }
 
 func (m *QuoteSummaryView) validateQuoteLevel(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.QuoteLevel) { // not required
 		return nil
 	}
@@ -261,7 +257,6 @@ func (m *QuoteSummaryView) validateRequestedQuoteCompletionDate(formats strfmt.R
 }
 
 func (m *QuoteSummaryView) validateState(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.State) { // not required
 		return nil
 	}
@@ -277,13 +272,116 @@ func (m *QuoteSummaryView) validateState(formats strfmt.Registry) error {
 }
 
 func (m *QuoteSummaryView) validateValidFor(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ValidFor) { // not required
 		return nil
 	}
 
 	if m.ValidFor != nil {
 		if err := m.ValidFor.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("validFor")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this quote summary view based on the context it is used
+func (m *QuoteSummaryView) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateQuoteItem(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQuoteLevel(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedPartyRole(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateValidFor(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *QuoteSummaryView) contextValidateQuoteItem(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.QuoteItem); i++ {
+
+		if m.QuoteItem[i] != nil {
+			if err := m.QuoteItem[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("quoteItem" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *QuoteSummaryView) contextValidateQuoteLevel(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.QuoteLevel.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("quoteLevel")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *QuoteSummaryView) contextValidateRelatedPartyRole(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedPartyRole); i++ {
+
+		if m.RelatedPartyRole[i] != nil {
+			if err := m.RelatedPartyRole[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedPartyRole" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *QuoteSummaryView) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.State.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("state")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *QuoteSummaryView) contextValidateValidFor(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ValidFor != nil {
+		if err := m.ValidFor.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("validFor")
 			}

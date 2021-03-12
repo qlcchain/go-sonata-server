@@ -16,175 +16,240 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewProductOrderFindParams creates a new ProductOrderFindParams object
-// with the default values initialized.
+// NewProductOrderFindParams creates a new ProductOrderFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewProductOrderFindParams() *ProductOrderFindParams {
-	var ()
 	return &ProductOrderFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewProductOrderFindParamsWithTimeout creates a new ProductOrderFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewProductOrderFindParamsWithTimeout(timeout time.Duration) *ProductOrderFindParams {
-	var ()
 	return &ProductOrderFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewProductOrderFindParamsWithContext creates a new ProductOrderFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewProductOrderFindParamsWithContext(ctx context.Context) *ProductOrderFindParams {
-	var ()
 	return &ProductOrderFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewProductOrderFindParamsWithHTTPClient creates a new ProductOrderFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewProductOrderFindParamsWithHTTPClient(client *http.Client) *ProductOrderFindParams {
-	var ()
 	return &ProductOrderFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*ProductOrderFindParams contains all the parameters to send to the API endpoint
-for the product order find operation typically these are written to a http.Request
+/* ProductOrderFindParams contains all the parameters to send to the API endpoint
+   for the product order find operation.
+
+   Typically these are written to a http.Request.
 */
 type ProductOrderFindParams struct {
 
-	/*BuyerID
-	  A Party Role played by an Individual or an Organization that buys products and services from a Seller. Specifically, the ID of the Service Provider (Buyer) organization placing the order.
+	/* BuyerID.
 
+	   A Party Role played by an Individual or an Organization that buys products and services from a Seller. Specifically, the ID of the Service Provider (Buyer) organization placing the order.
 	*/
 	BuyerID *string
-	/*BuyerRequestedDateGt
-	  Buyer requested date greater than
 
+	/* BuyerRequestedDateGt.
+
+	   Buyer requested date greater than
+
+	   Format: date-time
 	*/
 	BuyerRequestedDateGt *strfmt.DateTime
-	/*BuyerRequestedDateLt
-	  Buyer requested date lesser than
 
+	/* BuyerRequestedDateLt.
+
+	   Buyer requested date lesser than
+
+	   Format: date-time
 	*/
 	BuyerRequestedDateLt *strfmt.DateTime
-	/*CompletionDateGt
-	  Effective completion date greater than
 
+	/* CompletionDateGt.
+
+	   Effective completion date greater than
+
+	   Format: date-time
 	*/
 	CompletionDateGt *strfmt.DateTime
-	/*CompletionDateLt
-	  Effective completion date lesser than
 
+	/* CompletionDateLt.
+
+	   Effective completion date lesser than
+
+	   Format: date-time
 	*/
 	CompletionDateLt *strfmt.DateTime
-	/*ExpectedCompletionDateGt
-	  Seller planned completion date greater than
 
+	/* ExpectedCompletionDateGt.
+
+	   Seller planned completion date greater than
+
+	   Format: date-time
 	*/
 	ExpectedCompletionDateGt *strfmt.DateTime
-	/*ExpectedCompletionDateLt
-	  Seller planned completion date lesser than
 
+	/* ExpectedCompletionDateLt.
+
+	   Seller planned completion date lesser than
+
+	   Format: date-time
 	*/
 	ExpectedCompletionDateLt *strfmt.DateTime
-	/*ExternalID
-	  A number that uniquely identifies an order within the Buyer's enterprise.
 
+	/* ExternalID.
+
+	   A number that uniquely identifies an order within the Buyer's enterprise.
 	*/
 	ExternalID *string
-	/*Limit
-	  Requested number of resources to be provided in response requested by client
 
+	/* Limit.
+
+	   Requested number of resources to be provided in response requested by client
 	*/
 	Limit *string
-	/*Offset
-	  Requested index for start of resources to be provided in response requested by client
 
+	/* Offset.
+
+	   Requested index for start of resources to be provided in response requested by client
 	*/
 	Offset *string
-	/*OrderCancellationDateGt
-	  order cancellation date greater than
 
+	/* OrderCancellationDateGt.
+
+	   order cancellation date greater than
+
+	   Format: date-time
 	*/
 	OrderCancellationDateGt *strfmt.DateTime
-	/*OrderCancellationDateLt
-	  order cancellation date lesser than
 
+	/* OrderCancellationDateLt.
+
+	   order cancellation date lesser than
+
+	   Format: date-time
 	*/
 	OrderCancellationDateLt *strfmt.DateTime
-	/*OrderDateGt
-	  Date when the order was created greater than
 
+	/* OrderDateGt.
+
+	   Date when the order was created greater than
+
+	   Format: date-time
 	*/
 	OrderDateGt *strfmt.DateTime
-	/*OrderDateLt
-	  Date when the order was created lesser than
 
+	/* OrderDateLt.
+
+	   Date when the order was created lesser than
+
+	   Format: date-time
 	*/
 	OrderDateLt *strfmt.DateTime
-	/*ProjectID
-	  An identifier that is used to group Orders that represent a unit of functionality that is important to a Buyer.
 
+	/* ProjectID.
+
+	   An identifier that is used to group Orders that represent a unit of functionality that is important to a Buyer.
 	*/
 	ProjectID *string
-	/*RequestedCompletionDateGt
-	  Identifies the Buyer's desired due date (requested delivery date) greater than
 
+	/* RequestedCompletionDateGt.
+
+	   Identifies the Buyer's desired due date (requested delivery date) greater than
+
+	   Format: date-time
 	*/
 	RequestedCompletionDateGt *strfmt.DateTime
-	/*RequestedCompletionDateLt
-	  Identifies the Buyer's desired due date (requested delivery date) lesser than
 
+	/* RequestedCompletionDateLt.
+
+	   Identifies the Buyer's desired due date (requested delivery date) lesser than
+
+	   Format: date-time
 	*/
 	RequestedCompletionDateLt *strfmt.DateTime
-	/*RequestedStartDateGt
-	  Buyer requested start date greater than
 
+	/* RequestedStartDateGt.
+
+	   Buyer requested start date greater than
+
+	   Format: date-time
 	*/
 	RequestedStartDateGt *strfmt.DateTime
-	/*RequestedStartDateLt
-	  Buyer requested start date lesser than
 
+	/* RequestedStartDateLt.
+
+	   Buyer requested start date lesser than
+
+	   Format: date-time
 	*/
 	RequestedStartDateLt *strfmt.DateTime
-	/*SellerID
-	  A Party Role played by an organization that provides products and services to a Buyer.
-	Specifically, the ID of the Partner/Access Provider (Seller) organization receiving the order.
 
+	/* SellerID.
+
+	     A Party Role played by an organization that provides products and services to a Buyer.
+	Specifically, the ID of the Partner/Access Provider (Seller) organization receiving the order.
 	*/
 	SellerID *string
-	/*SiteCompanyName
-	  The name of the company that is located at the service location.  This may be different from the name of the Buyer that ordered services at that site.
 
+	/* SiteCompanyName.
+
+	   The name of the company that is located at the service location.  This may be different from the name of the Buyer that ordered services at that site.
 	*/
 	SiteCompanyName *string
-	/*SiteCustomerName
-	  The customer name at a site where the service is being delivered
 
+	/* SiteCustomerName.
+
+	   The customer name at a site where the service is being delivered
 	*/
 	SiteCustomerName *string
-	/*SiteName
-	  A name by which the site is known.
 
+	/* SiteName.
+
+	   A name by which the site is known.
 	*/
 	SiteName *string
-	/*State
-	  The status of the order
 
+	/* State.
+
+	   The status of the order
 	*/
 	State *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the product order find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderFindParams) WithDefaults() *ProductOrderFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the product order find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ProductOrderFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the product order find params
@@ -496,384 +561,408 @@ func (o *ProductOrderFindParams) WriteToRequest(r runtime.ClientRequest, reg str
 
 		// query param buyerId
 		var qrBuyerID string
+
 		if o.BuyerID != nil {
 			qrBuyerID = *o.BuyerID
 		}
 		qBuyerID := qrBuyerID
 		if qBuyerID != "" {
+
 			if err := r.SetQueryParam("buyerId", qBuyerID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.BuyerRequestedDateGt != nil {
 
 		// query param buyerRequestedDate.gt
 		var qrBuyerRequestedDateGt strfmt.DateTime
+
 		if o.BuyerRequestedDateGt != nil {
 			qrBuyerRequestedDateGt = *o.BuyerRequestedDateGt
 		}
 		qBuyerRequestedDateGt := qrBuyerRequestedDateGt.String()
 		if qBuyerRequestedDateGt != "" {
+
 			if err := r.SetQueryParam("buyerRequestedDate.gt", qBuyerRequestedDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.BuyerRequestedDateLt != nil {
 
 		// query param buyerRequestedDate.lt
 		var qrBuyerRequestedDateLt strfmt.DateTime
+
 		if o.BuyerRequestedDateLt != nil {
 			qrBuyerRequestedDateLt = *o.BuyerRequestedDateLt
 		}
 		qBuyerRequestedDateLt := qrBuyerRequestedDateLt.String()
 		if qBuyerRequestedDateLt != "" {
+
 			if err := r.SetQueryParam("buyerRequestedDate.lt", qBuyerRequestedDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.CompletionDateGt != nil {
 
 		// query param completionDate.gt
 		var qrCompletionDateGt strfmt.DateTime
+
 		if o.CompletionDateGt != nil {
 			qrCompletionDateGt = *o.CompletionDateGt
 		}
 		qCompletionDateGt := qrCompletionDateGt.String()
 		if qCompletionDateGt != "" {
+
 			if err := r.SetQueryParam("completionDate.gt", qCompletionDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.CompletionDateLt != nil {
 
 		// query param completionDate.lt
 		var qrCompletionDateLt strfmt.DateTime
+
 		if o.CompletionDateLt != nil {
 			qrCompletionDateLt = *o.CompletionDateLt
 		}
 		qCompletionDateLt := qrCompletionDateLt.String()
 		if qCompletionDateLt != "" {
+
 			if err := r.SetQueryParam("completionDate.lt", qCompletionDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ExpectedCompletionDateGt != nil {
 
 		// query param expectedCompletionDate.gt
 		var qrExpectedCompletionDateGt strfmt.DateTime
+
 		if o.ExpectedCompletionDateGt != nil {
 			qrExpectedCompletionDateGt = *o.ExpectedCompletionDateGt
 		}
 		qExpectedCompletionDateGt := qrExpectedCompletionDateGt.String()
 		if qExpectedCompletionDateGt != "" {
+
 			if err := r.SetQueryParam("expectedCompletionDate.gt", qExpectedCompletionDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ExpectedCompletionDateLt != nil {
 
 		// query param expectedCompletionDate.lt
 		var qrExpectedCompletionDateLt strfmt.DateTime
+
 		if o.ExpectedCompletionDateLt != nil {
 			qrExpectedCompletionDateLt = *o.ExpectedCompletionDateLt
 		}
 		qExpectedCompletionDateLt := qrExpectedCompletionDateLt.String()
 		if qExpectedCompletionDateLt != "" {
+
 			if err := r.SetQueryParam("expectedCompletionDate.lt", qExpectedCompletionDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ExternalID != nil {
 
 		// query param externalId
 		var qrExternalID string
+
 		if o.ExternalID != nil {
 			qrExternalID = *o.ExternalID
 		}
 		qExternalID := qrExternalID
 		if qExternalID != "" {
+
 			if err := r.SetQueryParam("externalId", qExternalID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Limit != nil {
 
 		// query param limit
 		var qrLimit string
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := qrLimit
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Offset != nil {
 
 		// query param offset
 		var qrOffset string
+
 		if o.Offset != nil {
 			qrOffset = *o.Offset
 		}
 		qOffset := qrOffset
 		if qOffset != "" {
+
 			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrderCancellationDateGt != nil {
 
 		// query param orderCancellationDate.gt
 		var qrOrderCancellationDateGt strfmt.DateTime
+
 		if o.OrderCancellationDateGt != nil {
 			qrOrderCancellationDateGt = *o.OrderCancellationDateGt
 		}
 		qOrderCancellationDateGt := qrOrderCancellationDateGt.String()
 		if qOrderCancellationDateGt != "" {
+
 			if err := r.SetQueryParam("orderCancellationDate.gt", qOrderCancellationDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrderCancellationDateLt != nil {
 
 		// query param orderCancellationDate.lt
 		var qrOrderCancellationDateLt strfmt.DateTime
+
 		if o.OrderCancellationDateLt != nil {
 			qrOrderCancellationDateLt = *o.OrderCancellationDateLt
 		}
 		qOrderCancellationDateLt := qrOrderCancellationDateLt.String()
 		if qOrderCancellationDateLt != "" {
+
 			if err := r.SetQueryParam("orderCancellationDate.lt", qOrderCancellationDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrderDateGt != nil {
 
 		// query param orderDate.gt
 		var qrOrderDateGt strfmt.DateTime
+
 		if o.OrderDateGt != nil {
 			qrOrderDateGt = *o.OrderDateGt
 		}
 		qOrderDateGt := qrOrderDateGt.String()
 		if qOrderDateGt != "" {
+
 			if err := r.SetQueryParam("orderDate.gt", qOrderDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.OrderDateLt != nil {
 
 		// query param orderDate.lt
 		var qrOrderDateLt strfmt.DateTime
+
 		if o.OrderDateLt != nil {
 			qrOrderDateLt = *o.OrderDateLt
 		}
 		qOrderDateLt := qrOrderDateLt.String()
 		if qOrderDateLt != "" {
+
 			if err := r.SetQueryParam("orderDate.lt", qOrderDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.ProjectID != nil {
 
 		// query param projectId
 		var qrProjectID string
+
 		if o.ProjectID != nil {
 			qrProjectID = *o.ProjectID
 		}
 		qProjectID := qrProjectID
 		if qProjectID != "" {
+
 			if err := r.SetQueryParam("projectId", qProjectID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.RequestedCompletionDateGt != nil {
 
 		// query param requestedCompletionDate.gt
 		var qrRequestedCompletionDateGt strfmt.DateTime
+
 		if o.RequestedCompletionDateGt != nil {
 			qrRequestedCompletionDateGt = *o.RequestedCompletionDateGt
 		}
 		qRequestedCompletionDateGt := qrRequestedCompletionDateGt.String()
 		if qRequestedCompletionDateGt != "" {
+
 			if err := r.SetQueryParam("requestedCompletionDate.gt", qRequestedCompletionDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.RequestedCompletionDateLt != nil {
 
 		// query param requestedCompletionDate.lt
 		var qrRequestedCompletionDateLt strfmt.DateTime
+
 		if o.RequestedCompletionDateLt != nil {
 			qrRequestedCompletionDateLt = *o.RequestedCompletionDateLt
 		}
 		qRequestedCompletionDateLt := qrRequestedCompletionDateLt.String()
 		if qRequestedCompletionDateLt != "" {
+
 			if err := r.SetQueryParam("requestedCompletionDate.lt", qRequestedCompletionDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.RequestedStartDateGt != nil {
 
 		// query param requestedStartDate.gt
 		var qrRequestedStartDateGt strfmt.DateTime
+
 		if o.RequestedStartDateGt != nil {
 			qrRequestedStartDateGt = *o.RequestedStartDateGt
 		}
 		qRequestedStartDateGt := qrRequestedStartDateGt.String()
 		if qRequestedStartDateGt != "" {
+
 			if err := r.SetQueryParam("requestedStartDate.gt", qRequestedStartDateGt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.RequestedStartDateLt != nil {
 
 		// query param requestedStartDate.lt
 		var qrRequestedStartDateLt strfmt.DateTime
+
 		if o.RequestedStartDateLt != nil {
 			qrRequestedStartDateLt = *o.RequestedStartDateLt
 		}
 		qRequestedStartDateLt := qrRequestedStartDateLt.String()
 		if qRequestedStartDateLt != "" {
+
 			if err := r.SetQueryParam("requestedStartDate.lt", qRequestedStartDateLt); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SellerID != nil {
 
 		// query param sellerId
 		var qrSellerID string
+
 		if o.SellerID != nil {
 			qrSellerID = *o.SellerID
 		}
 		qSellerID := qrSellerID
 		if qSellerID != "" {
+
 			if err := r.SetQueryParam("sellerId", qSellerID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteCompanyName != nil {
 
 		// query param siteCompanyName
 		var qrSiteCompanyName string
+
 		if o.SiteCompanyName != nil {
 			qrSiteCompanyName = *o.SiteCompanyName
 		}
 		qSiteCompanyName := qrSiteCompanyName
 		if qSiteCompanyName != "" {
+
 			if err := r.SetQueryParam("siteCompanyName", qSiteCompanyName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteCustomerName != nil {
 
 		// query param siteCustomerName
 		var qrSiteCustomerName string
+
 		if o.SiteCustomerName != nil {
 			qrSiteCustomerName = *o.SiteCustomerName
 		}
 		qSiteCustomerName := qrSiteCustomerName
 		if qSiteCustomerName != "" {
+
 			if err := r.SetQueryParam("siteCustomerName", qSiteCustomerName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteName != nil {
 
 		// query param siteName
 		var qrSiteName string
+
 		if o.SiteName != nil {
 			qrSiteName = *o.SiteName
 		}
 		qSiteName := qrSiteName
 		if qSiteName != "" {
+
 			if err := r.SetQueryParam("siteName", qSiteName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.State != nil {
 
 		// query param state
 		var qrState string
+
 		if o.State != nil {
 			qrState = *o.State
 		}
 		qState := qrState
 		if qState != "" {
+
 			if err := r.SetQueryParam("state", qState); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

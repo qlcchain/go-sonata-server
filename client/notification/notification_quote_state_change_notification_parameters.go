@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationQuoteStateChangeNotificationParams creates a new NotificationQuoteStateChangeNotificationParams object
-// with the default values initialized.
+// NewNotificationQuoteStateChangeNotificationParams creates a new NotificationQuoteStateChangeNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationQuoteStateChangeNotificationParams() *NotificationQuoteStateChangeNotificationParams {
-	var ()
 	return &NotificationQuoteStateChangeNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationQuoteStateChangeNotificationParamsWithTimeout creates a new NotificationQuoteStateChangeNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationQuoteStateChangeNotificationParamsWithTimeout(timeout time.Duration) *NotificationQuoteStateChangeNotificationParams {
-	var ()
 	return &NotificationQuoteStateChangeNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationQuoteStateChangeNotificationParamsWithContext creates a new NotificationQuoteStateChangeNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationQuoteStateChangeNotificationParamsWithContext(ctx context.Context) *NotificationQuoteStateChangeNotificationParams {
-	var ()
 	return &NotificationQuoteStateChangeNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationQuoteStateChangeNotificationParamsWithHTTPClient creates a new NotificationQuoteStateChangeNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationQuoteStateChangeNotificationParamsWithHTTPClient(client *http.Client) *NotificationQuoteStateChangeNotificationParams {
-	var ()
 	return &NotificationQuoteStateChangeNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationQuoteStateChangeNotificationParams contains all the parameters to send to the API endpoint
-for the notification quote state change notification operation typically these are written to a http.Request
+/* NotificationQuoteStateChangeNotificationParams contains all the parameters to send to the API endpoint
+   for the notification quote state change notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationQuoteStateChangeNotificationParams struct {
 
-	/*QuoteStateChangeNotification*/
+	// QuoteStateChangeNotification.
 	QuoteStateChangeNotification *models.QuoteEvent
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification quote state change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteStateChangeNotificationParams) WithDefaults() *NotificationQuoteStateChangeNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification quote state change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteStateChangeNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification quote state change notification params
@@ -121,7 +135,6 @@ func (o *NotificationQuoteStateChangeNotificationParams) WriteToRequest(r runtim
 		return err
 	}
 	var res []error
-
 	if o.QuoteStateChangeNotification != nil {
 		if err := r.SetBodyParam(o.QuoteStateChangeNotification); err != nil {
 			return err

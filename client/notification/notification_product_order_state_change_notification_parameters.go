@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationProductOrderStateChangeNotificationParams creates a new NotificationProductOrderStateChangeNotificationParams object
-// with the default values initialized.
+// NewNotificationProductOrderStateChangeNotificationParams creates a new NotificationProductOrderStateChangeNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationProductOrderStateChangeNotificationParams() *NotificationProductOrderStateChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderStateChangeNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationProductOrderStateChangeNotificationParamsWithTimeout creates a new NotificationProductOrderStateChangeNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationProductOrderStateChangeNotificationParamsWithTimeout(timeout time.Duration) *NotificationProductOrderStateChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderStateChangeNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationProductOrderStateChangeNotificationParamsWithContext creates a new NotificationProductOrderStateChangeNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationProductOrderStateChangeNotificationParamsWithContext(ctx context.Context) *NotificationProductOrderStateChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderStateChangeNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationProductOrderStateChangeNotificationParamsWithHTTPClient creates a new NotificationProductOrderStateChangeNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationProductOrderStateChangeNotificationParamsWithHTTPClient(client *http.Client) *NotificationProductOrderStateChangeNotificationParams {
-	var ()
 	return &NotificationProductOrderStateChangeNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationProductOrderStateChangeNotificationParams contains all the parameters to send to the API endpoint
-for the notification product order state change notification operation typically these are written to a http.Request
+/* NotificationProductOrderStateChangeNotificationParams contains all the parameters to send to the API endpoint
+   for the notification product order state change notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationProductOrderStateChangeNotificationParams struct {
 
-	/*ProductOrderStateChange*/
+	// ProductOrderStateChange.
 	ProductOrderStateChange *models.PoEvent
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification product order state change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOrderStateChangeNotificationParams) WithDefaults() *NotificationProductOrderStateChangeNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification product order state change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationProductOrderStateChangeNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification product order state change notification params
@@ -121,7 +135,6 @@ func (o *NotificationProductOrderStateChangeNotificationParams) WriteToRequest(r
 		return err
 	}
 	var res []error
-
 	if o.ProductOrderStateChange != nil {
 		if err := r.SetBodyParam(o.ProductOrderStateChange); err != nil {
 			return err

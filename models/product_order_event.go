@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -76,7 +77,7 @@ type ProductOrderEvent struct {
 
 	// state
 	// Required: true
-	State ProductOrderStateType `json:"state"`
+	State *ProductOrderStateType `json:"state"`
 }
 
 // Validate validates this product order event
@@ -138,7 +139,6 @@ func (m *ProductOrderEvent) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ProductOrderEvent) validateCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CompletionDate) { // not required
 		return nil
 	}
@@ -151,7 +151,6 @@ func (m *ProductOrderEvent) validateCompletionDate(formats strfmt.Registry) erro
 }
 
 func (m *ProductOrderEvent) validateExpectedCompletionDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedCompletionDate) { // not required
 		return nil
 	}
@@ -182,7 +181,6 @@ func (m *ProductOrderEvent) validateID(formats strfmt.Registry) error {
 }
 
 func (m *ProductOrderEvent) validateNote(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Note) { // not required
 		return nil
 	}
@@ -232,7 +230,6 @@ func (m *ProductOrderEvent) validateOrderItem(formats strfmt.Registry) error {
 }
 
 func (m *ProductOrderEvent) validateOrderMessage(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.OrderMessage) { // not required
 		return nil
 	}
@@ -304,7 +301,6 @@ func (m *ProductOrderEvent) validateRequestedCompletionDate(formats strfmt.Regis
 }
 
 func (m *ProductOrderEvent) validateRequestedStartDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestedStartDate) { // not required
 		return nil
 	}
@@ -318,11 +314,137 @@ func (m *ProductOrderEvent) validateRequestedStartDate(formats strfmt.Registry) 
 
 func (m *ProductOrderEvent) validateState(formats strfmt.Registry) error {
 
-	if err := m.State.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("state")
-		}
+	if err := validate.Required("state", "body", m.State); err != nil {
 		return err
+	}
+
+	if err := validate.Required("state", "body", m.State); err != nil {
+		return err
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product order event based on the context it is used
+func (m *ProductOrderEvent) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateNote(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateOrderItem(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateOrderMessage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductOrderEvent) contextValidateNote(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Note); i++ {
+
+		if m.Note[i] != nil {
+			if err := m.Note[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("note" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOrderEvent) contextValidateOrderItem(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.OrderItem); i++ {
+
+		if m.OrderItem[i] != nil {
+			if err := m.OrderItem[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("orderItem" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOrderEvent) contextValidateOrderMessage(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.OrderMessage); i++ {
+
+		if m.OrderMessage[i] != nil {
+			if err := m.OrderMessage[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("orderMessage" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOrderEvent) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOrderEvent) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			}
+			return err
+		}
 	}
 
 	return nil

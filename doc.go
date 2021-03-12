@@ -5,4 +5,4 @@
  * https://opensource.org/licenses/MIT
  */
 
-package main
+package doc

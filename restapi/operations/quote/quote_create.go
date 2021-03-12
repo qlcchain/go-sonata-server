@@ -31,7 +31,7 @@ func NewQuoteCreate(ctx *middleware.Context, handler QuoteCreateHandler) *QuoteC
 	return &QuoteCreate{Context: ctx, Handler: handler}
 }
 
-/*QuoteCreate swagger:route POST /quoteManagement/v2/quote Quote quoteCreate
+/* QuoteCreate swagger:route POST /quoteManagement/v2/quote Quote quoteCreate
 
 Create a quote
 
@@ -49,7 +49,6 @@ func (o *QuoteCreate) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		r = rCtx
 	}
 	var Params = NewQuoteCreateParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *QuoteCreate) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

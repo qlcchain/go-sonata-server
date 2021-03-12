@@ -16,56 +16,70 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewCancelProductOrderGetParams creates a new CancelProductOrderGetParams object
-// with the default values initialized.
+// NewCancelProductOrderGetParams creates a new CancelProductOrderGetParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCancelProductOrderGetParams() *CancelProductOrderGetParams {
-	var ()
 	return &CancelProductOrderGetParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCancelProductOrderGetParamsWithTimeout creates a new CancelProductOrderGetParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCancelProductOrderGetParamsWithTimeout(timeout time.Duration) *CancelProductOrderGetParams {
-	var ()
 	return &CancelProductOrderGetParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCancelProductOrderGetParamsWithContext creates a new CancelProductOrderGetParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCancelProductOrderGetParamsWithContext(ctx context.Context) *CancelProductOrderGetParams {
-	var ()
 	return &CancelProductOrderGetParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCancelProductOrderGetParamsWithHTTPClient creates a new CancelProductOrderGetParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCancelProductOrderGetParamsWithHTTPClient(client *http.Client) *CancelProductOrderGetParams {
-	var ()
 	return &CancelProductOrderGetParams{
 		HTTPClient: client,
 	}
 }
 
-/*CancelProductOrderGetParams contains all the parameters to send to the API endpoint
-for the cancel product order get operation typically these are written to a http.Request
+/* CancelProductOrderGetParams contains all the parameters to send to the API endpoint
+   for the cancel product order get operation.
+
+   Typically these are written to a http.Request.
 */
 type CancelProductOrderGetParams struct {
 
-	/*CancelProductOrderID*/
+	// CancelProductOrderID.
 	CancelProductOrderID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the cancel product order get params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CancelProductOrderGetParams) WithDefaults() *CancelProductOrderGetParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the cancel product order get params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CancelProductOrderGetParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the cancel product order get params

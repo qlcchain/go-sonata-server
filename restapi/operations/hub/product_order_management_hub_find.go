@@ -31,7 +31,7 @@ func NewProductOrderManagementHubFind(ctx *middleware.Context, handler ProductOr
 	return &ProductOrderManagementHubFind{Context: ctx, Handler: handler}
 }
 
-/*ProductOrderManagementHubFind swagger:route GET /productOrderManagement/v3/hub Hub productOrderManagementHubFind
+/* ProductOrderManagementHubFind swagger:route GET /productOrderManagement/v3/hub Hub productOrderManagementHubFind
 
 Find a list of Hub
 
@@ -49,7 +49,6 @@ func (o *ProductOrderManagementHubFind) ServeHTTP(rw http.ResponseWriter, r *htt
 		r = rCtx
 	}
 	var Params = NewProductOrderManagementHubFindParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *ProductOrderManagementHubFind) ServeHTTP(rw http.ResponseWriter, r *htt
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

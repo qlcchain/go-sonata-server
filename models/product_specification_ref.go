@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -44,7 +46,6 @@ func (m *ProductSpecificationRef) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ProductSpecificationRef) validateDescribing(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Describing) { // not required
 		return nil
 	}
@@ -65,6 +66,34 @@ func (m *ProductSpecificationRef) validateID(formats strfmt.Registry) error {
 
 	if err := validate.Required("id", "body", m.ID); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product specification ref based on the context it is used
+func (m *ProductSpecificationRef) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDescribing(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductSpecificationRef) contextValidateDescribing(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Describing != nil {
+		if err := m.Describing.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("describing")
+			}
+			return err
+		}
 	}
 
 	return nil

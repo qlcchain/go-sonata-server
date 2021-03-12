@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -32,7 +34,7 @@ type OrderMessage struct {
 
 	// severity
 	// Required: true
-	Severity Severity `json:"severity"`
+	Severity *Severity `json:"severity"`
 }
 
 // Validate validates this order message
@@ -64,11 +66,49 @@ func (m *OrderMessage) validateMessageInformation(formats strfmt.Registry) error
 
 func (m *OrderMessage) validateSeverity(formats strfmt.Registry) error {
 
-	if err := m.Severity.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("severity")
-		}
+	if err := validate.Required("severity", "body", m.Severity); err != nil {
 		return err
+	}
+
+	if err := validate.Required("severity", "body", m.Severity); err != nil {
+		return err
+	}
+
+	if m.Severity != nil {
+		if err := m.Severity.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("severity")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this order message based on the context it is used
+func (m *OrderMessage) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateSeverity(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *OrderMessage) contextValidateSeverity(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Severity != nil {
+		if err := m.Severity.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("severity")
+			}
+			return err
+		}
 	}
 
 	return nil

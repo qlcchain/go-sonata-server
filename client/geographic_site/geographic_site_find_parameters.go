@@ -16,125 +16,152 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGeographicSiteFindParams creates a new GeographicSiteFindParams object
-// with the default values initialized.
+// NewGeographicSiteFindParams creates a new GeographicSiteFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGeographicSiteFindParams() *GeographicSiteFindParams {
-	var ()
 	return &GeographicSiteFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGeographicSiteFindParamsWithTimeout creates a new GeographicSiteFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGeographicSiteFindParamsWithTimeout(timeout time.Duration) *GeographicSiteFindParams {
-	var ()
 	return &GeographicSiteFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGeographicSiteFindParamsWithContext creates a new GeographicSiteFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGeographicSiteFindParamsWithContext(ctx context.Context) *GeographicSiteFindParams {
-	var ()
 	return &GeographicSiteFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGeographicSiteFindParamsWithHTTPClient creates a new GeographicSiteFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGeographicSiteFindParamsWithHTTPClient(client *http.Client) *GeographicSiteFindParams {
-	var ()
 	return &GeographicSiteFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*GeographicSiteFindParams contains all the parameters to send to the API endpoint
-for the geographic site find operation typically these are written to a http.Request
+/* GeographicSiteFindParams contains all the parameters to send to the API endpoint
+   for the geographic site find operation.
+
+   Typically these are written to a http.Request.
 */
 type GeographicSiteFindParams struct {
 
-	/*GeographicAddressCity
-	  City of the geographic site address
+	/* GeographicAddressCity.
 
+	   City of the geographic site address
 	*/
 	GeographicAddressCity *string
-	/*GeographicAddressCountry
-	  Country of the geographic site address
 
+	/* GeographicAddressCountry.
+
+	   Country of the geographic site address
 	*/
 	GeographicAddressCountry *string
-	/*GeographicAddressID
-	  Identifier of a geographic address (from the seller). It could be any type of address reference (fielded, formatted, referenced, geoCode)
 
+	/* GeographicAddressID.
+
+	   Identifier of a geographic address (from the seller). It could be any type of address reference (fielded, formatted, referenced, geoCode)
 	*/
 	GeographicAddressID *string
-	/*GeographicAddressPostcode
-	  Postcode of the geographic site address
 
+	/* GeographicAddressPostcode.
+
+	   Postcode of the geographic site address
 	*/
 	GeographicAddressPostcode *string
-	/*GeographicAddressStreetName
-	  Street Name of the geographic site address
 
+	/* GeographicAddressStreetName.
+
+	   Street Name of the geographic site address
 	*/
 	GeographicAddressStreetName *string
-	/*GeographicAddressStreetNr
-	  Street Nr of the geographic site address
 
+	/* GeographicAddressStreetNr.
+
+	   Street Nr of the geographic site address
 	*/
 	GeographicAddressStreetNr *string
-	/*GeographicAddressStreetType
-	  Street Type of the geographic site address
 
+	/* GeographicAddressStreetType.
+
+	   Street Type of the geographic site address
 	*/
 	GeographicAddressStreetType *string
-	/*SiteCompanyName
-	  The name of the company that is the administrative authority (e.g. controls access) for this Service Site. (For example, the building owner)
 
+	/* SiteCompanyName.
+
+	   The name of the company that is the administrative authority (e.g. controls access) for this Service Site. (For example, the building owner)
 	*/
 	SiteCompanyName *string
-	/*SiteContactName
-	  Identifies the name of the person or organization at the specific site location that is the local contact. This contact will primarily be used for gaining access to the site.
-	Filtering is done on the name of the relatedParty which has role ‘Site Contact’ in the Site record.
 
+	/* SiteContactName.
+
+	     Identifies the name of the person or organization at the specific site location that is the local contact. This contact will primarily be used for gaining access to the site.
+	Filtering is done on the name of the relatedParty which has role ‘Site Contact’ in the Site record.
 	*/
 	SiteContactName *string
-	/*SiteCustomerName
-	  The name of the company that is the administrative authority for the space within this Service Site. (For example, the company leasing space in a multi-tenant building).
 
+	/* SiteCustomerName.
+
+	   The name of the company that is the administrative authority for the space within this Service Site. (For example, the company leasing space in a multi-tenant building).
 	*/
 	SiteCustomerName *string
-	/*SiteDescription
-	  A textual description of the Service Site.
 
+	/* SiteDescription.
+
+	   A textual description of the Service Site.
 	*/
 	SiteDescription *string
-	/*SiteName
-	  A name commonly used by people to refer to this Service Site.
 
+	/* SiteName.
+
+	   A name commonly used by people to refer to this Service Site.
 	*/
 	SiteName *string
-	/*SiteType
-	  This defines whether a Service Site is public or private.
 
+	/* SiteType.
+
+	   This defines whether a Service Site is public or private.
 	*/
 	SiteType *string
-	/*Status
-	  Status of the site
 
+	/* Status.
+
+	   Status of the site
 	*/
 	Status *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the geographic site find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GeographicSiteFindParams) WithDefaults() *GeographicSiteFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the geographic site find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GeographicSiteFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the geographic site find params
@@ -336,224 +363,238 @@ func (o *GeographicSiteFindParams) WriteToRequest(r runtime.ClientRequest, reg s
 
 		// query param geographicAddress.city
 		var qrGeographicAddressCity string
+
 		if o.GeographicAddressCity != nil {
 			qrGeographicAddressCity = *o.GeographicAddressCity
 		}
 		qGeographicAddressCity := qrGeographicAddressCity
 		if qGeographicAddressCity != "" {
+
 			if err := r.SetQueryParam("geographicAddress.city", qGeographicAddressCity); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.GeographicAddressCountry != nil {
 
 		// query param geographicAddress.country
 		var qrGeographicAddressCountry string
+
 		if o.GeographicAddressCountry != nil {
 			qrGeographicAddressCountry = *o.GeographicAddressCountry
 		}
 		qGeographicAddressCountry := qrGeographicAddressCountry
 		if qGeographicAddressCountry != "" {
+
 			if err := r.SetQueryParam("geographicAddress.country", qGeographicAddressCountry); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.GeographicAddressID != nil {
 
 		// query param geographicAddress.id
 		var qrGeographicAddressID string
+
 		if o.GeographicAddressID != nil {
 			qrGeographicAddressID = *o.GeographicAddressID
 		}
 		qGeographicAddressID := qrGeographicAddressID
 		if qGeographicAddressID != "" {
+
 			if err := r.SetQueryParam("geographicAddress.id", qGeographicAddressID); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.GeographicAddressPostcode != nil {
 
 		// query param geographicAddress.postcode
 		var qrGeographicAddressPostcode string
+
 		if o.GeographicAddressPostcode != nil {
 			qrGeographicAddressPostcode = *o.GeographicAddressPostcode
 		}
 		qGeographicAddressPostcode := qrGeographicAddressPostcode
 		if qGeographicAddressPostcode != "" {
+
 			if err := r.SetQueryParam("geographicAddress.postcode", qGeographicAddressPostcode); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.GeographicAddressStreetName != nil {
 
 		// query param geographicAddress.streetName
 		var qrGeographicAddressStreetName string
+
 		if o.GeographicAddressStreetName != nil {
 			qrGeographicAddressStreetName = *o.GeographicAddressStreetName
 		}
 		qGeographicAddressStreetName := qrGeographicAddressStreetName
 		if qGeographicAddressStreetName != "" {
+
 			if err := r.SetQueryParam("geographicAddress.streetName", qGeographicAddressStreetName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.GeographicAddressStreetNr != nil {
 
 		// query param geographicAddress.streetNr
 		var qrGeographicAddressStreetNr string
+
 		if o.GeographicAddressStreetNr != nil {
 			qrGeographicAddressStreetNr = *o.GeographicAddressStreetNr
 		}
 		qGeographicAddressStreetNr := qrGeographicAddressStreetNr
 		if qGeographicAddressStreetNr != "" {
+
 			if err := r.SetQueryParam("geographicAddress.streetNr", qGeographicAddressStreetNr); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.GeographicAddressStreetType != nil {
 
 		// query param geographicAddress.streetType
 		var qrGeographicAddressStreetType string
+
 		if o.GeographicAddressStreetType != nil {
 			qrGeographicAddressStreetType = *o.GeographicAddressStreetType
 		}
 		qGeographicAddressStreetType := qrGeographicAddressStreetType
 		if qGeographicAddressStreetType != "" {
+
 			if err := r.SetQueryParam("geographicAddress.streetType", qGeographicAddressStreetType); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteCompanyName != nil {
 
 		// query param siteCompanyName
 		var qrSiteCompanyName string
+
 		if o.SiteCompanyName != nil {
 			qrSiteCompanyName = *o.SiteCompanyName
 		}
 		qSiteCompanyName := qrSiteCompanyName
 		if qSiteCompanyName != "" {
+
 			if err := r.SetQueryParam("siteCompanyName", qSiteCompanyName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteContactName != nil {
 
 		// query param siteContactName
 		var qrSiteContactName string
+
 		if o.SiteContactName != nil {
 			qrSiteContactName = *o.SiteContactName
 		}
 		qSiteContactName := qrSiteContactName
 		if qSiteContactName != "" {
+
 			if err := r.SetQueryParam("siteContactName", qSiteContactName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteCustomerName != nil {
 
 		// query param siteCustomerName
 		var qrSiteCustomerName string
+
 		if o.SiteCustomerName != nil {
 			qrSiteCustomerName = *o.SiteCustomerName
 		}
 		qSiteCustomerName := qrSiteCustomerName
 		if qSiteCustomerName != "" {
+
 			if err := r.SetQueryParam("siteCustomerName", qSiteCustomerName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteDescription != nil {
 
 		// query param siteDescription
 		var qrSiteDescription string
+
 		if o.SiteDescription != nil {
 			qrSiteDescription = *o.SiteDescription
 		}
 		qSiteDescription := qrSiteDescription
 		if qSiteDescription != "" {
+
 			if err := r.SetQueryParam("siteDescription", qSiteDescription); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteName != nil {
 
 		// query param siteName
 		var qrSiteName string
+
 		if o.SiteName != nil {
 			qrSiteName = *o.SiteName
 		}
 		qSiteName := qrSiteName
 		if qSiteName != "" {
+
 			if err := r.SetQueryParam("siteName", qSiteName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.SiteType != nil {
 
 		// query param siteType
 		var qrSiteType string
+
 		if o.SiteType != nil {
 			qrSiteType = *o.SiteType
 		}
 		qSiteType := qrSiteType
 		if qSiteType != "" {
+
 			if err := r.SetQueryParam("siteType", qSiteType); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Status != nil {
 
 		// query param status
 		var qrStatus string
+
 		if o.Status != nil {
 			qrStatus = *o.Status
 		}
 		qStatus := qrStatus
 		if qStatus != "" {
+
 			if err := r.SetQueryParam("status", qStatus); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

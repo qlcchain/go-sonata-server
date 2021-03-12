@@ -14,7 +14,8 @@ import (
 )
 
 // NewQuoteGetParams creates a new QuoteGetParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewQuoteGetParams() QuoteGetParams {
 
 	return QuoteGetParams{}
@@ -49,7 +50,6 @@ func (o *QuoteGetParams) BindRequest(r *http.Request, route *middleware.MatchedR
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -65,7 +65,6 @@ func (o *QuoteGetParams) bindID(rawData []string, hasKey bool, formats strfmt.Re
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.ID = raw
 
 	return nil

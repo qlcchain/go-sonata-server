@@ -29,7 +29,7 @@ func NewNotificationQuoteInformationRequiredNotification(ctx *middleware.Context
 	return &NotificationQuoteInformationRequiredNotification{Context: ctx, Handler: handler}
 }
 
-/*NotificationQuoteInformationRequiredNotification swagger:route POST /quoteNotification/v1/notification/quoteInformationRequiredNotification Notification notificationQuoteInformationRequiredNotification
+/* NotificationQuoteInformationRequiredNotification swagger:route POST /quoteNotification/v1/notification/quoteInformationRequiredNotification Notification notificationQuoteInformationRequiredNotification
 
 Quote information required notification structure
 
@@ -54,14 +54,12 @@ func (o *NotificationQuoteInformationRequiredNotification) ServeHTTP(rw http.Res
 		r = rCtx
 	}
 	var Params = NewNotificationQuoteInformationRequiredNotificationParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

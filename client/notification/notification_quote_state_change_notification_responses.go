@@ -77,9 +77,8 @@ func (o *NotificationQuoteStateChangeNotificationReader) ReadResponse(response r
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -88,7 +87,7 @@ func NewNotificationQuoteStateChangeNotificationNoContent() *NotificationQuoteSt
 	return &NotificationQuoteStateChangeNotificationNoContent{}
 }
 
-/*NotificationQuoteStateChangeNotificationNoContent handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationNoContent describes a response with status code 204, with default header values.
 
 Success
 */
@@ -109,9 +108,9 @@ func NewNotificationQuoteStateChangeNotificationBadRequest() *NotificationQuoteS
 	return &NotificationQuoteStateChangeNotificationBadRequest{}
 }
 
-/*NotificationQuoteStateChangeNotificationBadRequest handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -131,7 +130,6 @@ type NotificationQuoteStateChangeNotificationBadRequest struct {
 func (o *NotificationQuoteStateChangeNotificationBadRequest) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -153,9 +151,9 @@ func NewNotificationQuoteStateChangeNotificationUnauthorized() *NotificationQuot
 	return &NotificationQuoteStateChangeNotificationUnauthorized{}
 }
 
-/*NotificationQuoteStateChangeNotificationUnauthorized handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -169,7 +167,6 @@ type NotificationQuoteStateChangeNotificationUnauthorized struct {
 func (o *NotificationQuoteStateChangeNotificationUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -191,9 +188,9 @@ func NewNotificationQuoteStateChangeNotificationForbidden() *NotificationQuoteSt
 	return &NotificationQuoteStateChangeNotificationForbidden{}
 }
 
-/*NotificationQuoteStateChangeNotificationForbidden handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -208,7 +205,6 @@ type NotificationQuoteStateChangeNotificationForbidden struct {
 func (o *NotificationQuoteStateChangeNotificationForbidden) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationForbidden  %+v", 403, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -230,9 +226,9 @@ func NewNotificationQuoteStateChangeNotificationNotFound() *NotificationQuoteSta
 	return &NotificationQuoteStateChangeNotificationNotFound{}
 }
 
-/*NotificationQuoteStateChangeNotificationNotFound handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -244,7 +240,6 @@ type NotificationQuoteStateChangeNotificationNotFound struct {
 func (o *NotificationQuoteStateChangeNotificationNotFound) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationNotFound  %+v", 404, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -266,9 +261,9 @@ func NewNotificationQuoteStateChangeNotificationMethodNotAllowed() *Notification
 	return &NotificationQuoteStateChangeNotificationMethodNotAllowed{}
 }
 
-/*NotificationQuoteStateChangeNotificationMethodNotAllowed handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -280,7 +275,6 @@ type NotificationQuoteStateChangeNotificationMethodNotAllowed struct {
 func (o *NotificationQuoteStateChangeNotificationMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -302,9 +296,9 @@ func NewNotificationQuoteStateChangeNotificationUnprocessableEntity() *Notificat
 	return &NotificationQuoteStateChangeNotificationUnprocessableEntity{}
 }
 
-/*NotificationQuoteStateChangeNotificationUnprocessableEntity handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 */
@@ -315,7 +309,6 @@ type NotificationQuoteStateChangeNotificationUnprocessableEntity struct {
 func (o *NotificationQuoteStateChangeNotificationUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -337,9 +330,9 @@ func NewNotificationQuoteStateChangeNotificationInternalServerError() *Notificat
 	return &NotificationQuoteStateChangeNotificationInternalServerError{}
 }
 
-/*NotificationQuoteStateChangeNotificationInternalServerError handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -351,7 +344,6 @@ type NotificationQuoteStateChangeNotificationInternalServerError struct {
 func (o *NotificationQuoteStateChangeNotificationInternalServerError) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -373,7 +365,7 @@ func NewNotificationQuoteStateChangeNotificationServiceUnavailable() *Notificati
 	return &NotificationQuoteStateChangeNotificationServiceUnavailable{}
 }
 
-/*NotificationQuoteStateChangeNotificationServiceUnavailable handles this case with default header values.
+/* NotificationQuoteStateChangeNotificationServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -386,7 +378,6 @@ type NotificationQuoteStateChangeNotificationServiceUnavailable struct {
 func (o *NotificationQuoteStateChangeNotificationServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /quoteNotification/v1/notification/quoteStateChangeNotification][%d] notificationQuoteStateChangeNotificationServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *NotificationQuoteStateChangeNotificationServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

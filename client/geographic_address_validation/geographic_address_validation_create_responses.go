@@ -77,9 +77,8 @@ func (o *GeographicAddressValidationCreateReader) ReadResponse(response runtime.
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -88,7 +87,7 @@ func NewGeographicAddressValidationCreateCreated() *GeographicAddressValidationC
 	return &GeographicAddressValidationCreateCreated{}
 }
 
-/*GeographicAddressValidationCreateCreated handles this case with default header values.
+/* GeographicAddressValidationCreateCreated describes a response with status code 201, with default header values.
 
 Created
 */
@@ -99,7 +98,6 @@ type GeographicAddressValidationCreateCreated struct {
 func (o *GeographicAddressValidationCreateCreated) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateCreated  %+v", 201, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateCreated) GetPayload() *models.GeographicAddressValidation {
 	return o.Payload
 }
@@ -121,9 +119,9 @@ func NewGeographicAddressValidationCreateBadRequest() *GeographicAddressValidati
 	return &GeographicAddressValidationCreateBadRequest{}
 }
 
-/*GeographicAddressValidationCreateBadRequest handles this case with default header values.
+/* GeographicAddressValidationCreateBadRequest describes a response with status code 400, with default header values.
 
-Bad Request
+ Bad Request
 
 List of supported error codes:
 - 20: Invalid URL parameter value
@@ -143,7 +141,6 @@ type GeographicAddressValidationCreateBadRequest struct {
 func (o *GeographicAddressValidationCreateBadRequest) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateBadRequest) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -165,9 +162,9 @@ func NewGeographicAddressValidationCreateUnauthorized() *GeographicAddressValida
 	return &GeographicAddressValidationCreateUnauthorized{}
 }
 
-/*GeographicAddressValidationCreateUnauthorized handles this case with default header values.
+/* GeographicAddressValidationCreateUnauthorized describes a response with status code 401, with default header values.
 
-Unauthorized
+ Unauthorized
 
 List of supported error codes:
 - 40: Missing credentials
@@ -181,7 +178,6 @@ type GeographicAddressValidationCreateUnauthorized struct {
 func (o *GeographicAddressValidationCreateUnauthorized) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateUnauthorized  %+v", 401, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateUnauthorized) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -203,9 +199,9 @@ func NewGeographicAddressValidationCreateForbidden() *GeographicAddressValidatio
 	return &GeographicAddressValidationCreateForbidden{}
 }
 
-/*GeographicAddressValidationCreateForbidden handles this case with default header values.
+/* GeographicAddressValidationCreateForbidden describes a response with status code 403, with default header values.
 
-Forbidden
+ Forbidden
 
 List of supported error codes:
 - 50: Access denied
@@ -220,7 +216,6 @@ type GeographicAddressValidationCreateForbidden struct {
 func (o *GeographicAddressValidationCreateForbidden) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateForbidden  %+v", 403, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateForbidden) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -242,9 +237,9 @@ func NewGeographicAddressValidationCreateNotFound() *GeographicAddressValidation
 	return &GeographicAddressValidationCreateNotFound{}
 }
 
-/*GeographicAddressValidationCreateNotFound handles this case with default header values.
+/* GeographicAddressValidationCreateNotFound describes a response with status code 404, with default header values.
 
-Not Found
+ Not Found
 
 List of supported error codes:
 - 60: Resource not found
@@ -256,7 +251,6 @@ type GeographicAddressValidationCreateNotFound struct {
 func (o *GeographicAddressValidationCreateNotFound) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateNotFound  %+v", 404, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateNotFound) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -278,9 +272,9 @@ func NewGeographicAddressValidationCreateMethodNotAllowed() *GeographicAddressVa
 	return &GeographicAddressValidationCreateMethodNotAllowed{}
 }
 
-/*GeographicAddressValidationCreateMethodNotAllowed handles this case with default header values.
+/* GeographicAddressValidationCreateMethodNotAllowed describes a response with status code 405, with default header values.
 
-Method Not Allowed
+ Method Not Allowed
 
 List of supported error codes:
 - 61: Method not allowed
@@ -292,7 +286,6 @@ type GeographicAddressValidationCreateMethodNotAllowed struct {
 func (o *GeographicAddressValidationCreateMethodNotAllowed) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateMethodNotAllowed  %+v", 405, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateMethodNotAllowed) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -314,9 +307,9 @@ func NewGeographicAddressValidationCreateUnprocessableEntity() *GeographicAddres
 	return &GeographicAddressValidationCreateUnprocessableEntity{}
 }
 
-/*GeographicAddressValidationCreateUnprocessableEntity handles this case with default header values.
+/* GeographicAddressValidationCreateUnprocessableEntity describes a response with status code 422, with default header values.
 
-Unprocessable entity
+ Unprocessable entity
 
 Functional error
 
@@ -335,7 +328,6 @@ type GeographicAddressValidationCreateUnprocessableEntity struct {
 func (o *GeographicAddressValidationCreateUnprocessableEntity) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateUnprocessableEntity  %+v", 422, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateUnprocessableEntity) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -357,9 +349,9 @@ func NewGeographicAddressValidationCreateInternalServerError() *GeographicAddres
 	return &GeographicAddressValidationCreateInternalServerError{}
 }
 
-/*GeographicAddressValidationCreateInternalServerError handles this case with default header values.
+/* GeographicAddressValidationCreateInternalServerError describes a response with status code 500, with default header values.
 
-Internal Server Error
+ Internal Server Error
 
 List of supported error codes:
 - 1: Internal error
@@ -371,7 +363,6 @@ type GeographicAddressValidationCreateInternalServerError struct {
 func (o *GeographicAddressValidationCreateInternalServerError) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateInternalServerError) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }
@@ -393,7 +384,7 @@ func NewGeographicAddressValidationCreateServiceUnavailable() *GeographicAddress
 	return &GeographicAddressValidationCreateServiceUnavailable{}
 }
 
-/*GeographicAddressValidationCreateServiceUnavailable handles this case with default header values.
+/* GeographicAddressValidationCreateServiceUnavailable describes a response with status code 503, with default header values.
 
 Service Unavailable
 
@@ -406,7 +397,6 @@ type GeographicAddressValidationCreateServiceUnavailable struct {
 func (o *GeographicAddressValidationCreateServiceUnavailable) Error() string {
 	return fmt.Sprintf("[POST /geographicAddressManagement/v3/geographicAddressValidation][%d] geographicAddressValidationCreateServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *GeographicAddressValidationCreateServiceUnavailable) GetPayload() *models.ErrorRepresentation {
 	return o.Payload
 }

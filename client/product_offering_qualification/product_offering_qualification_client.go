@@ -25,13 +25,16 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ProductOfferingQualificationCreate(params *ProductOfferingQualificationCreateParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationCreateCreated, error)
+	ProductOfferingQualificationCreate(params *ProductOfferingQualificationCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationCreateCreated, error)
 
-	ProductOfferingQualificationFind(params *ProductOfferingQualificationFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationFindOK, error)
+	ProductOfferingQualificationFind(params *ProductOfferingQualificationFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationFindOK, error)
 
-	ProductOfferingQualificationGet(params *ProductOfferingQualificationGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationGetOK, error)
+	ProductOfferingQualificationGet(params *ProductOfferingQualificationGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationGetOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -41,13 +44,12 @@ type ClientService interface {
 
   A request initiated by the Buyer to determine whether the Seller can feasibly deliver a particular Product (or Products) to a specific set of geographic locations specified by a set of Site/Address filter criteria. The Seller also provides estimated time intervals to complete these deliveries.
 */
-func (a *Client) ProductOfferingQualificationCreate(params *ProductOfferingQualificationCreateParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationCreateCreated, error) {
+func (a *Client) ProductOfferingQualificationCreate(params *ProductOfferingQualificationCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOfferingQualificationCreateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOfferingQualificationCreate",
 		Method:             "POST",
 		PathPattern:        "/productOfferingQualificationManagement/v3/productOfferingQualification",
@@ -59,7 +61,12 @@ func (a *Client) ProductOfferingQualificationCreate(params *ProductOfferingQuali
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -78,13 +85,12 @@ func (a *Client) ProductOfferingQualificationCreate(params *ProductOfferingQuali
 
   The Buyer requests a list of POQs (in any state) from the Seller based on a set of POQ filter criteria.  For each POQ returned, the Seller also provides a POQ Identifier that uniquely identifies this POQ within the Seller.
 */
-func (a *Client) ProductOfferingQualificationFind(params *ProductOfferingQualificationFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationFindOK, error) {
+func (a *Client) ProductOfferingQualificationFind(params *ProductOfferingQualificationFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOfferingQualificationFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOfferingQualificationFind",
 		Method:             "GET",
 		PathPattern:        "/productOfferingQualificationManagement/v3/productOfferingQualification",
@@ -96,7 +102,12 @@ func (a *Client) ProductOfferingQualificationFind(params *ProductOfferingQualifi
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -115,13 +126,12 @@ func (a *Client) ProductOfferingQualificationFind(params *ProductOfferingQualifi
 
   The Buyer requests the full details of a single Product Offering Qualification based on a POQ identifier.
 */
-func (a *Client) ProductOfferingQualificationGet(params *ProductOfferingQualificationGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationGetOK, error) {
+func (a *Client) ProductOfferingQualificationGet(params *ProductOfferingQualificationGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOfferingQualificationGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOfferingQualificationGet",
 		Method:             "GET",
 		PathPattern:        "/productOfferingQualificationManagement/v3/productOfferingQualification/{ProductOfferingQualificationId}",
@@ -133,7 +143,12 @@ func (a *Client) ProductOfferingQualificationGet(params *ProductOfferingQualific
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

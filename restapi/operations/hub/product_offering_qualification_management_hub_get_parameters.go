@@ -13,7 +13,8 @@ import (
 )
 
 // NewProductOfferingQualificationManagementHubGetParams creates a new ProductOfferingQualificationManagementHubGetParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewProductOfferingQualificationManagementHubGetParams() ProductOfferingQualificationManagementHubGetParams {
 
 	return ProductOfferingQualificationManagementHubGetParams{}

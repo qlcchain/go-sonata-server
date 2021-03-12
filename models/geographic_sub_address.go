@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -61,7 +62,6 @@ func (m *GeographicSubAddress) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GeographicSubAddress) validateSubUnit(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.SubUnit) { // not required
 		return nil
 	}
@@ -73,6 +73,38 @@ func (m *GeographicSubAddress) validateSubUnit(formats strfmt.Registry) error {
 
 		if m.SubUnit[i] != nil {
 			if err := m.SubUnit[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("subUnit" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this geographic sub address based on the context it is used
+func (m *GeographicSubAddress) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateSubUnit(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GeographicSubAddress) contextValidateSubUnit(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.SubUnit); i++ {
+
+		if m.SubUnit[i] != nil {
+			if err := m.SubUnit[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subUnit" + "." + strconv.Itoa(i))
 				}

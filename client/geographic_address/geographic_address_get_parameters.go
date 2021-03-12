@@ -16,56 +16,70 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGeographicAddressGetParams creates a new GeographicAddressGetParams object
-// with the default values initialized.
+// NewGeographicAddressGetParams creates a new GeographicAddressGetParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGeographicAddressGetParams() *GeographicAddressGetParams {
-	var ()
 	return &GeographicAddressGetParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGeographicAddressGetParamsWithTimeout creates a new GeographicAddressGetParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGeographicAddressGetParamsWithTimeout(timeout time.Duration) *GeographicAddressGetParams {
-	var ()
 	return &GeographicAddressGetParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGeographicAddressGetParamsWithContext creates a new GeographicAddressGetParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGeographicAddressGetParamsWithContext(ctx context.Context) *GeographicAddressGetParams {
-	var ()
 	return &GeographicAddressGetParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGeographicAddressGetParamsWithHTTPClient creates a new GeographicAddressGetParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGeographicAddressGetParamsWithHTTPClient(client *http.Client) *GeographicAddressGetParams {
-	var ()
 	return &GeographicAddressGetParams{
 		HTTPClient: client,
 	}
 }
 
-/*GeographicAddressGetParams contains all the parameters to send to the API endpoint
-for the geographic address get operation typically these are written to a http.Request
+/* GeographicAddressGetParams contains all the parameters to send to the API endpoint
+   for the geographic address get operation.
+
+   Typically these are written to a http.Request.
 */
 type GeographicAddressGetParams struct {
 
-	/*GeographicAddressID*/
+	// GeographicAddressID.
 	GeographicAddressID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the geographic address get params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GeographicAddressGetParams) WithDefaults() *GeographicAddressGetParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the geographic address get params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GeographicAddressGetParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the geographic address get params

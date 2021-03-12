@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -80,7 +81,6 @@ func (m *ProductOfferingQualificationItemCreate) Validate(formats strfmt.Registr
 }
 
 func (m *ProductOfferingQualificationItemCreate) validateAction(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Action) { // not required
 		return nil
 	}
@@ -123,7 +123,6 @@ func (m *ProductOfferingQualificationItemCreate) validateProduct(formats strfmt.
 }
 
 func (m *ProductOfferingQualificationItemCreate) validateProductOffering(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ProductOffering) { // not required
 		return nil
 	}
@@ -141,7 +140,6 @@ func (m *ProductOfferingQualificationItemCreate) validateProductOffering(formats
 }
 
 func (m *ProductOfferingQualificationItemCreate) validateProductOfferingQualificationItemRelationship(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ProductOfferingQualificationItemRelationship) { // not required
 		return nil
 	}
@@ -166,7 +164,6 @@ func (m *ProductOfferingQualificationItemCreate) validateProductOfferingQualific
 }
 
 func (m *ProductOfferingQualificationItemCreate) validateRelatedParty(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RelatedParty) { // not required
 		return nil
 	}
@@ -178,6 +175,112 @@ func (m *ProductOfferingQualificationItemCreate) validateRelatedParty(formats st
 
 		if m.RelatedParty[i] != nil {
 			if err := m.RelatedParty[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this product offering qualification item create based on the context it is used
+func (m *ProductOfferingQualificationItemCreate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAction(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProduct(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProductOffering(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateProductOfferingQualificationItemRelationship(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProductOfferingQualificationItemCreate) contextValidateAction(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.Action.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("action")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItemCreate) contextValidateProduct(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Product != nil {
+		if err := m.Product.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("product")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItemCreate) contextValidateProductOffering(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ProductOffering != nil {
+		if err := m.ProductOffering.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("productOffering")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItemCreate) contextValidateProductOfferingQualificationItemRelationship(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ProductOfferingQualificationItemRelationship); i++ {
+
+		if m.ProductOfferingQualificationItemRelationship[i] != nil {
+			if err := m.ProductOfferingQualificationItemRelationship[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("productOfferingQualificationItemRelationship" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *ProductOfferingQualificationItemCreate) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
 				}

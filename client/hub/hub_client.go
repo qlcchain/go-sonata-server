@@ -25,25 +25,28 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ProductOfferingQualificationManagementHubDelete(params *ProductOfferingQualificationManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationManagementHubDeleteNoContent, error)
+	ProductOfferingQualificationManagementHubDelete(params *ProductOfferingQualificationManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationManagementHubDeleteNoContent, error)
 
-	ProductOfferingQualificationManagementHubGet(params *ProductOfferingQualificationManagementHubGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationManagementHubGetOK, error)
+	ProductOfferingQualificationManagementHubGet(params *ProductOfferingQualificationManagementHubGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationManagementHubGetOK, error)
 
-	ProductOfferingQualificationManagementHubPost(params *ProductOfferingQualificationManagementHubPostParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationManagementHubPostCreated, error)
+	ProductOfferingQualificationManagementHubPost(params *ProductOfferingQualificationManagementHubPostParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationManagementHubPostCreated, error)
 
-	ProductOrderManagementHubCreate(params *ProductOrderManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderManagementHubCreateCreated, error)
+	ProductOrderManagementHubCreate(params *ProductOrderManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderManagementHubCreateCreated, error)
 
-	ProductOrderManagementHubDelete(params *ProductOrderManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderManagementHubDeleteNoContent, error)
+	ProductOrderManagementHubDelete(params *ProductOrderManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderManagementHubDeleteNoContent, error)
 
-	ProductOrderManagementHubFind(params *ProductOrderManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderManagementHubFindOK, error)
+	ProductOrderManagementHubFind(params *ProductOrderManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderManagementHubFindOK, error)
 
-	QuoteManagementHubCreate(params *QuoteManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteManagementHubCreateCreated, error)
+	QuoteManagementHubCreate(params *QuoteManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteManagementHubCreateCreated, error)
 
-	QuoteManagementHubDelete(params *QuoteManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteManagementHubDeleteNoContent, error)
+	QuoteManagementHubDelete(params *QuoteManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteManagementHubDeleteNoContent, error)
 
-	QuoteManagementHubFind(params *QuoteManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteManagementHubFindOK, error)
+	QuoteManagementHubFind(params *QuoteManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteManagementHubFindOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -53,13 +56,12 @@ type ClientService interface {
 
   This operation is used to delete a hub.
 */
-func (a *Client) ProductOfferingQualificationManagementHubDelete(params *ProductOfferingQualificationManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationManagementHubDeleteNoContent, error) {
+func (a *Client) ProductOfferingQualificationManagementHubDelete(params *ProductOfferingQualificationManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationManagementHubDeleteNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOfferingQualificationManagementHubDeleteParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOfferingQualificationManagementHubDelete",
 		Method:             "DELETE",
 		PathPattern:        "/productOfferingQualificationManagement/v3/hub/{HubId}",
@@ -71,7 +73,12 @@ func (a *Client) ProductOfferingQualificationManagementHubDelete(params *Product
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -90,13 +97,12 @@ func (a *Client) ProductOfferingQualificationManagementHubDelete(params *Product
 
   This operation retrieves a set of hubs.
 */
-func (a *Client) ProductOfferingQualificationManagementHubGet(params *ProductOfferingQualificationManagementHubGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationManagementHubGetOK, error) {
+func (a *Client) ProductOfferingQualificationManagementHubGet(params *ProductOfferingQualificationManagementHubGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationManagementHubGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOfferingQualificationManagementHubGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOfferingQualificationManagementHubGet",
 		Method:             "GET",
 		PathPattern:        "/productOfferingQualificationManagement/v3/hub",
@@ -108,7 +114,12 @@ func (a *Client) ProductOfferingQualificationManagementHubGet(params *ProductOff
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -127,13 +138,12 @@ func (a *Client) ProductOfferingQualificationManagementHubGet(params *ProductOff
 
   A request initiated by the Buyer to instruct the Seller to send notifications of POQ state changes in the event the Seller uses the Deferred Response pattern to respond to a Create Product Offering Qualifica-tion request.
 */
-func (a *Client) ProductOfferingQualificationManagementHubPost(params *ProductOfferingQualificationManagementHubPostParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOfferingQualificationManagementHubPostCreated, error) {
+func (a *Client) ProductOfferingQualificationManagementHubPost(params *ProductOfferingQualificationManagementHubPostParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOfferingQualificationManagementHubPostCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOfferingQualificationManagementHubPostParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOfferingQualificationManagementHubPost",
 		Method:             "POST",
 		PathPattern:        "/productOfferingQualificationManagement/v3/hub",
@@ -145,7 +155,12 @@ func (a *Client) ProductOfferingQualificationManagementHubPost(params *ProductOf
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -164,13 +179,12 @@ func (a *Client) ProductOfferingQualificationManagementHubPost(params *ProductOf
 
   Structure used to create a hub (to subscribe to notification)
 */
-func (a *Client) ProductOrderManagementHubCreate(params *ProductOrderManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderManagementHubCreateCreated, error) {
+func (a *Client) ProductOrderManagementHubCreate(params *ProductOrderManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderManagementHubCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOrderManagementHubCreateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOrderManagementHubCreate",
 		Method:             "POST",
 		PathPattern:        "/productOrderManagement/v3/hub",
@@ -182,7 +196,12 @@ func (a *Client) ProductOrderManagementHubCreate(params *ProductOrderManagementH
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -201,13 +220,12 @@ func (a *Client) ProductOrderManagementHubCreate(params *ProductOrderManagementH
 
   Delete Hub
 */
-func (a *Client) ProductOrderManagementHubDelete(params *ProductOrderManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderManagementHubDeleteNoContent, error) {
+func (a *Client) ProductOrderManagementHubDelete(params *ProductOrderManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderManagementHubDeleteNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOrderManagementHubDeleteParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOrderManagementHubDelete",
 		Method:             "DELETE",
 		PathPattern:        "/productOrderManagement/v3/hub/{HubId}",
@@ -219,7 +237,12 @@ func (a *Client) ProductOrderManagementHubDelete(params *ProductOrderManagementH
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -238,13 +261,12 @@ func (a *Client) ProductOrderManagementHubDelete(params *ProductOrderManagementH
 
   Find Hub
 */
-func (a *Client) ProductOrderManagementHubFind(params *ProductOrderManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductOrderManagementHubFindOK, error) {
+func (a *Client) ProductOrderManagementHubFind(params *ProductOrderManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductOrderManagementHubFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductOrderManagementHubFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productOrderManagementHubFind",
 		Method:             "GET",
 		PathPattern:        "/productOrderManagement/v3/hub",
@@ -256,7 +278,12 @@ func (a *Client) ProductOrderManagementHubFind(params *ProductOrderManagementHub
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -275,13 +302,12 @@ func (a *Client) ProductOrderManagementHubFind(params *ProductOrderManagementHub
 
   Sets the communication endpoint address the service instance must use to deliver information about its health state, execution state, failures and metrics
 */
-func (a *Client) QuoteManagementHubCreate(params *QuoteManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteManagementHubCreateCreated, error) {
+func (a *Client) QuoteManagementHubCreate(params *QuoteManagementHubCreateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteManagementHubCreateCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewQuoteManagementHubCreateParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "quoteManagementHubCreate",
 		Method:             "POST",
 		PathPattern:        "/quoteManagement/v2/hub",
@@ -293,7 +319,12 @@ func (a *Client) QuoteManagementHubCreate(params *QuoteManagementHubCreateParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -312,13 +343,12 @@ func (a *Client) QuoteManagementHubCreate(params *QuoteManagementHubCreateParams
 
   Clears the communication endpoint address that was set by creating the Hub
 */
-func (a *Client) QuoteManagementHubDelete(params *QuoteManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteManagementHubDeleteNoContent, error) {
+func (a *Client) QuoteManagementHubDelete(params *QuoteManagementHubDeleteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteManagementHubDeleteNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewQuoteManagementHubDeleteParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "quoteManagementHubDelete",
 		Method:             "DELETE",
 		PathPattern:        "/quoteManagement/v2/hub/{HubId}",
@@ -330,7 +360,12 @@ func (a *Client) QuoteManagementHubDelete(params *QuoteManagementHubDeleteParams
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -349,13 +384,12 @@ func (a *Client) QuoteManagementHubDelete(params *QuoteManagementHubDeleteParams
 
   Retrieve hub(s)
 */
-func (a *Client) QuoteManagementHubFind(params *QuoteManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter) (*QuoteManagementHubFindOK, error) {
+func (a *Client) QuoteManagementHubFind(params *QuoteManagementHubFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*QuoteManagementHubFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewQuoteManagementHubFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "quoteManagementHubFind",
 		Method:             "GET",
 		PathPattern:        "/quoteManagement/v2/hub",
@@ -367,7 +401,12 @@ func (a *Client) QuoteManagementHubFind(params *QuoteManagementHubFindParams, au
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

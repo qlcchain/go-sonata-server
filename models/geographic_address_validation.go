@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -84,7 +85,6 @@ func (m *GeographicAddressValidation) validateRequestedAddress(formats strfmt.Re
 }
 
 func (m *GeographicAddressValidation) validateValidationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ValidationDate) { // not required
 		return nil
 	}
@@ -97,7 +97,6 @@ func (m *GeographicAddressValidation) validateValidationDate(formats strfmt.Regi
 }
 
 func (m *GeographicAddressValidation) validateValidationResult(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ValidationResult) { // not required
 		return nil
 	}
@@ -113,7 +112,6 @@ func (m *GeographicAddressValidation) validateValidationResult(formats strfmt.Re
 }
 
 func (m *GeographicAddressValidation) validateVerifiedAddress(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.VerifiedAddress) { // not required
 		return nil
 	}
@@ -125,6 +123,72 @@ func (m *GeographicAddressValidation) validateVerifiedAddress(formats strfmt.Reg
 
 		if m.VerifiedAddress[i] != nil {
 			if err := m.VerifiedAddress[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("verifiedAddress" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this geographic address validation based on the context it is used
+func (m *GeographicAddressValidation) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRequestedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateValidationResult(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateVerifiedAddress(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GeographicAddressValidation) contextValidateRequestedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestedAddress != nil {
+		if err := m.RequestedAddress.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestedAddress")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GeographicAddressValidation) contextValidateValidationResult(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.ValidationResult.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("validationResult")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *GeographicAddressValidation) contextValidateVerifiedAddress(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.VerifiedAddress); i++ {
+
+		if m.VerifiedAddress[i] != nil {
+			if err := m.VerifiedAddress[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("verifiedAddress" + "." + strconv.Itoa(i))
 				}

@@ -31,7 +31,7 @@ func NewProductFind(ctx *middleware.Context, handler ProductFindHandler) *Produc
 	return &ProductFind{Context: ctx, Handler: handler}
 }
 
-/*ProductFind swagger:route GET /productInventoryManagement/v3/product Product productFind
+/* ProductFind swagger:route GET /productInventoryManagement/v3/product Product productFind
 
 productFind (list) - retrieve product list with summary view
 
@@ -49,7 +49,6 @@ func (o *ProductFind) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		r = rCtx
 	}
 	var Params = NewProductFindParams()
-
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -69,7 +68,6 @@ func (o *ProductFind) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	res := o.Handler.Handle(Params, principal) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

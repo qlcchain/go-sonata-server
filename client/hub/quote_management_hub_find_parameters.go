@@ -16,56 +16,70 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewQuoteManagementHubFindParams creates a new QuoteManagementHubFindParams object
-// with the default values initialized.
+// NewQuoteManagementHubFindParams creates a new QuoteManagementHubFindParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewQuoteManagementHubFindParams() *QuoteManagementHubFindParams {
-	var ()
 	return &QuoteManagementHubFindParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewQuoteManagementHubFindParamsWithTimeout creates a new QuoteManagementHubFindParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewQuoteManagementHubFindParamsWithTimeout(timeout time.Duration) *QuoteManagementHubFindParams {
-	var ()
 	return &QuoteManagementHubFindParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewQuoteManagementHubFindParamsWithContext creates a new QuoteManagementHubFindParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewQuoteManagementHubFindParamsWithContext(ctx context.Context) *QuoteManagementHubFindParams {
-	var ()
 	return &QuoteManagementHubFindParams{
-
 		Context: ctx,
 	}
 }
 
 // NewQuoteManagementHubFindParamsWithHTTPClient creates a new QuoteManagementHubFindParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewQuoteManagementHubFindParamsWithHTTPClient(client *http.Client) *QuoteManagementHubFindParams {
-	var ()
 	return &QuoteManagementHubFindParams{
 		HTTPClient: client,
 	}
 }
 
-/*QuoteManagementHubFindParams contains all the parameters to send to the API endpoint
-for the quote management hub find operation typically these are written to a http.Request
+/* QuoteManagementHubFindParams contains all the parameters to send to the API endpoint
+   for the quote management hub find operation.
+
+   Typically these are written to a http.Request.
 */
 type QuoteManagementHubFindParams struct {
 
-	/*Fields*/
+	// Fields.
 	Fields *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the quote management hub find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteManagementHubFindParams) WithDefaults() *QuoteManagementHubFindParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the quote management hub find params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *QuoteManagementHubFindParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the quote management hub find params
@@ -126,7 +140,6 @@ func (o *QuoteManagementHubFindParams) WriteToRequest(r runtime.ClientRequest, r
 		if err := r.SetHeaderParam("fields", *o.Fields); err != nil {
 			return err
 		}
-
 	}
 
 	if len(res) > 0 {

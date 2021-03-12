@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ProductFind(params *ProductFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductFindOK, error)
+	ProductFind(params *ProductFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductFindOK, error)
 
-	ProductGet(params *ProductGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductGetOK, error)
+	ProductGet(params *ProductGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductGetOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   The Buyer requests a list of Products from the Seller based on filter criteria.
 */
-func (a *Client) ProductFind(params *ProductFindParams, authInfo runtime.ClientAuthInfoWriter) (*ProductFindOK, error) {
+func (a *Client) ProductFind(params *ProductFindParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductFindOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductFindParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productFind",
 		Method:             "GET",
 		PathPattern:        "/productInventoryManagement/v3/product",
@@ -57,7 +59,12 @@ func (a *Client) ProductFind(params *ProductFindParams, authInfo runtime.ClientA
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -76,13 +83,12 @@ func (a *Client) ProductFind(params *ProductFindParams, authInfo runtime.ClientA
 
   The Buyer requests the details associated with a single Product based on a Seller Product Identifier.
 */
-func (a *Client) ProductGet(params *ProductGetParams, authInfo runtime.ClientAuthInfoWriter) (*ProductGetOK, error) {
+func (a *Client) ProductGet(params *ProductGetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProductGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewProductGetParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "productGet",
 		Method:             "GET",
 		PathPattern:        "/productInventoryManagement/v3/product/{ProductId}",
@@ -94,7 +100,12 @@ func (a *Client) ProductGet(params *ProductGetParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

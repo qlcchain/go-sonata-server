@@ -14,7 +14,8 @@ import (
 )
 
 // NewProductOfferingQualificationManagementHubDeleteParams creates a new ProductOfferingQualificationManagementHubDeleteParams object
-// no default values defined in spec.
+//
+// There are no default values defined in the spec.
 func NewProductOfferingQualificationManagementHubDeleteParams() ProductOfferingQualificationManagementHubDeleteParams {
 
 	return ProductOfferingQualificationManagementHubDeleteParams{}
@@ -49,7 +50,6 @@ func (o *ProductOfferingQualificationManagementHubDeleteParams) BindRequest(r *h
 	if err := o.bindHubID(rHubID, rhkHubID, route.Formats); err != nil {
 		res = append(res, err)
 	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -65,7 +65,6 @@ func (o *ProductOfferingQualificationManagementHubDeleteParams) bindHubID(rawDat
 
 	// Required: true
 	// Parameter is provided by construction from the route
-
 	o.HubID = raw
 
 	return nil

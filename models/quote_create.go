@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -109,7 +110,6 @@ func (m *QuoteCreate) Validate(formats strfmt.Registry) error {
 }
 
 func (m *QuoteCreate) validateAgreement(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Agreement) { // not required
 		return nil
 	}
@@ -134,7 +134,6 @@ func (m *QuoteCreate) validateAgreement(formats strfmt.Registry) error {
 }
 
 func (m *QuoteCreate) validateExpectedFulfillmentStartDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ExpectedFulfillmentStartDate) { // not required
 		return nil
 	}
@@ -147,7 +146,6 @@ func (m *QuoteCreate) validateExpectedFulfillmentStartDate(formats strfmt.Regist
 }
 
 func (m *QuoteCreate) validateNote(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Note) { // not required
 		return nil
 	}
@@ -197,7 +195,6 @@ func (m *QuoteCreate) validateQuoteItem(formats strfmt.Registry) error {
 }
 
 func (m *QuoteCreate) validateQuoteLevel(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.QuoteLevel) { // not required
 		return nil
 	}
@@ -245,6 +242,120 @@ func (m *QuoteCreate) validateRequestedQuoteCompletionDate(formats strfmt.Regist
 
 	if err := validate.FormatOf("requestedQuoteCompletionDate", "body", "date-time", m.RequestedQuoteCompletionDate.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this quote create based on the context it is used
+func (m *QuoteCreate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAgreement(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateNote(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQuoteItem(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQuoteLevel(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRelatedParty(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *QuoteCreate) contextValidateAgreement(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Agreement); i++ {
+
+		if m.Agreement[i] != nil {
+			if err := m.Agreement[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("agreement" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *QuoteCreate) contextValidateNote(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Note); i++ {
+
+		if m.Note[i] != nil {
+			if err := m.Note[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("note" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *QuoteCreate) contextValidateQuoteItem(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.QuoteItem); i++ {
+
+		if m.QuoteItem[i] != nil {
+			if err := m.QuoteItem[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("quoteItem" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *QuoteCreate) contextValidateQuoteLevel(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.QuoteLevel.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("quoteLevel")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *QuoteCreate) contextValidateRelatedParty(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RelatedParty); i++ {
+
+		if m.RelatedParty[i] != nil {
+			if err := m.RelatedParty[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("relatedParty" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

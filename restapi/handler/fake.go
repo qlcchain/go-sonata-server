@@ -129,10 +129,11 @@ func Note() *models.Note {
 }
 
 func ItemTerm() *models.ItemTerm {
+	day := models.DurationUnitDAY
 	return &models.ItemTerm{
 		Description: gofakeit.JobDescriptor(),
 		Duration: &models.Duration{
-			Unit:  models.DurationUnitDAY,
+			Unit:  &day,
 			Value: swag.Int32(gofakeit.Int32()),
 		},
 		Name: gofakeit.Name(),
@@ -196,6 +197,7 @@ func ProductPrice() *models.ProductPrice {
 }
 
 func Product() *models.Product {
+	status := models.ProductStatusActive
 	return &models.Product{
 		//AtBaseType:       "",
 		//AtSchemaLocation: "",
@@ -257,7 +259,7 @@ func Product() *models.Product {
 			GeographicSite(),
 		},
 		StartDate: NewDatetime(time.Now().AddDate(-1, 0, 0)),
-		Status:    models.ProductStatusActive,
+		Status:    &status,
 		StatusChange: []*models.StatusChange{
 			StatusChange(),
 		},
@@ -308,6 +310,8 @@ func StatusChange() *models.StatusChange {
 }
 
 func QuoteCreate() *models.QuoteCreate {
+	add := models.ProductActionTypeAdd
+	typeBundled := models.RelationshipTypeBundled
 	return &models.QuoteCreate{
 		//AtBaseType:                   "",
 		//AtSchemaLocation:             "",
@@ -330,7 +334,7 @@ func QuoteCreate() *models.QuoteCreate {
 			{
 				//AtSchemaLocation:       "",
 				//AtType:                 "",
-				Action: models.ProductActionTypeAdd,
+				Action: &add,
 				ID:     util.NewIDPtr(),
 				Note: []*models.Note{
 					Note(),
@@ -348,7 +352,7 @@ func QuoteCreate() *models.QuoteCreate {
 				QuoteItemRelationship: []*models.QuoteItemRelationship{
 					{
 						ID:   util.NewIDPtr(),
-						Type: models.RelationshipTypeBundled,
+						Type: &typeBundled,
 					},
 				},
 				RelatedParty: []*models.RelatedParty{
@@ -366,6 +370,8 @@ func QuoteCreate() *models.QuoteCreate {
 }
 
 func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCreate {
+	status := models.ProductStatusActive
+	typeBundled := models.RelationshipTypeBundled
 	return &models.ProductOfferingQualificationCreate{
 		AtSchemaLocation:         "",
 		AtType:                   "",
@@ -433,7 +439,7 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 					},
 					Site:      []*models.GeographicSite{},
 					StartDate: NewDatetime(time.Now().AddDate(-1, 0, 0)),
-					Status:    models.ProductStatusActive,
+					Status:    &status,
 					StatusChange: []*models.StatusChange{
 						StatusChange(),
 					},
@@ -445,7 +451,7 @@ func ProductOfferingQualificationCreate() *models.ProductOfferingQualificationCr
 				ProductOfferingQualificationItemRelationship: []*models.ProductOfferingQualificationItemRelationship{
 					{
 						ID:   util.NewIDPtr(),
-						Type: models.RelationshipTypeBundled,
+						Type: &typeBundled,
 					},
 				},
 				RelatedParty: []*models.RelatedParty{
@@ -469,24 +475,29 @@ func ProductOrderCreate() *models.ProductOrderCreate {
 	parties := []*models.RelatedParty{
 		RelatedParty(),
 	}
+	desiredOrderResponses := models.DesiredOrderResponsesConfirmationOnly
+	activity := models.OrderActivityInstall
+	orderItemAction := models.ProductActionTypeAdd
+
+	priceType := models.PriceTypeRecurring
 	return &models.ProductOrderCreate{
 		AtBaseType:       "",
 		AtSchemaLocation: "",
 		AtType:           "",
 		BillingAccount:   billAccount,
 		BuyerRequestDate: NewDatetime(time.Now()),
-		DesiredResponse:  models.DesiredOrderResponsesConfirmationOnly,
+		DesiredResponse:  &desiredOrderResponses,
 		ExpeditePriority: false,
 		ExternalID:       util.NewIDPtr(),
 		Note: []*models.Note{
 			Note(),
 		},
-		OrderActivity: models.OrderActivityInstall,
+		OrderActivity: &activity,
 		OrderItem: []*models.ProductOrderItemCreate{
 			{
 				AtSchemaLocation: "",
 				AtType:           "",
-				Action:           models.ProductActionTypeAdd,
+				Action:           &orderItemAction,
 				BillingAccount:   billAccount,
 				ID:               util.NewIDPtr(),
 				OrderItemPrice: []*models.OrderItemPrice{
@@ -495,7 +506,7 @@ func ProductOrderCreate() *models.ProductOrderCreate {
 						Description:           "",
 						Name:                  swag.String(gofakeit.Name()),
 						Price:                 Price(),
-						PriceType:             models.PriceTypeRecurring,
+						PriceType:             &priceType,
 						RecurringChargePeriod: models.ChargePeriodMonth,
 					},
 				},

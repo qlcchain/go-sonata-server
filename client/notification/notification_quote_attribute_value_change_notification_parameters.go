@@ -18,56 +18,70 @@ import (
 	"github.com/qlcchain/go-sonata-server/models"
 )
 
-// NewNotificationQuoteAttributeValueChangeNotificationParams creates a new NotificationQuoteAttributeValueChangeNotificationParams object
-// with the default values initialized.
+// NewNotificationQuoteAttributeValueChangeNotificationParams creates a new NotificationQuoteAttributeValueChangeNotificationParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNotificationQuoteAttributeValueChangeNotificationParams() *NotificationQuoteAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationQuoteAttributeValueChangeNotificationParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNotificationQuoteAttributeValueChangeNotificationParamsWithTimeout creates a new NotificationQuoteAttributeValueChangeNotificationParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNotificationQuoteAttributeValueChangeNotificationParamsWithTimeout(timeout time.Duration) *NotificationQuoteAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationQuoteAttributeValueChangeNotificationParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNotificationQuoteAttributeValueChangeNotificationParamsWithContext creates a new NotificationQuoteAttributeValueChangeNotificationParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNotificationQuoteAttributeValueChangeNotificationParamsWithContext(ctx context.Context) *NotificationQuoteAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationQuoteAttributeValueChangeNotificationParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNotificationQuoteAttributeValueChangeNotificationParamsWithHTTPClient creates a new NotificationQuoteAttributeValueChangeNotificationParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNotificationQuoteAttributeValueChangeNotificationParamsWithHTTPClient(client *http.Client) *NotificationQuoteAttributeValueChangeNotificationParams {
-	var ()
 	return &NotificationQuoteAttributeValueChangeNotificationParams{
 		HTTPClient: client,
 	}
 }
 
-/*NotificationQuoteAttributeValueChangeNotificationParams contains all the parameters to send to the API endpoint
-for the notification quote attribute value change notification operation typically these are written to a http.Request
+/* NotificationQuoteAttributeValueChangeNotificationParams contains all the parameters to send to the API endpoint
+   for the notification quote attribute value change notification operation.
+
+   Typically these are written to a http.Request.
 */
 type NotificationQuoteAttributeValueChangeNotificationParams struct {
 
-	/*QuoteAttributeValueChangeNotification*/
+	// QuoteAttributeValueChangeNotification.
 	QuoteAttributeValueChangeNotification []*models.QuoteEventPlus
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the notification quote attribute value change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteAttributeValueChangeNotificationParams) WithDefaults() *NotificationQuoteAttributeValueChangeNotificationParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the notification quote attribute value change notification params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NotificationQuoteAttributeValueChangeNotificationParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the notification quote attribute value change notification params
@@ -121,7 +135,6 @@ func (o *NotificationQuoteAttributeValueChangeNotificationParams) WriteToRequest
 		return err
 	}
 	var res []error
-
 	if o.QuoteAttributeValueChangeNotification != nil {
 		if err := r.SetBodyParam(o.QuoteAttributeValueChangeNotification); err != nil {
 			return err
