@@ -31,7 +31,7 @@ func CreateTables() error {
 			&schema.User{}, &schema.HubSubscriber{},
 			// GeographicAddress
 			&schema.GeographicAddress{}, &schema.FieldedAddress{}, &schema.FormattedAddress{},
-			&schema.GeographicLocation{}, &schema.GeographicAddress{}, &schema.GeographicSubAddress{}, &schema.GeographicPoint{},
+			&schema.GeographicLocation{}, &schema.GeographicSubAddress{}, &schema.GeographicPoint{},
 			&schema.SubUnit{}, &models.ReferencedAddress{},
 			// GeographicSite
 			&schema.GeographicSite{}, &schema.FormattedAddress{}, &schema.FieldedAddress{},
