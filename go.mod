@@ -15,8 +15,9 @@ require (
 	github.com/go-openapi/validate v0.20.2
 	github.com/google/uuid v1.2.0
 	github.com/gorilla/handlers v1.5.1
-	github.com/jessevdk/go-flags v1.4.0
+	github.com/jessevdk/go-flags v1.5.0
 	github.com/jinzhu/gorm v1.9.16
+	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/justinas/alice v1.2.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
