@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/brianvoe/gofakeit/v5 v5.11.2
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/gammazero/workerpool v1.1.1
+	github.com/gammazero/workerpool v1.1.3
 	github.com/go-openapi/errors v0.20.0
 	github.com/go-openapi/loads v0.20.2
 	github.com/go-openapi/runtime v0.19.27
@@ -24,5 +24,5 @@ require (
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/rs/xid v1.3.0
 	github.com/sirupsen/logrus v1.8.1
-	golang.org/x/net v0.0.0-20210316092652-d523dce5a7f4
+	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 )
